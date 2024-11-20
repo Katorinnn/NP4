@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RootNamespace>LPG_Management_System</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="cash-machine.png" />
+    <None Remove="cogwheel.png" />
+    <None Remove="dashboard %282%29.png" />
+    <None Remove="inventory.png" />
+    <None Remove="LPG Background.png" />
+    <None Remove="market-analysis.png" />
+    <None Remove="people.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\cash-machine.png" />
+    <Resource Include="Images\cogwheel.png" />
+    <Resource Include="Images\dashboard %282%29.png" />
+    <Resource Include="Images\inventory.png" />
+    <Resource Include="Images\LPG Background.png" />
+    <Resource Include="Images\market-analysis.png" />
+    <Resource Include="Images\people.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="userControls\" />
+  </ItemGroup>
+
+</Project>
