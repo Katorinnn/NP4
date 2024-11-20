@@ -1,4 +1,8 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -9,16 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace LPG_Management_System
+namespace LPG_Management_System.View.UserControls
 {
-    public partial class MainWindow : Window
+    /// <summary>
+    /// Interaction logic for dashboarUC.xaml
+    /// </summary>
+    public partial class dashboardUC : UserControl
     {
-        public MainWindow()
+        public dashboardUC()
         {
             InitializeComponent();
         }
-
-  
-        
     }
 }

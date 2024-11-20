@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="userControls\**" />
+    <EmbeddedResource Remove="userControls\**" />
+    <None Remove="userControls\**" />
+    <Page Remove="userControls\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="cash-machine.png" />
     <None Remove="cogwheel.png" />
     <None Remove="dashboard %282%29.png" />
@@ -30,7 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="userControls\" />
+    <PackageReference Include="MySql.Data" Version="9.1.0" />
   </ItemGroup>
 
 </Project>
