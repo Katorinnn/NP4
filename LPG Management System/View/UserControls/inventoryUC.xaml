@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="LPG_Management_System.View.UserControls.inventoryUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="850" d:DesignWidth="1200" Cursor="Hand">
+    <Grid HorizontalAlignment="Left" Width="1190" Background="#FFFEF9F5" Margin="10,0,0,0">
+        <DataGrid d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DataGrid_SelectionChanged" Margin="0,91,0,0"/>
+    </Grid>
+</UserControl>

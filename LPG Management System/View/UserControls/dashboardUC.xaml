@@ -5,14 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="850" d:DesignWidth="1250">
     <Grid Background="#FFDFEDFE">
-        <Grid x:Name="topGrid" Margin="74,23,74,225" Background="#FFFEF9F5">
+        <Grid x:Name="topGrid" Margin="50,23,50,498" Background="#FFFEF9F5">
+            <Label Content="NP4 GAS" HorizontalAlignment="Center" VerticalAlignment="Center" Height="193" Width="534" FontSize="50" FontFamily="Arial Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         </Grid>
-        <Grid x:Name="leftGrid" Margin="24,244,388,10" Background="#FFFEF9F5">
+        <Grid x:Name="leftGrid" Margin="50,400,650,50" Background="#FFFEF9F5" Width="550" Height="400">
         </Grid>
-        <Grid x:Name="rightGrid" Margin="434,244,10,10" Background="#FFFEF9F5">
+        <Grid x:Name="rightGrid" Margin="650,400,50,50" Background="#FFFEF9F5" Height="400" Width="550">
         </Grid>
     </Grid>
-    
+
 </UserControl>

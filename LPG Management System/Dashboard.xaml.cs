@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using LPG_Management_System.View.UserControls;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -18,7 +19,35 @@ namespace LPG_Management_System
             InitializeComponent();
         }
 
-  
-        
+
+        private void inventoryBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new inventoryUC();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new customersUC();
+        }
+
+        private void posBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new pointofsaleUC();
+        }
+
+        private void reportsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new reportsUC();
+        }
+
+        private void settingBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new settingsUC();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new dashboardUC();
+        }
     }
 }
