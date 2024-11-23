@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="LPG_Management_System.View.UserControls.dashboardUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="850" d:DesignWidth="1250">
+    <Grid Background="#FFDFEDFE">
+        <Grid x:Name="topGrid" Margin="50,23,50,498" Background="#FFFEF9F5">
+            <Label Content="NP4 GAS" HorizontalAlignment="Center" VerticalAlignment="Center" Height="193" Width="534" FontSize="50" FontFamily="Arial Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        </Grid>
+        <Grid x:Name="leftGrid" Margin="50,400,650,50" Background="#FFFEF9F5" Width="550" Height="400">
+        </Grid>
+        <Grid x:Name="rightGrid" Margin="650,400,50,50" Background="#FFFEF9F5" Height="400" Width="550">
+        </Grid>
+    </Grid>
+
+</UserControl>
