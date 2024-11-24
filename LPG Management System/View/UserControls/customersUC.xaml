@@ -13,7 +13,7 @@
                 <RowDefinition Height="665*"/>
             </Grid.RowDefinitions>
             <DataGrid x:Name="customersDG" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DataGrid_SelectionChanged"/>
-            <Button x:Name="newBtn" Content="New" HorizontalAlignment="Left" Margin="979,0,0,0" VerticalAlignment="Center" Width="147" Height="50" Click="newBtn_Click"/>
+            <Button x:Name="newBtn" Content="New" HorizontalAlignment="Left" Margin="979,0,0,0" VerticalAlignment="Center" Width="147" Height="50" Click="newBtn_Click" Cursor="Hand"/>
             <TextBox HorizontalAlignment="Left" Height="26" Margin="44,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="251" TextChanged="TextBox_TextChanged" Text="search "/>
         </Grid>
         <ContentControl x:Name="crudGrid" Content="" HorizontalAlignment="Left" Margin="265,276,0,0" VerticalAlignment="Top" Height="314" Width="608"/>

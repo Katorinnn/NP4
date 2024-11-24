@@ -29,5 +29,10 @@ namespace LPG_Management_System.View.UserControls
         {
 
         }
+
+        private void newBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

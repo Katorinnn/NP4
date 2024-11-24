@@ -25,10 +25,10 @@
             </Grid>
 
             <!-- Buttons for Sidebar Menu -->
-            <Button x:Name="dashboardBtn" Content="Dashboard" Height="91" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Click="Button_Click_1" Cursor="Hand" >
+            <Button x:Name="dashboardBtn" Content="Dashboard" Height="91" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Click="Button_Click_1" Cursor="Hand" MouseEnter="dashboardBtn_MouseEnter" MouseLeave="dashboardBtn_MouseLeave" >
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="5" Margin="10">
+                        <Border Background="{TemplateBinding Background}" >
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Image Source="Images/dashboard (2).png" Height="84" Width="69" Margin="10,0"/>
                                 <TextBlock Text="Dashboard" FontSize="16" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"/>
@@ -38,10 +38,10 @@
                 </Button.Template>
             </Button>
 
-            <Button x:Name="custumerBtn" Content="Customers" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="Button_Click" >
+            <Button x:Name="custumerBtn" Content="Customers" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="Button_Click" MouseEnter="custumerBtn_MouseEnter" MouseLeave="custumerBtn_MouseLeave" >
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="5" Margin="10">
+                        <Border Background="{TemplateBinding Background}" >
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <!-- Image for Customers button -->
                                 <Image Source="Images/people.png" Height="84" Width="69" Margin="10,0"/>
@@ -52,10 +52,10 @@
                 </Button.Template>
             </Button>
 
-            <Button x:Name="inventoryBtn" Content="Inventory" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="inventoryBtn_Click" >
+            <Button x:Name="inventoryBtn" Content="Inventory" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="inventoryBtn_Click" MouseEnter="inventoryBtn_MouseEnter" MouseLeave="inventoryBtn_MouseLeave" >
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="5" Margin="10">
+                        <Border Background="{TemplateBinding Background}" >
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Image Source="Images/inventory.png" Height="84" Width="69" Margin="10,0"/>
                                 <TextBlock Text="Inventory" FontSize="16" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"/>
@@ -65,10 +65,10 @@
                 </Button.Template>
             </Button>
 
-            <Button x:Name="posBtn" Content="Point of Sale" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="posBtn_Click" >
+            <Button x:Name="posBtn" Content="Point of Sale" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="posBtn_Click" MouseEnter="posBtn_MouseEnter" MouseLeave="posBtn_MouseLeave" >
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="5" Margin="10">
+                        <Border Background="{TemplateBinding Background}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <!-- Image for Point of Sale button -->
                                 <Image Source="Images/cash-machine.png" Height="84" Width="69" Margin="10,0"/>
@@ -79,10 +79,10 @@
                 </Button.Template>
             </Button>
 
-            <Button x:Name="reportsBtn" Content="Reports" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="reportsBtn_Click" >
+            <Button x:Name="reportsBtn" Content="Reports" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="reportsBtn_Click" MouseEnter="reportsBtn_MouseEnter" MouseLeave="reportsBtn_MouseLeave" >
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="5" Margin="10">
+                        <Border Background="{TemplateBinding Background}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Image Source="Images/market-analysis.png" Height="84" Width="69" Margin="10,0"/>
                                 <TextBlock Text="Reports" FontSize="16" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"/>
@@ -92,10 +92,10 @@
                 </Button.Template>
             </Button>
 
-            <Button x:Name="settingBtn" Content="Settings" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="settingBtn_Click" >
+            <Button x:Name="settingBtn" Content="Settings" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="settingBtn_Click" MouseEnter="settingBtn_MouseEnter" MouseLeave="settingBtn_MouseLeave" >
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="5" Margin="10">
+                        <Border Background="{TemplateBinding Background}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Image Source="Images/cogwheel.png" Height="84" Width="69" Margin="10,0"/>
                                 <TextBlock Text="Settings" FontSize="16" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"/>

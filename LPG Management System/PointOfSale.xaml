@@ -1,0 +1,78 @@
+﻿<Window x:Class="LPG_Management_System.PointOfSale"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LPG_Management_System"
+        mc:Ignorable="d"
+        Title="PointOfSale" Height="850" Width="1500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" WindowState="Maximized">
+    <Grid Background="#FF8ECAE6" Margin="-5,1,-2,0">
+        <Button Content="Home" HorizontalAlignment="Left" Height="89" Margin="8,736,0,0" VerticalAlignment="Top" Width="169" RenderTransformOrigin="0.79,0.887" Click="Button_Click" FontSize="22"/>
+        <Grid HorizontalAlignment="Left" Height="407" Margin="688,10,0,0" VerticalAlignment="Top" Width="809" Background="#FFFEF9F5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Content="                               NP4 DRY GOODS STORE&#xA;Blk 141 Lot 5 Phase 3, Brgy. Paliparan 3, Dasmarinas City, Cavite" Grid.ColumnSpan="2" Height="72" Margin="0,14,101,0" VerticalAlignment="Top" Width="596" HorizontalAlignment="Right" FontSize="20"/>
+            <Label Content="Smart:0961-1240-218/ TNT: 0910-6061-636" Grid.ColumnSpan="2" Height="43" Margin="0,57,276,0" VerticalAlignment="Top" Width="244" HorizontalAlignment="Right" FontSize="20"/>
+            <Label Content="Reciept # 0001" Height="26" Margin="352,91,0,0" VerticalAlignment="Top" Width="97" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
+            <Label Content="Date 10/21/2024 7:28" Height="43" Margin="2,265,0,0" VerticalAlignment="Top" Width="129" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
+            <Label Content="---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" Height="43" Margin="6,82,0,0" VerticalAlignment="Top" Width="788" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
+        </Grid>
+        <Label
+        Margin="18,203,0,0" HorizontalAlignment="Left" FontSize="20" Width="129" VerticalAlignment="Top" Height="43" Content="SubTotal:" Grid.Column="1"/>
+        <Label
+    Margin="17,244,0,0" HorizontalAlignment="Left" FontSize="20" Width="129" VerticalAlignment="Top" Height="43" Content="Tax:" Grid.Column="1"/>
+        <Label
+            Margin="17,284,0,0" HorizontalAlignment="Left" FontSize="20" Width="129" VerticalAlignment="Top" Height="43" Content="Total:" Grid.Column="1"/>
+        <Label
+            Margin="17,328,0,0" HorizontalAlignment="Left" FontSize="20" Width="129" VerticalAlignment="Top" Height="43" Content="Change:" Grid.Column="1"/>
+        <Button Content="7" HorizontalAlignment="Left" Height="73" Margin="938,439,0,0" VerticalAlignment="Top" Width="182" FontSize="20"/>
+        <Button Content="8" HorizontalAlignment="Left" Height="73" Margin="1125,439,0,0" VerticalAlignment="Top" Width="187" FontSize="20"/>
+        <Button Content="9" HorizontalAlignment="Left" Height="73" Margin="1317,439,0,0" VerticalAlignment="Top" Width="178" FontSize="20"/>
+        <ComboBox HorizontalAlignment="Left" Height="53" Margin="687,440,0,0" VerticalAlignment="Top" Width="239" Cursor="Hand"/>
+        <ComboBox HorizontalAlignment="Left" Height="53" Margin="687,515,0,0" VerticalAlignment="Top" Width="240" RenderTransformOrigin="0.507,0.562" Cursor="Hand"/>
+        <Button Content="4" HorizontalAlignment="Left" Height="73" Margin="938,516,0,0" VerticalAlignment="Top" Width="182" FontSize="20"/>
+        <Button Content="5" HorizontalAlignment="Left" Height="73" Margin="1125,516,0,0" VerticalAlignment="Top" Width="187" FontSize="20"/>
+        <Button Content="6" HorizontalAlignment="Left" Height="73" Margin="1317,516,0,0" VerticalAlignment="Top" Width="178" FontSize="20"/>
+        <Button Content="1" HorizontalAlignment="Left" Height="73" Margin="938,593,0,0" VerticalAlignment="Top" Width="182" FontSize="20"/>
+        <Button Content="2" HorizontalAlignment="Left" Height="73" Margin="1125,593,0,0" VerticalAlignment="Top" Width="187" FontSize="20"/>
+        <Button Content="3" HorizontalAlignment="Left" Height="73" Margin="1317,593,0,0" VerticalAlignment="Top" Width="178" FontSize="20"/>
+        <Button Content="Cash" HorizontalAlignment="Left" Height="78" Margin="938,749,0,0" VerticalAlignment="Top" Width="274" Background="#FFB1C92A" FontSize="20"/>
+        <Button Content="Gcash" HorizontalAlignment="Left" Height="78" Margin="1217,749,0,0" VerticalAlignment="Top" Width="278" Background="#FF1150F2" FontSize="20"/>
+        <Button Content="." HorizontalAlignment="Left" Height="74" Margin="938,670,0,0" VerticalAlignment="Top" Width="182" FontSize="20"/>
+        <Button Content="0" HorizontalAlignment="Left" Height="74" Margin="1125,670,0,0" VerticalAlignment="Top" Width="187" FontSize="20"/>
+        <Button Content="clear" HorizontalAlignment="Left" Height="74" Margin="1317,670,0,0" VerticalAlignment="Top" Width="178" FontSize="20"/>
+
+
+        <!-- StackPanel for Coastal Product with kg options below -->
+        <StackPanel x:Name="CoastalPanel" HorizontalAlignment="Left" Margin="14,95,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed">
+            <Button x:Name="Button5kg" Content="5kg" HorizontalAlignment="Left" Height="80" Width="156"/>
+            <Button x:Name="Button11kg" Content="11kg" HorizontalAlignment="Left" Height="80" Width="156"/>
+        </StackPanel>
+
+        <!-- StackPanel for Gaz Lite Product with kg options below -->
+        <StackPanel x:Name="GazLitePanel" HorizontalAlignment="Left" Margin="14,95,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed">
+            <Button x:Name="Button230g" Content="230g" HorizontalAlignment="Left" Height="80" Width="156"/>
+            <Button x:Name="Button330g" Content="330g" HorizontalAlignment="Left" Height="80" Width="156"/>
+        </StackPanel>
+
+        <!-- StackPanel for Solane Product with kg options below -->
+        <StackPanel x:Name="SolanePanel" HorizontalAlignment="Left" Margin="14,95,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed">
+            <Button x:Name="Button11kgSolane" Content="11kg" HorizontalAlignment="Left" Height="80" Width="156"/>
+        </StackPanel>
+
+        <!-- StackPanel for Regasco Product with kg options below -->
+        <StackPanel x:Name="RegascoPanel" HorizontalAlignment="Left" Margin="14,95,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed">
+            <Button x:Name="Button5kgRegasco" Content="5kg" HorizontalAlignment="Left" Height="80" Width="156"/>
+            <Button x:Name="Button2_7kg" Content="2.7kg" HorizontalAlignment="Left" Height="80" Width="156"/>
+            <Button x:Name="Button11kgRegasco" Content="11kg" HorizontalAlignment="Left" Height="80" Width="156"/>
+        </StackPanel>
+
+        <!-- Product Buttons (to select the gas type) -->
+        <Button Content="Coastal" HorizontalAlignment="Left" Height="80" Margin="14,10,0,0" VerticalAlignment="Top" Width="159" Click="ProductButton_Click" FontSize="20"/>
+        <Button Content="Gaz Lite" HorizontalAlignment="Left" Height="80" Margin="178,10,0,0" VerticalAlignment="Top" Width="158" Click="ProductButton_Click" FontSize="20"/>
+        <Button Content="Solane" HorizontalAlignment="Left" Height="80" Margin="342,10,0,0" VerticalAlignment="Top" Width="158" Click="ProductButton_Click" FontSize="20"/>
+        <Button Content="Regasco" HorizontalAlignment="Left" Height="80" Margin="505,10,0,0" VerticalAlignment="Top" Width="158" Click="ProductButton_Click" FontSize="20"/>
+    </Grid>
+</Window>
