@@ -13,11 +13,24 @@
                 <ColumnDefinition Width="0*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Label Content="                               NP4 DRY GOODS STORE&#xA;Blk 141 Lot 5 Phase 3, Brgy. Paliparan 3, Dasmarinas City, Cavite" Grid.ColumnSpan="2" Height="72" Margin="0,14,101,0" VerticalAlignment="Top" Width="596" HorizontalAlignment="Right" FontSize="20"/>
-            <Label Content="Smart:0961-1240-218/ TNT: 0910-6061-636" Grid.ColumnSpan="2" Height="43" Margin="0,57,276,0" VerticalAlignment="Top" Width="244" HorizontalAlignment="Right" FontSize="20"/>
-            <Label Content="Reciept # 0001" Height="26" Margin="352,91,0,0" VerticalAlignment="Top" Width="97" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
-            <Label Content="Date 10/21/2024 7:28" Height="43" Margin="2,265,0,0" VerticalAlignment="Top" Width="129" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
-            <Label Content="---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" Height="43" Margin="6,82,0,0" VerticalAlignment="Top" Width="788" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
+            <Label Content="                               NP4 DRY GOODS STORE&#xA;Blk 141 Lot 5 Phase 3, Brgy. Paliparan 3, Dasmarinas City, Cavite" Grid.ColumnSpan="2" Height="72" Margin="0,10,101,0" VerticalAlignment="Top" Width="596" HorizontalAlignment="Right" FontSize="20"/>
+            <Label Content="Smart:0961-1240-218/ TNT: 0910-6061-636" Height="43" Margin="0,66,0,0" VerticalAlignment="Top" Width="419" HorizontalAlignment="Center" FontSize="20" Grid.Column="1"/>
+            <Label Content="Reciept # 0001" Height="39" Margin="352,105,0,0" VerticalAlignment="Top" Width="97" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
+            <Label Content="---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" Height="36" Margin="0,84,0,0" VerticalAlignment="Top" Width="788" HorizontalAlignment="Center" Grid.Column="1" FontSize="20"/>
+            <StackPanel Grid.ColumnSpan="2" Margin="10,154,541,25">
+                <Label Content="Sub Total" Height="42" Width="207" FontSize="20"/>
+                <Label Content="Tax" Height="42" Width="207" FontSize="20"/>
+                <Label Content="Total" Height="42" Width="207" FontSize="20" RenderTransformOrigin="0.509,0.462"/>
+                <Label Content="Change" Height="42" Width="207" FontSize="20"/>
+            </StackPanel>
+
+            <StackPanel Grid.ColumnSpan="2" Margin="10,154,541,25">
+                <Label Content="Sub Total" Height="42" Width="207" FontSize="20"/>
+                <Label Content="Tax" Height="42" Width="207" FontSize="20"/>
+                <Label Content="Total" Height="42" Width="207" FontSize="20" RenderTransformOrigin="0.509,0.462"/>
+                <Label Content="Change" Height="42" Width="207" FontSize="20"/>
+            </StackPanel>
+            <StackPanel Grid.ColumnSpan="2" Margin="268,130,10,25"/>
         </Grid>
         <Label
         Margin="18,203,0,0" HorizontalAlignment="Left" FontSize="20" Width="129" VerticalAlignment="Top" Height="43" Content="SubTotal:" Grid.Column="1"/>

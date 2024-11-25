@@ -28,7 +28,10 @@ namespace LPG_Management_System.View.UserControls
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Login login = new Login();
+            Dashboard dashboard = new Dashboard();
+
             login.Show();
+            dashboard.Close();
 
         }
 

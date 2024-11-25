@@ -23,7 +23,7 @@ namespace LPG_Management_System.View.UserControls
     public partial class customersUC : UserControl
     {
 
-        private readonly string connectionString = "server=localhost;database=lpgpos;user=root;";
+        private readonly string connectionString = "server=localhost;database=db_lpgpos;user=root;";
         public customersUC()
         {
             InitializeComponent();
@@ -65,7 +65,14 @@ namespace LPG_Management_System.View.UserControls
         private void newBtn_Click(object sender, RoutedEventArgs e)
         {
             customerCRUD cg = new customerCRUD();
-            cg.ShowDialog();
+            bool? dialogResult = cg.ShowDialog();
+
+            // Check if the dialog was successful (e.g., a new record was added)
+            if (dialogResult == true) // Assuming `true` is returned when a record is added
+            {
+                // Refresh the data in the DataGrid
+                LoadCustomersData();
+            }
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)

@@ -52,7 +52,7 @@ namespace LPG_Management_System
 
         private bool ValidateLogin(string username, string password)
         {
-            string connectionString = "server=localhost;database=lpgpos;user=root;";
+            string connectionString = "server=localhost;database=db_lpgpos;user=root;";
             string query = "SELECT COUNT(*) FROM tbl_admin WHERE username = @username AND password = @password";
 
             try

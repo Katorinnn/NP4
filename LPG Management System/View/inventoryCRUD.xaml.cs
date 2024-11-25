@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,55 @@ namespace LPG_Management_System.View
         public inventoryCRUD()
         {
             InitializeComponent();
+        }
+
+        private void addBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // Collect user input
+            string tankID = tankIDtxtBox.Text;
+            string brandname = brandtxtBox.Text;
+            string size = sizetxtBox.Text;
+            string price = pricetxtBox.Text;
+
+            // Connection string (update according to your DB credentials)
+            string connectionString = "server=localhost;database=db_lpgpos;user=root;";
+
+            try
+            {
+                // Insert data into the database
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = "INSERT INTO tbl_inventory (tankID, brandName, size, price) VALUES (@tankID, @brandname, @size, @price)";
+
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        // Use parameters to prevent SQL injection
+                        command.Parameters.AddWithValue("@tankID", tankID);
+                        command.Parameters.AddWithValue("@brandname", brandname);
+                        command.Parameters.AddWithValue("@size", size);
+                        command.Parameters.AddWithValue("@price", price);
+
+                        int rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Customer added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                            this.DialogResult = true;
+
+                            //close form
+                            this.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Failed to add customer.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

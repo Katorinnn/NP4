@@ -12,11 +12,11 @@
             <Label Content="Address" HorizontalAlignment="Left" Height="28" Margin="110,228,0,0" VerticalAlignment="Top" Width="108"/>
             <Label Content="Contact Number" HorizontalAlignment="Left" Height="25" Margin="110,182,0,0" VerticalAlignment="Top" Width="108"/>
             <Label Content="Tank ID" HorizontalAlignment="Left" Height="25" Margin="110,88,0,0" VerticalAlignment="Top" Width="108"/>
-            <TextBox HorizontalAlignment="Left" Height="22" Margin="258,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
-            <TextBox HorizontalAlignment="Left" Height="22" Margin="259,181,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
-            <TextBox HorizontalAlignment="Left" Height="22" Margin="260,229,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
-            <Button Content="ADD" HorizontalAlignment="Left" Height="32" Margin="425,331,0,0" VerticalAlignment="Top" Width="81" Cursor="Hand"/>
-            <TextBox HorizontalAlignment="Left" Height="22" Margin="258,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
+            <TextBox x:Name="customertxtBox" HorizontalAlignment="Left" Height="22" Margin="258,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
+            <TextBox x:Name="contacttxtBox" HorizontalAlignment="Left" Height="22" Margin="259,181,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
+            <TextBox x:Name="addresstxtBox" HorizontalAlignment="Left" Height="22" Margin="260,229,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
+            <Button x:Name="addBtn" Content="ADD" HorizontalAlignment="Left" Height="32" Margin="425,331,0,0" VerticalAlignment="Top" Width="81" Cursor="Hand" Click="addBtn_Click"/>
+            <TextBox x:Name="tankIDtxtBox" HorizontalAlignment="Left" Height="22" Margin="258,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
 
         </Grid>
 
