@@ -30,5 +30,10 @@ namespace LPG_Management_System.View.UserControls
             Dashboard dashboard = new Dashboard();
             dashboard.Show();
         }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
