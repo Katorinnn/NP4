@@ -67,5 +67,20 @@ namespace LPG_Management_System
                     break;
             }
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void oneBtn_Click(object sender, RoutedEventArgs e)
+        {
+            displayText.Content = "1";
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
