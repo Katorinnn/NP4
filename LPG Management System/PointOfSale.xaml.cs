@@ -33,38 +33,29 @@ namespace LPG_Management_System
 
         private void ProductButton_Click(object sender, RoutedEventArgs e)
         {
-            // Hide all product panels (kg options)
             CoastalPanel.Visibility = Visibility.Collapsed;
             GazLitePanel.Visibility = Visibility.Collapsed;
             SolanePanel.Visibility = Visibility.Collapsed;
             RegascoPanel.Visibility = Visibility.Collapsed;
 
-            // Check which product button was clicked and show the corresponding kg buttons
-            switch ((sender as Button).Content.ToString())
+            // Show the corresponding panel
+            if (sender is Button button)
             {
-                case "Coastal":
-                    // Show kg options for Coastal
-                    CoastalPanel.Visibility = Visibility.Visible;
-                    break;
-
-                case "Gaz Lite":
-                    // Show kg options for Gaz Lite
-                    GazLitePanel.Visibility = Visibility.Visible;
-                    break;
-
-                case "Solane":
-                    // Show kg options for Solane
-                    SolanePanel.Visibility = Visibility.Visible;
-                    break;
-
-                case "Regasco":
-                    // Show kg options for Regasco
-                    RegascoPanel.Visibility = Visibility.Visible;
-                    break;
-
-                default:
-                    // Default action in case of invalid selection (optional)
-                    break;
+                switch (button.Content.ToString())
+                {
+                    case "Coastal":
+                        CoastalPanel.Visibility = Visibility.Visible;
+                        break;
+                    case "Gaz Lite":
+                        GazLitePanel.Visibility = Visibility.Visible;
+                        break;
+                    case "Solane":
+                        SolanePanel.Visibility = Visibility.Visible;
+                        break;
+                    case "Regasco":
+                        RegascoPanel.Visibility = Visibility.Visible;
+                        break;
+                }
             }
         }
 
@@ -75,7 +66,7 @@ namespace LPG_Management_System
 
         private void oneBtn_Click(object sender, RoutedEventArgs e)
         {
-            displayText.Content = "1";
+            
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

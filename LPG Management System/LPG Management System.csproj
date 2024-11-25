@@ -18,12 +18,8 @@
 
   <ItemGroup>
     <None Remove="cash-machine.png" />
-    <None Remove="cogwheel.png" />
-    <None Remove="dashboard %282%29.png" />
     <None Remove="inventory.png" />
     <None Remove="LPG Background.png" />
-    <None Remove="market-analysis.png" />
-    <None Remove="people.png" />
   </ItemGroup>
 
   <ItemGroup>
