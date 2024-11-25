@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LPG_Management_System.View"
         mc:Ignorable="d"
-        Title="inventoryCRUD" Height="450" Width="800">
-    <Grid>
-        
+        Title="inventoryCRUD" Height="371" Width="440">
+    <Grid Margin="-1,-2,22,8">
+        <Label Content="Brand" HorizontalAlignment="Left" Height="27" Margin="73,133,0,0" VerticalAlignment="Top" Width="108"/>
+        <Label Content="Price" HorizontalAlignment="Left" Height="28" Margin="72,226,0,0" VerticalAlignment="Top" Width="108"/>
+        <Label Content="Kg:" HorizontalAlignment="Left" Height="25" Margin="72,180,0,0" VerticalAlignment="Top" Width="108"/>
+        <Label Content="Tank ID" HorizontalAlignment="Left" Height="25" Margin="72,86,0,0" VerticalAlignment="Top" Width="108"/>
+        <TextBox HorizontalAlignment="Left" Height="22" Margin="220,136,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
+        <TextBox HorizontalAlignment="Left" Height="22" Margin="221,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
+        <TextBox HorizontalAlignment="Left" Height="22" Margin="222,227,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
+        <Button Content="ADD" HorizontalAlignment="Left" Height="32" Margin="322,295,0,0" VerticalAlignment="Top" Width="81" Cursor="Hand"/>
+        <TextBox HorizontalAlignment="Left" Height="22" Margin="220,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
+
     </Grid>
 </Window>

@@ -27,6 +27,8 @@ namespace LPG_Management_System.View.UserControls
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            Login login = new Login();
+            login.Show();
 
         }
 
@@ -34,5 +36,6 @@ namespace LPG_Management_System.View.UserControls
         {
 
         }
+
     }
 }

@@ -81,5 +81,15 @@ namespace LPG_Management_System
         {
 
         }
+
+        private void loginBtn_MouseEnter(object sender, MouseEventArgs e)
+        {
+            loginBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#8ecae6"));
+        }
+
+        private void loginBtn_MouseLeave(object sender, MouseEventArgs e)
+        {
+            loginBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("white"));
+        }
     }
 }

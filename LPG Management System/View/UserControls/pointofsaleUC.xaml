@@ -5,31 +5,31 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
              mc:Ignorable="d" 
-            d:DesignHeight="850" d:DesignWidth="1200" Width="1245" Height="870">
-    <Grid Background="#FF8ECAE6" Margin="-22,0,-26,-27" Width="1245" Height="870">
+            d:DesignHeight="850" d:DesignWidth="1200" Width="1500" Height="850">
+    <Grid Background="#FF8ECAE6" Margin="-351,4,-24,-24" Height="850" Width="1500">
         <Button Content="Home" HorizontalAlignment="Left" Height="89" Margin="10,771,0,0" VerticalAlignment="Top" Width="169" RenderTransformOrigin="0.79,0.887" Click="Button_Click"/>
-        <Grid HorizontalAlignment="Left" Height="274" Margin="672,10,0,0" VerticalAlignment="Top" Width="563" Background="#FFFEF9F5">
+        <Grid HorizontalAlignment="Left" Height="274" Margin="934,10,0,0" VerticalAlignment="Top" Width="563" Background="#FFFEF9F5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
         </Grid>
-        <Button Content="7" HorizontalAlignment="Left" Height="82" Margin="672,413,0,0" VerticalAlignment="Top" Width="184"/>
-        <Button Content="8" HorizontalAlignment="Left" Height="82" Margin="861,413,0,0" VerticalAlignment="Top" Width="189"/>
-        <Button Content="9" HorizontalAlignment="Left" Height="82" Margin="1055,413,0,0" VerticalAlignment="Top" Width="180"/>
-        <ComboBox HorizontalAlignment="Left" Height="53" Margin="672,334,0,0" VerticalAlignment="Top" Width="239" Cursor="Hand"/>
-        <ComboBox HorizontalAlignment="Left" Height="53" Margin="995,334,0,0" VerticalAlignment="Top" Width="240" RenderTransformOrigin="0.507,0.562" Cursor="Hand"/>
-        <Button Content="4" HorizontalAlignment="Left" Height="81" Margin="672,500,0,0" VerticalAlignment="Top" Width="184"/>
-        <Button Content="5" HorizontalAlignment="Left" Height="81" Margin="861,500,0,0" VerticalAlignment="Top" Width="189"/>
-        <Button Content="6" HorizontalAlignment="Left" Height="81" Margin="1055,500,0,0" VerticalAlignment="Top" Width="180"/>
-        <Button Content="1" HorizontalAlignment="Left" Height="82" Margin="672,586,0,0" VerticalAlignment="Top" Width="184"/>
-        <Button Content="2" HorizontalAlignment="Left" Height="82" Margin="861,586,0,0" VerticalAlignment="Top" Width="189"/>
-        <Button Content="3" HorizontalAlignment="Left" Height="82" Margin="1055,586,0,0" VerticalAlignment="Top" Width="180"/>
-        <Button Content="Cash" HorizontalAlignment="Left" Height="88" Margin="672,761,0,0" VerticalAlignment="Top" Width="277"/>
-        <Button Content="Gcash" HorizontalAlignment="Left" Height="88" Margin="954,761,0,0" VerticalAlignment="Top" Width="281"/>
-        <Button Content="." HorizontalAlignment="Left" Height="83" Margin="672,673,0,0" VerticalAlignment="Top" Width="184"/>
-        <Button Content="0" HorizontalAlignment="Left" Height="83" Margin="861,673,0,0" VerticalAlignment="Top" Width="189"/>
-        <Button Content="clear" HorizontalAlignment="Left" Height="83" Margin="1055,673,0,0" VerticalAlignment="Top" Width="180"/>
+        <Button Content="7" HorizontalAlignment="Left" Height="82" Margin="934,413,0,0" VerticalAlignment="Top" Width="184"/>
+        <Button Content="8" HorizontalAlignment="Left" Height="82" Margin="1123,413,0,0" VerticalAlignment="Top" Width="189"/>
+        <Button Content="9" HorizontalAlignment="Left" Height="82" Margin="1317,413,0,0" VerticalAlignment="Top" Width="180"/>
+        <ComboBox HorizontalAlignment="Left" Height="53" Margin="934,334,0,0" VerticalAlignment="Top" Width="239" Cursor="Hand"/>
+        <ComboBox HorizontalAlignment="Left" Height="53" Margin="1257,334,0,0" VerticalAlignment="Top" Width="240" RenderTransformOrigin="0.507,0.562" Cursor="Hand"/>
+        <Button Content="4" HorizontalAlignment="Left" Height="81" Margin="934,500,0,0" VerticalAlignment="Top" Width="184"/>
+        <Button Content="5" HorizontalAlignment="Left" Height="81" Margin="1123,500,0,0" VerticalAlignment="Top" Width="189"/>
+        <Button Content="6" HorizontalAlignment="Left" Height="81" Margin="1317,500,0,0" VerticalAlignment="Top" Width="180"/>
+        <Button Content="1" HorizontalAlignment="Left" Height="82" Margin="934,586,0,0" VerticalAlignment="Top" Width="184"/>
+        <Button Content="2" HorizontalAlignment="Left" Height="82" Margin="1123,586,0,0" VerticalAlignment="Top" Width="189"/>
+        <Button Content="3" HorizontalAlignment="Left" Height="82" Margin="1317,586,0,0" VerticalAlignment="Top" Width="180"/>
+        <Button Content="Cash" HorizontalAlignment="Left" Height="88" Margin="934,761,0,0" VerticalAlignment="Top" Width="277"/>
+        <Button Content="Gcash" HorizontalAlignment="Left" Height="88" Margin="1216,761,0,0" VerticalAlignment="Top" Width="281"/>
+        <Button Content="." HorizontalAlignment="Left" Height="83" Margin="934,673,0,0" VerticalAlignment="Top" Width="184"/>
+        <Button Content="0" HorizontalAlignment="Left" Height="83" Margin="1123,673,0,0" VerticalAlignment="Top" Width="189"/>
+        <Button Content="clear" HorizontalAlignment="Left" Height="83" Margin="1317,673,0,0" VerticalAlignment="Top" Width="180"/>
         <Button Content="7" HorizontalAlignment="Left" Height="80" Margin="14,95,0,0" VerticalAlignment="Top" Width="156"/>
         <Button Content="8" HorizontalAlignment="Left" Height="80" Margin="178,95,0,0" VerticalAlignment="Top" Width="156"/>
         <Button Content="9" HorizontalAlignment="Left" Height="80" Margin="342,95,0,0" VerticalAlignment="Top" Width="157"/>
