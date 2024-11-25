@@ -12,7 +12,7 @@
         <Button Content="Home" HorizontalAlignment="Left" Height="57" Margin="1374,780,0,0" VerticalAlignment="Top" Width="119" RenderTransformOrigin="0.79,0.887" Click="Button_Click" FontSize="22"/>
 
         <!-- Receipt Section -->
-        <Grid HorizontalAlignment="Left" Height="619" Margin="20,16,0,0" VerticalAlignment="Top" Width="724" Background="#FFFEF9F5">
+        <Grid HorizontalAlignment="Left" Height="619" Margin="31,26,0,0" VerticalAlignment="Top" Width="724" Background="#FFFEF9F5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0*"/>
                 <ColumnDefinition/>
@@ -23,15 +23,15 @@
         </Grid>
 
         <!-- Payment Buttons -->
-        <Button Content="Cash" HorizontalAlignment="Left" Height="102" Margin="20,634,0,0" VerticalAlignment="Top" Width="354" Background="#FFB1C92A" FontSize="30"/>
-        <Button Content="Gcash" HorizontalAlignment="Left" Height="102" Margin="373,635,0,0" VerticalAlignment="Top" Width="370" Background="#FF1150F2" FontSize="30"/>
+        <Button Content="Cash" HorizontalAlignment="Left" Height="102" Margin="31,644,0,0" VerticalAlignment="Top" Width="354" Background="#FFB1C92A" FontSize="30"/>
+        <Button Content="Gcash" HorizontalAlignment="Left" Height="102" Margin="384,645,0,0" VerticalAlignment="Top" Width="370" Background="#FF1150F2" FontSize="30"/>
 
         <!-- Dropdown Comboboxes -->
-        <ComboBox x:Name="tagIDcomboBox" HorizontalAlignment="Left" Height="53" Margin="811,658,0,0" VerticalAlignment="Top" Width="247" Cursor="Hand" SelectionChanged="ComboBox_SelectionChanged"/>
-        <ComboBox HorizontalAlignment="Left" Height="53" Margin="1249,658,0,0" VerticalAlignment="Top" Width="248" RenderTransformOrigin="0.507,0.562" Cursor="Hand"/>
+        <ComboBox x:Name="tagIDcomboBox" HorizontalAlignment="Left" Height="53" Margin="826,527,0,0" VerticalAlignment="Top" Width="247" Cursor="Hand" SelectionChanged="ComboBox_SelectionChanged"/>
+        <ComboBox HorizontalAlignment="Left" Height="53" Margin="1238,530,0,0" VerticalAlignment="Top" Width="248" RenderTransformOrigin="0.507,0.562" Cursor="Hand"/>
 
         <!-- Total and Change Labels -->
-        <Grid HorizontalAlignment="Left" Height="132" Margin="20,502,0,0" VerticalAlignment="Top" Width="724" Background="#FFEDEDED" RenderTransformOrigin="0.5,0.5">
+        <Grid HorizontalAlignment="Left" Height="132" Margin="31,512,0,0" VerticalAlignment="Top" Width="724" Background="#FFEDEDED" RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleY="-1"/>
@@ -46,16 +46,21 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.ColumnSpan="2" Margin="0,204,577,0"/>
         </Grid>
-        <Label Content="TOTAL:" HorizontalAlignment="Left" Height="72" Margin="41,547,0,0" VerticalAlignment="Top" Width="316" FontSize="20"/>
-        <Label Content="CHANGE:" HorizontalAlignment="Left" Height="72" Margin="405,548,0,0" VerticalAlignment="Top" Width="316" FontSize="20"/>
+        <Label Content="TOTAL:" HorizontalAlignment="Left" Height="72" Margin="52,557,0,0" VerticalAlignment="Top" Width="316" FontSize="20"/>
+        <Label Content="CHANGE:" HorizontalAlignment="Left" Height="72" Margin="416,558,0,0" VerticalAlignment="Top" Width="316" FontSize="20"/>
 
         <!-- Grid for Products and Kilogram Options -->
-        <Grid HorizontalAlignment="Left" Height="625" Margin="809,18,0,0" VerticalAlignment="Top" Width="690" Background="#FF005F8C">
+        <Grid HorizontalAlignment="Left" Height="491" Margin="820,22,0,0" VerticalAlignment="Top" Width="663" Background="#FF005F8C">
             <!-- Product Buttons -->
-            <Button Content="Coastal" HorizontalAlignment="Left" Height="80" Margin="10,10,0,0" VerticalAlignment="Top" Width="159" Click="ProductButton_Click" FontSize="20"/>
-            <Button Content="Gaz Lite" HorizontalAlignment="Left" Height="80" Margin="180,10,0,0" VerticalAlignment="Top" Width="159" Click="ProductButton_Click" FontSize="20"/>
-            <Button Content="Solane" HorizontalAlignment="Left" Height="80" Margin="350,10,0,0" VerticalAlignment="Top" Width="159" Click="ProductButton_Click" FontSize="20"/>
-            <Button Content="Regasco" HorizontalAlignment="Left" Height="80" Margin="520,10,0,0" VerticalAlignment="Top" Width="159" Click="ProductButton_Click" FontSize="20"/>
+
+            <!-- Coastal Kilogram Buttons -->
+            <StackPanel HorizontalAlignment="Center" Margin="0,10,0,0" Orientation="Horizontal" VerticalAlignment="Top">
+                <Button Content="Coastal" Height="80" Width="159" Click="ProductButton_Click" FontSize="20"/>
+                <Button Content="Gaz Lite" Height="80" Width="159" Click="ProductButton_Click" FontSize="20"/>
+                <Button Content="Solane" Height="80" Width="159" Click="ProductButton_Click" FontSize="20"/>
+                <Button Content="Regasco" Height="80" Width="159" Click="ProductButton_Click" FontSize="20"/>
+
+            </StackPanel>
 
             <!-- Coastal Kilogram Buttons -->
             <StackPanel x:Name="CoastalPanel" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed">
@@ -81,33 +86,6 @@
                 <Button x:Name="Button11kgRegasco" Content="11kg" HorizontalAlignment="Left" Height="40" Width="159"/>
             </StackPanel>
         </Grid>
-        <Grid HorizontalAlignment="Left" Height="498" Margin="824,126,0,0" VerticalAlignment="Top" Width="661" Background="#FFE6EFF3">
-            <!-- Product Buttons -->
 
-            <!-- Coastal Kilogram Buttons -->
-            <StackPanel x:Name="CoastalPanel1" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed">
-                <Button x:Name="Button5kg1" Content="5kg" HorizontalAlignment="Left" Height="40" Width="159"/>
-                <Button x:Name="Button11kg1" Content="11kg" HorizontalAlignment="Left" Height="40" Width="159"/>
-            </StackPanel>
-
-            <!-- Gaz Lite Kilogram Buttons -->
-            <StackPanel x:Name="GazLitePanel1" HorizontalAlignment="Left" Margin="180,100,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed">
-                <Button x:Name="Button230g1" Content="230g" HorizontalAlignment="Left" Height="40" Width="159"/>
-                <Button x:Name="Button330g1" Content="330g" HorizontalAlignment="Left" Height="40" Width="159"/>
-            </StackPanel>
-
-            <!-- Solane Kilogram Buttons -->
-            <StackPanel x:Name="SolanePanel1" HorizontalAlignment="Left" Margin="350,100,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed">
-                <Button x:Name="Button11kgSolane1" Content="11kg" HorizontalAlignment="Left" Height="40" Width="159"/>
-            </StackPanel>
-
-            <!-- Regasco Kilogram Buttons -->
-            <StackPanel x:Name="RegascoPanel1" HorizontalAlignment="Left" Margin="520,100,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed">
-                <Button x:Name="Button5kgRegasco1" Content="5kg" HorizontalAlignment="Left" Height="40" Width="159"/>
-                <Button x:Name="Button2_7kg1" Content="2.7kg" HorizontalAlignment="Left" Height="40" Width="159"/>
-                <Button x:Name="Button11kgRegasco1" Content="11kg" HorizontalAlignment="Left" Height="40" Width="159"/>
-            </StackPanel>
-        </Grid>
-        
     </Grid>
 </Window>
