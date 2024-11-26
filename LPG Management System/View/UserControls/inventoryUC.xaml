@@ -7,8 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="850" d:DesignWidth="1200" Cursor="Hand">
     <Grid HorizontalAlignment="Left" Width="1190" Background="#FFFEF9F5" Margin="10,0,0,0">
-        <DataGrid x:Name="inventoryDG" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DataGrid_SelectionChanged" Margin="0,91,0,0" MinColumnWidth="150" MinRowHeight="25" GridLinesVisibility="None"/>
-        <Button x:Name="newBtn" Content="New" HorizontalAlignment="Left" Margin="1023,27,0,0" VerticalAlignment="Top" Width="147" Height="50" Click="newBtn_Click" Cursor="Hand"/>
-        <TextBox HorizontalAlignment="Left" Margin="28,43,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
+        <DataGrid x:Name="inventoryDG" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DataGrid_SelectionChanged" Margin="28,91,20,31" MinColumnWidth="150" MinRowHeight="25" GridLinesVisibility="None" Width="1120" Height="665"/>
+        <Button x:Name="newBtn" Content="New" HorizontalAlignment="Left" Margin="1012,34,0,0" VerticalAlignment="Top" Width="147" Height="50" Click="newBtn_Click" Cursor="Hand"/>
+        <TextBox x:Name="TextBox" HorizontalAlignment="Left" Background="Transparent" Height="35" Margin="39,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="261" TextChanged="TextBox_TextChanged"  Tag="Search..." Foreground="Black"/>
+
     </Grid>
 </UserControl>

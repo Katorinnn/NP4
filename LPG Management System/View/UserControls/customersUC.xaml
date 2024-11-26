@@ -5,16 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="850" d:DesignWidth="1250" Width="1250" Height="850">
+             d:DesignHeight="850" d:DesignWidth="1250">
     <Grid x:Name="mainGrid">
         <Grid Margin="10,10,0,10" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="106*"/>
                 <RowDefinition Height="665*"/>
             </Grid.RowDefinitions>
-            <DataGrid x:Name="customersDG" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DataGrid_SelectionChanged" MaxColumnWidth="150" MinColumnWidth="153" CanUserResizeColumns="False" Margin="84,10,0,64" HorizontalAlignment="Left" Width="1128" Grid.Row="1" GridLinesVisibility="None" MinRowHeight="30"/>
-            <Button x:Name="newBtn" Content="New" HorizontalAlignment="Left" Margin="1032,72,0,0" VerticalAlignment="Top" Width="96" Height="35" Click="newBtn_Click" Cursor="Hand"/>
-            <TextBox HorizontalAlignment="Left" Height="22" Margin="84,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="261" TextChanged="TextBox_TextChanged" Text="Search here ... "/>
+            <DataGrid x:Name="customersDG" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DataGrid_SelectionChanged" MaxColumnWidth="150" MinColumnWidth="153" CanUserResizeColumns="False" Margin="40,10,45,40" Grid.Row="1" GridLinesVisibility="None" MinRowHeight="30" Width="1120" Height="665"/>
+            <Button x:Name="newBtn" Content="New" HorizontalAlignment="Left" Margin="1099,0,0,0" VerticalAlignment="Center" Width="96" Height="35" Click="newBtn_Click" Cursor="Hand"/>
+            <TextBox x:Name="TextBox" HorizontalAlignment="Left" Background="Transparent" Height="35" Margin="72,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="261" TextChanged="TextBox_TextChanged"  Tag="Search..." Foreground="Black"/>
 
         </Grid>
 

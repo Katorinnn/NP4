@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="850" d:DesignWidth="1250" FontFamily="Candara" FontSize="20">
     <Grid Background="#FFDFEDFE">
-        <Button x:Name="logoutBtn" Content="Logout" HorizontalAlignment="Left" Height="32" Margin="29,403,0,0" VerticalAlignment="Top" Width="72" Click="Button_Click" RenderTransformOrigin="0.459,0.321" FontSize="16">
+        <Button x:Name="logoutBtn" Content="Logout" HorizontalAlignment="Left" Height="32" Margin="39,798,0,0" VerticalAlignment="Top" Width="72" Click="Button_Click" RenderTransformOrigin="0.459,0.321" FontSize="16">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -17,7 +17,7 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Button Content="Upload Image" HorizontalAlignment="Left" Height="38" Margin="210,132,0,0" VerticalAlignment="Top" Width="90" Click="Button_Click" RenderTransformOrigin="0.5,0.5" FontSize="16">
+        <Button Content="Upload Image" HorizontalAlignment="Left" Height="38" Margin="214,78,0,0" VerticalAlignment="Top" Width="143" Click="Button_Click" RenderTransformOrigin="0.5,0.5" FontSize="16">
 
 
             <Button.RenderTransform>

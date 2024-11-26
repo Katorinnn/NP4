@@ -10,10 +10,19 @@
         <Grid x:Name="topGrid" Margin="50,23,50,498" Background="#FFFEF9F5">
             <Label Content="NP4 GAS" HorizontalAlignment="Center" VerticalAlignment="Center" Height="193" Width="534" FontSize="50" FontFamily="Arial Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         </Grid>
-        <Grid x:Name="leftGrid" Margin="50,400,650,50" Background="#FFFEF9F5" Width="550" Height="400"/>
+        <Grid x:Name="leftGrid" Margin="50,400,650,50" Background="#FFFEF9F5" Width="550" Height="400">
+            <Rectangle HorizontalAlignment="Left" Height="145" Margin="34,33,0,0" Stroke="Black" VerticalAlignment="Top" Width="196"/>
+            <Rectangle HorizontalAlignment="Left" Height="145" Margin="306,33,0,0" Stroke="Black" VerticalAlignment="Top" Width="196"/>
+            <Rectangle HorizontalAlignment="Left" Height="145" Margin="34,225,0,0" Stroke="Black" VerticalAlignment="Top" Width="196"/>
+            <Rectangle HorizontalAlignment="Left" Height="145" Margin="306,225,0,0" Stroke="Black" VerticalAlignment="Top" Width="196"/>
+        </Grid>
         <Grid x:Name="rightGrid" Margin="650,400,50,50" Background="#FFFEF9F5" Height="400" Width="550">
             <Label Content="REPORTS&#xA;&#xA;graph" HorizontalAlignment="Center" VerticalAlignment="Center" Width="126"/>
         </Grid>
+        <Label Content="Today's Income" HorizontalAlignment="Left" Margin="135,734,0,0" VerticalAlignment="Top"/>
+        <Label Content="Total Income" HorizontalAlignment="Left" Margin="408,734,0,0" VerticalAlignment="Top"/>
+        <Label Content="Sold LPG" HorizontalAlignment="Left" Margin="142,538,0,0" VerticalAlignment="Top"/>
+        <Label Content="Stocks" HorizontalAlignment="Left" Margin="432,538,0,0" VerticalAlignment="Top"/>
     </Grid>
 
 </UserControl>

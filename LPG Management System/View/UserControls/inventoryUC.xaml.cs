@@ -77,7 +77,41 @@ namespace LPG_Management_System.View.UserControls
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            // Get the text from the search TextBox
+            string searchText = (sender as TextBox)?.Text;
 
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                try
+                {
+                    using (MySqlConnection connection = new MySqlConnection(connectionString))
+                    {
+                        connection.Open();
+
+                        // Use a parameterized query to prevent SQL injection
+                        string query = "SELECT * FROM tbl_inventory WHERE tankID LIKE @SearchText OR brandName LIKE @SearchText";
+
+                        MySqlCommand cmd = new MySqlCommand(query, connection);
+                        cmd.Parameters.AddWithValue("@SearchText", "%" + searchText + "%");
+
+                        MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+
+                        // Bind filtered data to DataGrid
+                        inventoryDG.ItemsSource = dataTable.DefaultView;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error fetching data: " + ex.Message);
+                }
+            }
+            else
+            {
+                // If the search box is empty, reload all data
+                LoadCustomersData();
+            }
         }
     }
 }
