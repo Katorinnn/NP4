@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LPG_Management_System.View"
         mc:Ignorable="d"
-        Title="customerCRUD" Height="444" Width="556" WindowStartupLocation="CenterScreen" AutomationProperties.IsRequiredForForm="True">
+        Title="customerCRUD" Height="444" Width="556" WindowStartupLocation="CenterScreen" AutomationProperties.IsRequiredForForm="True" FontFamily="Century">
     <Grid>
         <Grid Margin="-1,-2,1,2">
             <Label Content="Customer Name" HorizontalAlignment="Left" Height="27" Margin="111,135,0,0" VerticalAlignment="Top" Width="108"/>

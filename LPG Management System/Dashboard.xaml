@@ -7,7 +7,7 @@
         xmlns:userControls="clr-namespace:LPG_Management_System.View.UserControls"
         xmlns:custumerUC="clr-namespace:LPG_Management_System.View.UserControls"
         mc:Ignorable="d"
-        Title="NP4 lang" Height="850" Width="1500" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None">
+        Title="NP4 lang" Height="850" Width="1500" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" FontFamily="Century">
     <Grid>
         <Grid.ColumnDefinitions>
             <!-- Sidebar column -->
