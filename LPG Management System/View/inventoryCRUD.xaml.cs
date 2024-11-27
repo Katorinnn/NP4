@@ -73,5 +73,10 @@ namespace LPG_Management_System.View
                 MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void tankIDtxtBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

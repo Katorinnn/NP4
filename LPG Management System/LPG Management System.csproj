@@ -29,6 +29,7 @@
     <Resource Include="Images\inventory.png" />
     <Resource Include="Images\LPG Background.png" />
     <Resource Include="Images\market-analysis.png" />
+    <Resource Include="Images\NP4LOGO.png" />
     <Resource Include="Images\people.png" />
   </ItemGroup>
 

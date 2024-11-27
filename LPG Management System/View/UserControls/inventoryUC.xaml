@@ -6,10 +6,94 @@
              xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="850" d:DesignWidth="1200" Cursor="Hand">
-    <Grid HorizontalAlignment="Left" Width="1190" Background="#FFFEF9F5" Margin="10,0,0,0">
-        <DataGrid x:Name="inventoryDG" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="DataGrid_SelectionChanged" Margin="28,91,20,31" MinColumnWidth="150" MinRowHeight="25" GridLinesVisibility="None" Width="1120" Height="665"/>
-        <Button x:Name="newBtn" Content="New" HorizontalAlignment="Left" Margin="1012,34,0,0" VerticalAlignment="Top" Width="147" Height="50" Click="newBtn_Click" Cursor="Hand"/>
-        <TextBox x:Name="TextBox" HorizontalAlignment="Left" Background="Transparent" Height="35" Margin="39,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="261" TextChanged="TextBox_TextChanged"  Tag="Search..." Foreground="Black"/>
+    <Grid x:Name="mainGrid">
+        <Grid Margin="10,10,0,10" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" MinHeight="132"/>
+                <!-- For Search and Button -->
+                <RowDefinition/>
+                <!-- For DataGrid -->
+            </Grid.RowDefinitions>
 
+            <!-- Search TextBox -->
+            <TextBox x:Name="TextBox" HorizontalAlignment="Left" Background="WhiteSmoke" Height="36" 
+                 Margin="7,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" 
+                 TextChanged="TextBox_TextChanged" Tag="Search..." Foreground="Black" 
+                 FontSize="14" Padding="5" BorderThickness="1" BorderBrush="Gray" Grid.Row="1"/>
+
+            <!-- StackPanel for New Button -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="1050,10,0,10" Width="100">
+                <!-- New Button -->
+
+            </StackPanel>
+
+            <!-- DataGrid -->
+            <DataGrid x:Name="inventoryDG" Grid.Row="1" Margin="1,179,3,43"
+                  CanUserResizeColumns="False" GridLinesVisibility="None" 
+                  HorizontalGridLinesBrush="LightGray"
+                  VerticalGridLinesBrush="LightGray" BorderBrush="Gray" BorderThickness="1"
+                  CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single" 
+                  SelectionUnit="FullRow" AutoGenerateColumns="False" MinRowHeight="30" 
+                  RowHeaderWidth="0" FontFamily="Segoe UI"
+                  HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" 
+                  ScrollViewer.CanContentScroll="True">
+
+                <!-- DataGrid Column Header Style -->
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="SteelBlue"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="FontSize" Value="15"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="Padding" Value="10"/>
+                        <Setter Property="FontFamily" Value="Segoe UI"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+
+                <!-- DataGrid Row Style -->
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="FontSize" Value="14"/>
+                        <Setter Property="Foreground" Value="Black"/>
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                        <Setter Property="BorderBrush" Value="LightGray"/>
+                        <Setter Property="FontFamily" Value="Segoe UI"/>
+                    </Style>
+                </DataGrid.RowStyle>
+
+                <!-- Define DataGrid Columns -->
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Tank ID" Binding="{Binding tankID}" Width="150" />
+                    <DataGridTextColumn Header="Brand" Binding="{Binding customerName}" Width="190" />
+                    <DataGridTextColumn Header="Kilograms" Binding="{Binding kilograms}" Width="210" />
+                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="150" />
+                    <DataGridTextColumn Header="Price" Binding="{Binding price}" Width="203" />
+
+                    <!-- Actions Column (Edit and Delete Buttons) -->
+                    <DataGridTemplateColumn Header="Actions" Width="200">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                    <Button Content="Edit" Width="80" Height="30" Margin="5,0,5,0"
+                                            Background="Green" Foreground="White" FontWeight="Bold"
+                                            BorderThickness="0" Cursor="Hand"
+                                            Tag="{Binding Id}" FontFamily="Segoe UI"/>
+                                    <Button Content="Delete" Width="80" Height="30" Margin="5,0,5,0"
+                                            Background="#FF4500" Foreground="White" FontWeight="Bold"
+                                            BorderThickness="0" Cursor="Hand"
+                                            Tag="{Binding Id}" FontFamily="Segoe UI"/>  
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        <Button x:Name="newBtn" Content="New Brand" 
+                Click="newBtn_Click" Cursor="Hand" Background="#0078D7" Foreground="White" 
+                FontWeight="Bold" BorderThickness="0" BorderBrush="Transparent"
+                FontFamily="Segou UI" Margin="1078,117,12,545" RenderTransformOrigin="0.661,0.485" Grid.Row="1"/>
+        </Grid>
     </Grid>
 </UserControl>

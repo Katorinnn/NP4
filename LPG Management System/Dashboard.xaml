@@ -7,7 +7,7 @@
         xmlns:userControls="clr-namespace:LPG_Management_System.View.UserControls"
         xmlns:custumerUC="clr-namespace:LPG_Management_System.View.UserControls"
         mc:Ignorable="d"
-        Title="NP4 lang" Height="850" Width="1500" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" FontFamily="Century">
+        Title="NP4 lang" Height="850" Width="1500" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None">
     <Grid>
         <Grid.ColumnDefinitions>
             <!-- Sidebar column -->
@@ -21,11 +21,11 @@
         <StackPanel Background="#FF2C3E50" Grid.Column="0">
             <!-- Logo or Header -->
             <Grid Background="#FF34495E" Height="276">
-                <TextBlock Text="LPG Management" Foreground="White" FontSize="24" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Image HorizontalAlignment="Left" Height="171" Margin="29,48,0,0" VerticalAlignment="Top" Width="215"/>
             </Grid>
 
             <!-- Buttons for Sidebar Menu -->
-            <Button x:Name="dashboardBtn" Content="Dashboard" Height="91" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Click="Button_Click_1" Cursor="Hand" MouseEnter="dashboardBtn_MouseEnter" MouseLeave="dashboardBtn_MouseLeave" >
+            <Button x:Name="dashboardBtn" Content="Dashboard" Height="91" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Click="Button_Click_1" Cursor="Hand" MouseEnter="dashboardBtn_MouseEnter" MouseLeave="dashboardBtn_MouseLeave" FontWeight="Bold" >
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}" >
@@ -38,7 +38,7 @@
                 </Button.Template>
             </Button>
 
-            <Button x:Name="custumerBtn" Content="Customers" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="Button_Click" MouseEnter="custumerBtn_MouseEnter" MouseLeave="custumerBtn_MouseLeave" >
+            <Button x:Name="custumerBtn" Content="Customers" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="Button_Click" MouseEnter="custumerBtn_MouseEnter" MouseLeave="custumerBtn_MouseLeave" FontWeight="Bold" >
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}" >
@@ -52,7 +52,7 @@
                 </Button.Template>
             </Button>
 
-            <Button x:Name="inventoryBtn" Content="Inventory" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="inventoryBtn_Click" MouseEnter="inventoryBtn_MouseEnter" MouseLeave="inventoryBtn_MouseLeave" >
+            <Button x:Name="inventoryBtn" Content="Inventory" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="inventoryBtn_Click" MouseEnter="inventoryBtn_MouseEnter" MouseLeave="inventoryBtn_MouseLeave" FontWeight="Bold" >
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}" >
@@ -65,7 +65,7 @@
                 </Button.Template>
             </Button>
 
-            <Button x:Name="posBtn" Content="Point of Sale" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="posBtn_Click" MouseEnter="posBtn_MouseEnter" MouseLeave="posBtn_MouseLeave" >
+            <Button x:Name="posBtn" Content="Point of Sale" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="posBtn_Click" MouseEnter="posBtn_MouseEnter" MouseLeave="posBtn_MouseLeave" FontWeight="Bold" >
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}">
@@ -79,7 +79,7 @@
                 </Button.Template>
             </Button>
 
-            <Button x:Name="reportsBtn" Content="Reports" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="reportsBtn_Click" MouseEnter="reportsBtn_MouseEnter" MouseLeave="reportsBtn_MouseLeave" >
+            <Button x:Name="reportsBtn" Content="Reports" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="reportsBtn_Click" MouseEnter="reportsBtn_MouseEnter" MouseLeave="reportsBtn_MouseLeave" FontWeight="Bold" >
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}">
@@ -92,7 +92,7 @@
                 </Button.Template>
             </Button>
 
-            <Button x:Name="settingBtn" Content="Settings" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="settingBtn_Click" MouseEnter="settingBtn_MouseEnter" MouseLeave="settingBtn_MouseLeave" >
+            <Button x:Name="settingBtn" Content="Settings" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="settingBtn_Click" MouseEnter="settingBtn_MouseEnter" MouseLeave="settingBtn_MouseLeave" FontWeight="Bold" >
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}">

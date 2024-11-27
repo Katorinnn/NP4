@@ -1,0 +1,30 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+
+    <Style x:Key="ButtonStyle" TargetType="Button">
+
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="#6a7783"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+            <ControlTemplate TargetType="Button">
+                <Border Background="{TemplateBinding Background}" CornerRadius="50">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+            </ControlTemplate>
+        </Setter.Value>
+       </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="LightBlue"/>
+                <Setter Property="Background" Value="MintCream"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="LightBlue"/>
+                <Setter Property="Background" Value="MintCream"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

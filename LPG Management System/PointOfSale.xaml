@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LPG_Management_System"
         mc:Ignorable="d"
-        Title="PointOfSale" Height="850" Width="1500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" WindowState="Maximized" FontFamily="MS Gothic">
+        Title="PointOfSale" Height="850" Width="1500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" WindowState="Maximized">
     <Grid Background="#FF8ECAE6" Margin="-5,1,-2,0">
 
         <!-- Home Button -->
@@ -17,7 +17,7 @@
                 <ColumnDefinition Width="0*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Label Content="                        NP4 DRY GOODS STORE" Height="39" Margin="0,36,0,0" VerticalAlignment="Top" Width="680" HorizontalAlignment="Center" FontSize="20" Grid.Column="1"/>
+            <Label Content="                        NP4 DRY GOODS STORE" Height="39" Margin="0,36,0,0" VerticalAlignment="Top" Width="680" HorizontalAlignment="Center" FontSize="20" Grid.Column="1" FontWeight="Bold" FontFamily="Segoe UI"/>
             <Label Content="Reciept # 0001" Height="39" Margin="22,133,0,0" VerticalAlignment="Top" Width="158" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
             <StackPanel Grid.ColumnSpan="2" Margin="0,204,577,0"/>
         </Grid>

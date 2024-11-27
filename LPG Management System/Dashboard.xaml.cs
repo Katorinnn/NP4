@@ -17,6 +17,7 @@ namespace LPG_Management_System
         public Dashboard()
         {
             InitializeComponent();
+
         }
 
 
