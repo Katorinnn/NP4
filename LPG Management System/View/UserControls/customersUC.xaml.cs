@@ -114,5 +114,10 @@ namespace LPG_Management_System.View.UserControls
                 LoadCustomersData();
             }
         }
+
+        private void customersDG_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

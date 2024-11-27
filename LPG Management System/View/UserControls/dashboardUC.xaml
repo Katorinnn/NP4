@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="850" d:DesignWidth="1250" FontFamily="Century">
+             d:DesignHeight="850" d:DesignWidth="1250">
     <Grid Background="#FFDFEDFE">
         <Grid x:Name="topGrid" Margin="50,23,50,498" Background="#FFFEF9F5">
             <Label Content="NP4 GAS" HorizontalAlignment="Center" VerticalAlignment="Center" Height="193" Width="534" FontSize="50" FontFamily="Arial Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>

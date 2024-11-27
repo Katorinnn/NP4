@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LPG_Management_System.View"
         mc:Ignorable="d"
-        Title="inventoryCRUD" Height="371" Width="440" FontFamily="Century">
+        Title="inventoryCRUD" Height="371" Width="440" WindowStartupLocation="CenterScreen">
     <Grid Margin="-1,-2,0,-6">
         <Label Content="Brand:" HorizontalAlignment="Left" Height="27" Margin="73,133,0,0" VerticalAlignment="Top" Width="108"/>
         <Label Content="Price:" HorizontalAlignment="Left" Height="28" Margin="72,226,0,0" VerticalAlignment="Top" Width="108"/>
@@ -15,7 +15,7 @@
         <TextBox x:Name="sizetxtBox" HorizontalAlignment="Left" Height="22" Margin="221,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
         <TextBox x:Name="pricetxtBox" HorizontalAlignment="Left" Height="22" Margin="222,227,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
         <Button x:Name="addBtn" Content="ADD" HorizontalAlignment="Left" Height="32" Margin="322,295,0,0" VerticalAlignment="Top" Width="81" Cursor="Hand" Click="addBtn_Click"/>
-        <TextBox x:Name="tankIDtxtBox" HorizontalAlignment="Left" Height="22" Margin="220,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
+        <TextBox x:Name="tankIDtxtBox" HorizontalAlignment="Left" Height="22" Margin="220,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" TextChanged="tankIDtxtBox_TextChanged"/>
 
     </Grid>
 </Window>

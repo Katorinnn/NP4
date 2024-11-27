@@ -29,10 +29,13 @@
     <Resource Include="Images\inventory.png" />
     <Resource Include="Images\LPG Background.png" />
     <Resource Include="Images\market-analysis.png" />
+    <Resource Include="Images\NP4LOGO.png" />
     <Resource Include="Images\people.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MaterialDesignColors" Version="3.1.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
     <PackageReference Include="MySql.Data" Version="9.1.0" />
   </ItemGroup>
 
