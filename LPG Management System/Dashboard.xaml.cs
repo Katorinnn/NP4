@@ -32,9 +32,7 @@ namespace LPG_Management_System
 
         private void posBtn_Click(object sender, RoutedEventArgs e)
         {
-            PointOfSale PointOfSale = new PointOfSale();
-            PointOfSale.Show();
-            this.Close();
+            MainContent.Content = new pointofsaleUC();
         }
 
         private void reportsBtn_Click(object sender, RoutedEventArgs e)

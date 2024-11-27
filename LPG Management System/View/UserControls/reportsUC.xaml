@@ -5,8 +5,23 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="850" d:DesignWidth="1200" Width="1200" Height="850">
-    <Grid Background="#FF8ECAE6" Margin="-30,-135,-79,0">
-            
+             d:DesignHeight="850" d:DesignWidth="1200">
+    <Grid Background="#FF8ECAE6" Margin="10,10,-79,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="295*"/>
+            <ColumnDefinition Width="1014*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="reportsDG" HorizontalAlignment="Left" Height="840" Margin="0,135,0,0" VerticalAlignment="Top" Width="1309" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.ColumnSpan="2"/>
+        <Grid Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="135" VerticalAlignment="Top" Width="1309" Background="#FFD2D2D2">
+            <Label Content="Category:" HorizontalAlignment="Left" Height="43" Margin="745,0,0,0" VerticalAlignment="Center" Width="106"/>
+            <Label Content="Begin Date:" HorizontalAlignment="Left" Height="43" Margin="932,0,0,0" VerticalAlignment="Center" Width="106"/>
+            <Label Content="End Date:" HorizontalAlignment="Left" Height="43" Margin="1093,0,0,0" VerticalAlignment="Center" Width="106"/>
+        </Grid>
+        <Ellipse HorizontalAlignment="Left" Height="50" Margin="49,43,0,0" Stroke="Black" VerticalAlignment="Top" Width="52"/>
+        <DatePicker Grid.Column="1" HorizontalAlignment="Left" Height="36" Margin="635,70,0,0" VerticalAlignment="Top" Width="159" FontSize="16"/>
+        <DatePicker Grid.Column="1" HorizontalAlignment="Left" Height="36" Margin="799,70,0,0" VerticalAlignment="Top" Width="159" FontSize="16"/>
+        <ComboBox Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="455,72,0,0" VerticalAlignment="Top" Width="153" FontSize="16"/>
+
+
     </Grid>
 </UserControl>
