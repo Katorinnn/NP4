@@ -15,7 +15,7 @@
                 <ColumnDefinition Width="0*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Label Content="                               NP4 DRY GOODS STORE" Height="67" Margin="0,36,0,0" VerticalAlignment="Top" Width="596" HorizontalAlignment="Center" FontSize="20" Grid.Column="1"/>
+            <Label Content="NP4 DRY GOODS STORE" Height="67" Margin="0,36,0,0" VerticalAlignment="Top" Width="596" HorizontalAlignment="Center" FontSize="20" Grid.Column="1"/>
             <Label Content="Reciept # 0001" Height="39" Margin="22,140,0,0" VerticalAlignment="Top" Width="97" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
             <StackPanel Grid.ColumnSpan="2" Margin="0,204,577,0"/>
         </Grid>
@@ -62,14 +62,14 @@
 
             <!-- Coastal Kilogram Buttons -->
             <StackPanel x:Name="CoastalPanel" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed">
-                <Button x:Name="Button5kg" Content="5kg" HorizontalAlignment="Left" Height="40" Width="159"/>
-                <Button x:Name="Button11kg" Content="11kg" HorizontalAlignment="Left" Height="40" Width="159"/>
+                <Button x:Name="Button5kg" Content="5kg" HorizontalAlignment="Left" Height="40" Width="150"/>
+                <Button x:Name="Button11kg" Content="11kg" HorizontalAlignment="Left" Height="40" Width="150"/>
             </StackPanel>
 
             <!-- Gaz Lite Kilogram Buttons -->
             <StackPanel x:Name="GazLitePanel" HorizontalAlignment="Left" Margin="180,100,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed">
-                <Button x:Name="Button230g" Content="230g" HorizontalAlignment="Left" Height="40" Width="159"/>
-                <Button x:Name="Button330g" Content="330g" HorizontalAlignment="Left" Height="40" Width="159"/>
+                <Button x:Name="Button230g" Content="230g" HorizontalAlignment="Left" Height="40" Width="150"/>
+                <Button x:Name="Button330g" Content="330g" HorizontalAlignment="Left" Height="40" Width="150"/>
             </StackPanel>
 
             <!-- Solane Kilogram Buttons -->

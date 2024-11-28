@@ -21,7 +21,7 @@
         <StackPanel Background="#FF2C3E50" Grid.Column="0">
             <!-- Logo or Header -->
             <Grid Background="#FF34495E" Height="276">
-                <Image HorizontalAlignment="Left" Height="171" Margin="29,48,0,0" VerticalAlignment="Top" Width="215"/>
+                <Image Source="/Images/NP4LOGO.png" HorizontalAlignment="Left" Height="190" Margin="49,37,0,0" VerticalAlignment="Top" Width="230" RenderTransformOrigin="0.453,0.601"/>
             </Grid>
 
             <!-- Buttons for Sidebar Menu -->
