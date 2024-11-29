@@ -43,7 +43,7 @@ namespace LPG_Management_System
 
         private void settingBtn_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = new settingsUC();
+            MainContent.Content = new trySettingsUC();
          
         }
 

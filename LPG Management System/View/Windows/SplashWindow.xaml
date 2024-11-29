@@ -21,11 +21,11 @@
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Height="261" Width="730">
 
                 <WrapPanel>
-                    <Image Source="/Images/NP4LOGO.png" HorizontalAlignment="Center" Height="150" Width="150"/>
+                    <Image Source="/Images/NP4LOGO.png" HorizontalAlignment="Center" Height="175" Width="175" VerticalAlignment="Center"/>
                 </WrapPanel>
 
-                <TextBlock Text="LoadingScreen" FontSize="17" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="0 30 0 15"></TextBlock>
-                <ProgressBar x:Name="progressBar" Value="0" Height="10" Width="700" IsIndeterminate="True" Margin="10,30,0,0"/>
+                <TextBlock Text="LoadingScreen..." FontSize="17" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="25,30,0,10"></TextBlock>
+                <ProgressBar x:Name="progressBar" Value="0" Height="10" Width="700" IsIndeterminate="True" Margin="10,10,0,0"/>
             </StackPanel>
         </Grid>
     </materialDesign:Card>
