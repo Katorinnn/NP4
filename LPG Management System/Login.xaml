@@ -10,7 +10,7 @@
         <TextBox x:Name="unametxtBox" HorizontalAlignment="Left" Margin="223,105,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="150" Height="25" TextChanged="unametxtBox_TextChanged" Cursor="IBeam"/>
         <Label x:Name="unameLabel" Content="username" HorizontalAlignment="Left" Margin="128,105,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Label x:Name="pwordLabel" Content="password" HorizontalAlignment="Left" Margin="128,161,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.039,1.347" Foreground="White"/>
-        <Button x:Name="loginBtn" Content="LOGIN" HorizontalAlignment="Left" Margin="191,242,0,0" VerticalAlignment="Top" Click="Button_Click" Width="117" Height="39" Cursor="Hand" MouseEnter="loginBtn_MouseEnter" MouseLeave="loginBtn_MouseLeave">
+        <Button x:Name="loginBtn" Content="LOGIN" HorizontalAlignment="Left" Margin="191,242,0,0" VerticalAlignment="Top" Click="Button_Click" Width="142" Height="39" Cursor="Hand" MouseEnter="loginBtn_MouseEnter" MouseLeave="loginBtn_MouseLeave">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Border Background="{TemplateBinding Background}" 

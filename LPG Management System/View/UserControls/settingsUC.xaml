@@ -52,7 +52,7 @@
         <TextBox HorizontalAlignment="Left" Height="25" Margin="31,337,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="168" TextChanged="TextBox_TextChanged" FontSize="16"/>
         <Label Content="Name" HorizontalAlignment="Left" Height="38" Margin="31,312,0,0" VerticalAlignment="Top" Width="63" FontSize="16"/>
         <TextBox HorizontalAlignment="Left" Height="25" Margin="31,405,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="168" TextChanged="TextBox_TextChanged" FontSize="16"/>
-        <Label Content="Password" HorizontalAlignment="Left" Height="38" Margin="31,382,0,0" VerticalAlignment="Top" Width="75" FontSize="16"/>
+        <Label Content="Password" HorizontalAlignment="Left" Height="36" Margin="31,382,0,0" VerticalAlignment="Top" Width="75" FontSize="16"/>
         <Label Content="Logo Image" HorizontalAlignment="Left" Height="38" Margin="62,79,0,0" VerticalAlignment="Top" Width="106" FontSize="16"/>
     </Grid>
 </UserControl>

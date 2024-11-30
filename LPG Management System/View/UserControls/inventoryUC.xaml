@@ -66,9 +66,9 @@
                 <!-- Define DataGrid Columns -->
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Tank ID" Binding="{Binding tankID}" Width="150" />
-                    <DataGridTextColumn Header="Brand" Binding="{Binding customerName}" Width="190" />
-                    <DataGridTextColumn Header="Kilograms" Binding="{Binding kilograms}" Width="210" />
-                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="150" />
+                    <DataGridTextColumn Header="Brand" Binding="{Binding brandName}" Width="190" />
+                    <DataGridTextColumn Header="Kilograms" Binding="{Binding size}" Width="210" />
+                    <!--<DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="150" /> -->
                     <DataGridTextColumn Header="Price" Binding="{Binding price}" Width="203" />
 
                     <!-- Actions Column (Edit and Delete Buttons) -->
