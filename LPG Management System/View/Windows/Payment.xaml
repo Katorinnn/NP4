@@ -7,10 +7,10 @@
         mc:Ignorable="d"
         Title="Payment" Height="300" Width="500">
     <Grid>
-        <TextBox HorizontalAlignment="Center" Margin="0,117,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Foreground="{x:Null}"/>
-        <Button Content="Enter Amount" HorizontalAlignment="Center" Margin="0,164,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="TotalAmountLabel" HorizontalAlignment="Left" Margin="150,10,0,0" VerticalAlignment="Top" FontSize="16"/>
 
-
+        <Button x:Name="amountBtn" Content="Button" HorizontalAlignment="Left" Margin="203,174,0,0" VerticalAlignment="Top" Click="amountBtn_Click"/>
+        <TextBox x:Name="amounttxtBox" HorizontalAlignment="Left" Margin="181,105,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Window>

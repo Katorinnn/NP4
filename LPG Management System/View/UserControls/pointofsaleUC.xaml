@@ -51,7 +51,9 @@
         </Grid>
         <Label Content="TOTAL:" HorizontalAlignment="Left" Height="62" Margin="31,556,0,0" VerticalAlignment="Top" Width="302" FontSize="20"/>
         <Label x:Name="TotalPriceLabel" Content="₱0.00" HorizontalAlignment="Left" Height="62" Margin="131,556,0,0" VerticalAlignment="Top" Width="200" FontSize="20" />
+        
         <Label Content="CHANGE:" HorizontalAlignment="Left" Height="62" Margin="338,556,0,0" VerticalAlignment="Top" Width="272" FontSize="20"/>
+        <Label x:Name="ChangeLabel" Content="₱0.00" HorizontalAlignment="Left" Height="62" Margin="435,556,0,0" VerticalAlignment="Top" Width="200" FontSize="20" />
 
         <!-- Grid for Products and Kilogram Options -->
         <Grid HorizontalAlignment="Left" Height="712" Margin="610,22,0,0" VerticalAlignment="Top" Width="588" Background="#FF005F8C">

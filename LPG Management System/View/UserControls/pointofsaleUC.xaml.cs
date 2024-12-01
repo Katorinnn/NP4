@@ -152,14 +152,40 @@ namespace LPG_Management_System.View.UserControls
         //Payment Options
         private void cashBtn_Click_1(object sender, RoutedEventArgs e)
         {
-            Payment payment = new Payment();
-            payment.Show();
+            // Calculate the total price of receipt items
+            double totalPrice = receiptItems.Sum(item => item.Price);
+
+            // Create a new Payment window and pass the total price
+            Payment paymentWindow = new Payment(totalPrice);
+
+            // Show the Payment window as a dialog
+            if (paymentWindow.ShowDialog() == true)
+            {
+                // Get the payment amount entered by the user
+                double paymentAmount = paymentWindow.PaymentAmount;
+
+                // Calculate the change
+                double change = paymentAmount - totalPrice;
+
+                // Update the Change label
+                ChangeLabel.Content = change >= 0
+                    ? $"₱{change:F2}"
+                    : "Insufficient payment!";
+
+                // Show a warning if payment is insufficient
+                if (change < 0)
+                {
+                    MessageBox.Show("The payment amount is less than the total price.", "Payment Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
         }
+
 
         private void GcashBtn_Click(object sender, RoutedEventArgs e)
         {
-            Payment payment = new Payment();
-            payment.Show();
+            double totalAmount = receiptItems.Sum(item => item.Price);
+            Payment payment = new Payment(totalAmount);
+            payment.ShowDialog();
         }
 
         //Calculatipons of payment
