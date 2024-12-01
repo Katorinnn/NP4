@@ -16,6 +16,18 @@
             </Grid.RowDefinitions>
 
             <!-- Search TextBox -->
+
+            <!-- StackPanel for New Button -->
+            <Button Content="Filter" Width="239" Height="102" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,20,0,0">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <!-- Filter Options -->
+                        <MenuItem Header="Filter by Name"/>
+                        <MenuItem Header="Filter by Date"/>
+                        <MenuItem Header="Filter by Status"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
             <TextBox x:Name="TextBox" HorizontalAlignment="Left" Background="WhiteSmoke" Height="36" 
                  Margin="7,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" 
                  TextChanged="TextBox_TextChanged" Tag="Search..." Foreground="Black" 
@@ -40,7 +52,7 @@
 
                 <!-- DataGrid Column Header Style -->
                 <DataGrid.ColumnHeaderStyle>
-                    <Style TargetType="DataGridColumnHeader">
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
                         <Setter Property="Background" Value="SteelBlue"/>
                         <Setter Property="Foreground" Value="White"/>
                         <Setter Property="FontWeight" Value="Bold"/>
@@ -53,7 +65,7 @@
 
                 <!-- DataGrid Row Style -->
                 <DataGrid.RowStyle>
-                    <Style TargetType="DataGridRow">
+                    <Style TargetType="{x:Type DataGridRow}">
                         <Setter Property="FontSize" Value="14"/>
                         <Setter Property="Foreground" Value="Black"/>
                         <Setter Property="Background" Value="White"/>
