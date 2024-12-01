@@ -294,8 +294,5 @@ namespace LPG_Management_System.View.UserControls
                 }
             }
         }
-
-        
-
     }
 }

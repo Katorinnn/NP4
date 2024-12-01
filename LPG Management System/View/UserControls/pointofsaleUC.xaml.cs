@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LPG_Management_System.View.Windows;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,6 +10,24 @@ namespace LPG_Management_System.View.UserControls
     /// </summary>
     public partial class pointofsaleUC : UserControl
     {
+        private Button currentKgButton;
+
+        public class ReceiptItem
+        {
+            public string Brand { get; set; }
+            public string Size { get; set; }
+            public double Price { get; set; }
+        }
+
+        private List<ReceiptItem> receiptItems = new List<ReceiptItem>();
+
+        private readonly Dictionary<string, Dictionary<string, double>> gasPrices = new Dictionary<string, Dictionary<string, double>>()
+        {
+            { "Coastal", new Dictionary<string, double> { { "5kg", 500.0 }, { "11kg", 1000.0 } } },
+            { "Gaz Lite", new Dictionary<string, double> { { "230g", 100.0 }, { "330g", 150.0 } } },
+            { "Solane", new Dictionary<string, double> { { "11kg", 1100.0 } } },
+            { "Regasco", new Dictionary<string, double> { { "5kg", 550.0 }, { "2.7kg", 300.0 }, { "11kg", 1050.0 } } }
+        };
         public pointofsaleUC()
         {
             InitializeComponent();
@@ -56,12 +75,98 @@ namespace LPG_Management_System.View.UserControls
 
         private void SizeButton_Click(object sender, RoutedEventArgs e)
         {
-            // Check if the sender is a button
             if (sender is Button button)
             {
+                currentKgButton = button;
+
+                // Get the size and display it in the label
                 string selectedSize = button.Content.ToString();
-                SizeLabel.Content = $"Size: {selectedSize}";  // Update the size label based on the selected button
+                //SizeLabel.Content = $"Size: {selectedSize}";
+
+                // Position the popup relative to the button
+                KgPopup.PlacementTarget = button;
+                KgPopup.Visibility = Visibility.Visible;
+                KgPopup.IsOpen = true;
             }
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentKgButton != null)
+            {
+                string size = currentKgButton.Content.ToString();
+                string brand = BrandLabel.Content.ToString();
+
+                // Set a mock price (you can fetch the real price from a database)
+                double price = 500.00; // Replace with actual price logic
+
+                // Add to receipt list
+                receiptItems.Add(new ReceiptItem
+                {
+                    Brand = brand,
+                    Size = size,
+                    Price = price
+                });
+
+                // Update Receipt Display
+                UpdateReceiptDisplay();
+
+                // Update Total Price
+                UpdateTotalPrice();
+
+                // Close the popup
+                KgPopup.IsOpen = false;
+                KgPopup.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void UpdateReceiptDisplay()
+        {
+            ReceiptItemsPanel.Children.Clear();
+
+            foreach (var item in receiptItems)
+            {
+                // Create a horizontal layout for each receipt item
+                var itemPanel = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 5, 0, 5) };
+
+                var brandLabel = new Label { Content = item.Brand, Width = 150, FontSize = 16 };
+                var sizeLabel = new Label { Content = item.Size, Width = 100, FontSize = 16 };
+                var priceLabel = new Label { Content = $"₱{item.Price:F2}", Width = 100, FontSize = 16 };
+
+                itemPanel.Children.Add(brandLabel);
+                itemPanel.Children.Add(sizeLabel);
+                itemPanel.Children.Add(priceLabel);
+
+                ReceiptItemsPanel.Children.Add(itemPanel);
+            }
+        }
+
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Close the popup
+            KgPopup.IsOpen = false;
+            KgPopup.Visibility = Visibility.Collapsed;
+        }
+
+        //Payment Options
+        private void cashBtn_Click_1(object sender, RoutedEventArgs e)
+        {
+            Payment payment = new Payment();
+            payment.Show();
+        }
+
+        private void GcashBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Payment payment = new Payment();
+            payment.Show();
+        }
+
+        //Calculatipons of payment
+        private void UpdateTotalPrice()
+        {
+            double totalPrice = receiptItems.Sum(item => item.Price);
+            TotalPriceLabel.Content = $"₱{totalPrice:F2}";
         }
     }
 }
