@@ -20,11 +20,26 @@ namespace LPG_Management_System.View
     /// </summary>
     public partial class inventoryCRUD : Window
     {
+        public string TankId { get; set; }
         public inventoryCRUD()
         {
             InitializeComponent();
         }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(TankId))
+            {
+                // Example: Display the TankId or prefill data based on it
+                MessageBox.Show($"Editing details for Tank ID: {TankId}");
+            }
+        }
 
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Save logic here
+            DialogResult = true; // Indicate success and close the dialog
+            Close();
+        }
         private void addBtn_Click(object sender, RoutedEventArgs e)
         {
             // Collect user input
