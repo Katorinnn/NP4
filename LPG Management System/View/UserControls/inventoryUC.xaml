@@ -83,14 +83,14 @@
                                     <Button Content="Delete" Width="80" Height="30" Margin="5,0,5,0"
                                             Background="#FF4500" Foreground="White" FontWeight="Bold"
                                             BorderThickness="0" Cursor="Hand"
-                                            Tag="{Binding Id}" FontFamily="Segoe UI"/>  
+                                            Tag="{Binding Id}" FontFamily="Segoe UI"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-        <Button x:Name="newBtn" Content="New Brand" 
+            <Button x:Name="newBtn" Content="New Brand" 
                 Click="newBtn_Click" Cursor="Hand" Background="#0078D7" Foreground="White" 
                 FontWeight="Bold" BorderThickness="0" BorderBrush="Transparent"
                 FontFamily="Segou UI" Margin="1078,117,12,545" RenderTransformOrigin="0.661,0.485" Grid.Row="1"/>
