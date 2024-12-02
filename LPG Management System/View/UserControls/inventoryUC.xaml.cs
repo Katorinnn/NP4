@@ -294,5 +294,10 @@ namespace LPG_Management_System.View.UserControls
                 }
             }
         }
+
+        private void inventoryDG_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

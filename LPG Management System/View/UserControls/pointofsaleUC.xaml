@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
              mc:Ignorable="d" 
             d:DesignHeight="850" d:DesignWidth="1220" FontFamily="Century Gothic">
-    <Grid Background="#FF8ECAE6" Margin="2,0,-2,0">
+    <Grid Background="#FF8ECAE6" Margin="-2,0,-2,0">
         <!-- Home Button -->
 
         <!-- Receipt Section -->
