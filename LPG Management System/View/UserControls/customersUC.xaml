@@ -8,7 +8,7 @@
              d:DesignHeight="850" d:DesignWidth="1200" Width="1200" Height="850">
 
     <Grid x:Name="mainGrid">
-        <Grid Margin="10,10,0,10" Background="White">
+        <Grid Margin="10,10,0,10" Background="White" Width="1200" Height="850">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" MinHeight="132"/>
                 <!-- For Search and Button -->
@@ -18,7 +18,7 @@
 
             <!-- Search TextBox -->
             <TextBox x:Name="TextBox" HorizontalAlignment="Left" Background="WhiteSmoke" Height="36" 
-                     Margin="1,132,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" 
+                     Margin="2,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" 
                      TextChanged="TextBox_TextChanged" Tag="Search..." Foreground="Black" 
                      FontSize="14" Padding="5" BorderThickness="1" BorderBrush="Gray" Grid.Row="1"/>
 
@@ -29,7 +29,7 @@
             </StackPanel>
 
             <!-- DataGrid -->
-            <DataGrid x:Name="customersDG" Grid.Row="1" Margin="1,179,3,43"
+            <DataGrid x:Name="customersDG" Grid.Row="1" Margin="1,185,24,37"
                       CanUserResizeColumns="False" GridLinesVisibility="None" 
                       HorizontalGridLinesBrush="LightGray"
                       VerticalGridLinesBrush="LightGray" BorderBrush="Gray" BorderThickness="1"
@@ -46,7 +46,7 @@
                         <Setter Property="Foreground" Value="White"/>
                         <Setter Property="FontWeight" Value="Bold"/>
                         <Setter Property="FontSize" Value="15"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
                         <Setter Property="Padding" Value="10"/>
                         <Setter Property="FontFamily" Value="Segoe UI"/>
                     </Style>
@@ -55,7 +55,7 @@
                 <!-- DataGrid Row Style -->
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
-                        <Setter Property="FontSize" Value="14"/>
+                        <Setter Property="FontSize" Value="15"/>
                         <Setter Property="Foreground" Value="Black"/>
                         <Setter Property="Background" Value="White"/>
                         <Setter Property="BorderThickness" Value="0,0,0,1"/>
@@ -77,14 +77,15 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                    <Button Content="Edit" Width="80" Height="30" Margin="5,0,5,0"
-                                Background="Green" Foreground="White" FontWeight="Bold"
-                                BorderThickness="0" Cursor="Hand"
-                                Tag="{Binding Id}" FontFamily="Segoe UI"/>
-                                    <Button Content="Delete" Width="80" Height="30" Margin="5,0,5,0"
-                                Background="#FF4500" Foreground="White" FontWeight="Bold"
-                                BorderThickness="0" Cursor="Hand"
-                                Tag="{Binding Id}" FontFamily="Segoe UI"/>
+                                    <Button Content="Edit" Width="75" Height="35" Margin="5,0,5,0"
+                                            Background="Green" Foreground="White" FontWeight="Bold"
+                                            BorderThickness="0" Cursor="Hand"
+                                            Tag="{Binding Id}" FontFamily="Segoe UI"/>
+
+                                    <Button Content="Delete" Width="75" Height="35" Margin="5,0,5,0"
+                                            Background="#FF4500" Foreground="White" FontWeight="Bold"
+                                            BorderThickness="0" Cursor="Hand"
+                                            Tag="{Binding Id}" FontFamily="Segoe UI"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -92,9 +93,9 @@
                 </DataGrid.Columns>
             </DataGrid>
             <Button x:Name="newBtn" Content="New Customer" 
-                        Click="newBtn_Click" Cursor="Hand" Background="#0078D7" Foreground="White" 
+                        Click="newBtn_Click" Cursor="Hand" Background="#0078D7" Foreground="White" Height="36"
                         FontWeight="Bold" BorderThickness="0" BorderBrush="Transparent"
-                        FontFamily="Segou UI" Margin="1086,135,4,527" RenderTransformOrigin="0.661,0.485" Grid.Row="1"/>
+                        FontFamily="Segou UI" Margin="1041,141,26,541" RenderTransformOrigin="0.661,0.485" Grid.Row="1"/>
         </Grid>
     </Grid>
 </UserControl>

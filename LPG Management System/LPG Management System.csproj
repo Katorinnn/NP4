@@ -18,19 +18,31 @@
 
   <ItemGroup>
     <None Remove="cash-machine.png" />
+    <None Remove="fogbg.jpg" />
+    <None Remove="fogsmoke.webp" />
     <None Remove="inventory.png" />
     <None Remove="LPG Background.png" />
+    <None Remove="View\UserControls\200.webp" />
+    <None Remove="View\UserControls\NP4LOGO.png" />
+    <None Remove="View\Windows\blue-smoke-collection-white-background_1112-1404.avif" />
+    <None Remove="View\Windows\fogsmoke.webp" />
+    <None Remove="View\Windows\NP4bg.jpg" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\cash-machine.png" />
-    <Resource Include="Images\cogwheel.png" />
-    <Resource Include="Images\dashboard %282%29.png" />
+    <Resource Include="Images\pos.png" />
+    <Resource Include="Images\settings.png" />
+    <Resource Include="Images\dashboard.png" />
     <Resource Include="Images\inventory.png" />
     <Resource Include="Images\LPG Background.png" />
-    <Resource Include="Images\market-analysis.png" />
+    <Resource Include="Images\reports.png" />
     <Resource Include="Images\NP4LOGO.png" />
-    <Resource Include="Images\people.png" />
+    <Resource Include="Images\customer.png" />
+    <Resource Include="Images\NP4BG.avif" />
+    <Resource Include="View\UserControls\200.webp" />
+    <Resource Include="View\UserControls\NP4LOGO.png" />
+    <Resource Include="View\Windows\fogsmoke.webp" />
+    <Resource Include="View\Windows\NP4bg.jpg" />
   </ItemGroup>
 
   <ItemGroup>

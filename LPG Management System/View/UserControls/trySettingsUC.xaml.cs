@@ -52,6 +52,11 @@ namespace LPG_Management_System.View.UserControls
                 }
             }
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
 

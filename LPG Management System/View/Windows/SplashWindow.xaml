@@ -14,6 +14,9 @@
 
     <materialDesign:Card UniformCornerRadius="15" Background="{DynamicResource MaterialDesignPaper}" materialDesign:ShadowAssist.ShadowDepth="Depth4" Margin="25">
         <Grid>
+            <Grid.Background>
+                <ImageBrush ImageSource="/View/Windows/blue-smoke-collection-white-background_1112-1404.avif" TileMode="None" Stretch="UniformToFill"/>
+            </Grid.Background>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition ></ColumnDefinition>
             </Grid.ColumnDefinitions>
