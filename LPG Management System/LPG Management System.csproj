@@ -39,4 +39,10 @@
     <PackageReference Include="MySql.Data" Version="9.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="View\Windows\customerUpdate.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
 </Project>

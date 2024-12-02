@@ -18,59 +18,68 @@ namespace LPG_Management_System.View
     /// <summary>
     /// Interaction logic for inventoryCRUD.xaml
     /// </summary>
-    public partial class inventoryCRUD : Window
+    public partial class customerUpdate : Window
     {
 
         string connectionString = "server=localhost;database=db_lpgpos;user=root;";
         public string TankId { get; set; }    
-        public inventoryCRUD(int tankID)
+        public customerUpdate(int tankID)
         {
             InitializeComponent();
+            LoadItemData(tankID);
         }
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+
+        private void LoadItemData(int tankId)
         {
-            if (!string.IsNullOrEmpty(TankId))
+            try
             {
-                // Example: Display the TankId or prefill data based on it
-                MessageBox.Show($"Editing details for Tank ID: {TankId}");
-                //LoadItemData(tankID); // Use the TankId to load data
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = "SELECT * FROM tbl_inventory WHERE tankID = @tankID"; // Assuming tankID is a column
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    cmd.Parameters.AddWithValue("@tankID", tankId);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            // Populate the controls (e.g., TextBoxes) with the data from the database
+                            tankIDtxtBox.Text = reader["tankID"].ToString();
+                            brandtxtBox.Text = reader["brandName"].ToString();
+                            sizetxtBox.Text = reader["size"].ToString();
+                            pricetxtBox.Text = reader["price"].ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading item data: " + ex.Message);
             }
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        private void updateBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Save logic here
-            DialogResult = true; // Indicate success and close the dialog
-            Close();
-        }
-        private void addBtn_Click(object sender, RoutedEventArgs e)
-        {
-            // Collect user input
             string tankID = tankIDtxtBox.Text;
             string brandname = brandtxtBox.Text;
             string size = sizetxtBox.Text;
             string price = pricetxtBox.Text;
 
-            // Connection string (update according to your DB credentials)
-
             if (string.IsNullOrEmpty(tankID) || string.IsNullOrEmpty(brandname) || string.IsNullOrEmpty(size) || string.IsNullOrEmpty(price))
             {
-                // Show a message to the user if any field is empty
                 MessageBox.Show("Please fill in all the fields.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return; // Exit the method early
+                return;
             }
 
             try
             {
-                // Insert data into the database
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
-                    string query = "INSERT INTO tbl_inventory (tankID, brandName, size, price) VALUES (@tankID, @brandname, @size, @price)";
-
+                    string query = "UPDATE tbl_inventory SET brandName = @brandname, size = @size, price = @price WHERE tankID = @tankID";
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
-                        // Use parameters to prevent SQL injection
                         command.Parameters.AddWithValue("@tankID", tankID);
                         command.Parameters.AddWithValue("@brandname", brandname);
                         command.Parameters.AddWithValue("@size", size);
@@ -79,15 +88,13 @@ namespace LPG_Management_System.View
                         int rowsAffected = command.ExecuteNonQuery();
                         if (rowsAffected > 0)
                         {
-                            MessageBox.Show("Customer added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MessageBox.Show("Brand updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                             this.DialogResult = true;
-
-                            //close form
                             this.Close();
                         }
                         else
                         {
-                            MessageBox.Show("Failed to add customer.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show("Failed to update brand.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                 }
@@ -96,11 +103,6 @@ namespace LPG_Management_System.View
             {
                 MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-        private void tankIDtxtBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
         }
     }
 }
