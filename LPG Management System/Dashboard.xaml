@@ -110,7 +110,7 @@
 
         <!-- Main Content Area -->
         <ContentControl x:Name="MainContent" Grid.Column="1" Background="#F0F0F0" Grid.ColumnSpan="2">
-            <userControls:dashboardUC Background="Black"/>
+            <userControls:dashboardUC Background="Black" Loaded="dashboardUC_Loaded"/>
         </ContentControl>
     </Grid>
 </Window>

@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="850" d:DesignWidth="1200" Cursor="Hand">
+             d:DesignHeight="850" d:DesignWidth="1230" Cursor="Hand">
     <Grid x:Name="mainGrid">
-        <Grid Margin="4,5,-31,-1" Background="White">
+        <Grid Margin="0,5,0,-10" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" MinHeight="132"/>
                 <!-- For Search and Button -->
@@ -18,9 +18,10 @@
             <!-- Search TextBox -->
 
             <!-- StackPanel for New Button -->
-            <Button Name="FilterButton" Content="Filter" Width="111" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="351,146,0,0" Click="FilterButton_Click" Grid.Row="1"/>
+            <Button Name="FilterButton" Content="Filter" Width="111" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,135,0,0" Click="FilterButton_Click" Grid.Row="1"/>
+            <Button Name="ClearFilterButton" Content="Clear" Width="111" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="500,135,0,0" Click="ClearFilterButton_Click" Grid.Row="1"/>
             <TextBox x:Name="TextBox" HorizontalAlignment="Left" Background="WhiteSmoke" Height="36" 
-                 Margin="29,144,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" 
+                 Margin="30,135,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" 
                  TextChanged="TextBox_TextChanged" Tag="Search..." Foreground="Black" 
                  FontSize="14" Padding="5" BorderThickness="1" BorderBrush="Gray" Grid.Row="1"/>
 
@@ -31,7 +32,7 @@
             </StackPanel>
 
             <!-- DataGrid -->
-            <DataGrid x:Name="inventoryDG" Grid.Row="1" Margin="26,196,65,26"
+            <DataGrid x:Name="inventoryDG" Grid.Row="1" Margin="12,185,12,40"
                   CanUserResizeColumns="False" GridLinesVisibility="None" 
                   HorizontalGridLinesBrush="LightGray"
                   VerticalGridLinesBrush="LightGray" BorderBrush="Gray" BorderThickness="1"
@@ -39,7 +40,7 @@
                   SelectionUnit="FullRow" AutoGenerateColumns="False" MinRowHeight="30" 
                   RowHeaderWidth="0" FontFamily="Segoe UI"
                   HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" 
-                  ScrollViewer.CanContentScroll="True" SelectionChanged="inventoryDG_SelectionChanged">
+                  ScrollViewer.CanContentScroll="True" SelectionChanged="inventoryDG_SelectionChanged" Height="500" Width="1200">
 
                 <!-- DataGrid Column Header Style -->
                 <DataGrid.ColumnHeaderStyle>
@@ -103,7 +104,7 @@
             <Button x:Name="newBtn" Content="New Brand" 
                 Click="newBtn_Click" Cursor="Hand" Background="#0078D7" Foreground="White" Width="111" Height="36"
                 FontWeight="Bold" BorderThickness="0" BorderBrush="Transparent"
-                FontFamily="Segou UI" Margin="1066,145,50,533"  Grid.Row="1"/>
+                FontFamily="Segou UI" Margin="1100,136,19,551"  Grid.Row="1"/>
         </Grid>
     </Grid>
 </UserControl>

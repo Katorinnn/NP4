@@ -15,7 +15,7 @@
     <materialDesign:Card UniformCornerRadius="15" Background="{DynamicResource MaterialDesignPaper}" materialDesign:ShadowAssist.ShadowDepth="Depth4" Margin="25">
         <Grid>
             <Grid.Background>
-                <ImageBrush ImageSource="/View/Windows/blue-smoke-collection-white-background_1112-1404.avif" TileMode="None" Stretch="UniformToFill"/>
+                <ImageBrush ImageSource="/View/Windows/loginBackground.jpg" TileMode="None" Stretch="UniformToFill"/>
             </Grid.Background>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition ></ColumnDefinition>
@@ -27,7 +27,7 @@
                     <Image Source="/Images/NP4LOGO.png" HorizontalAlignment="Center" Height="175" Width="175" VerticalAlignment="Center"/>
                 </WrapPanel>
 
-                <TextBlock Text="LoadingScreen..." FontSize="17" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="25,30,0,10"></TextBlock>
+                <TextBlock Text="Loading..." FontSize="17" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="25,30,0,10"></TextBlock>
                 <ProgressBar x:Name="progressBar" Value="0" Height="10" Width="700" IsIndeterminate="True" Margin="10,10,0,0"/>
             </StackPanel>
         </Grid>

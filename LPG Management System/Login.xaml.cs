@@ -89,7 +89,7 @@ namespace LPG_Management_System
 
         private void loginBtn_MouseLeave(object sender, MouseEventArgs e)
         {
-            loginBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("white"));
+            
         }
     }
 }

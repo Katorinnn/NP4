@@ -113,5 +113,10 @@ namespace LPG_Management_System
         {
             settingBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF2C3E50"));
         }
+
+        private void dashboardUC_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
