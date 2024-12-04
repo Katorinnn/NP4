@@ -102,6 +102,7 @@
                 <Button x:Name="Button2_7kg" Content="2.7kg" HorizontalAlignment="Left" Height="100" Width="130" Click="SizeButton_Click" Margin="-95,8,0,0"/>
                 <Button x:Name="Button11kgRegasco" Content="11kg" HorizontalAlignment="Left" Height="100" Width="130" Click="SizeButton_Click" Margin="-95,8,0,0"/>
             </StackPanel>
+            <WrapPanel x:Name="ProductsPanel" Margin="0,95,0,0" Background="White"/>
 
         </Grid>
     </Grid>

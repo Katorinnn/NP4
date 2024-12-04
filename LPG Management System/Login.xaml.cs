@@ -35,9 +35,12 @@ namespace LPG_Management_System
             string username = unametxtBox.Text;
             string password = pwordBox.Password;
 
+            // Reset styles and error messages
+            ResetValidation();
+
             if (ValidateLogin(username, password))
             {
-                MessageBox.Show("Login successful!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Clear error states if login is successful
 
                 Dashboard dashboard = new Dashboard();
                 dashboard.Show();
@@ -46,9 +49,43 @@ namespace LPG_Management_System
             }
             else
             {
-                MessageBox.Show("Invalid username or password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                // Highlight errors
+                if (string.IsNullOrWhiteSpace(username))
+                {
+                    unametxtBox.BorderBrush = Brushes.Red;
+                    unameError.Text = "Username cannot be empty";
+                    unameError.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    unametxtBox.BorderBrush = Brushes.Red;
+                    unameError.Text = "Invalid username";
+                    unameError.Visibility = Visibility.Visible;
+                }
+
+                if (string.IsNullOrWhiteSpace(password))
+                {
+                    pwordBox.BorderBrush = Brushes.Red;
+                    pwordError.Text = "Password cannot be empty";
+                    pwordError.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    pwordBox.BorderBrush = Brushes.Red;
+                    pwordError.Text = "Invalid password";
+                    pwordError.Visibility = Visibility.Visible;
+                }
             }
         }
+
+        private void ResetValidation()
+        {
+            unametxtBox.BorderBrush = Brushes.Gray;
+            unameError.Visibility = Visibility.Collapsed;
+            pwordBox.BorderBrush = Brushes.Gray;
+            pwordError.Visibility = Visibility.Collapsed;
+        }
+
 
         private bool ValidateLogin(string username, string password)
         {

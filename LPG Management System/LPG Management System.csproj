@@ -24,6 +24,7 @@
     <None Remove="LPG Background.png" />
     <None Remove="View\UserControls\200.webp" />
     <None Remove="View\UserControls\NP4LOGO.png" />
+    <None Remove="View\UserControls\solanesample.jpg" />
     <None Remove="View\Windows\blue-smoke-collection-white-background_1112-1404.avif" />
     <None Remove="View\Windows\fogsmoke.webp" />
     <None Remove="View\Windows\loginBackground.jpg" />
@@ -42,6 +43,7 @@
     <Resource Include="Images\NP4BG.avif" />
     <Resource Include="View\UserControls\200.webp" />
     <Resource Include="View\UserControls\NP4LOGO.png" />
+    <Resource Include="View\UserControls\solanesample.jpg" />
     <Resource Include="View\Windows\fogsmoke.webp" />
     <Resource Include="View\Windows\loginBackground.jpg" />
     <Resource Include="View\Windows\NP4bg.jpg" />

@@ -31,6 +31,7 @@ namespace LPG_Management_System.View.UserControls
         public pointofsaleUC()
         {
             InitializeComponent();
+            LoadProducts();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -194,5 +195,39 @@ namespace LPG_Management_System.View.UserControls
             double totalPrice = receiptItems.Sum(item => item.Price);
             TotalPriceLabel.Content = $"₱{totalPrice:F2}";
         }
+
+        //products
+        private void LoadProducts()
+        {
+            // Example data for products
+            var products = new List<ProductModel>
+            {
+                new ProductModel { BrandName = "Solane", Price = "₱800", ImagePath = "/View/UserControls/solanesample.jpg" },
+                new ProductModel { BrandName = "Gaz Lite", Price = "₱600", ImagePath = "/View/UserControls/gazlite.jpg" },
+                new ProductModel { BrandName = "Regasco", Price = "₱500", ImagePath = "/View/UserControls/regasco.jpg" }
+            };
+
+            // Create Product controls and add them to the WrapPanel
+            foreach (var product in products)
+            {
+                var productControl = new Product();
+                productControl.BrandLabel.Content = product.BrandName;
+                productControl.PriceLabel.Content = product.Price;
+
+                // Set the image source
+                var image = new System.Windows.Media.Imaging.BitmapImage(new Uri(product.ImagePath, UriKind.Relative));
+                productControl.ProductImage.Source = image;
+
+                // Add to WrapPanel
+                ProductsPanel.Children.Add(productControl);
+            }
+        }
+    }
+
+    public class ProductModel
+    {
+        public string BrandName { get; set; }
+        public string Price { get; set; }
+        public string ImagePath { get; set; }
     }
 }
