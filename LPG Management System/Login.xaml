@@ -7,24 +7,26 @@
         mc:Ignorable="d"
         Title="Login" Height="349" Width="505" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,-2,-1" Background="#FF78AAC3">
-        <TextBox x:Name="unametxtBox" HorizontalAlignment="Left" Margin="223,105,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="150" Height="25" TextChanged="unametxtBox_TextChanged" Cursor="IBeam" Foreground="White"/>
-        <Label x:Name="unameLabel" Content="username" HorizontalAlignment="Left" Margin="128,105,0,0" VerticalAlignment="Top" Foreground="White"/>
-        <Label x:Name="pwordLabel" Content="password" HorizontalAlignment="Left" Margin="128,161,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.039,1.347" Foreground="White"/>
-        <Button x:Name="loginBtn" Content="LOGIN" HorizontalAlignment="Left" Margin="191,242,0,0" VerticalAlignment="Top" Click="Button_Click" Width="142" Height="39" Cursor="Hand" MouseEnter="loginBtn_MouseEnter" MouseLeave="loginBtn_MouseLeave">
+        <TextBox x:Name="unametxtBox" HorizontalAlignment="Left" Margin="223,105,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="150" Height="25" TextChanged="unametxtBox_TextChanged" Cursor="IBeam" Foreground="White" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
+        <Label x:Name="unameLabel" Content="username: " HorizontalAlignment="Left" Margin="128,105,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <TextBlock x:Name="unameError" HorizontalAlignment="Left" Margin="223,135,0,0" Text="Invalid username" Foreground="Red" Visibility="Collapsed"/>
+
+        <PasswordBox x:Name="pwordBox" HorizontalAlignment="Left" Margin="223,161,0,0" VerticalAlignment="Top" Width="150" Height="25" Foreground="White" BorderBrush="Gray" BorderThickness="0,0,0,1"/>
+        <Label x:Name="pwordLabel" Content="password: " HorizontalAlignment="Left" Margin="128,161,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.039,1.347" Foreground="White"/>
+        <TextBlock x:Name="pwordError" HorizontalAlignment="Left" Margin="223,191,0,0" Text="Invalid password" Foreground="Red" Visibility="Collapsed"/>
+
+        <Button x:Name="loginBtn" Content="LOGIN" HorizontalAlignment="Left" Margin="191,242,0,0" VerticalAlignment="Top" Click="Button_Click" Width="162" Height="39" Cursor="Hand" MouseEnter="loginBtn_MouseEnter" >
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Border Background="{TemplateBinding Background}" 
                     BorderBrush="{TemplateBinding BorderBrush}" 
                     BorderThickness="{TemplateBinding BorderThickness}" 
-                    CornerRadius="20" Margin="0,-1,19,0">
+                    CornerRadius="20" Margin="0,0,0,0">
                         <!-- Set CornerRadius here -->
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                 </ControlTemplate>
             </Button.Template>
         </Button>
-
-        <PasswordBox x:Name="pwordBox" HorizontalAlignment="Left" Margin="223,161,0,0" VerticalAlignment="Top" Width="150" Height="25" Foreground="White"/>
-
     </Grid>
 </Window>

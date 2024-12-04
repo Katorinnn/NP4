@@ -254,8 +254,8 @@ namespace LPG_Management_System.View.UserControls
                 int selectedTankID = Convert.ToInt32(btn.Tag);
 
                 // Open the inventoryCRUD form and pass the correct tankID
-                inventoryUpdate inventoryCRUD = new inventoryUpdate(selectedTankID);
-                inventoryCRUD.ShowDialog(); // Show the dialog for editing
+                inventoryUpdate inventoryupdate = new inventoryUpdate(selectedTankID);
+                inventoryupdate.ShowDialog(); // Show the dialog for editing
             }
         }
 
@@ -298,6 +298,11 @@ namespace LPG_Management_System.View.UserControls
         private void inventoryDG_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void ClearFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            ClearFilter();
         }
     }
 }

@@ -24,8 +24,10 @@
     <None Remove="LPG Background.png" />
     <None Remove="View\UserControls\200.webp" />
     <None Remove="View\UserControls\NP4LOGO.png" />
+    <None Remove="View\UserControls\solanesample.jpg" />
     <None Remove="View\Windows\blue-smoke-collection-white-background_1112-1404.avif" />
     <None Remove="View\Windows\fogsmoke.webp" />
+    <None Remove="View\Windows\loginBackground.jpg" />
     <None Remove="View\Windows\NP4bg.jpg" />
   </ItemGroup>
 
@@ -41,11 +43,14 @@
     <Resource Include="Images\NP4BG.avif" />
     <Resource Include="View\UserControls\200.webp" />
     <Resource Include="View\UserControls\NP4LOGO.png" />
+    <Resource Include="View\UserControls\solanesample.jpg" />
     <Resource Include="View\Windows\fogsmoke.webp" />
+    <Resource Include="View\Windows\loginBackground.jpg" />
     <Resource Include="View\Windows\NP4bg.jpg" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="MaterialDesignColors" Version="2.0.3" />
     <PackageReference Include="MaterialDesignThemes" Version="4.1.0" />
     <PackageReference Include="MySql.Data" Version="9.1.0" />

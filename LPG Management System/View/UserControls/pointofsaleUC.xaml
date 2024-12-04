@@ -22,7 +22,7 @@
             <Label x:Name="BrandLabel" Content="" Height="39" Margin="15,170,0,0" VerticalAlignment="Top" Width="161" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
             <Label x:Name="SizeLabel" Content="" Height="39" Margin="203,173,0,0" VerticalAlignment="Top" Width="161" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
             <Label x:Name="PriceLabel" Content="" Height="39" Margin="400,173,0,0" VerticalAlignment="Top" Width="161" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
-            <StackPanel x:Name="ReceiptItemsPanel" Margin="15,250,15,0" VerticalAlignment="Top" Grid.Column="1" />
+            <StackPanel x:Name="ReceiptItemsPanel" Margin="15,220,15,0" VerticalAlignment="Top" Grid.Column="1" />
         </Grid>
 
         <!-- Payment Buttons -->
@@ -65,9 +65,9 @@
 
             <!-- Coastal Kilogram Buttons -->
             <Popup x:Name="KgPopup" Placement="Relative" StaysOpen="False" Visibility="Collapsed">
-                <StackPanel Orientation="Horizontal" Background="White" Margin="0">
-                    <Button x:Name="AddButton" Content="Add" Width="80" Height="30" Margin="5" Click="AddButton_Click" />
-                    <Button x:Name="CancelButton" Content="Cancel" Width="80" Height="30" Margin="5" Click="CancelButton_Click" />
+                <StackPanel Orientation="Vertical" Background="White" Margin="0">
+                    <Button x:Name="AddButton" Content="Add" Width="100" Height="30" Margin="15,10,15,10" Click="AddButton_Click" />
+                    <Button x:Name="CancelButton" Content="Cancel" Width="100" Height="30" Margin="15,10,15,10" Click="CancelButton_Click" />
                 </StackPanel>
             </Popup>
 
@@ -102,6 +102,7 @@
                 <Button x:Name="Button2_7kg" Content="2.7kg" HorizontalAlignment="Left" Height="100" Width="130" Click="SizeButton_Click" Margin="-95,8,0,0"/>
                 <Button x:Name="Button11kgRegasco" Content="11kg" HorizontalAlignment="Left" Height="100" Width="130" Click="SizeButton_Click" Margin="-95,8,0,0"/>
             </StackPanel>
+            <WrapPanel x:Name="ProductsPanel" Margin="0,95,0,0" Background="White"/>
 
         </Grid>
     </Grid>

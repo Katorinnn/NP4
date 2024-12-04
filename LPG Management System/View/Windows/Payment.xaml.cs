@@ -41,5 +41,10 @@ namespace LPG_Management_System.View.Windows
                 MessageBox.Show("Please enter a valid payment amount.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+        private void amounttxtBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

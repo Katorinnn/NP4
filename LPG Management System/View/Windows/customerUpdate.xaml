@@ -5,17 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LPG_Management_System.View"
         mc:Ignorable="d"
-        Title="inventoryUpdate" Height="371" Width="440" WindowStartupLocation="CenterScreen">
+        Title="inventoryUpdate" Height="450" Width="500" WindowStartupLocation="CenterScreen">
     <Grid Margin="-1,-2,0,-6">
-        <Label Content="Brand:" HorizontalAlignment="Left" Height="27" Margin="73,133,0,0" VerticalAlignment="Top" Width="108" FontSize="14"/>
-        <Label Content="Price:" HorizontalAlignment="Left" Height="28" Margin="72,226,0,0" VerticalAlignment="Top" Width="108" FontSize="14"/>
-        <Label Content="Kg:" HorizontalAlignment="Left" Height="33" Margin="72,180,0,0" VerticalAlignment="Top" Width="108" FontSize="14"/>
-        <Label Content="Tank ID:" HorizontalAlignment="Left" Height="25" Margin="72,86,0,0" VerticalAlignment="Top" Width="108" FontSize="14"/>
-        <TextBox x:Name="brandtxtBox" HorizontalAlignment="Left" Height="22" Margin="221,139,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
-        <TextBox x:Name="sizetxtBox" HorizontalAlignment="Left" Height="22" Margin="220,186,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
-        <TextBox x:Name="pricetxtBox" HorizontalAlignment="Left" Height="22" Margin="222,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
-        <Button x:Name="updateBtn" Content="UPDATE" HorizontalAlignment="Left" Height="39" Margin="327,300,0,0" VerticalAlignment="Top" Width="84" Cursor="Hand" Click="updateBtn_Click"/>
-        <TextBox x:Name="tankIDtxtBox" HorizontalAlignment="Left" Height="22" Margin="220,93,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
+        <Label Content="Customer name" HorizontalAlignment="Left" Height="27" Margin="116,176,0,0" VerticalAlignment="Top" Width="108" FontSize="14"/>
+        <Label Content="Address:" HorizontalAlignment="Left" Height="28" Margin="116,272,0,0" VerticalAlignment="Top" Width="108" FontSize="14"/>
+        <Label Content="Contact number:" HorizontalAlignment="Left" Height="33" Margin="116,223,0,0" VerticalAlignment="Top" Width="108" FontSize="14"/>
+        <Label Content="Tank ID:" HorizontalAlignment="Left" Height="25" Margin="116,122,0,0" VerticalAlignment="Top" Width="108" FontSize="14"/>
+        <TextBox x:Name="cuNametxtBox" HorizontalAlignment="Left" Height="30" Margin="271,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
+        <TextBox x:Name="contacttxtBox" HorizontalAlignment="Left" Height="30" Margin="271,219,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
+        <TextBox x:Name="addresstxtBox" HorizontalAlignment="Left" Height="30" Margin="271,272,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
+        <Button x:Name="updateBtn" Content="UPDATE" HorizontalAlignment="Left" Height="39" Margin="331,348,0,0" VerticalAlignment="Top" Width="110" Cursor="Hand" Click="updateBtn_Click"/>
+        <TextBox x:Name="tankIDtxtBox" HorizontalAlignment="Left" Height="30" Margin="271,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextChanged="tankIDtxtBox_TextChanged"/>
+        <Label Content="Customer ID:" HorizontalAlignment="Left" Height="25" Margin="116,85,0,0" VerticalAlignment="Top" Width="108" FontSize="14"/>
+        <TextBox x:Name="customerIDtxtBox" HorizontalAlignment="Left" Height="25" Margin="271,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextChanged="tankIDtxtBox_TextChanged"/>
 
     </Grid>
 </Window>

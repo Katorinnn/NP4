@@ -8,13 +8,19 @@
              d:DesignHeight="850" d:DesignWidth="1250">
     <Grid>
         <TabControl>
-            <TabItem Header="General Settings" Height="35" FontSize="20">
-                <Grid Background="#FFE5E5E5" Margin="-1,0,-7,0">
-                    <Label Content="Company Details" HorizontalAlignment="Left" Height="31" Margin="24,30,0,0" VerticalAlignment="Top" Width="166" FontSize="18" FontWeight="Bold" FontFamily="Segoe UI"/>
+            <TabItem Header="General Settings" FontSize="30" Width="623" Margin="0,0,0,0">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFF0F0F0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <Grid Background="White" Margin="-1,0,-7,0">
+                    <Label Content="Company Details" HorizontalAlignment="Left" Height="47" Margin="24,30,0,0" VerticalAlignment="Top" Width="221" FontSize="25" FontWeight="Bold" FontFamily="Segoe UI"/>
                     <Label Content="Address:" HorizontalAlignment="Left" Height="35" Margin="51,405,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontFamily="Segoe UI"/>
                     <Label Content="Name:" HorizontalAlignment="Left" Height="32" Margin="51,368,0,0"  VerticalAlignment="Top" Width="128" FontSize="14" FontFamily="Segoe UI"/>
                     <Label Content="Contact number:" HorizontalAlignment="Left" Height="32" Margin="50,445,0,0" VerticalAlignment="Top" Width="128" FontSize="14" FontFamily="Segoe UI"/>
-                    <Label Content="Privacy &amp; Security" HorizontalAlignment="Left" Height="31" Margin="43,554,0,0" VerticalAlignment="Top" Width="184" FontSize="18" FontWeight="Bold" FontFamily="Segoe UI"/>
+                    <Label Content="Privacy &amp; Security" HorizontalAlignment="Left" Height="45" Margin="43,554,0,0" VerticalAlignment="Top" Width="294" FontSize="25" FontWeight="Bold" FontFamily="Segoe UI"/>
                     <Label Content="username:" HorizontalAlignment="Left" Height="32" Margin="43,614,0,0" VerticalAlignment="Top" Width="128" FontSize="14" FontFamily="Segoe UI"/>
                     <Label Content="password:" HorizontalAlignment="Left" Height="32" Margin="42,663,0,0" VerticalAlignment="Top" Width="128" FontSize="14" FontFamily="Segoe UI"/>
                     <TextBox HorizontalAlignment="Left" Margin="181,362,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="26" FontSize="14" TextChanged="TextBox_TextChanged" FontFamily="Segoe UI"/>
@@ -24,13 +30,13 @@
                     <TextBox HorizontalAlignment="Left" Margin="183,658,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="26" FontSize="14" FontFamily="Segoe UI"/>
                     <Label Content="Email address:" HorizontalAlignment="Left" Height="32" Margin="51,479,0,0"  VerticalAlignment="Top" Width="128" FontSize="14" FontFamily="Segoe UI"/>
                     <TextBox HorizontalAlignment="Left" Margin="181,472,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="26" FontSize="14" FontFamily="Segoe UI"/>
-                    <Button Content="Upload Image" HorizontalAlignment="Left" Margin="235,231,0,0" VerticalAlignment="Top" Click="Button_Click" Height="50"/>
-                    <Image x:Name="logoPlaceholder" HorizontalAlignment="Right" Height="180" Margin="0,99,1041,0" VerticalAlignment="Top" Width="185" OpacityMask="#FFC3BABA"/>
+                    <Button Content="Upload Image" HorizontalAlignment="Left" Margin="235,166,0,0" VerticalAlignment="Top" Click="Button_Click" Height="50"/>
+                    <Image x:Name="logoPlaceholder" HorizontalAlignment="Right" Height="180" Margin="0,99,1041,0" VerticalAlignment="Top" Width="185" OpacityMask="#FFC3BABA" Source="/View/UserControls/NP4LOGO.png"/>
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Notification Setting" FontSize="20">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem Header="Notification Setting" FontSize="30" Margin="0,0,0,0" Width="623">
+                <Grid Background="White"/>
             </TabItem>
         </TabControl>
 
