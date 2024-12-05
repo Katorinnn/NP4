@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="850" d:DesignWidth="1200">
-    <Grid Background="#FF8ECAE6" Margin="10,10,-79,0">
+             d:DesignHeight="850" d:DesignWidth="1230">
+    <Grid Background="#FF8ECAE6" Margin="10,10,0,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="194*"/>
             <ColumnDefinition Width="1075*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="reportsDG" HorizontalAlignment="Left" Height="840" Margin="-9,135,0,0" VerticalAlignment="Top" Width="1318" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.ColumnSpan="2"/>
+        <DataGrid x:Name="reportsDG" HorizontalAlignment="Left" Height="705" Margin="-9,135,0,0" VerticalAlignment="Top" Width="1229" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.ColumnSpan="2" ColumnWidth="*" SelectionChanged="reportsDG_SelectionChanged"/>
         <Grid Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="145" VerticalAlignment="Top" Width="1319" Background="#FFD2D2D2" Margin="-10,-10,0,0">
             <Label Content="Category" HorizontalAlignment="Left" Height="43" Margin="742,63,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontWeight="Bold"/>
             <Label Content="Begin Date" HorizontalAlignment="Left" Height="43" Margin="924,62,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontWeight="Bold"/>

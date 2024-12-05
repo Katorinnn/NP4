@@ -68,9 +68,9 @@
                 <!-- Define DataGrid Columns -->
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Customer ID" Binding="{Binding customerID}" Width="150" />
-                    <DataGridTextColumn Header="Tank ID" Binding="{Binding tankID}" Width="150" />
+                    <DataGridTextColumn Header="Tank ID" Binding="{Binding TankID}" Width="150" />
                     <DataGridTextColumn Header="Customer Name" Binding="{Binding customerName}" Width="190" />
-                    <DataGridTextColumn Header="Contact Number" Binding="{Binding contactNumber}" Width="210" />
+                    <DataGridTextColumn Header="Contact Number" Binding="{Binding ContactNumber}" Width="210" />
                     <DataGridTextColumn Header="Address" Binding="{Binding address}" Width="203" />
 
                     <!-- Actions Column (Edit and Delete Buttons) -->

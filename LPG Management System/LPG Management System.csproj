@@ -20,6 +20,8 @@
     <None Remove="cash-machine.png" />
     <None Remove="fogbg.jpg" />
     <None Remove="fogsmoke.webp" />
+    <None Remove="Images\RegascoSample.jpg" />
+    <None Remove="Images\solanesample.jpg" />
     <None Remove="inventory.png" />
     <None Remove="LPG Background.png" />
     <None Remove="View\UserControls\200.webp" />
@@ -32,7 +34,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\RegascoSample.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Images\pos.png" />
+    <Resource Include="Images\RegascoBig.png" />
     <Resource Include="Images\settings.png" />
     <Resource Include="Images\dashboard.png" />
     <Resource Include="Images\inventory.png" />
@@ -41,9 +48,9 @@
     <Resource Include="Images\NP4LOGO.png" />
     <Resource Include="Images\customer.png" />
     <Resource Include="Images\NP4BG.avif" />
+    <Resource Include="Images\solanesample.jpg" />
     <Resource Include="View\UserControls\200.webp" />
     <Resource Include="View\UserControls\NP4LOGO.png" />
-    <Resource Include="View\UserControls\solanesample.jpg" />
     <Resource Include="View\Windows\fogsmoke.webp" />
     <Resource Include="View\Windows\loginBackground.jpg" />
     <Resource Include="View\Windows\NP4bg.jpg" />

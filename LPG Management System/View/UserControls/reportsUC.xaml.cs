@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +22,45 @@ namespace LPG_Management_System.View.UserControls
     /// </summary>
     public partial class reportsUC : UserControl
     {
+        private readonly string connectionString = "server=localhost;database=db_lpgpos;user=root;";
         public reportsUC()
         {
             InitializeComponent();
+            LoadCustomersData();
+        }
+    
+
+    private void LoadCustomersData()
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Query to fetch customer data
+                    string query = "SELECT * FROM tbl_reports";
+
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+
+                    DataTable dataTable = new DataTable();
+                    adapter.Fill(dataTable);
+
+                    // Bind data to DataGrid
+                    reportsDG.ItemsSource = dataTable.DefaultView;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error fetching data: " + ex.Message);
+            }
+        }
+
+        private void reportsDG_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
+
 }
