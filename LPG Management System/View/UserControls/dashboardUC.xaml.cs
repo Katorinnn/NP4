@@ -26,7 +26,7 @@ namespace LPG_Management_System.View.UserControls
         {
             InitializeComponent();
 
-            double[] sales = { 150, 200, 180, 250, 300, 350, 400, 380, 420, 450, 470, 500 };
+            double[] sales = { 150, 200, 180, 250, 350, 450, 400, 380, 420, 450, 470, 500 };
 
             // Days of the month (example labels)
             string[] days = { "1", "5", "10", "15", "20", "25", "30" };

@@ -16,9 +16,8 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label Content="NP4 DRY GOODS STORE" Height="67" Margin="131,22,0,0" VerticalAlignment="Top" Width="268" HorizontalAlignment="Left" FontSize="20" Grid.Column="1"/>
-            <Label Content="Receipt # 0001" Height="39" Margin="173,72,0,0" VerticalAlignment="Top" Width="161" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
-            
-            
+
+
             <Label x:Name="BrandLabel" Content="" Height="39" Margin="15,170,0,0" VerticalAlignment="Top" Width="161" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
             <Label x:Name="SizeLabel" Content="" Height="39" Margin="203,173,0,0" VerticalAlignment="Top" Width="161" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
             <Label x:Name="PriceLabel" Content="" Height="39" Margin="400,173,0,0" VerticalAlignment="Top" Width="161" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>

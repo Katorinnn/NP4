@@ -202,9 +202,10 @@ namespace LPG_Management_System.View.UserControls
             // Example data for products
             var products = new List<ProductModel>
             {
-                new ProductModel { BrandName = "Solane", Price = "₱800", ImagePath = "/View/UserControls/solanesample.jpg" },
-                new ProductModel { BrandName = "Gaz Lite", Price = "₱600", ImagePath = "/View/UserControls/gazlite.jpg" },
-                new ProductModel { BrandName = "Regasco", Price = "₱500", ImagePath = "/View/UserControls/regasco.jpg" }
+                new ProductModel { BrandName = "Solane", Price = "₱800", ImagePath = "/Images/solanesample.jpg" },
+                //new ProductModel { BrandName = "Gaz Lite", Price = "₱600", ImagePath = "/Images/gazlite.jpg" },
+                new ProductModel { BrandName = "Regasco", Price = "₱500", ImagePath = "/Images/RegascoSample.jpg" },
+                new ProductModel { BrandName = "Regasco", Price = "₱800", ImagePath = "/Images/RegascoBig.png" }
             };
 
             // Create Product controls and add them to the WrapPanel
@@ -215,7 +216,10 @@ namespace LPG_Management_System.View.UserControls
                 productControl.PriceLabel.Content = product.Price;
 
                 // Set the image source
-                var image = new System.Windows.Media.Imaging.BitmapImage(new Uri(product.ImagePath, UriKind.Relative));
+                var image = new System.Windows.Media.Imaging.BitmapImage();
+                image.BeginInit();
+                image.UriSource = new Uri(product.ImagePath, UriKind.Relative);
+                image.EndInit();
                 productControl.ProductImage.Source = image;
 
                 // Add to WrapPanel

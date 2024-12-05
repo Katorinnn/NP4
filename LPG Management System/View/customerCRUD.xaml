@@ -8,15 +8,15 @@
         Title="customerCRUD" Height="450" Width="500" WindowStartupLocation="CenterScreen" AutomationProperties.IsRequiredForForm="True" FontFamily="Century">
     <Grid>
         <Grid Margin="-1,-2,1,2">
-            <Label Content="Customer Name" HorizontalAlignment="Left" Height="27" Margin="111,135,0,0" VerticalAlignment="Top" Width="108"/>
-            <Label Content="Address" HorizontalAlignment="Left" Height="28" Margin="110,228,0,0" VerticalAlignment="Top" Width="108"/>
-            <Label Content="Contact Number" HorizontalAlignment="Left" Height="25" Margin="110,182,0,0" VerticalAlignment="Top" Width="108"/>
-            <Label Content="Tank ID" HorizontalAlignment="Left" Height="25" Margin="110,88,0,0" VerticalAlignment="Top" Width="108"/>
-            <TextBox x:Name="customertxtBox" HorizontalAlignment="Left" Height="25" Margin="258,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
-            <TextBox x:Name="contacttxtBox" HorizontalAlignment="Left" Height="25" Margin="259,181,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
-            <TextBox x:Name="addresstxtBox" HorizontalAlignment="Left" Height="25" Margin="260,229,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
+            <Label Content="Customer Name:" HorizontalAlignment="Left" Height="27" Margin="111,135,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI"/>
+            <Label Content="Address:" HorizontalAlignment="Left" Height="28" Margin="110,228,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI"/>
+            <Label Content="Contact Number:" HorizontalAlignment="Left" Height="25" Margin="110,182,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI"/>
+            <Label Content="Tank ID:" HorizontalAlignment="Left" Height="25" Margin="110,88,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI"/>
+            <TextBox x:Name="customertxtBox" HorizontalAlignment="Left" Height="25" Margin="258,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" FontFamily="Segoe UI"/>
+            <TextBox x:Name="contacttxtBox" HorizontalAlignment="Left" Height="25" Margin="259,181,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" FontFamily="Segoe UI"/>
+            <TextBox x:Name="addresstxtBox" HorizontalAlignment="Left" Height="25" Margin="260,229,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" FontFamily="Segoe UI"/>
             <Button x:Name="addBtn" Content="ADD" HorizontalAlignment="Left" Height="32" Margin="354,332,0,0" VerticalAlignment="Top" Width="81" Cursor="Hand" Click="addBtn_Click"/>
-            <TextBox x:Name="tankIDtxtBox" HorizontalAlignment="Left" Height="25" Margin="258,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
+            <TextBox x:Name="tankIDtxtBox" HorizontalAlignment="Left" Height="25" Margin="258,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" FontFamily="Segoe UI"/>
 
         </Grid>
 
