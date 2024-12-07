@@ -24,5 +24,10 @@ namespace LPG_Management_System.View.UserControls
         {
             InitializeComponent();
         }
+
+            private void Product_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("Product clicked!");
+        }
     }
 }

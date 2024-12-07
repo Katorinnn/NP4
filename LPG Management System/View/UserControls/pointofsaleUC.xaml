@@ -15,7 +15,7 @@
                 <ColumnDefinition Width="0*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Label Content="NP4 GAS RETAIL STORE" Height="67" Margin="0,24,0,0" VerticalAlignment="Top" Width="268" HorizontalAlignment="Center" FontSize="20" Grid.Column="1"/>
+            <Label Content="NP4 GAS RETAIL STORE" Height="31" Margin="0,24,0,0" VerticalAlignment="Top" Width="268" HorizontalAlignment="Center" FontSize="20" Grid.Column="1"/>
 
 
             <Label x:Name="BrandLabel" Content="" Height="39" Margin="15,170,0,0" VerticalAlignment="Top" Width="161" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
@@ -55,7 +55,7 @@
         <Label x:Name="ChangeLabel" Content="₱ 0.00" HorizontalAlignment="Left" Height="62" Margin="435,556,0,0" VerticalAlignment="Top" Width="200" FontSize="20" />
 
         <!-- Grid for Products and Kilogram Options -->
-        <Grid HorizontalAlignment="Left" Height="712" Margin="610,22,0,0" VerticalAlignment="Top" Width="588" Background="#FF005F8C">
+        <Grid HorizontalAlignment="Left" Height="784" Margin="610,22,0,0" VerticalAlignment="Top" Width="588" Background="#FF005F8C">
             <!-- Product Buttons -->
 
             <!-- Coastal Kilogram Buttons -->

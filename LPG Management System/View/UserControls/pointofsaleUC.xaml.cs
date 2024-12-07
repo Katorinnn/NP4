@@ -1,4 +1,5 @@
 ﻿using LPG_Management_System.View.Windows;
+using MySql.Data.MySqlClient;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,6 +11,9 @@ namespace LPG_Management_System.View.UserControls
     /// </summary>
     public partial class pointofsaleUC : UserControl
     {
+
+        private readonly string connectionString = "server=localhost;database=db_lpgpos;user=root;";
+
         private Button currentKgButton;
 
         public class ReceiptItem
@@ -197,16 +201,77 @@ namespace LPG_Management_System.View.UserControls
         }
 
         //products
+        private List<ProductModel> GetProductsFromDatabase()
+        {
+            var productList = new List<ProductModel>();
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = "SELECT brandName, price, productImage FROM tbl_inventory";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var product = new ProductModel
+                                {
+                                    BrandName = reader["brandName"].ToString(),
+                                    Price = $"₱{Convert.ToDecimal(reader["price"]):F2}"
+                                };
+
+                                // Check if the BLOB is not null
+                                if (!reader.IsDBNull(reader.GetOrdinal("productImage")))
+                                {
+                                    // Retrieve the BLOB data and convert it to a Base64 string
+                                    var imageBytes = (byte[])reader["productImage"];
+                                    product.ImageSource = ConvertToImageSource(imageBytes);
+                                }
+
+                                productList.Add(product);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error retrieving data: {ex.Message}");
+                }
+            }
+
+            return productList;
+        }
+        public class ProductModel
+        {
+            public string BrandName { get; set; }
+            public string Price { get; set; }
+            public System.Windows.Media.ImageSource ImageSource { get; set; }
+        }
+
+
+        private System.Windows.Media.ImageSource ConvertToImageSource(byte[] imageBytes)
+        {
+            using (var ms = new System.IO.MemoryStream(imageBytes))
+            {
+                var image = new System.Windows.Media.Imaging.BitmapImage();
+                image.BeginInit();
+                image.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
+                image.StreamSource = ms;
+                image.EndInit();
+                return image;
+            }
+        }
         private void LoadProducts()
         {
-            // Example data for products
-            var products = new List<ProductModel>
-            {
-                new ProductModel { BrandName = "Solane", Price = "₱800", ImagePath = "/Images/solanesample.jpg" },
-                //new ProductModel { BrandName = "Gaz Lite", Price = "₱600", ImagePath = "/Images/gazlite.jpg" },
-                new ProductModel { BrandName = "Regasco", Price = "₱500", ImagePath = "/Images/RegascoSample.jpg" },
-                new ProductModel { BrandName = "Regasco", Price = "₱800", ImagePath = "/Images/RegascoBig.png" }
-            };
+            // Get products from the database
+            var products = GetProductsFromDatabase();
+
+            // Clear existing items in the WrapPanel
+            ProductsPanel.Children.Clear();
 
             // Create Product controls and add them to the WrapPanel
             foreach (var product in products)
@@ -216,22 +281,12 @@ namespace LPG_Management_System.View.UserControls
                 productControl.PriceLabel.Content = product.Price;
 
                 // Set the image source
-                var image = new System.Windows.Media.Imaging.BitmapImage();
-                image.BeginInit();
-                image.UriSource = new Uri(product.ImagePath, UriKind.Relative);
-                image.EndInit();
-                productControl.ProductImage.Source = image;
+                productControl.ProductImage.Source = product.ImageSource;
 
                 // Add to WrapPanel
                 ProductsPanel.Children.Add(productControl);
             }
         }
-    }
 
-    public class ProductModel
-    {
-        public string BrandName { get; set; }
-        public string Price { get; set; }
-        public string ImagePath { get; set; }
     }
 }
