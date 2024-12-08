@@ -5,7 +5,7 @@
 namespace LPG_Management_System.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -44,16 +44,29 @@ namespace LPG_Management_System.Migrations
                 name: "tbl_inventory",
                 columns: table => new
                 {
-                    TankId = table.Column<int>(type: "INTEGER", nullable: false)
+                    TankID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    productName = table.Column<string>(type: "TEXT", nullable: false),
-                    size = table.Column<string>(type: "TEXT", nullable: false),
-                    price = table.Column<string>(type: "TEXT", nullable: false),
-                    Image = table.Column<byte[]>(type: "BLOB", nullable: false)
+                    ProductName = table.Column<string>(type: "TEXT", nullable: false),
+                    Size = table.Column<string>(type: "TEXT", nullable: false),
+                    Price = table.Column<decimal>(type: "TEXT", nullable: false),
+                    ProductImage = table.Column<byte[]>(type: "BLOB", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tbl_inventory", x => x.TankId);
+                    table.PrimaryKey("PK_tbl_inventory", x => x.TankID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tbl_reports",
+                columns: table => new
+                {
+                    ReportId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ReportDetails = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tbl_reports", x => x.ReportId);
                 });
         }
 
@@ -68,6 +81,9 @@ namespace LPG_Management_System.Migrations
 
             migrationBuilder.DropTable(
                 name: "tbl_inventory");
+
+            migrationBuilder.DropTable(
+                name: "tbl_reports");
         }
     }
 }

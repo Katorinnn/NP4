@@ -18,7 +18,16 @@
             <!-- Search TextBox -->
 
             <!-- StackPanel for New Button -->
-            <Button Name="FilterButton" Content="Filter" Width="111" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,135,0,0" Click="FilterButton_Click" Grid.Row="1"/>
+            <Button Name="FilterButton" Content="Filter" Width="111" Height="36" VerticalAlignment="Top" 
+        HorizontalAlignment="Left" Margin="350,135,0,0" Grid.Row="1">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Filter by Brand" />
+                        <MenuItem Header="Filter by Size"/>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+
             <Button Name="ClearFilterButton" Content="Clear" Width="111" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="500,135,0,0" Click="ClearFilterButton_Click" Grid.Row="1"/>
             <TextBox x:Name="TextBox" HorizontalAlignment="Left" Background="WhiteSmoke" Height="36" 
                  Margin="30,135,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" 
@@ -40,7 +49,7 @@
                   SelectionUnit="FullRow" AutoGenerateColumns="False" MinRowHeight="30" 
                   RowHeaderWidth="0" FontFamily="Segoe UI"
                   HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" 
-                  ScrollViewer.CanContentScroll="True" SelectionChanged="inventoryDG_SelectionChanged" Height="500" Width="1200">
+                  ScrollViewer.CanContentScroll="True"  Height="500" Width="1200">
 
                 <!-- DataGrid Column Header Style -->
                 <DataGrid.ColumnHeaderStyle>

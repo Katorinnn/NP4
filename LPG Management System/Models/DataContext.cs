@@ -15,7 +15,14 @@ namespace LPG_Management_System.Models
         }
         public DbSet<InventoryTable> tbl_inventory { get; set; }
         public DbSet<AdminTable> tbl_admin { get; set; }
-
         public DbSet<CustomersTable> tbl_customers { get; set; }
+        public DbSet<Report> tbl_reports { get; set; }
+
+        public class Report
+        {
+            public int ReportId { get; set; }
+            // Add other columns from the tbl_reports table here
+            public string ReportDetails { get; set; }  // Example column
+        }
     }
 }

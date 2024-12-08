@@ -1,5 +1,5 @@
-﻿using LPG_Management_System.View.Windows;
-using MySql.Data.MySqlClient;
+﻿using LPG_Management_System.Models;
+using LPG_Management_System.View.Windows;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -201,57 +201,24 @@ namespace LPG_Management_System.View.UserControls
         }
 
         //products
-        private List<ProductModel> GetProductsFromDatabase()
+        private List<InventoryTable> GetProductsFromDatabase()
         {
-            var productList = new List<ProductModel>();
+            var productList = new List<InventoryTable>();
 
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            try
             {
-                try
+                using (var dbContext = new DataContext())
                 {
-                    conn.Open();
-                    string query = "SELECT brandName, price, productImage FROM tbl_inventory";
-
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                var product = new ProductModel
-                                {
-                                    BrandName = reader["brandName"].ToString(),
-                                    Price = $"₱{Convert.ToDecimal(reader["price"]):F2}"
-                                };
-
-                                // Check if the BLOB is not null
-                                if (!reader.IsDBNull(reader.GetOrdinal("productImage")))
-                                {
-                                    // Retrieve the BLOB data and convert it to a Base64 string
-                                    var imageBytes = (byte[])reader["productImage"];
-                                    product.ImageSource = ConvertToImageSource(imageBytes);
-                                }
-
-                                productList.Add(product);
-                            }
-                        }
-                    }
+                    productList = dbContext.tbl_inventory.ToList();
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error retrieving data: {ex.Message}");
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error retrieving data: {ex.Message}");
             }
 
             return productList;
         }
-        public class ProductModel
-        {
-            public string BrandName { get; set; }
-            public string Price { get; set; }
-            public System.Windows.Media.ImageSource ImageSource { get; set; }
-        }
-
 
         private System.Windows.Media.ImageSource ConvertToImageSource(byte[] imageBytes)
         {
@@ -267,7 +234,7 @@ namespace LPG_Management_System.View.UserControls
         }
         private void LoadProducts()
         {
-            // Get products from the database
+            // Get products from the database using EF
             var products = GetProductsFromDatabase();
 
             // Clear existing items in the WrapPanel
@@ -277,16 +244,18 @@ namespace LPG_Management_System.View.UserControls
             foreach (var product in products)
             {
                 var productControl = new Product();
-                productControl.BrandLabel.Content = product.BrandName;
-                productControl.PriceLabel.Content = product.Price;
+                productControl.BrandLabel.Content = product.ProductName;
+                productControl.PriceLabel.Content = $"₱{product.Price:F2}";
 
-                // Set the image source
-                productControl.ProductImage.Source = product.ImageSource;
+                // Set the image source if there is an image
+                if (product.ProductImage != null && product.ProductImage.Length > 0)
+                {
+                    productControl.ProductImage.Source = ConvertToImageSource(product.ProductImage);
+                }
 
                 // Add to WrapPanel
                 ProductsPanel.Children.Add(productControl);
             }
         }
-
     }
 }

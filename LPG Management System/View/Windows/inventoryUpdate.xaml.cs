@@ -1,31 +1,18 @@
-﻿using MySql.Data.MySqlClient;
+﻿using LPG_Management_System.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace LPG_Management_System.View
 {
-    /// <summary>
-    /// Interaction logic for inventoryCRUD.xaml
-    /// </summary>
     public partial class inventoryUpdate : Window
     {
+        public int TankId { get; set; }
 
-        string connectionString = "server=localhost;database=db_lpgpos;user=root;";
-        public string TankId { get; set; }    
         public inventoryUpdate(int tankID)
         {
             InitializeComponent();
+            TankId = tankID;
             LoadItemData(tankID);
         }
 
@@ -33,23 +20,20 @@ namespace LPG_Management_System.View
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (var dbContext = new DataContext())
                 {
-                    connection.Open();
-                    string query = "SELECT * FROM tbl_inventory WHERE tankID = @tankID"; // Assuming tankID is a column
-                    MySqlCommand cmd = new MySqlCommand(query, connection);
-                    cmd.Parameters.AddWithValue("@tankID", tankId);
-
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    var inventoryItem = dbContext.tbl_inventory.FirstOrDefault(i => i.TankID == tankId);
+                    if (inventoryItem != null)
                     {
-                        if (reader.Read())
-                        {
-                            // Populate the controls (e.g., TextBoxes) with the data from the database
-                            tankIDtxtBox.Text = reader["tankID"].ToString();
-                            brandtxtBox.Text = reader["brandName"].ToString();
-                            sizetxtBox.Text = reader["size"].ToString();
-                            pricetxtBox.Text = reader["price"].ToString();
-                        }
+                        // Populate the controls (e.g., TextBoxes) with the data from the database
+                        tankIDtxtBox.Text = inventoryItem.TankID.ToString();
+                        brandtxtBox.Text = inventoryItem.ProductName;
+                        sizetxtBox.Text = inventoryItem.Size;
+                        pricetxtBox.Text = inventoryItem.Price.ToString("F2");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Item not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
@@ -74,28 +58,24 @@ namespace LPG_Management_System.View
 
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (var dbContext = new DataContext())
                 {
-                    connection.Open();
-                    string query = "UPDATE tbl_inventory SET brandName = @brandname, size = @size, price = @price WHERE tankID = @tankID";
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    var inventoryItem = dbContext.tbl_inventory.FirstOrDefault(i => i.TankID == int.Parse(tankID));
+                    if (inventoryItem != null)
                     {
-                        command.Parameters.AddWithValue("@tankID", tankID);
-                        command.Parameters.AddWithValue("@brandname", brandname);
-                        command.Parameters.AddWithValue("@size", size);
-                        command.Parameters.AddWithValue("@price", price);
+                        inventoryItem.ProductName = brandname;
+                        inventoryItem.Size = size;
+                        inventoryItem.Price = decimal.Parse(price);
 
-                        int rowsAffected = command.ExecuteNonQuery();
-                        if (rowsAffected > 0)
-                        {
-                            MessageBox.Show("Brand updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                            this.DialogResult = true;
-                            this.Close();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Failed to update brand.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
+                        dbContext.SaveChanges();  // Save the changes to the database
+
+                        MessageBox.Show("Inventory updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        this.DialogResult = true;
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Item not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }

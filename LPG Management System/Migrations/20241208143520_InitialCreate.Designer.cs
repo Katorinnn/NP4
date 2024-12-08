@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LPG_Management_System.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241207154643_Initial")]
-    partial class Initial
+    [Migration("20241208143520_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
 
             modelBuilder.Entity("LPG_Management_System.Models.AdminTable", b =>
                 {
@@ -64,29 +64,43 @@ namespace LPG_Management_System.Migrations
                     b.ToTable("tbl_customers");
                 });
 
-            modelBuilder.Entity("LPG_Management_System.Models.InventoryTable", b =>
+            modelBuilder.Entity("LPG_Management_System.Models.DataContext+Report", b =>
                 {
-                    b.Property<int>("TankId")
+                    b.Property<int>("ReportId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<byte[]>("Image")
+                    b.Property<string>("ReportDetails")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ReportId");
+
+                    b.ToTable("tbl_reports");
+                });
+
+            modelBuilder.Entity("LPG_Management_System.Models.InventoryTable", b =>
+                {
+                    b.Property<int>("TankID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("ProductImage")
                         .IsRequired()
                         .HasColumnType("BLOB");
 
-                    b.Property<string>("price")
+                    b.Property<string>("ProductName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("productName")
+                    b.Property<string>("Size")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("size")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("TankId");
+                    b.HasKey("TankID");
 
                     b.ToTable("tbl_inventory");
                 });

@@ -1,31 +1,18 @@
-﻿using MySql.Data.MySqlClient;
+﻿using LPG_Management_System.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace LPG_Management_System.View
 {
-    /// <summary>
-    /// Interaction logic for inventoryCRUD.xaml
-    /// </summary>
     public partial class customerUpdate : Window
     {
+        public int CustomerId { get; set; }
 
-        string connectionString = "server=localhost;database=db_lpgpos;user=root;";
-        public string customerId { get; set; }
         public customerUpdate(int customerID)
         {
             InitializeComponent();
+            CustomerId = customerID;
             LoadItemData(customerID);
         }
 
@@ -33,24 +20,17 @@ namespace LPG_Management_System.View
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (var dbContext = new DataContext())
                 {
-                    connection.Open();
-                    string query = "SELECT * FROM tbl_customers WHERE customerID = @customerID"; // Assuming tankID is a column
-                    MySqlCommand cmd = new MySqlCommand(query, connection);
-                    cmd.Parameters.AddWithValue("@customerID", customerId);
-
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    var customer = dbContext.tbl_customers.FirstOrDefault(c => c.CustomerID == customerId);
+                    if (customer != null)
                     {
-                        if (reader.Read())
-                        {
-                            // Populate the controls (e.g., TextBoxes) with the data from the database
-                            customerIDtxtBox.Text = reader["customerID"].ToString();
-                            tankIDtxtBox.Text = reader["tankID"].ToString();
-                            cuNametxtBox.Text = reader["customerName"].ToString();
-                            contacttxtBox.Text = reader["contactNumber"].ToString();
-                            addresstxtBox.Text = reader["address"].ToString();
-                        }
+                        // Populate the controls (e.g., TextBoxes) with the data from the database
+                        customerIDtxtBox.Text = customer.CustomerID.ToString();
+                        tankIDtxtBox.Text = customer.TankID.ToString();
+                        cuNametxtBox.Text = customer.CustomerName;
+                        contacttxtBox.Text = customer.ContactNumber;
+                        addresstxtBox.Text = customer.Address;
                     }
                 }
             }
@@ -61,8 +41,7 @@ namespace LPG_Management_System.View
         }
 
         private void updateBtn_Click(object sender, RoutedEventArgs e)
-{
-            string customerID = customerIDtxtBox.Text;
+        {
             string tankID = tankIDtxtBox.Text;
             string customerName = cuNametxtBox.Text;
             string contactNumber = contacttxtBox.Text;
@@ -76,28 +55,25 @@ namespace LPG_Management_System.View
 
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (var dbContext = new DataContext())
                 {
-                    connection.Open();
-                    string query = "UPDATE tbl_customers SET customerName = @customerName, contactNumber = @contactNumber, address = @address WHERE customerID = @customerID";
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    var customer = dbContext.tbl_customers.FirstOrDefault(c => c.CustomerID == CustomerId);
+                    if (customer != null)
                     {
-                        command.Parameters.AddWithValue("@tankID", tankID);
-                        command.Parameters.AddWithValue("@customerName", customerName);
-                        command.Parameters.AddWithValue("@contactNumber", contactNumber);
-                        command.Parameters.AddWithValue("@address", address);
+                        customer.TankID = int.Parse(tankID);
+                        customer.CustomerName = customerName;
+                        customer.ContactNumber = contactNumber;
+                        customer.Address = address;
 
-                        int rowsAffected = command.ExecuteNonQuery();
-                        if (rowsAffected > 0)
-                        {
-                            MessageBox.Show("Customer updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                            this.DialogResult = true;
-                            this.Close();
-                        }
-                        else
-                        {
-                            MessageBox.Show("No records were updated.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
+                        dbContext.SaveChanges();  // Save the changes to the database
+
+                        MessageBox.Show("Customer updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        this.DialogResult = true;
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Customer not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
@@ -107,10 +83,9 @@ namespace LPG_Management_System.View
             }
         }
 
-
-        private void tankIDtxtBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void tankIDtxtBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-
+            // Handle text change if necessary
         }
     }
 }
