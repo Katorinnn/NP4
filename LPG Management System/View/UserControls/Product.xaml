@@ -4,13 +4,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
+             MouseLeftButtonDown="Product_MouseLeftButtonDown"
              mc:Ignorable="d" 
-             d:DesignHeight="150" d:DesignWidth="150" Foreground="White" Margin="5,5,5,5">
-    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="5">
+             d:DesignHeight="190" d:DesignWidth="200" Height="180" Width="180" Foreground="White" Margin="7,7,7,7">
+    <UserControl.Resources>
+        <Style x:Key="HoverBorderStyle" TargetType="Border">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="Blue"/>
+                    <Setter Property="BorderThickness" Value="3"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="5" Style="{StaticResource HoverBorderStyle}">
         <Grid>
-            <Label x:Name="BrandLabel" Content="Brandname" HorizontalAlignment="Left" Margin="15,124,0,0" VerticalAlignment="Top"/>
-            <Label x:Name="PriceLabel" Content="Price" HorizontalAlignment="Left" Margin="102,125,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.479,-0.929"/>
-            <Image x:Name="ProductImage" Height="111" Margin="30,10,38,0" VerticalAlignment="Top" />
+            <Label x:Name="BrandLabel" Content="Brandname" HorizontalAlignment="Left" Margin="0,152,0,0" VerticalAlignment="Top" Width="100"/>
+            <Label x:Name="PriceLabel" Content="Price" HorizontalAlignment="Left" Margin="100,152,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.479,-0.929"/>
+            <Image x:Name="ProductImage" Height="100" Width="100" Margin="10,10,10,10" VerticalAlignment="Top" Cursor="Hand" />
         </Grid>
     </Border>
+
 </UserControl>

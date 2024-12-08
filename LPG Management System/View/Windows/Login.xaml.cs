@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿using LPG_Management_System.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,18 +16,11 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace LPG_Management_System
 {
-    /// <summary>
-    /// Interaction logic for Login.xaml
-    /// </summary>
     public partial class Login : Window
     {
         public Login()
         {
             InitializeComponent();
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -40,11 +33,8 @@ namespace LPG_Management_System
 
             if (ValidateLogin(username, password))
             {
-                // Clear error states if login is successful
-
                 Dashboard dashboard = new Dashboard();
                 dashboard.Show();
-
                 this.Close();
             }
             else
@@ -52,26 +42,26 @@ namespace LPG_Management_System
                 // Highlight errors
                 if (string.IsNullOrWhiteSpace(username))
                 {
-                    unametxtBox.BorderBrush = Brushes.Red;
+                    unametxtBox.BorderBrush = System.Windows.Media.Brushes.Red;
                     unameError.Text = "Username cannot be empty";
                     unameError.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    unametxtBox.BorderBrush = Brushes.Red;
+                    unametxtBox.BorderBrush = System.Windows.Media.Brushes.Red;
                     unameError.Text = "Invalid username";
                     unameError.Visibility = Visibility.Visible;
                 }
 
                 if (string.IsNullOrWhiteSpace(password))
                 {
-                    pwordBox.BorderBrush = Brushes.Red;
+                    pwordBox.BorderBrush = System.Windows.Media.Brushes.Red;
                     pwordError.Text = "Password cannot be empty";
                     pwordError.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    pwordBox.BorderBrush = Brushes.Red;
+                    pwordBox.BorderBrush = System.Windows.Media.Brushes.Red;
                     pwordError.Text = "Invalid password";
                     pwordError.Visibility = Visibility.Visible;
                 }
@@ -80,53 +70,44 @@ namespace LPG_Management_System
 
         private void ResetValidation()
         {
-            unametxtBox.BorderBrush = Brushes.Gray;
+            unametxtBox.BorderBrush = System.Windows.Media.Brushes.Gray;
             unameError.Visibility = Visibility.Collapsed;
-            pwordBox.BorderBrush = Brushes.Gray;
+            pwordBox.BorderBrush = System.Windows.Media.Brushes.Gray;
             pwordError.Visibility = Visibility.Collapsed;
         }
 
-
         private bool ValidateLogin(string username, string password)
         {
-            string connectionString = "server=localhost;database=db_lpgpos;user=root;";
-            string query = "SELECT COUNT(*) FROM tbl_admin WHERE username = @username AND password = @password";
-
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var context = new DataContext())
                 {
-                    conn.Open();
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@username", username);
-                        cmd.Parameters.AddWithValue("@password", password);
+                    var admin = context.tbl_admin
+                        .FirstOrDefault(a => a.username == username && a.password == password);
 
-                        int result = Convert.ToInt32(cmd.ExecuteScalar());
-                        return result > 0;
-                    }
+                    return admin != null;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Database Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
         }
 
         private void unametxtBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
         }
 
         private void loginBtn_MouseEnter(object sender, MouseEventArgs e)
         {
-            loginBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#8ecae6"));
+            loginBtn.Background = new System.Windows.Media.SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#8ecae6"));
         }
 
         private void loginBtn_MouseLeave(object sender, MouseEventArgs e)
         {
-            
+            loginBtn.Background = System.Windows.Media.Brushes.Transparent;
         }
     }
 }
+

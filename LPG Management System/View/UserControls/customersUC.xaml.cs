@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using LPG_Management_System.Models;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -35,21 +36,12 @@ namespace LPG_Management_System.View.UserControls
         {
             try
             {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (var context = new DataContext())
                 {
-                    connection.Open();
-
-                    // Query to fetch customer data
-                    string query = "SELECT * FROM tbl_customers";
-
-                    MySqlCommand cmd = new MySqlCommand(query, connection);
-                    MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-
-                    DataTable dataTable = new DataTable();
-                    adapter.Fill(dataTable);
+                    var customers = context.tbl_customers.ToList(); // Fetch all customers
 
                     // Bind data to DataGrid
-                    customersDG.ItemsSource = dataTable.DefaultView;
+                    customersDG.ItemsSource = customers;
                 }
             }
             catch (Exception ex)
@@ -57,6 +49,7 @@ namespace LPG_Management_System.View.UserControls
                 MessageBox.Show("Error fetching data: " + ex.Message);
             }
         }
+
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -79,29 +72,19 @@ namespace LPG_Management_System.View.UserControls
         //SearchBar
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Get the text from the search TextBox
             string searchText = (sender as TextBox)?.Text;
 
             if (!string.IsNullOrEmpty(searchText))
             {
                 try
                 {
-                    using (MySqlConnection connection = new MySqlConnection(connectionString))
+                    using (var context = new DataContext())
                     {
-                        connection.Open();
+                        var filteredCustomers = context.tbl_customers
+                            .Where(c => c.CustomerName.Contains(searchText) || c.ContactNumber.Contains(searchText))
+                            .ToList();
 
-                        // Use a parameterized query to prevent SQL injection
-                        string query = "SELECT * FROM tbl_customers WHERE customerName LIKE @SearchText OR contactNumber LIKE @SearchText";
-
-                        MySqlCommand cmd = new MySqlCommand(query, connection);
-                        cmd.Parameters.AddWithValue("@SearchText", "%" + searchText + "%");
-
-                        MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                        DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
-
-                        // Bind filtered data to DataGrid
-                        customersDG.ItemsSource = dataTable.DefaultView;
+                        customersDG.ItemsSource = filteredCustomers;
                     }
                 }
                 catch (Exception ex)
@@ -111,10 +94,11 @@ namespace LPG_Management_System.View.UserControls
             }
             else
             {
-                // If the search box is empty, reload all data
+                // Reload all data if search is empty
                 LoadCustomersData();
             }
         }
+
 
         private void customersDG_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -221,7 +205,6 @@ namespace LPG_Management_System.View.UserControls
         // Delete button click event handler
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            // Get the ID of the selected item
             Button btn = sender as Button;
             int id = Convert.ToInt32(btn.Tag);  // Assuming the ID is bound to the Tag
 
@@ -232,19 +215,17 @@ namespace LPG_Management_System.View.UserControls
             {
                 try
                 {
-                    using (MySqlConnection connection = new MySqlConnection(connectionString))
+                    using (var context = new DataContext())
                     {
-                        connection.Open();
+                        var customer = context.tbl_customers.FirstOrDefault(c => c.CustomerID == id);
+                        if (customer != null)
+                        {
+                            context.tbl_customers.Remove(customer); // Remove the customer
+                            context.SaveChanges(); // Save changes to database
 
-                        // Delete query
-                        string query = "DELETE FROM tbl_customers WHERE customerID = @Id";
-                        MySqlCommand cmd = new MySqlCommand(query, connection);
-                        cmd.Parameters.AddWithValue("@Id", id);
-
-                        cmd.ExecuteNonQuery();  // Execute the deletion
-
-                        // Reload the DataGrid to reflect the changes
-                        LoadCustomersData();
+                            // Reload the DataGrid
+                            LoadCustomersData();
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -253,5 +234,6 @@ namespace LPG_Management_System.View.UserControls
                 }
             }
         }
+
     }
 }

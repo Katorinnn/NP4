@@ -30,7 +30,7 @@
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}" >
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <Image Source="Images/dashboard.png" Height="84" Width="69" Margin="10,0"/>
+                                <Image Source="/Images/dashboard.png" Height="84" Width="69" Margin="10,0"/>
                                 <TextBlock Text="Dashboard" FontSize="16" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
@@ -44,7 +44,7 @@
                         <Border Background="{TemplateBinding Background}" >
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <!-- Image for Customers button -->
-                                <Image Source="Images/customer.png" Height="84" Width="69" Margin="10,0"/>
+                                <Image Source="/Images/customer.png" Height="84" Width="69" Margin="10,0"/>
                                 <TextBlock Text="Customers" FontSize="16" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
@@ -57,7 +57,7 @@
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}" >
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <Image Source="Images/inventory.png" Height="84" Width="69" Margin="10,0"/>
+                                <Image Source="/Images/inventory.png" Height="84" Width="69" Margin="10,0"/>
                                 <TextBlock Text="Inventory" FontSize="16" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
@@ -71,7 +71,7 @@
                         <Border Background="{TemplateBinding Background}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <!-- Image for Point of Sale button -->
-                                <Image Source="Images/pos.png" Height="84" Width="69" Margin="10,0"/>
+                                <Image Source="/Images/pos.png" Height="84" Width="69" Margin="10,0"/>
                                 <TextBlock Text="Point of Sale" FontSize="16" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
@@ -84,7 +84,7 @@
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <Image Source="Images/reports.png" Height="84" Width="69" Margin="10,0"/>
+                                <Image Source="/Images/reports.png" Height="84" Width="69" Margin="10,0"/>
                                 <TextBlock Text="Reports" FontSize="16" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
@@ -97,7 +97,7 @@
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <Image Source="Images/settings.png" Height="84" Width="69" Margin="10,0"/>
+                                <Image Source="/Images/settings.png" Height="84" Width="69" Margin="10,0"/>
                                 <TextBlock Text="Settings" FontSize="16" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Border>
