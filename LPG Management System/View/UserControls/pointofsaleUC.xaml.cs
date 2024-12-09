@@ -1,6 +1,8 @@
 ﻿using LPG_Management_System.Models;
 using LPG_Management_System.View.Windows;
 using System;
+using System.Windows.Media.Imaging;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -11,8 +13,6 @@ namespace LPG_Management_System.View.UserControls
     /// </summary>
     public partial class pointofsaleUC : UserControl
     {
-
-        private readonly string connectionString = "server=localhost;database=db_lpgpos;user=root;";
 
         private Button currentKgButton;
 
@@ -222,16 +222,32 @@ namespace LPG_Management_System.View.UserControls
 
         private System.Windows.Media.ImageSource ConvertToImageSource(byte[] imageBytes)
         {
-            using (var ms = new System.IO.MemoryStream(imageBytes))
+            if (imageBytes == null || imageBytes.Length == 0)
             {
-                var image = new System.Windows.Media.Imaging.BitmapImage();
-                image.BeginInit();
-                image.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
-                image.StreamSource = ms;
-                image.EndInit();
-                return image;
+                MessageBox.Show("The image data is invalid or empty.", "Image Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return null;
+            }
+
+            try
+            {
+                using (var ms = new MemoryStream(imageBytes))
+                {
+                    var image = new BitmapImage();
+                    image.BeginInit();
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.StreamSource = ms;
+                    image.EndInit();
+                    return image;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading image: {ex.Message}", "Image Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return null;
             }
         }
+
+
         private void LoadProducts()
         {
             // Get products from the database using EF
