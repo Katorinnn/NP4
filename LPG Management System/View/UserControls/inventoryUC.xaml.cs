@@ -167,14 +167,4 @@ namespace LPG_Management_System.View.UserControls
             LoadCustomersData();
         }
     }
-
-    public class DataContext : DbContext
-    {
-        public DbSet<InventoryTable> tbl_inventory { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite("Data Source=inventory.db");
-        }
-    }
 }
