@@ -23,6 +23,8 @@ namespace LPG_Management_System.Models
             public int ReportId { get; set; }
             // Add other columns from the tbl_reports table here
             public string ReportDetails { get; set; }  // Example column
+
+            public string ReportQuattt { get; set; }  // Example column
         }
     }
 }

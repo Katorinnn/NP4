@@ -22,8 +22,6 @@ namespace LPG_Management_System.View.UserControls
     /// </summary>
     public partial class customersUC : UserControl
     {
-
-        private readonly string connectionString = "server=localhost;database=db_lpgpos;user=root;";
         public customersUC()
         {
             InitializeComponent();

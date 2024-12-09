@@ -78,10 +78,10 @@
 
                 <!-- Define DataGrid Columns -->
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Tank ID" Binding="{Binding tankID}" Width="210" />
-                    <DataGridTextColumn Header="Brand" Binding="{Binding brandName}" Width="210" />
-                    <DataGridTextColumn Header="Size (kg.)" Binding="{Binding size}" Width="210" />
-                    <DataGridTextColumn Header="Price" Binding="{Binding price}" Width="220" />
+                    <DataGridTextColumn Header="Tank ID" Binding="{Binding TankID}" Width="210" />
+                    <DataGridTextColumn Header="Brand" Binding="{Binding ProductName}" Width="210" />
+                    <DataGridTextColumn Header="Size (kg.)" Binding="{Binding Size}" Width="210" />
+                    <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="220" />
 
                     <!-- Actions Column (Edit and Delete Buttons) -->
                     <DataGridTemplateColumn Header="Actions" Width="220">
@@ -89,7 +89,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                     <!-- Edit Button -->
-                                    <Button Content="Edit" Tag="{Binding tankID}" Click="EditButton_Click" Width="75" Height="35" Background="Green"/>
+                                    <Button Content="Edit" Tag="{Binding TankID}" Click="EditButton_Click" Width="75" Height="35" Background="Green"/>
                                     <!-- <Button Content="Edit" Width="80" Height="30" Margin="5,0,5,0"
                                     Background="Green" Foreground="White" FontWeight="Bold"
                                     BorderThickness="0" Cursor="Hand"
@@ -101,7 +101,7 @@
                                     <Button Content="Delete" Width="75" Height="35" Margin="5,0,5,0"
                                     Background="#FF4500" Foreground="White" FontWeight="Bold"
                                     BorderThickness="0" Cursor="Hand"
-                                    Tag="{Binding tankID}" FontFamily="Segoe UI"
+                                    Tag="{Binding TankID}" FontFamily="Segoe UI"
                                     Click="DeleteButton_Click" />
                                     <!-- Bind to Delete Button Click Event -->
                                 </StackPanel>

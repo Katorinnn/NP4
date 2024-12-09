@@ -67,11 +67,11 @@
 
                 <!-- Define DataGrid Columns -->
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Customer ID" Binding="{Binding customerID}" Width="150" />
+                    <DataGridTextColumn Header="Customer ID" Binding="{Binding CustomerID}" Width="150" />
                     <DataGridTextColumn Header="Tank ID" Binding="{Binding TankID}" Width="150" />
-                    <DataGridTextColumn Header="Customer Name" Binding="{Binding customerName}" Width="190" />
+                    <DataGridTextColumn Header="Customer Name" Binding="{Binding CustomerName}" Width="190" />
                     <DataGridTextColumn Header="Contact Number" Binding="{Binding ContactNumber}" Width="210" />
-                    <DataGridTextColumn Header="Address" Binding="{Binding address}" Width="203" />
+                    <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="203" />
 
                     <!-- Actions Column (Edit and Delete Buttons) -->
                     <DataGridTemplateColumn Header="Actions" Width="220">
@@ -79,7 +79,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                     <!-- Edit Button -->
-                                    <Button Content="Edit" Tag="{Binding customerID}" Click="EditButton_Click" Width="75" Height="35" Background="Green"/>
+                                    <Button Content="Edit" Tag="{Binding CustomerID}" Click="EditButton_Click" Width="75" Height="35" Background="Green"/>
                                     <!-- <Button Content="Edit" Width="80" Height="30" Margin="5,0,5,0"
                 Background="Green" Foreground="White" FontWeight="Bold"
                 BorderThickness="0" Cursor="Hand"
@@ -91,7 +91,7 @@
                                     <Button Content="Delete" Width="75" Height="35" Margin="5,0,5,0"
                                     Background="#FF4500" Foreground="White" FontWeight="Bold"
                                     BorderThickness="0" Cursor="Hand"
-                                    Tag="{Binding customerID}" FontFamily="Segoe UI"
+                                    Tag="{Binding CustomerID}" FontFamily="Segoe UI"
                                     Click="DeleteButton_Click" />
                                     <!-- Bind to Delete Button Click Event -->
                                 </StackPanel>
