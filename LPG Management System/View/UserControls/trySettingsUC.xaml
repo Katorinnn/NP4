@@ -5,16 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="850" d:DesignWidth="1250">
+             d:DesignHeight="850" d:DesignWidth="1230">
     <Grid>
         <TabControl>
-            <TabItem Header="General Settings" FontSize="30" Width="623" Margin="0,0,0,0">
-                <TabItem.Background>
-                    <LinearGradientBrush EndPoint="0,1">
-                        <GradientStop Color="#FFF0F0F0"/>
-                        <GradientStop Color="White" Offset="1"/>
-                    </LinearGradientBrush>
-                </TabItem.Background>
+            <TabItem Header="General Settings" FontSize="28" Width="613" Margin="0,0,0,0" Background="#FF2C3E50">
                 <Grid Background="White" Margin="-1,0,-7,0">
                     <Label Content="Company Details" HorizontalAlignment="Left" Height="47" Margin="24,30,0,0" VerticalAlignment="Top" Width="221" FontSize="25" FontWeight="Bold" FontFamily="Segoe UI"/>
                     <Label Content="Address:" HorizontalAlignment="Left" Height="35" Margin="51,405,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontFamily="Segoe UI"/>
@@ -35,7 +29,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Notification Setting" FontSize="30" Margin="0,0,0,0" Width="623">
+            <TabItem Header="Notification Setting" FontSize="28" Margin="0,0,0,0" Width="614" Background="#FF2C3E50">
                 <Grid Background="White"/>
             </TabItem>
         </TabControl>
