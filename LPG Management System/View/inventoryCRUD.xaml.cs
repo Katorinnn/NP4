@@ -1,13 +1,16 @@
 ﻿using LPG_Management_System.Models;
 using LPG_Management_System.View.UserControls;
 using System;
+using System.IO;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace LPG_Management_System.View
 {
     public partial class inventoryCRUD : Window
     {
         public int TankId { get; set; }
+        private byte[] selectedImageBytes;
 
         public inventoryCRUD(int tankID)
         {
@@ -27,30 +30,21 @@ namespace LPG_Management_System.View
 
         private void addBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Collect user input
             string tankIDText = tankIDtxtBox.Text;
             string brandname = brandtxtBox.Text;
             string size = sizetxtBox.Text;
-            string priceText = pricetxtBox.Text;  // Capture the price as a string
+            string priceText = pricetxtBox.Text;
 
-            // Validate input
-            if (string.IsNullOrEmpty(tankIDText) || string.IsNullOrEmpty(brandname) || string.IsNullOrEmpty(size) || string.IsNullOrEmpty(priceText))
+            if (string.IsNullOrEmpty(tankIDText) || string.IsNullOrEmpty(brandname) ||
+                string.IsNullOrEmpty(size) || string.IsNullOrEmpty(priceText) || selectedImageBytes == null)
             {
-                MessageBox.Show("Please fill in all the fields.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return; // Exit the method early
-            }
-
-            // Validate and parse tankID as an integer
-            if (!int.TryParse(tankIDText, out int tankID))
-            {
-                MessageBox.Show("Tank ID must be a valid number.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please fill in all the fields and select an image.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            // Validate and parse price as a decimal
-            if (!decimal.TryParse(priceText, out decimal price))
+            if (!int.TryParse(tankIDText, out int tankID) || !decimal.TryParse(priceText, out decimal price))
             {
-                MessageBox.Show("Price must be a valid decimal number.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Tank ID and Price must be valid numbers.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -58,23 +52,20 @@ namespace LPG_Management_System.View
             {
                 using (var db = new DataContext())
                 {
-                    // Create a new inventory record
                     var inventory = new InventoryTable
                     {
                         TankID = tankID,
                         ProductName = brandname,
                         Size = size,
-                        Price = price  // Use the decimal value for price
+                        Price = price,
+                        ProductImage = selectedImageBytes // Save the image as a BLOB
                     };
 
-                    // Add and save the new inventory item
                     db.tbl_inventory.Add(inventory);
                     db.SaveChanges();
 
                     MessageBox.Show("Inventory item added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.DialogResult = true;
-
-                    // Close the form
                     this.Close();
                 }
             }
@@ -85,12 +76,33 @@ namespace LPG_Management_System.View
         }
 
 
+
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             // Save logic here
             DialogResult = true; // Indicate success and close the dialog
             Close();
         }
+
+        private void imageSelectBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // Open a file dialog for selecting an image
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                // Load the selected image
+                string selectedFileName = openFileDialog.FileName;
+                selectedImageBytes = File.ReadAllBytes(selectedFileName);
+
+                // Display the selected image in the preview
+                productImagePreview.Source = new BitmapImage(new Uri(selectedFileName));
+            }
+        }
+
 
         //private void tankIDtxtBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         //{

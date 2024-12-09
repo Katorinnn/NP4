@@ -11,6 +11,10 @@
         <Label Content="Price:" HorizontalAlignment="Left" Height="28" Margin="72,226,0,0" VerticalAlignment="Top" Width="108"/>
         <Label Content="Kg:" HorizontalAlignment="Left" Height="25" Margin="72,180,0,0" VerticalAlignment="Top" Width="108"/>
         <Label Content="Tank ID:" HorizontalAlignment="Left" Height="25" Margin="72,86,0,0" VerticalAlignment="Top" Width="108"/>
+        
+        <Label Content="Image:" HorizontalAlignment="Left" Height="25" Margin="72,270,0,0" VerticalAlignment="Top" Width="108"/>
+        <Button x:Name="imageSelectBtn" Content="Select Image" HorizontalAlignment="Left" Height="25" Margin="220,270,0,0" VerticalAlignment="Top" Width="130" Click="imageSelectBtn_Click"/>
+        <Image x:Name="productImagePreview" HorizontalAlignment="Left" Height="100" Margin="220,310,0,0" VerticalAlignment="Top" Width="130" Stretch="Uniform"/>
         <TextBox x:Name="brandtxtBox" HorizontalAlignment="Left" Height="25" Margin="220,136,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
         <TextBox x:Name="sizetxtBox" HorizontalAlignment="Left" Height="25" Margin="221,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
         <TextBox x:Name="pricetxtBox" HorizontalAlignment="Left" Height="25" Margin="222,227,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130"/>
