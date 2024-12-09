@@ -21,17 +21,12 @@ namespace LPG_Management_System.View.UserControls
             public string Brand { get; set; }
             public string Size { get; set; }
             public double Price { get; set; }
+            public int Quantity { get; set; } = 1;
+            public double Total => Price * Quantity;
         }
 
-        private List<ReceiptItem> receiptItems = new List<ReceiptItem>();
 
-        private readonly Dictionary<string, Dictionary<string, double>> gasPrices = new Dictionary<string, Dictionary<string, double>>()
-        {
-            { "Coastal", new Dictionary<string, double> { { "5kg", 500.0 }, { "11kg", 1000.0 } } },
-            { "Gaz Lite", new Dictionary<string, double> { { "230g", 100.0 }, { "330g", 150.0 } } },
-            { "Solane", new Dictionary<string, double> { { "11kg", 1100.0 } } },
-            { "Regasco", new Dictionary<string, double> { { "5kg", 550.0 }, { "2.7kg", 300.0 }, { "11kg", 1050.0 } } }
-        };
+        private List<ReceiptItem> receiptItems = new List<ReceiptItem>();
         public pointofsaleUC()
         {
             InitializeComponent();
@@ -44,87 +39,6 @@ namespace LPG_Management_System.View.UserControls
             Dashboard dashboard = new Dashboard();
             dashboard.Show();
         }
-
-        private void ProductButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Hide all panels initially
-            CoastalPanel.Visibility = Visibility.Collapsed;
-            GazLitePanel.Visibility = Visibility.Collapsed;
-            SolanePanel.Visibility = Visibility.Collapsed;
-            RegascoPanel.Visibility = Visibility.Collapsed;
-
-            if (sender is Button button)
-            {
-                string selectedBrand = button.Content.ToString();
-                BrandLabel.Content = $"Brand: {selectedBrand}";
-
-                // Show the corresponding panel based on the selected brand
-                switch (selectedBrand)
-                {
-                    case "Coastal":
-                        CoastalPanel.Visibility = Visibility.Visible;
-                        break;
-                    case "Gaz Lite":
-                        GazLitePanel.Visibility = Visibility.Visible;
-                        break;
-                    case "Solane":
-                        SolanePanel.Visibility = Visibility.Visible;
-                        break;
-                    case "Regasco":
-                        RegascoPanel.Visibility = Visibility.Visible;
-                        break;
-                }
-            }
-        }
-
-
-        private void SizeButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button)
-            {
-                currentKgButton = button;
-
-                // Get the size and display it in the label
-                string selectedSize = button.Content.ToString();
-                //SizeLabel.Content = $"Size: {selectedSize}";
-
-                // Position the popup relative to the button
-                KgPopup.PlacementTarget = button;
-                KgPopup.Visibility = Visibility.Visible;
-                KgPopup.IsOpen = true;
-            }
-        }
-
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (currentKgButton != null)
-            {
-                string size = currentKgButton.Content.ToString();
-                string brand = BrandLabel.Content.ToString();
-
-                // Set a mock price (you can fetch the real price from a database)
-                double price = 500.00; // Replace with actual price logic
-
-                // Add to receipt list
-                receiptItems.Add(new ReceiptItem
-                {
-                    Brand = brand,
-                    Size = size,
-                    Price = price
-                });
-
-                // Update Receipt Display
-                UpdateReceiptDisplay();
-
-                // Update Total Price
-                UpdateTotalPrice();
-
-                // Close the popup
-                KgPopup.IsOpen = false;
-                KgPopup.Visibility = Visibility.Collapsed;
-            }
-        }
-
         private void UpdateReceiptDisplay()
         {
             ReceiptItemsPanel.Children.Clear();
@@ -137,28 +51,31 @@ namespace LPG_Management_System.View.UserControls
                 var brandLabel = new Label { Content = item.Brand, Width = 150, FontSize = 16 };
                 var sizeLabel = new Label { Content = item.Size, Width = 100, FontSize = 16 };
                 var priceLabel = new Label { Content = $"₱{item.Price:F2}", Width = 100, FontSize = 16 };
+                var quantityLabel = new Label { Content = $"Qty: {item.Quantity}", Width = 100, FontSize = 16 };
+                var totalLabel = new Label { Content = $"₱{item.Total:F2}", Width = 100, FontSize = 16 };
 
                 itemPanel.Children.Add(brandLabel);
                 itemPanel.Children.Add(sizeLabel);
                 itemPanel.Children.Add(priceLabel);
+                itemPanel.Children.Add(quantityLabel);
+                itemPanel.Children.Add(totalLabel);
 
                 ReceiptItemsPanel.Children.Add(itemPanel);
             }
         }
 
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Close the popup
-            KgPopup.IsOpen = false;
-            KgPopup.Visibility = Visibility.Collapsed;
-        }
-
         //Payment Options
         private void cashBtn_Click_1(object sender, RoutedEventArgs e)
         {
+            if (receiptItems.Count == 0)
+            {
+                // No products selected, show a warning message
+                MessageBox.Show("Please select at least one product before proceeding with payment.", "No Products Selected", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return; // Prevent further actions
+            }
+
             // Calculate the total price of receipt items
-            double totalPrice = receiptItems.Sum(item => item.Price);
+            double totalPrice = receiptItems.Sum(item => item.Total);
 
             // Create a new Payment window and pass the total price
             Payment paymentWindow = new Payment(totalPrice);
@@ -185,18 +102,50 @@ namespace LPG_Management_System.View.UserControls
             }
         }
 
-
         private void GcashBtn_Click(object sender, RoutedEventArgs e)
         {
-            double totalAmount = receiptItems.Sum(item => item.Price);
-            Payment payment = new Payment(totalAmount);
-            payment.ShowDialog();
+            if (receiptItems.Count == 0)
+            {
+                // No products selected, show a warning message
+                MessageBox.Show("Please select at least one product before proceeding with payment.", "No Products Selected", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return; // Prevent further actions
+            }
+
+            // Calculate the total price of receipt items
+            double totalPrice = receiptItems.Sum(item => item.Total);
+
+            // Create a new Payment window and pass the total price
+            Payment paymentWindow = new Payment(totalPrice);
+
+            // Show the Payment window as a dialog
+            if (paymentWindow.ShowDialog() == true)
+            {
+                // Get the payment amount entered by the user
+                double paymentAmount = paymentWindow.PaymentAmount;
+
+                // Calculate the change
+                double change = paymentAmount - totalPrice;
+
+                // Update the Change label
+                ChangeLabel.Content = change >= 0
+                    ? $"₱{change:F2}"
+                    : "Insufficient payment!";
+
+                // Show a warning if payment is insufficient
+                if (change < 0)
+                {
+                    MessageBox.Show("The payment amount is less than the total price.", "Payment Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
         }
 
         //Calculatipons of payment
         private void UpdateTotalPrice()
         {
-            double totalPrice = receiptItems.Sum(item => item.Price);
+            // Calculate the total price using the total of each receipt item
+            double totalPrice = receiptItems.Sum(item => item.Total);
+
+            // Update the total price label
             TotalPriceLabel.Content = $"₱{totalPrice:F2}";
         }
 
@@ -259,19 +208,47 @@ namespace LPG_Management_System.View.UserControls
             // Create Product controls and add them to the WrapPanel
             foreach (var product in products)
             {
-                var productControl = new Product();
+                var productControl = new Product
+                {
+                    DataContext = this
+                };
                 productControl.BrandLabel.Content = product.ProductName;
                 productControl.PriceLabel.Content = $"₱{product.Price:F2}";
+                productControl.SizeLabel.Content = product.Size;
 
-                // Set the image source if there is an image
                 if (product.ProductImage != null && product.ProductImage.Length > 0)
                 {
                     productControl.ProductImage.Source = ConvertToImageSource(product.ProductImage);
                 }
 
-                // Add to WrapPanel
                 ProductsPanel.Children.Add(productControl);
             }
         }
+
+        public void AddToReceipt(ReceiptItem item)
+        {
+            // Check if the item already exists in the receipt
+            var existingItem = receiptItems.FirstOrDefault(r => r.Brand == item.Brand && r.Size == item.Size && r.Price == item.Price);
+
+            if (existingItem != null)
+            {
+                // If the item exists, increase its quantity
+                existingItem.Quantity++;
+            }
+            else
+            {
+                // If the item does not exist, add it to the receipt list
+                receiptItems.Add(item);
+            }
+
+            // Update the receipt display
+            UpdateReceiptDisplay();
+
+            // Update the total price
+            UpdateTotalPrice();
+        }
+
+
+
     }
 }

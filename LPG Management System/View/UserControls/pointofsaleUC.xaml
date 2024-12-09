@@ -17,10 +17,15 @@
             </Grid.ColumnDefinitions>
             <Label Content="NP4 GAS RETAIL STORE" Height="31" Margin="0,24,0,0" VerticalAlignment="Top" Width="268" HorizontalAlignment="Center" FontSize="20" Grid.Column="1"/>
 
+            <!--<Label x:Name="BrandHeaderLabel" Content="Name" Height="39" Margin="15,100,0,0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
+            <Label x:Name="PriceHeaderLabel" Content="Price" Height="39" Margin="0,100,0,0" VerticalAlignment="Top" Width="100" HorizontalAlignment="Center" Grid.Column="1" FontSize="20"/>
+            <Label x:Name="QuantityHeaderLabel" Content="Quantity" Height="39" Margin="417,100,0,0" VerticalAlignment="Top" Width="119" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
+            -->
 
-            <Label x:Name="BrandLabel" Content="" Height="39" Margin="15,170,0,0" VerticalAlignment="Top" Width="161" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
-            <Label x:Name="SizeLabel" Content="" Height="39" Margin="203,173,0,0" VerticalAlignment="Top" Width="161" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
-            <Label x:Name="PriceLabel" Content="" Height="39" Margin="400,173,0,0" VerticalAlignment="Top" Width="161" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
+            <Label x:Name="BrandLabel" Content="" Height="39" Margin="15,150,0,0" VerticalAlignment="Top" Width="161" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
+            <Label x:Name="SizeLabel" Content="" Height="39" Margin="203,150,0,0" VerticalAlignment="Top" Width="161" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
+            <Label x:Name="PriceLabel" Content="" Height="39" Margin="393,150,0,0" VerticalAlignment="Top" Width="161" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
+            <Label x:Name="QuantityLabel" Content="" Height="39" Margin="389,150,0,0" VerticalAlignment="Top" Width="150" HorizontalAlignment="Left" Grid.Column="1" FontSize="20"/>
             <StackPanel x:Name="ReceiptItemsPanel" Margin="15,220,15,0" VerticalAlignment="Top" Grid.Column="1" />
         </Grid>
 
@@ -58,52 +63,34 @@
         <Grid HorizontalAlignment="Left" Height="713" Margin="600,22,0,0" VerticalAlignment="Top" Width="598" Background="#FF005F8C">
             <!-- Product Buttons -->
 
-            <!-- Coastal Kilogram Buttons -->
-
-            <!-- Coastal Kilogram Buttons -->
-
-            <!-- Coastal Kilogram Buttons -->
-            <Popup x:Name="KgPopup" Placement="Relative" StaysOpen="False" Visibility="Collapsed">
-                <StackPanel Orientation="Vertical" Background="White" Margin="0">
-                    <Button x:Name="AddButton" Content="Add" Width="100" Height="30" Margin="15,10,15,10" Click="AddButton_Click" />
-                    <Button x:Name="CancelButton" Content="Cancel" Width="100" Height="30" Margin="15,10,15,10" Click="CancelButton_Click" />
-                </StackPanel>
-            </Popup>
-
 
             <!-- Coastal Kilogram Buttons -->
             <StackPanel HorizontalAlignment="Center" Margin="8,8,0,0" Orientation="Horizontal" VerticalAlignment="Top" Width="590">
-                <Button Content="Coastal" Height="100" Width="135" Click="ProductButton_Click" FontSize="20" Margin="8,8,0,0"/>
-                <Button Content="Gaz Lite" Height="100" Width="135" Click="ProductButton_Click" FontSize="20" Margin="8,8,0,0"/>
-                <Button Content="Solane" Height="100" Width="135" Click="ProductButton_Click" FontSize="20" Margin="8,8,0,0"/>
-                <Button Content="Regasco" Height="100" Width="135" Click="ProductButton_Click" FontSize="20" Margin="8,8,0,0"/>
+                <Button Content="Coastal" Height="100" Width="135"  FontSize="20" Margin="8,8,0,0"/>
+                <Button Content="Gaz Lite" Height="100" Width="135"  FontSize="20" Margin="8,8,0,0"/>
+                <Button Content="Solane" Height="100" Width="135"  FontSize="20" Margin="8,8,0,0"/>
+                <Button Content="Regasco" Height="100" Width="135" FontSize="20" Margin="8,8,0,0"/>
             </StackPanel>
 
 
 
             <!-- Coastal Kilogram Buttons (Initially Hidden) -->
             <StackPanel x:Name="CoastalPanel" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed">
-                <Button x:Name="Button5kg" Content="5kg" Height="100" Width="130" Click="SizeButton_Click" Margin="23,0,0,0"/>
-                <Button x:Name="Button11kg" Content="11kg" HorizontalAlignment="Left" Height="100" Width="130" Click="SizeButton_Click" Margin="23,8,0,0"/>
             </StackPanel>
 
             <StackPanel x:Name="GazLitePanel" HorizontalAlignment="Left" Margin="180,100,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed">
-                <Button x:Name="Button230g" Content="230g" HorizontalAlignment="Left" Height="100" Width="130" Click="SizeButton_Click" Margin="-16,0,0,0"/>
-                <Button x:Name="Button330g" Content="330g" HorizontalAlignment="Left" Height="100" Width="130" Click="SizeButton_Click" Margin="-16,8,0,0"/>
             </StackPanel>
 
             <!-- Solane Kilogram Buttons (Initially Hidden) -->
             <StackPanel x:Name="SolanePanel" HorizontalAlignment="Left" Margin="350,100,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed">
-                <Button x:Name="Button11kgSolane" Content="11kg" HorizontalAlignment="Left" Height="100" Width="130" Click="SizeButton_Click" Margin="-55,0,0,0"/>
             </StackPanel>
 
             <!-- Regasco Kilogram Buttons (Initially Hidden) -->
             <StackPanel x:Name="RegascoPanel" HorizontalAlignment="Left" Margin="520,100,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed">
-                <Button x:Name="Button5kgRegasco" Content="5kg" HorizontalAlignment="Left" Height="100" Width="130" Click="SizeButton_Click" Margin="-95,0,0,0"/>
-                <Button x:Name="Button2_7kg" Content="2.7kg" HorizontalAlignment="Left" Height="100" Width="130" Click="SizeButton_Click" Margin="-95,8,0,0"/>
-                <Button x:Name="Button11kgRegasco" Content="11kg" HorizontalAlignment="Left" Height="100" Width="130" Click="SizeButton_Click" Margin="-95,8,0,0"/>
             </StackPanel>
             <WrapPanel x:Name="ProductsPanel" Margin="14,130,14,0" Background="#FF005F8C" Height="641" VerticalAlignment="Top"/>
+
+
 
         </Grid>
     </Grid>

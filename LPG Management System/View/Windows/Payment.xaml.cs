@@ -19,13 +19,13 @@ namespace LPG_Management_System.View.Windows
     /// </summary>
     public partial class Payment : Window
     {
-        private double totalAmount;
+        private double totalPrice;
         public double PaymentAmount { get; private set; } // Holds the entered amount
-        public Payment(double totalAmount)
+        public Payment(double totalPrice)
         {
             InitializeComponent();
-            this.totalAmount = totalAmount;
-            TotalAmountLabel.Content = $"Total: ₱{totalAmount:F2}";
+            this.totalPrice = totalPrice;
+            TotalAmountLabel.Content = $"Total: ₱{totalPrice:F2}";
         }
 
         private void amountBtn_Click(object sender, RoutedEventArgs e)
@@ -41,6 +41,13 @@ namespace LPG_Management_System.View.Windows
                 MessageBox.Show("Please enter a valid payment amount.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+
+        //public void UpdateTotalPrice(double newTotalPrice)
+        //{
+        //    totalPrice = newTotalPrice; // Update the internal price
+        //    TotalAmountLabel.Content = $"Total: ₱{totalPrice:F2}"; // Update the label to reflect the new total
+        //}
 
         private void amounttxtBox_TextChanged(object sender, TextChangedEventArgs e)
         {
