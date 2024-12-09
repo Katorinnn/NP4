@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:LPG_Management_System"
         mc:Ignorable="d"
         Title="Login" Height="377" Width="526" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    
-    
+
+
     <Grid HorizontalAlignment="Center" Width="528">
         <Grid.Background>
             <LinearGradientBrush StartPoint="1,0" EndPoint="1,1">
@@ -21,18 +21,19 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="25*"/>
-            <ColumnDefinition Width="107*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="unametxtBox" HorizontalAlignment="Center" Margin="0,130,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="150" Height="25" TextChanged="unametxtBox_TextChanged" Cursor="IBeam" Foreground="Black" BorderBrush="Gray" BorderThickness="0,0,0,1" Grid.Column="1" Grid.Row="1"/>
-        <Label x:Name="unameLabel" Content="username: " HorizontalAlignment="Left" Margin="45,131,0,0" VerticalAlignment="Top" Foreground="Black" Grid.Column="1" Height="24" Width="66" Grid.Row="1"/>
+
+        <TextBox x:Name="unametxtBox" HorizontalAlignment="Center" Margin="0,130,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="150" Height="25" TextChanged="unametxtBox_TextChanged" Cursor="IBeam" Foreground="Black" BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" Grid.Column="1" Grid.Row="1"/>
+        <Label x:Name="unameLabel" Content="username: " HorizontalAlignment="Left" Margin="45,131,0,0" VerticalAlignment="Top" Grid.Column="1" Height="27" Width="83" Grid.Row="1" FontWeight="Bold" FontSize="15"/>
         <TextBlock x:Name="unameError" HorizontalAlignment="Left" Margin="140,157,0,0" Text="Invalid username" Foreground="Red" Visibility="Collapsed" Grid.Column="1"  Grid.Row="1"/>
 
-        <PasswordBox x:Name="pwordBox" HorizontalAlignment="Center" Margin="0,180,0,0" VerticalAlignment="Top" Width="150" Height="25" Foreground="Black" BorderBrush="Gray" BorderThickness="0,0,0,1" Grid.Column="1" Grid.Row="1"/>
-        <Label x:Name="pwordLabel" Content="password: " HorizontalAlignment="Left" Margin="45,185,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.039,1.347" Foreground="Black" Grid.Column="1" Height="24" Width="64" Grid.Row="1"/>
+        <PasswordBox x:Name="pwordBox" HorizontalAlignment="Center" Margin="0,180,0,0" VerticalAlignment="Top" Width="150" Height="25" Foreground="Black" BorderBrush="DimGray" BorderThickness="0.5" Grid.Column="1" Grid.Row="1"  Background="#e5f3fd"/>
+        <Label x:Name="pwordLabel" Content="password: " HorizontalAlignment="Left" Margin="45,178,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.039,1.347" Grid.Column="1" Height="28" Width="84" Grid.Row="1" FontWeight="Bold" FontSize="15"/>
         <TextBlock x:Name="pwordError" HorizontalAlignment="Left" Margin="140,205,0,0" Text="Invalid password" Foreground="Red" Visibility="Collapsed" Grid.Column="1"  Grid.Row="1"/>
 
-        <Button x:Name="loginBtn" Content="LOGIN" HorizontalAlignment="Left" Margin="99,252,0,0" VerticalAlignment="Top" Click="Button_Click" Width="162" Height="39" Cursor="Hand" MouseEnter="loginBtn_MouseEnter" Grid.Column="1" Grid.Row="1" >
+        <Button x:Name="loginBtn" Content="LOGIN" HorizontalAlignment="Left" Margin="105,247,0,0" VerticalAlignment="Top" Click="Button_Click" Width="144" Height="42" Cursor="Hand" MouseEnter="loginBtn_MouseEnter" Grid.Column="1" Grid.Row="1" >
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Border Background="{TemplateBinding Background}" 

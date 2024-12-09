@@ -5,19 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LPG_Management_System.View"
         mc:Ignorable="d"
-        Title="inventoryUpdate" Height="450" Width="500" WindowStartupLocation="CenterScreen">
-    <Grid Margin="-1,-2,0,-6">
-        <Label Content="Customer name" HorizontalAlignment="Left" Height="27" Margin="116,176,0,0" VerticalAlignment="Top" Width="108" FontSize="14"/>
-        <Label Content="Address:" HorizontalAlignment="Left" Height="28" Margin="116,272,0,0" VerticalAlignment="Top" Width="108" FontSize="14"/>
-        <Label Content="Contact number:" HorizontalAlignment="Left" Height="33" Margin="116,223,0,0" VerticalAlignment="Top" Width="108" FontSize="14"/>
-        <Label Content="Tank ID:" HorizontalAlignment="Left" Height="25" Margin="116,122,0,0" VerticalAlignment="Top" Width="108" FontSize="14"/>
-        <TextBox x:Name="cuNametxtBox" HorizontalAlignment="Left" Height="30" Margin="271,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
-        <TextBox x:Name="contacttxtBox" HorizontalAlignment="Left" Height="30" Margin="271,219,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
-        <TextBox x:Name="addresstxtBox" HorizontalAlignment="Left" Height="30" Margin="271,272,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140"/>
-        <Button x:Name="updateBtn" Content="UPDATE" HorizontalAlignment="Left" Height="39" Margin="331,348,0,0" VerticalAlignment="Top" Width="110" Cursor="Hand" Click="updateBtn_Click"/>
-        <TextBox x:Name="tankIDtxtBox" HorizontalAlignment="Left" Height="30" Margin="271,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextChanged="tankIDtxtBox_TextChanged"/>
-        <Label Content="Customer ID:" HorizontalAlignment="Left" Height="25" Margin="116,85,0,0" VerticalAlignment="Top" Width="108" FontSize="14"/>
-        <TextBox x:Name="customerIDtxtBox" HorizontalAlignment="Left" Height="25" Margin="271,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" TextChanged="tankIDtxtBox_TextChanged"/>
+        Title="inventoryUpdate" Height="442" Width="416" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+
+    <Grid Margin="-1,-2,0,-6" Background="#d1e5f4">
+        <Label Content="Customer name:" HorizontalAlignment="Left" Height="27" Margin="62,150,0,0" VerticalAlignment="Top" Width="122" FontSize="14" FontWeight="Bold" FontFamily="Segoe UI"/>
+        <Label Content="Address:" HorizontalAlignment="Left" Height="28" Margin="62,246,0,0" VerticalAlignment="Top" Width="108" FontSize="14" FontWeight="Bold" FontFamily="Segoe UI"/>
+        <Label Content="Contact number:" HorizontalAlignment="Left" Height="33" Margin="62,197,0,0" VerticalAlignment="Top" Width="128" FontSize="14" FontWeight="Bold" FontFamily="Segoe UI"/>
+        <Label Content="Tank ID:" HorizontalAlignment="Left" Height="25" Margin="62,96,0,0" VerticalAlignment="Top" Width="108" FontSize="14" FontWeight="Bold" FontFamily="Segoe UI"/>
+
+        <TextBox x:Name="cuNametxtBox" HorizontalAlignment="Left" Height="25" Margin="217,145,0,0" 
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="140" 
+                 BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd"/>
+
+        <TextBox x:Name="contacttxtBox" HorizontalAlignment="Left" Height="25" Margin="217,193,0,0" 
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="140" 
+                 BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd"/>
+
+        <TextBox x:Name="addresstxtBox" HorizontalAlignment="Left" Height="45" Margin="166,246,0,0" 
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="190" 
+                 BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd"/>
+
+        <TextBox x:Name="tankIDtxtBox" HorizontalAlignment="Left" Height="25" Margin="217,99,0,0" 
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="140" 
+                 BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" TextChanged="tankIDtxtBox_TextChanged" />
+
+        <TextBox x:Name="customerIDtxtBox" HorizontalAlignment="Left" Height="25" Margin="217,59,0,0" 
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="140" 
+                 BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" TextChanged="tankIDtxtBox_TextChanged"/>
+
+        <Button x:Name="updateBtn" Content="UPDATE" HorizontalAlignment="Center" Height="48" Margin="0,344,0,0" VerticalAlignment="Top" Width="125"  Cursor="Hand" Click="updateBtn_Click" FontFamily="Segoe UI" FontSize="14"/>
+
+        <Label Content="Customer ID:" HorizontalAlignment="Left" Height="25" Margin="62,59,0,0" VerticalAlignment="Top" Width="108" FontSize="14" FontWeight="Bold" FontFamily="Segoe UI"/>
+
 
     </Grid>
 </Window>

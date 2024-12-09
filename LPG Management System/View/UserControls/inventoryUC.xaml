@@ -7,7 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="850" d:DesignWidth="1230" Cursor="Hand">
     <Grid x:Name="mainGrid">
-        <Grid Margin="0,5,0,-10" Background="White">
+        <Grid Margin="0,0,0,-10">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="1,0" EndPoint="1,1">
+                    <GradientStop Color="White" Offset="0.1" />
+                    <GradientStop Color="#8ecae6" Offset="1.1" />
+                </LinearGradientBrush>
+            </Grid.Background>
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" MinHeight="132"/>
                 <!-- For Search and Button -->
@@ -89,7 +96,12 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                     <!-- Edit Button -->
-                                    <Button Content="Edit" Tag="{Binding TankID}" Click="EditButton_Click" Width="75" Height="35" Background="Green"/>
+                                    <Button x:Name="editButton" Tag="{Binding TankID}" Click="EditButton_Click" Width="75" Height="35" Background="Green">
+                                        <Button.Content>
+                                            <Image Source="Images/edit.png" Width="20" Height="20" Stretch="Uniform" Margin="0,0,5,0"/>
+                                        </Button.Content>
+                                    </Button>
+
                                     <!-- <Button Content="Edit" Width="80" Height="30" Margin="5,0,5,0"
                                     Background="Green" Foreground="White" FontWeight="Bold"
                                     BorderThickness="0" Cursor="Hand"
