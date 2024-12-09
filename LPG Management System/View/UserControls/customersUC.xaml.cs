@@ -1,5 +1,4 @@
 ﻿using LPG_Management_System.Models;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -151,33 +150,6 @@ namespace LPG_Management_System.View.UserControls
         //    // Assign the context menu to the button
         //    FilterButton.ContextMenu = FilterContextMenu;
         //}
-
-        private void ApplyFilter(string column, string value)
-        {
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    // Use a parameterized query to filter data
-                    string query = $"SELECT * FROM tbl_customer WHERE {column} = @Value";
-                    MySqlCommand cmd = new MySqlCommand(query, connection);
-                    cmd.Parameters.AddWithValue("@Value", value);
-
-                    MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                    DataTable dataTable = new DataTable();
-                    adapter.Fill(dataTable);
-
-                    // Bind filtered data to the DataGrid
-                    customersDG.ItemsSource = dataTable.DefaultView;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error applying filter: " + ex.Message);
-            }
-        }
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
             if (FilterButton.ContextMenu != null)

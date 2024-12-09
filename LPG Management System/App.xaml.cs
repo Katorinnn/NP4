@@ -1,4 +1,5 @@
 ﻿using LPG_Management_System.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Configuration;
 using System.Data;
@@ -19,8 +20,7 @@ namespace LPG_Management_System
             {
                 using (var context = new DataContext())
                 {
-                    DatabaseFacade facade = new DatabaseFacade(context);
-                    facade.EnsureCreated(); // Creates the database if it doesn't exist
+                    context.Database.Migrate(); // Applies pending migrations
                 }
             }
             catch (Exception ex)

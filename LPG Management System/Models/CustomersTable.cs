@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LPG_Management_System.Models
 {
-    public class CustomersTable
+    internal class CustomersTable
     {
         [Key]
         public int CustomerID { get; set; }

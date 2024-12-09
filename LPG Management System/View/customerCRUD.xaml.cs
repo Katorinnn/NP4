@@ -1,18 +1,6 @@
-﻿using LPG_Management_System.View.UserControls;
-using MySql.Data.MySqlClient;
+﻿using LPG_Management_System.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace LPG_Management_System.View
 {
@@ -21,60 +9,65 @@ namespace LPG_Management_System.View
     /// </summary>
     public partial class customerCRUD : Window
     {
-        customersUC customersUC = new customersUC();
-
         public customerCRUD()
         {
             InitializeComponent();
         }
 
         private void addBtn_Click(object sender, RoutedEventArgs e)
+{
+    // Collect user input
+    string tankIDText = tankIDtxtBox.Text;
+    string customerName = customertxtBox.Text;
+    string contactNumber = contacttxtBox.Text;
+    string address = addresstxtBox.Text;
+
+    // Validate input (optional but recommended)
+    if (string.IsNullOrWhiteSpace(tankIDText) ||
+        string.IsNullOrWhiteSpace(customerName) ||
+        string.IsNullOrWhiteSpace(contactNumber) ||
+        string.IsNullOrWhiteSpace(address))
+    {
+        MessageBox.Show("All fields are required.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+        return;
+    }
+
+    // Validate and parse tankID as an integer
+    if (!int.TryParse(tankIDText, out int tankID))
+    {
+        MessageBox.Show("Tank ID must be a valid number.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+        return;
+    }
+
+    try
+    {
+        using (var db = new DataContext())
         {
-            // Collect user input
-            string tankID = tankIDtxtBox.Text;
-            string customerName = customertxtBox.Text;
-            string contactNumber = contacttxtBox.Text;
-            string address = addresstxtBox.Text;
-
-            // Connection string (update according to your DB credentials)
-            string connectionString = "server=localhost;database=db_lpgpos;user=root;";
-
-            try
+            // Create a new customer record
+            var customer = new CustomersTable
             {
-                // Insert data into the database
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string query = "INSERT INTO tbl_customers (TankID, CustomerName, ContactNumber, Address) VALUES (@TankID, @CustomerName, @ContactNumber, @Address)";
+                TankID = tankID,
+                CustomerName = customerName,
+                ContactNumber = contactNumber,
+                Address = address
+            };
 
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
-                    {
-                        // Use parameters to prevent SQL injection
-                        command.Parameters.AddWithValue("@tankID", tankID);
-                        command.Parameters.AddWithValue("@customerName", customerName);
-                        command.Parameters.AddWithValue("@contactNumber", contactNumber);
-                        command.Parameters.AddWithValue("@address", address);
+            // Add and save the new customer
+            db.tbl_customers.Add(customer);
+            db.SaveChanges();
 
-                        int rowsAffected = command.ExecuteNonQuery();
-                        if (rowsAffected > 0)
-                        {
-                            MessageBox.Show("Customer added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                            this.DialogResult = true;
+            MessageBox.Show("Customer added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                            //close form
-                            this.Close();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Failed to add customer.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            // Close the form
+            this.DialogResult = true;
+            this.Close();
         }
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+    }
+}
+
     }
 }
