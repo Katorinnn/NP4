@@ -1,10 +1,12 @@
 ﻿using LPG_Management_System.Models;
 using LPG_Management_System.View.Windows;
 using System;
+using System.Linq;
 using System.Windows.Media.Imaging;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections.ObjectModel;
 
 namespace LPG_Management_System.View.UserControls
 {
@@ -26,12 +28,16 @@ namespace LPG_Management_System.View.UserControls
         }
 
 
-        private List<ReceiptItem> receiptItems = new List<ReceiptItem>();
+        private ObservableCollection<ReceiptItem> receiptItems = new ObservableCollection<ReceiptItem>();
+
+
         public pointofsaleUC()
         {
             InitializeComponent();
+            dataGridItems.ItemsSource = receiptItems;
             LoadProducts();
         }
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -41,113 +47,88 @@ namespace LPG_Management_System.View.UserControls
         }
         private void UpdateReceiptDisplay()
         {
-            ReceiptItemsPanel.Children.Clear();
+            // Bind receipt items to DataGrid
+            dataGridItems.ItemsSource = null;
+            dataGridItems.ItemsSource = receiptItems;
 
-            foreach (var item in receiptItems)
-            {
-                // Create a horizontal layout for each receipt item
-                var itemPanel = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 5, 0, 5) };
-
-                var brandLabel = new Label { Content = item.Brand, Width = 150, FontSize = 16 };
-                var sizeLabel = new Label { Content = item.Size, Width = 100, FontSize = 16 };
-                var priceLabel = new Label { Content = $"₱{item.Price:F2}", Width = 100, FontSize = 16 };
-                var quantityLabel = new Label { Content = $"Qty: {item.Quantity}", Width = 100, FontSize = 16 };
-                var totalLabel = new Label { Content = $"₱{item.Total:F2}", Width = 100, FontSize = 16 };
-
-                itemPanel.Children.Add(brandLabel);
-                itemPanel.Children.Add(sizeLabel);
-                itemPanel.Children.Add(priceLabel);
-                itemPanel.Children.Add(quantityLabel);
-                itemPanel.Children.Add(totalLabel);
-
-                ReceiptItemsPanel.Children.Add(itemPanel);
-            }
+            // Update Total Price
+            UpdateTotalPrice();
         }
+
+
+        private void DecreaseQuantity(ReceiptItem item)
+        {
+            if (item.Quantity > 1)
+            {
+                item.Quantity--;
+            }
+            else
+            {
+                receiptItems.Remove(item);
+            }
+
+            UpdateTotalPrice();
+        }
+
+
 
         //Payment Options
         private void cashBtn_Click_1(object sender, RoutedEventArgs e)
         {
+            // Check if there are any items in the receipt
             if (receiptItems.Count == 0)
             {
-                // No products selected, show a warning message
-                MessageBox.Show("Please select at least one product before proceeding with payment.", "No Products Selected", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return; // Prevent further actions
+                MessageBox.Show("Please select at least one product before proceeding with payment.",
+                                "No Products Selected", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
             }
 
-            // Calculate the total price of receipt items
+            // Calculate the total price
             double totalPrice = receiptItems.Sum(item => item.Total);
 
-            // Create a new Payment window and pass the total price
+            // Create the payment window
             Payment paymentWindow = new Payment(totalPrice);
 
-            // Show the Payment window as a dialog
+            // Show payment window and check if the payment is successful
             if (paymentWindow.ShowDialog() == true)
             {
-                // Get the payment amount entered by the user
+                // Retrieve the payment amount entered
                 double paymentAmount = paymentWindow.PaymentAmount;
 
-                // Calculate the change
-                double change = paymentAmount - totalPrice;
+                // Ensure receiptItems is a List<ReceiptItem>
+                var receiptList = receiptItems.ToList();
 
-                // Update the Change label
-                ChangeLabel.Content = change >= 0
-                    ? $"₱{change:F2}"
-                    : "Insufficient payment!";
+                // Variables to pass
+                string customerName = txtCustomerName.Text;
+                double finalTotalPrice = totalPrice;  // Total price
+                double change = paymentAmount - finalTotalPrice;
 
-                // Show a warning if payment is insufficient
+                // Check for negative change (insufficient payment)
                 if (change < 0)
                 {
-                    MessageBox.Show("The payment amount is less than the total price.", "Payment Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Payment amount is less than the total price. Please enter a valid amount.",
+                                    "Insufficient Payment", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
+
+                // Create and show Invoice page
+                var invoicePage = new Invoice(receiptList, customerName, "Customer Address Here",
+                                              finalTotalPrice, paymentAmount, change);
+                invoicePage.Show();
             }
         }
 
-        private void GcashBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (receiptItems.Count == 0)
-            {
-                // No products selected, show a warning message
-                MessageBox.Show("Please select at least one product before proceeding with payment.", "No Products Selected", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return; // Prevent further actions
-            }
 
-            // Calculate the total price of receipt items
-            double totalPrice = receiptItems.Sum(item => item.Total);
 
-            // Create a new Payment window and pass the total price
-            Payment paymentWindow = new Payment(totalPrice);
 
-            // Show the Payment window as a dialog
-            if (paymentWindow.ShowDialog() == true)
-            {
-                // Get the payment amount entered by the user
-                double paymentAmount = paymentWindow.PaymentAmount;
-
-                // Calculate the change
-                double change = paymentAmount - totalPrice;
-
-                // Update the Change label
-                ChangeLabel.Content = change >= 0
-                    ? $"₱{change:F2}"
-                    : "Insufficient payment!";
-
-                // Show a warning if payment is insufficient
-                if (change < 0)
-                {
-                    MessageBox.Show("The payment amount is less than the total price.", "Payment Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-            }
-        }
 
         //Calculatipons of payment
         private void UpdateTotalPrice()
         {
-            // Calculate the total price using the total of each receipt item
             double totalPrice = receiptItems.Sum(item => item.Total);
-
-            // Update the total price label
             TotalPriceLabel.Content = $"₱{totalPrice:F2}";
         }
+
 
         //products
         private List<InventoryTable> GetProductsFromDatabase()
@@ -227,28 +208,18 @@ namespace LPG_Management_System.View.UserControls
 
         public void AddToReceipt(ReceiptItem item)
         {
-            // Check if the item already exists in the receipt
             var existingItem = receiptItems.FirstOrDefault(r => r.Brand == item.Brand && r.Size == item.Size && r.Price == item.Price);
 
             if (existingItem != null)
             {
-                // If the item exists, increase its quantity
                 existingItem.Quantity++;
             }
             else
             {
-                // If the item does not exist, add it to the receipt list
                 receiptItems.Add(item);
             }
 
-            // Update the receipt display
-            UpdateReceiptDisplay();
-
-            // Update the total price
             UpdateTotalPrice();
         }
-
-
-
     }
 }

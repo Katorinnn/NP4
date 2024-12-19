@@ -5,10 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="850" d:DesignWidth="1230">
+             d:DesignHeight="860" d:DesignWidth="1233">
     <Grid>
         <TabControl>
-            <TabItem Header="General Settings" FontSize="28" Width="613" Margin="0,0,0,0" Background="#FF2C3E50">
+            <TabItem Header="General Settings" FontSize="28" Width="613" Margin="0,0,0,0" >
                 <Grid Background="White" Margin="-1,0,-7,0">
                     <Label Content="Company Details" HorizontalAlignment="Left" Height="47" Margin="24,30,0,0" VerticalAlignment="Top" Width="221" FontSize="25" FontWeight="Bold" FontFamily="Segoe UI"/>
                     <Label Content="Address:" HorizontalAlignment="Left" Height="35" Margin="51,405,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontFamily="Segoe UI"/>
@@ -29,10 +29,35 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Notification Setting" FontSize="28" Margin="0,0,0,0" Width="614" Background="#FF2C3E50">
-                <Grid Background="White"/>
+            <TabItem Header="Notification Setting" FontSize="28" Margin="0,0,0,0" Width="614">
+                <Grid Background="White">
+                    <Label Content="Notification Settings" HorizontalAlignment="Left" Height="47" Margin="24,30,0,0" VerticalAlignment="Top" Width="300" FontSize="25" FontWeight="Bold" FontFamily="Segoe UI"/>
+
+                    <!-- Enable Notifications Toggle -->
+                    <CheckBox Content="Enable Notifications" HorizontalAlignment="Left" Margin="50,100,0,0" VerticalAlignment="Top" FontSize="14"/>
+
+                    <!-- Notification Channels -->
+                    <Label Content="Notification Channels" HorizontalAlignment="Left" Height="32" Margin="50,150,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
+                    <CheckBox Content="Email Notifications" HorizontalAlignment="Left" Margin="70,190,0,0" VerticalAlignment="Top" FontSize="14"/>
+                    <CheckBox Content="SMS Notifications" HorizontalAlignment="Left" Margin="70,230,0,0" VerticalAlignment="Top" FontSize="14"/>
+                    <CheckBox Content="Push Notifications" HorizontalAlignment="Left" Margin="70,270,0,0" VerticalAlignment="Top" FontSize="14"/>
+
+                    <!-- Notification Frequency -->
+                    <Label Content="Notification Frequency" HorizontalAlignment="Left" Height="32" Margin="50,320,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="70,360,0,0" VerticalAlignment="Top" Width="200" Height="30" FontSize="14">
+                        <ComboBoxItem Content="Instant"/>
+                        <ComboBoxItem Content="Daily"/>
+                        <ComboBoxItem Content="Weekly"/>
+                    </ComboBox>
+
+                    <!-- Quiet Hours -->
+                    <Label Content="Quiet Hours" HorizontalAlignment="Left" Height="32" Margin="50,420,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
+                    <Label Content="Start Time:" HorizontalAlignment="Left" Margin="70,460,0,0" VerticalAlignment="Top" FontSize="14"/>
+                    <TextBox HorizontalAlignment="Left" Margin="150,460,0,0" VerticalAlignment="Top" Width="100" Height="26" FontSize="14"/>
+                    <Label Content="End Time:" HorizontalAlignment="Left" Margin="70,500,0,0" VerticalAlignment="Top" FontSize="14"/>
+                    <TextBox HorizontalAlignment="Left" Margin="150,500,0,0" VerticalAlignment="Top" Width="100" Height="26" FontSize="14"/>
+                </Grid>
             </TabItem>
         </TabControl>
-
     </Grid>
 </UserControl>

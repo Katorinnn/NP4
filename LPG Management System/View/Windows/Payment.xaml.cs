@@ -32,15 +32,17 @@ namespace LPG_Management_System.View.Windows
         {
             if (double.TryParse(amounttxtBox.Text, out double amount) && amount > 0)
             {
-                PaymentAmount = amount;
-                this.DialogResult = true; // Indicate successful payment entry
-                this.Close(); // Close the payment window
+                PaymentAmount = amount;  // Save entered payment amount
+                this.DialogResult = true;  // Close the window with a success result
+                this.Close();
             }
             else
             {
-                MessageBox.Show("Please enter a valid payment amount.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please enter a valid payment amount.",
+                                "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
 
 
         //public void UpdateTotalPrice(double newTotalPrice)
@@ -50,6 +52,11 @@ namespace LPG_Management_System.View.Windows
         //}
 
         private void amounttxtBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
 
         }

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
              MouseLeftButtonDown="Product_MouseLeftButtonDown"
              mc:Ignorable="d" 
-             d:DesignHeight="190" d:DesignWidth="200" Height="180" Width="180" Foreground="White" Margin="7,7,7,7">
+             d:DesignHeight="190" d:DesignWidth="200" Height="180" Width="180" Foreground="White" Margin="5">
     <UserControl.Resources>
         <Style x:Key="HoverBorderStyle" TargetType="Border">
             <Style.Triggers>
