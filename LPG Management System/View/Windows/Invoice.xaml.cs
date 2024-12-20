@@ -21,13 +21,12 @@ namespace LPG_Management_System.View.Windows
             public double Total => Price * Quantity;
         }
 
-        public Invoice(List<pointofsaleUC.ReceiptItem> receiptItems, string customerName,
+        public Invoice(List<pointofsaleUC.ReceiptItem> receiptItems,
                string customerAddress, double totalAmount, double amountPaid, double change)
         {
             InitializeComponent();
 
             // Set customer details
-            CustomerNameText.Text = $"Name: {customerName}";
             CustomerAddressText.Text = $"Address: {customerAddress}";
 
             // Bind receipt items to DataGrid
@@ -79,7 +78,7 @@ namespace LPG_Management_System.View.Windows
             // Left side: Company Info
             TextBlock companyInfo = new TextBlock
             {
-                Text = "JODHPUR GAS SERVICE\nC 3/4 KABIR NAGAR\nJODHPUR ROAD \"SHAHDARA,\"\nJODHPUR 302001",
+                Text = "NP4 GAS SERVICE\nC 3/4 KABIR NAGAR\nJODHPUR ROAD \"SHAHDARA,\"\nJODHPUR 302001",
                 FontSize = 14,
                 FontWeight = FontWeights.Bold,
                 TextAlignment = TextAlignment.Left

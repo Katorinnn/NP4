@@ -23,9 +23,9 @@
             <!-- Distributor Details -->
             <StackPanel Grid.Column="0">
                 <TextBlock Text="Distributor Details" FontWeight="Bold" />
-                <TextBlock Text="Name: JODHPUR GAS SERVICE" FontSize="12"/>
-                <TextBlock Text="Address: Blk 141 Lot 5 Phase 3, Brgy. Paliparan 3, Dasmarinas City, Cavite" FontSize="11"/>
-                <TextBlock Text="Jaynor Mendoza" FontSize="12"/>
+                <TextBlock Text="Name: NP4 GAS SERVICE" FontSize="11"/>
+                <TextBlock Text="Address: Blk 141 Lot 5 Phase 3, Brgy. Paliparan 3, Dasmarinas City, Cavite" FontSize="10"/>
+                <TextBlock Text="Jaynor Mendoza" FontSize="10"/>
             </StackPanel>
 
             <!-- Customer Details -->

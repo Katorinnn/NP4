@@ -99,7 +99,6 @@ namespace LPG_Management_System.View.UserControls
                 var receiptList = receiptItems.ToList();
 
                 // Variables to pass
-                string customerName = txtCustomerName.Text;
                 double finalTotalPrice = totalPrice;  // Total price
                 double change = paymentAmount - finalTotalPrice;
 
@@ -112,7 +111,7 @@ namespace LPG_Management_System.View.UserControls
                 }
 
                 // Create and show Invoice page
-                var invoicePage = new Invoice(receiptList, customerName, "Customer Address Here",
+                var invoicePage = new Invoice(receiptList, "Customer Address Here",
                                               finalTotalPrice, paymentAmount, change);
                 invoicePage.Show();
             }
@@ -221,5 +220,49 @@ namespace LPG_Management_System.View.UserControls
 
             UpdateTotalPrice();
         }
+
+        private void FilterByBrand_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is string brand)
+            {
+                // Call LoadProducts with the selected brand
+                LoadProducts(brand);
+            }
+        }
+
+        private void LoadProducts(string filterBrand = null)
+        {
+            // Get products from the database using EF
+            var products = GetProductsFromDatabase();
+
+            // Apply brand filter if specified
+            if (!string.IsNullOrEmpty(filterBrand))
+            {
+                products = products.Where(p => p.ProductName.Equals(filterBrand, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            // Clear existing items in the WrapPanel
+            ProductsPanel.Children.Clear();
+
+            // Create Product controls and add them to the WrapPanel
+            foreach (var product in products)
+            {
+                var productControl = new Product
+                {
+                    DataContext = this
+                };
+                productControl.BrandLabel.Content = product.ProductName;
+                productControl.PriceLabel.Content = $"₱{product.Price:F2}";
+                productControl.SizeLabel.Content = product.Size;
+
+                if (product.ProductImage != null && product.ProductImage.Length > 0)
+                {
+                    productControl.ProductImage.Source = ConvertToImageSource(product.ProductImage);
+                }
+
+                ProductsPanel.Children.Add(productControl);
+            }
+        }
+
     }
 }
