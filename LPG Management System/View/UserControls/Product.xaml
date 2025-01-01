@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
              MouseLeftButtonDown="Product_MouseLeftButtonDown"
              mc:Ignorable="d" 
-             d:DesignHeight="190" d:DesignWidth="200" Height="180" Width="180" Foreground="White" Margin="7,7,7,7">
+             d:DesignHeight="190" d:DesignWidth="200" Height="180" Width="180" Foreground="White" Margin="5">
     <UserControl.Resources>
         <Style x:Key="HoverBorderStyle" TargetType="Border">
             <Style.Triggers>
@@ -25,7 +25,9 @@
     <Border BorderBrush="Gray" Background="LightGray" BorderThickness="2" CornerRadius="5" Style="{StaticResource HoverBorderStyle}">
         <Grid>
             <Label x:Name="BrandLabel" Content="Brandname" HorizontalAlignment="Left" Margin="0,152,0,0" VerticalAlignment="Top" Width="100"/>
-            <Label x:Name="PriceLabel" Content="Price" HorizontalAlignment="Left" Margin="100,152,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.479,-0.929"/>
+            <Label x:Name="PriceLabel" Content="Price" HorizontalAlignment="Left" Margin="73,152,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.479,-0.929"/>
+            <Label x:Name="SizeLabel" Content="Size" HorizontalAlignment="Left" Margin="133,152,0,0" VerticalAlignment="Top" Width="100"/>
+            
             <Image x:Name="ProductImage" Height="100" Width="100" Margin="10,10,10,10" VerticalAlignment="Top" Cursor="Hand" />
         </Grid>
     </Border>

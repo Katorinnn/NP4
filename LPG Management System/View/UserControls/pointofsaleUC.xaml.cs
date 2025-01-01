@@ -1,10 +1,12 @@
 ﻿using LPG_Management_System.Models;
 using LPG_Management_System.View.Windows;
 using System;
+using System.Linq;
 using System.Windows.Media.Imaging;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections.ObjectModel;
 
 namespace LPG_Management_System.View.UserControls
 {
@@ -21,22 +23,21 @@ namespace LPG_Management_System.View.UserControls
             public string Brand { get; set; }
             public string Size { get; set; }
             public double Price { get; set; }
+            public int Quantity { get; set; } = 1;
+            public double Total => Price * Quantity;
         }
 
-        private List<ReceiptItem> receiptItems = new List<ReceiptItem>();
 
-        private readonly Dictionary<string, Dictionary<string, double>> gasPrices = new Dictionary<string, Dictionary<string, double>>()
-        {
-            { "Coastal", new Dictionary<string, double> { { "5kg", 500.0 }, { "11kg", 1000.0 } } },
-            { "Gaz Lite", new Dictionary<string, double> { { "230g", 100.0 }, { "330g", 150.0 } } },
-            { "Solane", new Dictionary<string, double> { { "11kg", 1100.0 } } },
-            { "Regasco", new Dictionary<string, double> { { "5kg", 550.0 }, { "2.7kg", 300.0 }, { "11kg", 1050.0 } } }
-        };
+        private ObservableCollection<ReceiptItem> receiptItems = new ObservableCollection<ReceiptItem>();
+
+
         public pointofsaleUC()
         {
             InitializeComponent();
+            dataGridItems.ItemsSource = receiptItems;
             LoadProducts();
         }
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -44,161 +45,89 @@ namespace LPG_Management_System.View.UserControls
             Dashboard dashboard = new Dashboard();
             dashboard.Show();
         }
-
-        private void ProductButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Hide all panels initially
-            CoastalPanel.Visibility = Visibility.Collapsed;
-            GazLitePanel.Visibility = Visibility.Collapsed;
-            SolanePanel.Visibility = Visibility.Collapsed;
-            RegascoPanel.Visibility = Visibility.Collapsed;
-
-            if (sender is Button button)
-            {
-                string selectedBrand = button.Content.ToString();
-                BrandLabel.Content = $"Brand: {selectedBrand}";
-
-                // Show the corresponding panel based on the selected brand
-                switch (selectedBrand)
-                {
-                    case "Coastal":
-                        CoastalPanel.Visibility = Visibility.Visible;
-                        break;
-                    case "Gaz Lite":
-                        GazLitePanel.Visibility = Visibility.Visible;
-                        break;
-                    case "Solane":
-                        SolanePanel.Visibility = Visibility.Visible;
-                        break;
-                    case "Regasco":
-                        RegascoPanel.Visibility = Visibility.Visible;
-                        break;
-                }
-            }
-        }
-
-
-        private void SizeButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button)
-            {
-                currentKgButton = button;
-
-                // Get the size and display it in the label
-                string selectedSize = button.Content.ToString();
-                //SizeLabel.Content = $"Size: {selectedSize}";
-
-                // Position the popup relative to the button
-                KgPopup.PlacementTarget = button;
-                KgPopup.Visibility = Visibility.Visible;
-                KgPopup.IsOpen = true;
-            }
-        }
-
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (currentKgButton != null)
-            {
-                string size = currentKgButton.Content.ToString();
-                string brand = BrandLabel.Content.ToString();
-
-                // Set a mock price (you can fetch the real price from a database)
-                double price = 500.00; // Replace with actual price logic
-
-                // Add to receipt list
-                receiptItems.Add(new ReceiptItem
-                {
-                    Brand = brand,
-                    Size = size,
-                    Price = price
-                });
-
-                // Update Receipt Display
-                UpdateReceiptDisplay();
-
-                // Update Total Price
-                UpdateTotalPrice();
-
-                // Close the popup
-                KgPopup.IsOpen = false;
-                KgPopup.Visibility = Visibility.Collapsed;
-            }
-        }
-
         private void UpdateReceiptDisplay()
         {
-            ReceiptItemsPanel.Children.Clear();
+            // Bind receipt items to DataGrid
+            dataGridItems.ItemsSource = null;
+            dataGridItems.ItemsSource = receiptItems;
 
-            foreach (var item in receiptItems)
-            {
-                // Create a horizontal layout for each receipt item
-                var itemPanel = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 5, 0, 5) };
-
-                var brandLabel = new Label { Content = item.Brand, Width = 150, FontSize = 16 };
-                var sizeLabel = new Label { Content = item.Size, Width = 100, FontSize = 16 };
-                var priceLabel = new Label { Content = $"₱{item.Price:F2}", Width = 100, FontSize = 16 };
-
-                itemPanel.Children.Add(brandLabel);
-                itemPanel.Children.Add(sizeLabel);
-                itemPanel.Children.Add(priceLabel);
-
-                ReceiptItemsPanel.Children.Add(itemPanel);
-            }
+            // Update Total Price
+            UpdateTotalPrice();
         }
 
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void DecreaseQuantity(ReceiptItem item)
         {
-            // Close the popup
-            KgPopup.IsOpen = false;
-            KgPopup.Visibility = Visibility.Collapsed;
+            if (item.Quantity > 1)
+            {
+                item.Quantity--;
+            }
+            else
+            {
+                receiptItems.Remove(item);
+            }
+
+            UpdateTotalPrice();
         }
+
+
 
         //Payment Options
         private void cashBtn_Click_1(object sender, RoutedEventArgs e)
         {
-            // Calculate the total price of receipt items
-            double totalPrice = receiptItems.Sum(item => item.Price);
+            // Check if there are any items in the receipt
+            if (receiptItems.Count == 0)
+            {
+                MessageBox.Show("Please select at least one product before proceeding with payment.",
+                                "No Products Selected", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
-            // Create a new Payment window and pass the total price
+            // Calculate the total price
+            double totalPrice = receiptItems.Sum(item => item.Total);
+
+            // Create the payment window
             Payment paymentWindow = new Payment(totalPrice);
 
-            // Show the Payment window as a dialog
+            // Show payment window and check if the payment is successful
             if (paymentWindow.ShowDialog() == true)
             {
-                // Get the payment amount entered by the user
+                // Retrieve the payment amount entered
                 double paymentAmount = paymentWindow.PaymentAmount;
 
-                // Calculate the change
-                double change = paymentAmount - totalPrice;
+                // Ensure receiptItems is a List<ReceiptItem>
+                var receiptList = receiptItems.ToList();
 
-                // Update the Change label
-                ChangeLabel.Content = change >= 0
-                    ? $"₱{change:F2}"
-                    : "Insufficient payment!";
+                // Variables to pass
+                double finalTotalPrice = totalPrice;  // Total price
+                double change = paymentAmount - finalTotalPrice;
 
-                // Show a warning if payment is insufficient
+                // Check for negative change (insufficient payment)
                 if (change < 0)
                 {
-                    MessageBox.Show("The payment amount is less than the total price.", "Payment Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Payment amount is less than the total price. Please enter a valid amount.",
+                                    "Insufficient Payment", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
+
+                // Create and show Invoice page
+                var invoicePage = new Invoice(receiptList, "Customer Address Here",
+                                              finalTotalPrice, paymentAmount, change);
+                invoicePage.Show();
             }
         }
 
 
-        private void GcashBtn_Click(object sender, RoutedEventArgs e)
-        {
-            double totalAmount = receiptItems.Sum(item => item.Price);
-            Payment payment = new Payment(totalAmount);
-            payment.ShowDialog();
-        }
+
+
 
         //Calculatipons of payment
         private void UpdateTotalPrice()
         {
-            double totalPrice = receiptItems.Sum(item => item.Price);
+            double totalPrice = receiptItems.Sum(item => item.Total);
             TotalPriceLabel.Content = $"₱{totalPrice:F2}";
         }
+
 
         //products
         private List<InventoryTable> GetProductsFromDatabase()
@@ -259,19 +188,81 @@ namespace LPG_Management_System.View.UserControls
             // Create Product controls and add them to the WrapPanel
             foreach (var product in products)
             {
-                var productControl = new Product();
+                var productControl = new Product
+                {
+                    DataContext = this
+                };
                 productControl.BrandLabel.Content = product.ProductName;
                 productControl.PriceLabel.Content = $"₱{product.Price:F2}";
+                productControl.SizeLabel.Content = product.Size;
 
-                // Set the image source if there is an image
                 if (product.ProductImage != null && product.ProductImage.Length > 0)
                 {
                     productControl.ProductImage.Source = ConvertToImageSource(product.ProductImage);
                 }
 
-                // Add to WrapPanel
                 ProductsPanel.Children.Add(productControl);
             }
         }
+
+        public void AddToReceipt(ReceiptItem item)
+        {
+            var existingItem = receiptItems.FirstOrDefault(r => r.Brand == item.Brand && r.Size == item.Size && r.Price == item.Price);
+
+            if (existingItem != null)
+            {
+                existingItem.Quantity++;
+            }
+            else
+            {
+                receiptItems.Add(item);
+            }
+
+            UpdateTotalPrice();
+        }
+
+        private void FilterByBrand_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is string brand)
+            {
+                // Call LoadProducts with the selected brand
+                LoadProducts(brand);
+            }
+        }
+
+        private void LoadProducts(string filterBrand = null)
+        {
+            // Get products from the database using EF
+            var products = GetProductsFromDatabase();
+
+            // Apply brand filter if specified
+            if (!string.IsNullOrEmpty(filterBrand))
+            {
+                products = products.Where(p => p.ProductName.Equals(filterBrand, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            // Clear existing items in the WrapPanel
+            ProductsPanel.Children.Clear();
+
+            // Create Product controls and add them to the WrapPanel
+            foreach (var product in products)
+            {
+                var productControl = new Product
+                {
+                    DataContext = this
+                };
+                productControl.BrandLabel.Content = product.ProductName;
+                productControl.PriceLabel.Content = $"₱{product.Price:F2}";
+                productControl.SizeLabel.Content = product.Size;
+
+                if (product.ProductImage != null && product.ProductImage.Length > 0)
+                {
+                    productControl.ProductImage.Source = ConvertToImageSource(product.ProductImage);
+                }
+
+                ProductsPanel.Children.Add(productControl);
+            }
+        }
+
     }
 }

@@ -25,9 +25,19 @@ namespace LPG_Management_System.View.UserControls
             InitializeComponent();
         }
 
-            private void Product_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Product_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("Product clicked!");
+            if (DataContext is pointofsaleUC mainControl)
+            {
+                // Pass the product details to the parent control
+                mainControl.AddToReceipt(new pointofsaleUC.ReceiptItem
+                {
+                    Brand = BrandLabel.Content.ToString(),
+                    Price = double.Parse(PriceLabel.Content.ToString().Replace("₱", "")),
+                    Size = SizeLabel?.Content?.ToString() // Optional: Include Size if applicable
+                });
+            }
         }
+
     }
 }

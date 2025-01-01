@@ -7,7 +7,11 @@
         mc:Ignorable="d"
         Title="customerCRUD" Height="442" Width="416" WindowStartupLocation="CenterScreen" AutomationProperties.IsRequiredForForm="True" ResizeMode="NoResize">
     <Grid>
-        <Grid Margin="-1,-1,-3,0" Background="#d1e5f4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="405*"/>
+            <ColumnDefinition Width="11*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Margin="-1,-1,-3,0" Background="#d1e5f4" Grid.ColumnSpan="2">
             <Label Content="Customer Name:" HorizontalAlignment="Left" Height="27" Margin="59,146,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold"/>
             <Label Content="Address:" HorizontalAlignment="Left" Height="28" Margin="59,230,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold"/>
             <Label Content="Contact Number:" HorizontalAlignment="Left" Height="25" Margin="59,189,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold"/>
