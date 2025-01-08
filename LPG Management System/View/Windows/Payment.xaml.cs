@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using LPG_Management_System.Models;
 using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace LPG_Management_System.View.Windows
@@ -23,13 +24,20 @@ namespace LPG_Management_System.View.Windows
     public partial class Payment : Window
     {
 
+        private DataContext _context; // Declare the context
 
         private double totalPrice;
         public double PaymentAmount { get; private set; } // Holds the entered amount
         public Payment(double totalPrice)
         {
             InitializeComponent();
+
+            _context = new DataContext(); // Initialize the context
+
+            NewCustomer_Checked(null, null);
+
             this.totalPrice = totalPrice;
+
             TotalAmountLabel.Content = $"Total: ₱{totalPrice:F2}";
         }
 
@@ -81,8 +89,6 @@ namespace LPG_Management_System.View.Windows
                     {
                         context.tbl_reports.Add(newTransaction); // Save transaction
                         context.SaveChanges(); // Persist changes
-                        MessageBox.Show($"Payment successful!\nChange Given: ₱{changeGiven:F2}",
-                                        "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.DialogResult = true; // Close the window with a success result
                         this.Close();
                     }
@@ -105,15 +111,6 @@ namespace LPG_Management_System.View.Windows
             return new Random().Next(1000, 9999);
         }
 
-
-
-
-        //public void UpdateTotalPrice(double newTotalPrice)
-        //{
-        //    totalPrice = newTotalPrice; // Update the internal price
-        //    TotalAmountLabel.Content = $"Total: ₱{totalPrice:F2}"; // Update the label to reflect the new total
-        //}
-
         private void amounttxtBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
@@ -122,6 +119,47 @@ namespace LPG_Management_System.View.Windows
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void OldCustomer_Checked(object sender, RoutedEventArgs e)
+        {
+            contacttxtBox.IsEnabled = false;
+            addresstxtBox.IsEnabled = false;
+
+            customertxtBox.IsReadOnly = false; // Allow typing for search functionality
+        }
+
+        private void NewCustomer_Checked(object sender, RoutedEventArgs e)
+        {
+            if (contacttxtBox == null || addresstxtBox == null || customertxtBox == null || tankIDtxtBox == null)
+                return;
+
+            contacttxtBox.IsEnabled = true;
+            addresstxtBox.IsEnabled = true;
+
+            customertxtBox.Text = "";
+            tankIDtxtBox.Text = "";
+            customertxtBox.IsReadOnly = false;
+        }
+
+
+        private void customertxtBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            string searchQuery = customertxtBox.Text;
+
+            var customers = _context.tbl_customers
+                                    .Where(c => c.CustomerName.Contains(searchQuery))
+                                    .ToList();
+
+            // Optional: Use an autocomplete control to show customer suggestions
+            // For now, select the first match for demonstration
+            if (customers.Any())
+            {
+                var customer = customers.First();
+                customertxtBox.Text = customer.CustomerName;
+                tankIDtxtBox.Text = customer.TankID.ToString();
+                addresstxtBox.Text = customer.Address;
+            }
         }
     }
 }
