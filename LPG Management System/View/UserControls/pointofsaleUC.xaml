@@ -22,7 +22,7 @@
                 <TextBlock Text="NP4 GAS" VerticalAlignment="Center" Margin="5"/>
             </StackPanel>
             <!-- Data Grid for Invoice Items -->
-            <DataGrid x:Name="dataGridItems" Grid.Row="1" AutoGenerateColumns="False" Margin="5" ItemsSource="{Binding}">
+            <DataGrid x:Name="dataGridItems" Grid.Row="1" AutoGenerateColumns="False" Margin="5" ItemsSource="{Binding}" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False" IsEnabled="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Item" Binding="{Binding Brand}" Width="*"/>
                     <DataGridTextColumn Header="Size" Binding="{Binding Size}" Width="100"/>

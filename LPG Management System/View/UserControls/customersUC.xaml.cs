@@ -102,61 +102,6 @@ namespace LPG_Management_System.View.UserControls
 
         }
 
-        //filter
-        private ContextMenu FilterContextMenu = new ContextMenu();
-        //private void PopulateFilterMenu()
-        //{
-        //    // Clear existing filter menu items
-        //    FilterContextMenu.Items.Clear();
-
-        //    // Create "Filter by Name" MenuItem
-        //    MenuItem filterByNameItem = new MenuItem { Header = "Date" };
-        //    HashSet<string> addedBrands = new HashSet<string>();
-
-        //    using (MySqlConnection connection = new MySqlConnection(connectionString))
-        //    {
-        //        connection.Open();
-
-        //        // Fetch unique brands
-        //        string brandQuery = "SELECT DISTINCT date_purchased FROM tbl_customers";
-        //        MySqlCommand brandCommand = new MySqlCommand(brandQuery, connection);
-        //        using (MySqlDataReader brandReader = brandCommand.ExecuteReader())
-        //        {
-        //            while (brandReader.Read())
-        //            {
-        //                string brandName = brandReader["brandName"].ToString();
-        //                if (!addedBrands.Contains(brandName))
-        //                {
-        //                    addedBrands.Add(brandName);
-
-        //                    MenuItem brandItem = new MenuItem { Header = brandName };
-
-        //                    // Apply filter on click
-        //                    brandItem.Click += (sender, args) =>
-        //                    {
-        //                        ApplyFilter("brandName", brandName);
-        //                    };
-        //                    filterByNameItem.Items.Add(brandItem);
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    // Add both filter options to the context menu
-        //    FilterContextMenu.Items.Add(filterByNameItem);
-
-        //    // Assign the context menu to the button
-        //    FilterButton.ContextMenu = FilterContextMenu;
-        //}
-        private void FilterButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (FilterButton.ContextMenu != null)
-            {
-                FilterButton.ContextMenu.PlacementTarget = FilterButton;
-                FilterButton.ContextMenu.IsOpen = true;
-            }
-        }
-
         //edit and delte 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
