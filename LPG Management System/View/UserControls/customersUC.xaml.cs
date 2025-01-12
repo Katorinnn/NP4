@@ -171,7 +171,7 @@ namespace LPG_Management_System.View.UserControls
                 int selectedcustomersID = Convert.ToInt32(btn.Tag);
 
                 // Open the inventoryCRUD form and pass the correct tankID
-                customerUpdate update= new customerUpdate(selectedcustomersID);
+                customerUpdate update = new customerUpdate(selectedcustomersID);
                 update.ShowDialog(); // Show the dialog for editing
             }
         }
