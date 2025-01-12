@@ -45,30 +45,6 @@ namespace LPG_Management_System.View.UserControls
             Dashboard dashboard = new Dashboard();
             dashboard.Show();
         }
-        private void UpdateReceiptDisplay()
-        {
-            // Bind receipt items to DataGrid
-            dataGridItems.ItemsSource = null;
-            dataGridItems.ItemsSource = receiptItems;
-
-            // Update Total Price
-            UpdateTotalPrice();
-        }
-
-
-        private void DecreaseQuantity(ReceiptItem item)
-        {
-            if (item.Quantity > 1)
-            {
-                item.Quantity--;
-            }
-            else
-            {
-                receiptItems.Remove(item);
-            }
-
-            UpdateTotalPrice();
-        }
 
 
 
