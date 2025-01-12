@@ -20,12 +20,17 @@
     <None Remove="cash-machine.png" />
     <None Remove="fogbg.jpg" />
     <None Remove="fogsmoke.webp" />
+    <None Remove="Images\edit.png" />
     <None Remove="Images\RegascoSample.jpg" />
     <None Remove="Images\solanesample.jpg" />
+    <None Remove="Images\trash.png" />
     <None Remove="inventory.png" />
     <None Remove="LPG Background.png" />
     <None Remove="screenbg.png" />
+    <None Remove="View\UserControls\filter %281%29.png" />
+    <None Remove="View\UserControls\filter.png" />
     <None Remove="View\UserControls\NP4LOGO.png" />
+    <None Remove="View\UserControls\setting.png" />
     <None Remove="View\UserControls\solanesample.jpg" />
     <None Remove="View\Windows\blue-smoke-collection-white-background_1112-1404.avif" />
     <None Remove="View\Windows\fogsmoke.webp" />
@@ -34,6 +39,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\edit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\RegascoSample.jpg" />
   </ItemGroup>
 
@@ -49,8 +57,14 @@
     <Resource Include="Images\customer.png" />
     <Resource Include="Images\NP4BG.avif" />
     <Resource Include="Images\solanesample.jpg" />
+    <Resource Include="Images\trash.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="screenbg.png" />
+    <Resource Include="View\UserControls\filter (1).png" />
+    <Resource Include="View\UserControls\filter.png" />
     <Resource Include="View\UserControls\NP4LOGO.png" />
+    <Resource Include="View\UserControls\setting.png" />
     <Resource Include="View\Windows\fogsmoke.webp" />
     <Resource Include="View\Windows\loginBackground.jpg" />
     <Resource Include="View\Windows\NP4bg.jpg" />
