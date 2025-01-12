@@ -19,7 +19,7 @@
 
             <!-- Customer Info -->
             <StackPanel Orientation="Horizontal" Margin="5">
-                <TextBlock Text="NP4 GAS" VerticalAlignment="Center" Margin="5"/>
+                <TextBlock VerticalAlignment="Center" Margin="5" Width="536" Height="19"><Run Language="en-ph" Text="NP4 GAS RETAIL SHOP"/></TextBlock>
             </StackPanel>
             <!-- Data Grid for Invoice Items -->
             <DataGrid x:Name="dataGridItems" Grid.Row="1" AutoGenerateColumns="False" Margin="5" ItemsSource="{Binding}">
@@ -34,7 +34,7 @@
 
 
         </Grid>
-        <Button x:Name="cashBtn" Content="Payment" HorizontalAlignment="Left" Height="90" Margin="21,644,0,0" VerticalAlignment="Top" Width="556" Background="#FFB1C92A" FontSize="30" Click="cashBtn_Click_1"/>
+        <Button x:Name="cashBtn" Content="Pay Now" HorizontalAlignment="Left" Height="90" Margin="21,644,0,0" VerticalAlignment="Top" Width="556" Background="#FFB1C92A" FontSize="30" Click="cashBtn_Click_1"/>
 
         <!-- Total and Change Labels -->
         <Grid HorizontalAlignment="Left" Height="102" Margin="23,542,0,0" VerticalAlignment="Top" Width="554" Background="#FFEDEDED" RenderTransformOrigin="0.5,0.5">
@@ -66,10 +66,10 @@
             </Grid.RowDefinitions>
             <!-- Product Buttons -->
             <StackPanel HorizontalAlignment="Left" Margin="8,8,0,0" Orientation="Horizontal" VerticalAlignment="Top" Width="590">
-                <Button Content="Coastal" Height="100" Width="135" FontSize="20" Margin="8,8,0,0" Click="FilterByBrand_Click" Tag="Coastal"/>
-                <Button Content="Gaz Lite" Height="100" Width="135" FontSize="20" Margin="8,8,0,0" Click="FilterByBrand_Click" Tag="Gaz Lite"/>
-                <Button Content="Solane" Height="100" Width="135" FontSize="20" Margin="8,8,0,0" Click="FilterByBrand_Click" Tag="Solane"/>
-                <Button Content="Regasco" Height="100" Width="135" FontSize="20" Margin="8,8,0,0" Click="FilterByBrand_Click" Tag="Regasco"/>
+                <Button Content="Coastal" Height="57" Width="135" FontSize="20" Margin="8,8,0,0" Click="FilterByBrand_Click" Tag="Coastal"/>
+                <Button Content="Gaz Lite" Height="57" Width="135" FontSize="20" Margin="8,8,0,0" Click="FilterByBrand_Click" Tag="Gaz Lite"/>
+                <Button Content="Solane" Height="57" Width="135" FontSize="20" Margin="8,8,0,0" Click="FilterByBrand_Click" Tag="Solane"/>
+                <Button Content="Regasco" Height="57" Width="135" FontSize="20" Margin="8,8,0,0" Click="FilterByBrand_Click" Tag="Regasco"/>
 
             </StackPanel>
 
@@ -85,7 +85,7 @@
 
             <!-- Regasco Kilogram Buttons (Initially Hidden) -->
             <StackPanel x:Name="RegascoPanel" HorizontalAlignment="Left" Margin="520,100,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed"/>
-            <WrapPanel x:Name="ProductsPanel" Margin="14,130,14,0" Background="#FF005F8C" Height="641" VerticalAlignment="Top" Grid.RowSpan="2"/>
+            <WrapPanel x:Name="ProductsPanel" Margin="14,86,14,0" Background="#FF005F8C" Height="685" VerticalAlignment="Top" Grid.RowSpan="2"/>
 
         </Grid>
     </Grid>

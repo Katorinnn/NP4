@@ -67,6 +67,7 @@ namespace LPG_Management_System.View.UserControls
         }
 
         //SearchBar
+
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchText = (sender as TextBox)?.Text;
@@ -94,6 +95,9 @@ namespace LPG_Management_System.View.UserControls
                 // Reload all data if search is empty
                 LoadCustomersData();
             }
+            
+
+            
         }
 
 
@@ -205,5 +209,27 @@ namespace LPG_Management_System.View.UserControls
             }
         }
 
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (TextBox.Text == "Search here")
+            {
+                TextBox.Text = string.Empty;
+                TextBox.Foreground = Brushes.Black; // Set text color to normal
+            }
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(TextBox.Text))
+            {
+                TextBox.Text = "Search here";
+                TextBox.Foreground = Brushes.Gray; // Set text color to placeholder style
+            }
+        }
+
+        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

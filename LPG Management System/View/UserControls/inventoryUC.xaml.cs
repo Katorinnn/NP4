@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace LPG_Management_System.View.UserControls
 {
@@ -165,6 +166,24 @@ namespace LPG_Management_System.View.UserControls
         private void ClearFilterButton_Click(object sender, RoutedEventArgs e)
         {
             LoadCustomersData();
+        }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (TextBox.Text == "Search here")
+            {
+                TextBox.Text = string.Empty;
+                TextBox.Foreground = Brushes.Black; // Set text color to normal
+            }
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(TextBox.Text))
+            {
+                TextBox.Text = "Search here";
+                TextBox.Foreground = Brushes.Gray; // Set text color to placeholder style
+            }
         }
     }
 }

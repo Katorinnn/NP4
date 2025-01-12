@@ -8,11 +8,11 @@
              d:DesignHeight="850" d:DesignWidth="1230">
 
     <Grid x:Name="mainGrid">
-        <Grid Margin="0,0,0,-10">
+        <Grid Margin="1,0,-1,-10">
             <Grid.Background>
                 <LinearGradientBrush StartPoint="1,0" EndPoint="1,1">
-                    <GradientStop Color="White" Offset="0.1" />
-                    <GradientStop Color="#FF8ECAE6" Offset="1.1" />
+                    <GradientStop Color="WhiteSmoke" Offset="0.1" />
+                    <GradientStop Color="#8ecae6" Offset="2.0" />
                 </LinearGradientBrush>
             </Grid.Background>
             <Grid.RowDefinitions>
@@ -23,11 +23,34 @@
             </Grid.RowDefinitions>
 
             <!-- Search TextBox -->
-            <Button Name="FilterButton" Content="Filter" Width="111" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,135,0,0" Click="FilterButton_Click" Grid.Row="1"/>
-            <TextBox x:Name="TextBox" HorizontalAlignment="Left" Background="WhiteSmoke" Height="36" 
-                     Margin="30,135,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" 
-                     TextChanged="TextBox_TextChanged" Tag="Search..." Foreground="Black" 
-                     FontSize="14" Padding="5" BorderThickness="1" BorderBrush="Gray" Grid.Row="1"/>
+            <Grid HorizontalAlignment="Left" Height="36" Margin="330,135,0,0" Grid.Row="1" VerticalAlignment="Top" Width="39" OpacityMask="Black" Background="#FF7C7C7C"/>
+            <Grid HorizontalAlignment="Left" Height="34" Margin="331,136,0,0" Grid.Row="1" VerticalAlignment="Top" Width="37" OpacityMask="Black" Background="White">
+                <Button x:Name="FilterButton" Content="" Width="32" Height="29" VerticalAlignment="Center" HorizontalAlignment="Center" Click="FilterButton_Click" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/View/UserControls/setting.png"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+
+            <!-- Search TextBox -->
+            <TextBox x:Name="TextBox" 
+                 HorizontalAlignment="Left" 
+                 Background="WhiteSmoke" 
+                 Height="36" 
+                 Margin="30,135,0,0" 
+                 VerticalAlignment="Top" 
+                 Width="300" 
+                 TextWrapping="Wrap" 
+                 FontSize="14" 
+                 Padding="5" 
+                 BorderThickness="1" 
+                 BorderBrush="Gray" 
+                 Foreground="Gray"
+                 Text="Search here" 
+                 GotFocus="TextBox_GotFocus" 
+                 LostFocus="TextBox_LostFocus" 
+                 Grid.Row="1"  />
+
 
             <!-- StackPanel for New Button -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="1050,10,0,10" Width="100">
@@ -48,7 +71,7 @@
 
                 <!-- DataGrid Column Header Style -->
                 <DataGrid.ColumnHeaderStyle>
-                    <Style TargetType="DataGridColumnHeader">
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
                         <Setter Property="Background" Value="SteelBlue"/>
                         <Setter Property="Foreground" Value="White"/>
                         <Setter Property="FontWeight" Value="Bold"/>
@@ -61,7 +84,7 @@
 
                 <!-- DataGrid Row Style -->
                 <DataGrid.RowStyle>
-                    <Style TargetType="DataGridRow">
+                    <Style TargetType="{x:Type DataGridRow}">
                         <Setter Property="FontSize" Value="15"/>
                         <Setter Property="Foreground" Value="Black"/>
                         <Setter Property="Background" Value="White"/>
@@ -84,22 +107,42 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                    <!-- Edit Button -->
-                                    <Button Content="Edit" Tag="{Binding CustomerID}" Click="EditButton_Click" Width="75" Height="35" Background="Green"/>
                                     <!-- <Button Content="Edit" Width="80" Height="30" Margin="5,0,5,0"
-                Background="Green" Foreground="White" FontWeight="Bold"
-                BorderThickness="0" Cursor="Hand"
-                Tag="{Binding Id}" FontFamily="Segoe UI"
-                Click="EditButton_Click" /> -->
+                                        Background="Green" Foreground="White" FontWeight="Bold"
+                                        BorderThickness="0" Cursor="Hand"
+                                        Tag="{Binding Id}" FontFamily="Segoe UI"
+                                        Click="EditButton_Click" /> -->
                                     <!-- Bind to Edit Button Click Event -->
-
-                                    <!-- Delete Button -->
-                                    <Button Content="Delete" Width="75" Height="35" Margin="5,0,5,0"
-                                    Background="#FF4500" Foreground="White" FontWeight="Bold"
-                                    BorderThickness="0" Cursor="Hand"
-                                    Tag="{Binding CustomerID}" FontFamily="Segoe UI"
-                                    Click="DeleteButton_Click" />
                                     <!-- Bind to Delete Button Click Event -->
+                                    <!-- Edit Button -->
+                                    <Button x:Name="editButton" 
+                                            Tag="{Binding TankID}" 
+                                            Click="EditButton_Click" 
+                                            Width="45" 
+                                            Height="45" 
+                                            Background="Green" 
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Padding="5">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Image Source="/Images/edit.png" Height="20"/>
+                                        </StackPanel>
+                                    </Button>
+                                    
+                                    <!-- Delete Button -->
+                                    <Button Width="45" 
+                                            Height="45" 
+                                            Margin="5,0,5,0"
+                                            Background="#FF4500" 
+                                            Foreground="WhiteSmoke" 
+                                            Cursor="Hand"
+                                            Tag="{Binding TankID}" FontFamily="Segoe UI"
+                                            Click="DeleteButton_Click">
+
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Image Source="/Images/trash.png" Height="20" />
+                                        </StackPanel>
+                                    </Button>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
