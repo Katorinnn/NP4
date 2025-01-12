@@ -87,5 +87,10 @@ namespace LPG_Management_System.View
         {
             // Handle text change if necessary
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

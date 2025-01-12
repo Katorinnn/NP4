@@ -5,13 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LPG_Management_System.View"
         mc:Ignorable="d"
-        Title="customerCRUD" Height="442" Width="416" WindowStartupLocation="CenterScreen" AutomationProperties.IsRequiredForForm="True" ResizeMode="NoResize">
+        Title="customerCRUD" Height="442" Width="416" WindowStartupLocation="CenterScreen" AutomationProperties.IsRequiredForForm="True"  ResizeMode="NoResize" WindowStyle="None"
+        Background="{x:Null}" AllowsTransparency="True">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="405*"/>
-            <ColumnDefinition Width="11*"/>
-        </Grid.ColumnDefinitions>
-        <Grid Margin="-1,-1,-3,0" Background="#d1e5f4" Grid.ColumnSpan="2">
+        <!-- Border to wrap the content and provide rounded corners -->
+        <Border Margin="20" Background="#d1e5f4" BorderBrush="Gray" BorderThickness="1,1,1,1" CornerRadius="10">
+            <Border.Effect>
+                <DropShadowEffect Color="Gray" BlurRadius="30" ShadowDepth="-5" Opacity="0.3"/>
+            </Border.Effect>
+            <!-- Close Button -->
+            <Button Content="X" HorizontalAlignment="Right" VerticalAlignment="Top" Width="46" Height="32" 
+            Margin="0,6,1,0" 
+            Background="Transparent" Foreground="Gray" Cursor="Hand" 
+            BorderBrush="{x:Null}" FontSize="19" Click="Button_Click"/>
+
+        </Border>
+        
+        <Grid>
             <Label Content="Customer Name:" HorizontalAlignment="Left" Height="27" Margin="59,146,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold"/>
             <Label Content="Address:" HorizontalAlignment="Left" Height="28" Margin="59,230,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold"/>
             <Label Content="Contact Number:" HorizontalAlignment="Left" Height="25" Margin="59,189,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold"/>

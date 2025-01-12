@@ -161,5 +161,10 @@ namespace LPG_Management_System.View.Windows
                 addresstxtBox.Text = customer.Address;
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

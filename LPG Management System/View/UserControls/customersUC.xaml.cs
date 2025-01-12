@@ -26,6 +26,7 @@ namespace LPG_Management_System.View.UserControls
         {
             InitializeComponent();
             LoadCustomersData();
+            customersDG.CanUserReorderColumns = false;
             //PopulateFilterMenu();
         }
 
@@ -50,7 +51,7 @@ namespace LPG_Management_System.View.UserControls
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            
         }
 
         private void newBtn_Click(object sender, RoutedEventArgs e)

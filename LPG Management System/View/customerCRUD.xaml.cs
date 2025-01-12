@@ -69,5 +69,9 @@ namespace LPG_Management_System.View
     }
 }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

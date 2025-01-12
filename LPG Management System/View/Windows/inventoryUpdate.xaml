@@ -5,34 +5,57 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LPG_Management_System.View"
         mc:Ignorable="d"
-        Title="inventoryUpdate" Height="450" Width="624" WindowStartupLocation="CenterScreen"  ResizeMode="NoResize">
+        Title="inventoryUpdate" Height="497" Width="682" WindowStartupLocation="CenterScreen" AutomationProperties.IsRequiredForForm="True"  ResizeMode="NoResize" WindowStyle="None"
+        Background="{x:Null}" AllowsTransparency="True">
 
-    <Grid Margin="-1,-2,0,-6" Background="#d1e5f4">
-        <Label Content="Brand:" HorizontalAlignment="Left" Height="27" Margin="73,133,0,0"  VerticalAlignment="Top" Width="108" FontSize="14" FontWeight="Bold"/>
-        <Label Content="Price:" HorizontalAlignment="Left" Height="28" Margin="72,226,0,0" VerticalAlignment="Top" Width="108" FontSize="14" FontWeight="Bold"/>
-        <Label Content="Size (kg):" HorizontalAlignment="Left" Height="32" Margin="72,180,0,0" VerticalAlignment="Top" Width="108" FontSize="14" FontWeight="Bold"/>
-        <Label Content="Tank ID:" HorizontalAlignment="Left" Height="25" Margin="72,86,0,0" VerticalAlignment="Top" Width="108" FontSize="14" FontWeight="Bold"/>
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
 
-        <TextBox x:Name="brandtxtBox" HorizontalAlignment="Left" Height="30" Margin="220,136,0,0" 
-                 TextWrapping="Wrap" VerticalAlignment="Top" Width="150" FontSize="15"
-                 BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd"/>
+    <Grid>
+        <!-- Border to wrap the content and provide rounded corners -->
+        <Border Margin="20" Background="#d1e5f4" BorderBrush="Gray" BorderThickness="1,1,1,1" CornerRadius="15">
+            <Border.Effect>
+                <DropShadowEffect Color="Gray" BlurRadius="30" ShadowDepth="-5" Opacity="0.3"/>
+            </Border.Effect>
+            <!-- Close Button -->
+            <Button Content="X" HorizontalAlignment="Right" VerticalAlignment="Top" Width="46" Height="32" 
+            Margin="0,6,1,0" Click="Button_Click" 
+            Background="Transparent" Foreground="Gray" Cursor="Hand" 
+            BorderBrush="{x:Null}" FontSize="19"/>
 
-        <TextBox x:Name="sizetxtBox" HorizontalAlignment="Left" Height="30" Margin="221,179,0,0" 
-                 TextWrapping="Wrap" VerticalAlignment="Top" Width="150" FontSize="15"
-                 BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd"/>
+        </Border>
 
-        <TextBox x:Name="pricetxtBox" HorizontalAlignment="Left" Height="30" Margin="222,227,0,0" 
-                 TextWrapping="Wrap" VerticalAlignment="Top" Width="150" FontSize="15"
-                 BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd"/>
 
-        <TextBox x:Name="tankIDtxtBox" HorizontalAlignment="Left" Height="31" Margin="220,88,0,0" 
-                 TextWrapping="Wrap" VerticalAlignment="Top" Width="150" FontSize="15"
-                 BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd"/>
+        <!-- Form Fields -->
+        <Label Content="Tank ID:" HorizontalAlignment="Left" Margin="90,100,0,0" VerticalAlignment="Top" 
+       FontWeight="Bold" FontSize="15" Width="80"/>
+        <TextBox x:Name="tankIDtxtBox" HorizontalAlignment="Left" Margin="200,100,0,0" VerticalAlignment="Top" 
+         Width="200" Height="30" Background="#e5f3fd" BorderBrush="Gray" BorderThickness="1"/>
 
-        <Button x:Name="updateBtn" Content="UPDATE" HorizontalAlignment="Left" Height="48" Margin="257,315,0,0" VerticalAlignment="Top" Width="125"  Cursor="Hand" Click="updateBtn_Click"/>
-        <Border HorizontalAlignment="Left" Height="151" Margin="395,89,0,0" VerticalAlignment="Top" 
-                Width="157" BorderBrush="DimGray" BorderThickness="1" CornerRadius="5">
-            <Image x:Name="productImagePreview" Stretch="Uniform"/>
+        <Label Content="Brand:" HorizontalAlignment="Left" Margin="90,150,0,0" VerticalAlignment="Top" 
+       FontWeight="Bold" FontSize="15" Width="80"/>
+        <TextBox x:Name="brandtxtBox" HorizontalAlignment="Left" Margin="200,150,0,0" VerticalAlignment="Top" 
+         Width="200" Height="30" Background="#e5f3fd" BorderBrush="Gray" BorderThickness="1"/>
+
+        <Label Content="Size (kg):" HorizontalAlignment="Left" Margin="90,200,0,0" VerticalAlignment="Top" 
+       FontWeight="Bold" FontSize="15" Width="80"/>
+        <TextBox x:Name="sizetxtBox" HorizontalAlignment="Left" Margin="200,200,0,0" VerticalAlignment="Top" 
+         Width="200" Height="30" Background="#e5f3fd" BorderBrush="Gray" BorderThickness="1"/>
+
+        <Label Content="Price:" HorizontalAlignment="Left" Margin="90,250,0,0" VerticalAlignment="Top" 
+       FontWeight="Bold" FontSize="15" Width="80"/>
+        <TextBox x:Name="pricetxtBox" HorizontalAlignment="Left" Margin="200,250,0,0" VerticalAlignment="Top" 
+         Width="200" Height="30" Background="#e5f3fd" BorderBrush="Gray" BorderThickness="1"/>
+
+
+        <Button x:Name="updateBtn" Content="UPDATE" HorizontalAlignment="Left" VerticalAlignment="Top" 
+            Width="150" Height="59" Margin="264,345,0,0" 
+            Background="#0078D7" Foreground="White" BorderBrush="Gray" BorderThickness="1" Cursor="Hand" RenderTransformOrigin="0.601,-0.207" Click="updateBtn_Click" />
+
+        <Border HorizontalAlignment="Left" Margin="430,100,0,0" VerticalAlignment="Top" 
+                Width="160" Height="160" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+            <Image x:Name="productImagePreview" Stretch="Uniform" />
         </Border>
 
     </Grid>

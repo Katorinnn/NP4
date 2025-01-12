@@ -10,23 +10,25 @@
         <TabControl>
             <TabItem Header="General Settings" FontSize="28" Width="613" Margin="0,0,0,0" >
                 <Grid Background="White" Margin="-1,0,-7,0">
-                    <Label Content="Company Details" HorizontalAlignment="Left" Height="47" Margin="24,30,0,0" VerticalAlignment="Top" Width="221" FontSize="25" FontWeight="Bold" FontFamily="Segoe UI"/>
-                    <Label Content="Address:" HorizontalAlignment="Left" Height="35" Margin="51,405,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontFamily="Segoe UI"/>
-                    <Label Content="Name:" HorizontalAlignment="Left" Height="32" Margin="51,368,0,0"  VerticalAlignment="Top" Width="128" FontSize="14" FontFamily="Segoe UI"/>
-                    <Label Content="Contact number:" HorizontalAlignment="Left" Height="32" Margin="50,445,0,0" VerticalAlignment="Top" Width="128" FontSize="14" FontFamily="Segoe UI"/>
-                    <Label Content="Privacy &amp; Security" HorizontalAlignment="Left" Height="45" Margin="43,554,0,0" VerticalAlignment="Top" Width="294" FontSize="25" FontWeight="Bold" FontFamily="Segoe UI"/>
-                    <Label Content="username:" HorizontalAlignment="Left" Height="32" Margin="43,614,0,0" VerticalAlignment="Top" Width="128" FontSize="14" FontFamily="Segoe UI"/>
-                    <Label Content="password:" HorizontalAlignment="Left" Height="32" Margin="42,663,0,0" VerticalAlignment="Top" Width="128" FontSize="14" FontFamily="Segoe UI"/>
-                    <TextBox HorizontalAlignment="Left" Margin="181,362,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="26" FontSize="14" TextChanged="TextBox_TextChanged" FontFamily="Segoe UI"/>
-                    <TextBox HorizontalAlignment="Left" Margin="181,396,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="26" FontSize="14" FontFamily="Segoe UI"/>
-                    <TextBox HorizontalAlignment="Left" Margin="181,432,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Height="26" FontSize="14" FontFamily="Segoe UI"/>
-                    <TextBox HorizontalAlignment="Left" Margin="183,617,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="26" FontSize="14" FontFamily="Segoe UI"/>
-                    <TextBox HorizontalAlignment="Left" Margin="183,658,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="26" FontSize="14" FontFamily="Segoe UI"/>
-                    <Label Content="Email address:" HorizontalAlignment="Left" Height="32" Margin="51,479,0,0"  VerticalAlignment="Top" Width="128" FontSize="14" FontFamily="Segoe UI"/>
-                    <TextBox HorizontalAlignment="Left" Margin="181,472,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="26" FontSize="14" FontFamily="Segoe UI"/>
-                    <Button Content="Upload Image" HorizontalAlignment="Left" Margin="275,196,0,0" VerticalAlignment="Top" Click="Button_Click" Height="50"/>
-                    <Image x:Name="logoPlaceholder" HorizontalAlignment="Right" Height="180" Margin="0,126,990,0" VerticalAlignment="Top" Width="185" OpacityMask="#FFC3BABA" Source="/View/UserControls/NP4LOGO.png"/>
-                    <Label Content="Company Logo" HorizontalAlignment="Left" Height="40" Margin="55,87,0,0" VerticalAlignment="Top" Width="221" FontSize="20" FontWeight="Bold" FontFamily="Segoe UI"/>
+                    <Label Content="Company Details" HorizontalAlignment="Left" Height="47" Margin="56,58,0,0" VerticalAlignment="Top" Width="221" FontSize="25" FontWeight="Bold" FontFamily="Segoe UI"/>
+                    <Label Content="Address:" HorizontalAlignment="Left" Height="35" Margin="55,173,0,0" VerticalAlignment="Top" Width="106" FontSize="15" FontFamily="Segoe UI"/>
+                    <Label Content="Name:" HorizontalAlignment="Left" Height="32" Margin="55,136,0,0"  VerticalAlignment="Top" Width="128" FontSize="15" FontFamily="Segoe UI"/>
+                    <Label Content="Contact number:" HorizontalAlignment="Left" Height="32" Margin="55,215,0,0" VerticalAlignment="Top" Width="128" FontSize="15" FontFamily="Segoe UI"/>
+                    <Label Content="Privacy &amp; Security" HorizontalAlignment="Left" Height="45" Margin="55,357,0,0" VerticalAlignment="Top" Width="294" FontSize="25" FontWeight="Bold" FontFamily="Segoe UI"/>
+                    <Label Content="username:" HorizontalAlignment="Left" Height="32" Margin="55,422,0,0" VerticalAlignment="Top" Width="128" FontSize="15" FontFamily="Segoe UI"/>
+                    <Label Content="password:" HorizontalAlignment="Left" Height="32" Margin="55,462,0,0" VerticalAlignment="Top" Width="128" FontSize="15" FontFamily="Segoe UI"/>
+                    <TextBox HorizontalAlignment="Left" Margin="210,136,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="26" FontSize="14" TextChanged="TextBox_TextChanged" FontFamily="Segoe UI"/>
+                    <TextBox HorizontalAlignment="Left" Margin="210,173,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="26" FontSize="14" FontFamily="Segoe UI"/>
+                    <TextBox HorizontalAlignment="Left" Margin="210,213,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Height="26" FontSize="14" FontFamily="Segoe UI"/>
+                    <TextBox HorizontalAlignment="Left" Margin="155,421,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="26" FontSize="14" FontFamily="Segoe UI"/>
+                    <TextBox HorizontalAlignment="Left" Margin="155,456,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="26" FontSize="14" FontFamily="Segoe UI"/>
+                    <Label Content="Email address:" HorizontalAlignment="Left" Height="32" Margin="55,252,0,0"  VerticalAlignment="Top" Width="128" FontSize="15" FontFamily="Segoe UI"/>
+                    <TextBox HorizontalAlignment="Left" Margin="210,251,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="26" FontSize="14" FontFamily="Segoe UI"/>
+                    <Grid HorizontalAlignment="Left" Height="241" Margin="618,111,0,0" VerticalAlignment="Top" Width="289" Background="#FFF0F0F0"/>
+                    <Button Content="Upload Image" HorizontalAlignment="Left" Margin="703,377,0,0" VerticalAlignment="Top" Click="Button_Click" Height="50"/>
+                    <Image x:Name="logoPlaceholder" HorizontalAlignment="Right" Height="217" Margin="0,116,360,0" VerticalAlignment="Top" Width="229" OpacityMask="#FFC3BABA" Source="/View/UserControls/NP4LOGO.png"/>
+                    <Label Content="Company Logo" HorizontalAlignment="Left" Height="47" Margin="611,59,0,0" VerticalAlignment="Top" Width="221" FontSize="25" FontWeight="Bold" FontFamily="Segoe UI"/>
+
 
                 </Grid>
             </TabItem>

@@ -185,5 +185,11 @@ namespace LPG_Management_System.View.UserControls
                 TextBox.Foreground = Brushes.Gray; // Set text color to placeholder style
             }
         }
+
+        private void inventoryDG_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
     }
 }

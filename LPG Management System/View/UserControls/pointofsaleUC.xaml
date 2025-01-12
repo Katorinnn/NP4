@@ -22,7 +22,7 @@
                 <TextBlock VerticalAlignment="Center" Margin="5" Width="536" Height="19"><Run Language="en-ph" Text="NP4 GAS RETAIL SHOP"/></TextBlock>
             </StackPanel>
             <!-- Data Grid for Invoice Items -->
-            <DataGrid x:Name="dataGridItems" Grid.Row="1" AutoGenerateColumns="False" Margin="5" ItemsSource="{Binding}" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False" IsEnabled="False">
+            <DataGrid x:Name="dataGridItems" Grid.Row="1" AutoGenerateColumns="False" Margin="5" ItemsSource="{Binding}" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False" IsEnabled="False" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Item" Binding="{Binding Brand}" Width="*"/>
                     <DataGridTextColumn Header="Size" Binding="{Binding Size}" Width="100"/>
@@ -66,10 +66,11 @@
             </Grid.RowDefinitions>
             <!-- Product Buttons -->
             <StackPanel HorizontalAlignment="Left" Margin="8,8,0,0" Orientation="Horizontal" VerticalAlignment="Top" Width="590">
-                <Button Content="Coastal" Height="57" Width="135" FontSize="20" Margin="8,8,0,0" Click="FilterByBrand_Click" Tag="Coastal"/>
-                <Button Content="Gaz Lite" Height="57" Width="135" FontSize="20" Margin="8,8,0,0" Click="FilterByBrand_Click" Tag="Gaz Lite"/>
-                <Button Content="Solane" Height="57" Width="135" FontSize="20" Margin="8,8,0,0" Click="FilterByBrand_Click" Tag="Solane"/>
-                <Button Content="Regasco" Height="57" Width="135" FontSize="20" Margin="8,8,0,0" Click="FilterByBrand_Click" Tag="Regasco"/>
+                <Button Content="All" Height="57" Width="59" FontSize="20" Click="FilterByBrand_Click" Tag="All"/>
+                <Button Content="Coastal" Height="57" Width="131" FontSize="20" Click="FilterByBrand_Click" Tag="Coastal"/>
+                <Button Content="Gaz Lite" Height="57" Width="131" FontSize="20" Click="FilterByBrand_Click" Tag="Gaz Lite"/>
+                <Button Content="Solane" Height="57" Width="131" FontSize="20" Click="FilterByBrand_Click" Tag="Solane"/>
+                <Button Content="Regasco" Height="57" Width="130" FontSize="20" Click="FilterByBrand_Click" Tag="Regasco"/>
 
             </StackPanel>
 

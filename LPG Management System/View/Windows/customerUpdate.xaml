@@ -5,37 +5,55 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LPG_Management_System.View"
         mc:Ignorable="d"
-        Title="inventoryUpdate" Height="442" Width="416" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="inventoryUpdate" Height="497" Width="682" WindowStartupLocation="CenterScreen" AutomationProperties.IsRequiredForForm="True"  ResizeMode="NoResize" WindowStyle="None"
+        Background="{x:Null}" AllowsTransparency="True">
 
-    <Grid Margin="-1,-2,0,-6" Background="#d1e5f4">
-        <Label Content="Customer name:" HorizontalAlignment="Left" Height="27" Margin="62,150,0,0" VerticalAlignment="Top" Width="122" FontSize="14" FontWeight="Bold" FontFamily="Segoe UI"/>
-        <Label Content="Address:" HorizontalAlignment="Left" Height="28" Margin="62,246,0,0" VerticalAlignment="Top" Width="108" FontSize="14" FontWeight="Bold" FontFamily="Segoe UI"/>
-        <Label Content="Contact number:" HorizontalAlignment="Left" Height="33" Margin="62,197,0,0" VerticalAlignment="Top" Width="128" FontSize="14" FontWeight="Bold" FontFamily="Segoe UI"/>
-        <Label Content="Tank ID:" HorizontalAlignment="Left" Height="25" Margin="62,96,0,0" VerticalAlignment="Top" Width="108" FontSize="14" FontWeight="Bold" FontFamily="Segoe UI"/>
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
 
-        <TextBox x:Name="cuNametxtBox" HorizontalAlignment="Left" Height="25" Margin="217,145,0,0" 
-                 TextWrapping="Wrap" VerticalAlignment="Top" Width="140" 
+    <Grid>
+        <!-- Border to wrap the content and provide rounded corners -->
+        <Border Margin="20" Background="#d1e5f4" BorderBrush="Gray" BorderThickness="1,1,1,1" CornerRadius="10">
+            <Border.Effect>
+                <DropShadowEffect Color="Gray" BlurRadius="30" ShadowDepth="-5" Opacity="0.3"/>
+            </Border.Effect>
+            <!-- Close Button -->
+            <Button Content="X" HorizontalAlignment="Right" VerticalAlignment="Top" Width="46" Height="32" 
+            Margin="0,6,1,0" Click="Button_Click" 
+            Background="Transparent" Foreground="Gray" Cursor="Hand" 
+            BorderBrush="{x:Null}" FontSize="19"/>
+
+        </Border>
+
+        <Label Content="Customer Name:" HorizontalAlignment="Left" Height="31" Margin="125,176,0,0" VerticalAlignment="Top" Width="149" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI"/>
+        <Label Content="Address:" HorizontalAlignment="Left" Height="28" Margin="127,272,0,0" VerticalAlignment="Top" Width="108" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI"/>
+        <Label Content="Contact number:" HorizontalAlignment="Left" Height="33" Margin="125,223,0,0" VerticalAlignment="Top" Width="158" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI"/>
+        <Label Content="Tank ID:" HorizontalAlignment="Left" Height="34" Margin="125,127,0,0" VerticalAlignment="Top" Width="119" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI"/>
+
+        <TextBox x:Name="cuNametxtBox" HorizontalAlignment="Left" Margin="315,171,0,0" 
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Height="35"
                  BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd"/>
 
-        <TextBox x:Name="contacttxtBox" HorizontalAlignment="Left" Height="25" Margin="217,193,0,0" 
-                 TextWrapping="Wrap" VerticalAlignment="Top" Width="140" 
+        <TextBox x:Name="contacttxtBox" HorizontalAlignment="Left" Margin="315,219,0,0" 
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="201" Height="36"
                  BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd"/>
 
-        <TextBox x:Name="addresstxtBox" HorizontalAlignment="Left" Height="45" Margin="166,246,0,0" 
-                 TextWrapping="Wrap" VerticalAlignment="Top" Width="190" 
+        <TextBox x:Name="addresstxtBox" HorizontalAlignment="Left" Height="63" Margin="315,271,0,0" 
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="226" 
                  BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd"/>
 
-        <TextBox x:Name="tankIDtxtBox" HorizontalAlignment="Left" Height="25" Margin="217,99,0,0" 
-                 TextWrapping="Wrap" VerticalAlignment="Top" Width="140" 
+        <TextBox x:Name="tankIDtxtBox" HorizontalAlignment="Left"  Margin="315,125,0,0" 
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="134" Height="36"
                  BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" TextChanged="tankIDtxtBox_TextChanged" />
 
-        <TextBox x:Name="customerIDtxtBox" HorizontalAlignment="Left" Height="25" Margin="217,59,0,0" 
-                 TextWrapping="Wrap" VerticalAlignment="Top" Width="140" 
+        <TextBox x:Name="customerIDtxtBox" HorizontalAlignment="Left" Margin="315,77,0,0" 
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="113" Height="36"
                  BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" TextChanged="tankIDtxtBox_TextChanged"/>
 
-        <Button x:Name="updateBtn" Content="UPDATE" HorizontalAlignment="Center" Height="48" Margin="0,344,0,0" VerticalAlignment="Top" Width="125"  Cursor="Hand" Click="updateBtn_Click" FontFamily="Segoe UI" FontSize="14"/>
+        <Button x:Name="updateBtn" Content="UPDATE" HorizontalAlignment="Center" Height="48" Margin="0,392,0,0" VerticalAlignment="Top" Width="126"  Cursor="Hand" Click="updateBtn_Click" FontFamily="Segoe UI" FontSize="14"/>
 
-        <Label Content="Customer ID:" HorizontalAlignment="Left" Height="25" Margin="62,59,0,0" VerticalAlignment="Top" Width="108" FontSize="14" FontWeight="Bold" FontFamily="Segoe UI"/>
+        <Label Content="Customer ID:" HorizontalAlignment="Left" Height="33" Margin="125,76,0,0" VerticalAlignment="Top" Width="121" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI"/>
 
 
     </Grid>

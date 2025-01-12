@@ -103,6 +103,11 @@ namespace LPG_Management_System.View
             }
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
 
         //private void tankIDtxtBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         //{

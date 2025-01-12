@@ -18,92 +18,236 @@
         </Grid.ColumnDefinitions>
 
         <!-- Sidebar -->
-        <StackPanel Background="#FF2C3E50" Grid.Column="0">
+        <StackPanel Background="#FF2C3E50" Grid.Column="0" x:Name="SidebarPanel">
             <!-- Logo or Header -->
             <Grid Background="#FF34495E" Height="276">
-                <Image Source="/Images/NP4LOGO.png" HorizontalAlignment="Left" Height="190" Margin="49,37,0,0" VerticalAlignment="Top" Width="230" RenderTransformOrigin="0.453,0.601"/>
+                <Image Source="/Images/NP4LOGO.png" HorizontalAlignment="Left" Height="190" Margin="49,37,0,0" VerticalAlignment="Top" Width="230" />
             </Grid>
 
-            <!-- Buttons for Sidebar Menu -->
-            <Button x:Name="dashboardBtn" Content="Dashboard" Height="91" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Click="Button_Click_1" Cursor="Hand" MouseEnter="dashboardBtn_MouseEnter" MouseLeave="dashboardBtn_MouseLeave" FontWeight="Bold" >
+            <!-- Sidebar Buttons -->
+            <!-- Dashboard Button -->
+            <Button x:Name="dashboardBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="100" FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" >
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <Image Source="/Images/dashboard.png" Height="84" Width="69" Margin="10,0"/>
-                                <TextBlock Text="Dashboard" FontSize="16" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Border>
+                        <Grid>
+                            <Rectangle x:Name="ActiveIndicator" Fill="#8ecae6" Width="5" HorizontalAlignment="Left" Visibility="Collapsed" Height="100" />
+                            <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Image Source="/Images/dashboard.png" Height="84" Width="69" Margin="10,0"/>
+                                    <TextBlock x:Name="Text" Text="Dashboard" FontSize="16" Foreground="White" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Tag" Value="Active">
+                                <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible" />
+                                <Setter Property="Background" Value="#8ecae6" />
+                                <Setter TargetName="Text" Property="Foreground" Value="#8ecae6" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="ActiveIndicator" Property="Fill" Value="#8ecae6" />
+                                <Setter TargetName="Text" Property="Foreground" Value="#8ecae6" />
+                                <Setter Property="Background" Value="LightGray" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#8ecae6" />
+                                <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="True">
+                                <Setter Property="Background" Value="Transparent" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
 
-            <Button x:Name="custumerBtn" Content="Customers" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="Button_Click" MouseEnter="custumerBtn_MouseEnter" MouseLeave="custumerBtn_MouseLeave" FontWeight="Bold" >
+            <!-- Customer Button -->
+            <Button x:Name="custumerBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="100" FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" >
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <!-- Image for Customers button -->
-                                <Image Source="/Images/customer.png" Height="84" Width="69" Margin="10,0"/>
-                                <TextBlock Text="Customers" FontSize="16" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Border>
+                        <Grid>
+                            <Rectangle x:Name="ActiveIndicator" Fill="#8ecae6" Width="5" HorizontalAlignment="Left" Visibility="Collapsed" Height="100" />
+                            <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Image Source="/Images/customer.png" Height="84" Width="69" Margin="10,0"/>
+                                    <TextBlock x:Name="Text" Text="Customer" FontSize="16" Foreground="White" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Tag" Value="Active">
+                                <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible" />
+                                <Setter Property="Background" Value="#8ecae6" />
+                                <Setter TargetName="Text" Property="Foreground" Value="#8ecae6" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="ActiveIndicator" Property="Fill" Value="#8ecae6" />
+                                <Setter TargetName="Text" Property="Foreground" Value="#8ecae6" />
+                                <Setter Property="Background" Value="LightGray" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#8ecae6" />
+                                <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="True">
+                                <Setter Property="Background" Value="Transparent" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
 
-            <Button x:Name="inventoryBtn" Content="Inventory" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="inventoryBtn_Click" MouseEnter="inventoryBtn_MouseEnter" MouseLeave="inventoryBtn_MouseLeave" FontWeight="Bold" >
+            <!-- Inventory Button -->
+            <Button x:Name="inventoryBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="100" FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" >
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <Image Source="/Images/inventory.png" Height="84" Width="69" Margin="10,0"/>
-                                <TextBlock Text="Inventory" FontSize="16" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Border>
+                        <Grid>
+                            <Rectangle x:Name="ActiveIndicator" Fill="#8ecae6" Width="5" HorizontalAlignment="Left" Visibility="Collapsed" Height="100" />
+                            <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Image Source="/Images/inventory.png" Height="84" Width="69" Margin="10,0"/>
+                                    <TextBlock x:Name="Text" Text="Inventory" FontSize="16" Foreground="White" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Tag" Value="Active">
+                                <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible" />
+                                <Setter Property="Background" Value="#8ecae6" />
+                                <Setter TargetName="Text" Property="Foreground" Value="#8ecae6" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="ActiveIndicator" Property="Fill" Value="#8ecae6" />
+                                <Setter TargetName="Text" Property="Foreground" Value="#8ecae6" />
+                                <Setter Property="Background" Value="LightGray" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#8ecae6" />
+                                <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="True">
+                                <Setter Property="Background" Value="Transparent" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
 
-            <Button x:Name="posBtn" Content="Point of Sale" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="posBtn_Click" MouseEnter="posBtn_MouseEnter" MouseLeave="posBtn_MouseLeave" FontWeight="Bold" >
+            <!-- POS Button -->
+            <Button x:Name="posBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="100" FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <!-- Image for Point of Sale button -->
-                                <Image Source="/Images/pos.png" Height="84" Width="69" Margin="10,0"/>
-                                <TextBlock Text="Point of Sale" FontSize="16" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Border>
+                        <Grid>
+                            <Rectangle x:Name="ActiveIndicator" Fill="#8ecae6" Width="5" HorizontalAlignment="Left" Visibility="Collapsed" Height="100" />
+                            <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Image Source="/Images/pos.png" Height="84" Width="69" Margin="10,0"/>
+                                    <TextBlock x:Name="Text" Text="Point of Sale" FontSize="16" Foreground="White" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Tag" Value="Active">
+                                <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible" />
+                                <Setter Property="Background" Value="#8ecae6" />
+                                <Setter TargetName="Text" Property="Foreground" Value="#8ecae6" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="ActiveIndicator" Property="Fill" Value="#8ecae6" />
+                                <Setter TargetName="Text" Property="Foreground" Value="#8ecae6" />
+                                <Setter Property="Background" Value="LightGray" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#8ecae6" />
+                                <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="True">
+                                <Setter Property="Background" Value="Transparent" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
 
-            <Button x:Name="reportsBtn" Content="Reports" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="reportsBtn_Click" MouseEnter="reportsBtn_MouseEnter" MouseLeave="reportsBtn_MouseLeave" FontWeight="Bold" >
+            <!-- Reports Button -->
+            <Button x:Name="reportsBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="100" FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <Image Source="/Images/reports.png" Height="84" Width="69" Margin="10,0"/>
-                                <TextBlock Text="Reports" FontSize="16" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Border>
+                        <Grid>
+                            <Rectangle x:Name="ActiveIndicator" Fill="#8ecae6" Width="5" HorizontalAlignment="Left" Visibility="Collapsed" Height="100" />
+                            <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Image Source="/Images/reports.png" Height="84" Width="69" Margin="10,0"/>
+                                    <TextBlock x:Name="Text" Text="Reports" FontSize="16" Foreground="White" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Tag" Value="Active">
+                                <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible" />
+                                <Setter Property="Background" Value="#8ecae6" />
+                                <Setter TargetName="Text" Property="Foreground" Value="#8ecae6" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="ActiveIndicator" Property="Fill" Value="#8ecae6" />
+                                <Setter TargetName="Text" Property="Foreground" Value="#8ecae6" />
+                                <Setter Property="Background" Value="LightGray" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#8ecae6" />
+                                <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="True">
+                                <Setter Property="Background" Value="Transparent" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
 
-            <Button x:Name="settingBtn" Content="Settings" Height="90" Background="Transparent" Foreground="White" BorderBrush="Transparent" FontSize="16" Cursor="Hand" Click="settingBtn_Click" MouseEnter="settingBtn_MouseEnter" MouseLeave="settingBtn_MouseLeave" FontWeight="Bold" >
+            <!-- Settings Button -->
+            <Button x:Name="settingsBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="100" FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}">
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <Image Source="/Images/settings.png" Height="84" Width="69" Margin="10,0"/>
-                                <TextBlock Text="Settings" FontSize="16" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Border>
+                        <Grid>
+                            <Rectangle x:Name="ActiveIndicator" Fill="#8ecae6" Width="5" HorizontalAlignment="Left" Visibility="Collapsed" Height="100" />
+                            <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Image Source="/Images/settings.png" Height="84" Width="69" Margin="10,0"/>
+                                    <TextBlock x:Name="Text" Text="Settings" FontSize="16" Foreground="White" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Tag" Value="Active">
+                                <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible" />
+                                <Setter Property="Background" Value="#8ecae6" />
+                                <Setter TargetName="Text" Property="Foreground" Value="#8ecae6" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="ActiveIndicator" Property="Fill" Value="#8ecae6" />
+                                <Setter TargetName="Text" Property="Foreground" Value="#8ecae6" />
+                                <Setter Property="Background" Value="LightGray" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#8ecae6" />
+                                <Setter TargetName="ActiveIndicator" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="True">
+                                <Setter Property="Background" Value="Transparent" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Button.Template>
             </Button>
+
+
 
             <!-- Add more buttons here -->
         </StackPanel>
