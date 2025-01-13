@@ -14,39 +14,27 @@
 
     <Grid >
         <!-- Border to wrap the content and provide rounded corners -->
-        <Border Margin="20" Background="#d1e5f4" BorderBrush="Gray" BorderThickness="1,1,1,1" CornerRadius="15">
+        <Border Margin="20" Background="#d1e5f4" BorderBrush="Gray" BorderThickness="1,1,1,1" CornerRadius="5">
             <Border.Effect>
                 <DropShadowEffect Color="Gray" BlurRadius="30" ShadowDepth="-5" Opacity="0.3"/>
             </Border.Effect>
             <!-- Close Button -->
-            <Button Content="X" HorizontalAlignment="Right" VerticalAlignment="Top" Width="46" Height="32" 
-            Margin="0,6,1,0" Click="Button_Click" 
-            Background="Transparent" Foreground="Gray" Cursor="Hand" 
-            BorderBrush="{x:Null}" FontSize="19"/>
+            <Button x:Name="exitBtn" Content="X" HorizontalAlignment="Right" VerticalAlignment="Top" Width="46" Height="32" 
+                    Margin="0,6,1,0" 
+                    Background="Transparent" Foreground="Gray" Cursor="Hand" 
+                    BorderBrush="{x:Null}" FontSize="19" Click="exitBtn_Click"/>
 
         </Border>
         <Grid HorizontalAlignment="Left" Height="141" Margin="43,311,0,0" VerticalAlignment="Top" Width="600" Background="#FFF7F6F6"/>
-        <Label x:Name="TotalAmountLabel" HorizontalAlignment="Left" Margin="281,326,0,0" VerticalAlignment="Top" FontSize="15" Height="28" Width="144" Content="" Foreground="#DD000000" Background="{x:Null}"/>
+        <Label x:Name="TotalAmountLabel" HorizontalAlignment="Left" Margin="281,326,0,0" VerticalAlignment="Top" FontSize="15" Height="28" Width="144" Content="" Foreground="#DD000000" Background="{x:Null}" FontWeight="Bold"/>
 
-        <Button x:Name="amountBtn" Content="Enter Amount" HorizontalAlignment="Left" Margin="284,403,0,0" VerticalAlignment="Top" Click="amountBtn_Click" FontSize="15" RenderTransformOrigin="0.125,0.532"/>
+        <Button x:Name="amountBtn" Content="Proceed" HorizontalAlignment="Left" Margin="302,403,0,0" VerticalAlignment="Top" Click="amountBtn_Click" FontSize="15" RenderTransformOrigin="0.125,0.532"/>
 
-        <TextBox x:Name="amounttxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" 
-                 VerticalAlignment="Top" Width="180" TextChanged="amounttxtBox_TextChanged" FontSize="15" 
-                 Margin="257,363,0,0"  BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd"/>
-
-        <Label Content="Tank ID:" HorizontalAlignment="Left" Height="25" Margin="100,90,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
+        <Label Content="Customer ID:" HorizontalAlignment="Left" Height="25" Margin="100,90,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
         <Label Content="Customer Name:" HorizontalAlignment="Left" Height="27" Margin="100,125,0,0" VerticalAlignment="Top" Width="129" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
         <Label Content="Contact Number:" HorizontalAlignment="Left" Height="25" Margin="100,160,0,0" VerticalAlignment="Top" Width="134" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
         <Label Content="Address:" HorizontalAlignment="Left" Height="28" Margin="100,203,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
 
-        <TextBox x:Name="tankIDtxtBox" HorizontalAlignment="Left" Height="25" Margin="273,89,0,0" 
-            TextWrapping="Wrap" VerticalAlignment="Top" Width="130" FontFamily="Segoe UI" 
-            BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsReadOnly="True"/>
-
-        <TextBox x:Name="customertxtBox" HorizontalAlignment="Left" Height="25" Margin="273,124,0,0" 
-            TextWrapping="Wrap" VerticalAlignment="Top" Width="130" FontFamily="Segoe UI" 
-            BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" 
-            KeyUp="customertxtBox_KeyUp"/>
 
         <RadioButton Content="New Customer" HorizontalAlignment="Left" Height="25" Margin="457,92,0,0" 
              VerticalAlignment="Top" Width="113" Checked="NewCustomer_Checked" IsChecked="True"/>
@@ -54,13 +42,34 @@
         <RadioButton Content="Old Customer" HorizontalAlignment="Left" Height="26" Margin="457,122,0,0" 
              VerticalAlignment="Top" Width="113" Checked="OldCustomer_Checked"/>
 
+        <TextBox x:Name="customerIDtxtBox" HorizontalAlignment="Left" Height="25" Margin="273,89,0,0" 
+             TextWrapping="Wrap" VerticalAlignment="Top" Width="130" FontFamily="Segoe UI" 
+             BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" 
+             IsReadOnly="False" TextChanged="customerIDtxtBox_TextChanged" 
+             PreviewTextInput="customerIDtxtBox_PreviewTextInput" />
+
+        <TextBox x:Name="customertxtBox" HorizontalAlignment="Left" Height="25" Margin="273,124,0,0" 
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="130" FontFamily="Segoe UI" 
+                 BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" 
+                 KeyUp="customertxtBox_KeyUp" PreviewTextInput="customertxtBox_PreviewTextInput"/>
+
         <TextBox x:Name="contacttxtBox" HorizontalAlignment="Left" Height="31" Margin="250,160,0,0" 
-         TextWrapping="Wrap" VerticalAlignment="Top" Width="153" FontFamily="Segoe UI" 
-         BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsEnabled="True"/>
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="153" FontFamily="Segoe UI" 
+                 BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsEnabled="True" 
+                 PreviewTextInput="contacttxtBox_PreviewTextInput"/>
 
         <TextBox x:Name="addresstxtBox" HorizontalAlignment="Left" Height="45" Margin="214,202,0,0" 
-         TextWrapping="Wrap" VerticalAlignment="Top" Width="190" FontFamily="Segoe UI" 
-         BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsEnabled="True"/>
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="190" FontFamily="Segoe UI" 
+                 BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsEnabled="True" 
+                 PreviewTextInput="addresstxtBox_PreviewTextInput"/>
+
+        <TextBox x:Name="amounttxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" 
+                 VerticalAlignment="Top" Width="180" TextChanged="amounttxtBox_TextChanged" 
+                 FontSize="15" Margin="257,363,0,0" BorderBrush="DimGray" BorderThickness="0.5" 
+                 Background="#e5f3fd" PreviewTextInput="amounttxtBox_PreviewTextInput"/>
+
+
+
 
     </Grid>
 </Window>

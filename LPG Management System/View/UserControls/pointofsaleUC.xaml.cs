@@ -71,9 +71,6 @@ namespace LPG_Management_System.View.UserControls
                 // Retrieve the payment amount entered
                 double paymentAmount = paymentWindow.PaymentAmount;
 
-                // Ensure receiptItems is a List<ReceiptItem>
-                var receiptList = receiptItems.ToList();
-
                 // Variables to pass
                 double finalTotalPrice = totalPrice;  // Total price
                 double change = paymentAmount - finalTotalPrice;
@@ -86,12 +83,52 @@ namespace LPG_Management_System.View.UserControls
                     return;
                 }
 
-                // Create and show Invoice page
-                var invoicePage = new Invoice(receiptList, "Customer Address Here",
-                                              finalTotalPrice, paymentAmount, change);
-                invoicePage.Show();
+                // Update the inventory in the database
+                try
+                {
+                    using (var dbContext = new DataContext())
+                    {
+                        foreach (var item in receiptItems)
+                        {
+                            var product = dbContext.tbl_inventory.FirstOrDefault(p => p.ProductName == item.Brand && p.Size == item.Size && p.Price == (decimal)item.Price);
+
+
+                            if (product != null)
+                            {
+                                // Update the quantity or remove the product if no stock is left
+                                product.Quantity -= item.Quantity;
+
+                                if (product.Quantity <= 0)
+                                {
+                                    dbContext.tbl_inventory.Remove(product);
+                                }
+                            }
+                        }
+
+                        dbContext.SaveChanges();
+                    }
+
+                    // Reload the available products
+                    LoadProducts();
+
+                    // Clear the receipt items
+                    receiptItems.Clear();
+
+                    // Update the total price label
+                    UpdateTotalPrice();
+
+                    // Show the invoice
+                    var invoicePage = new Invoice(receiptItems.ToList(), "Customer Address Here",
+                                                  finalTotalPrice, paymentAmount, change);
+                    invoicePage.Show();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error updating inventory: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
+
 
 
 
@@ -199,12 +236,25 @@ namespace LPG_Management_System.View.UserControls
 
         private void FilterByBrand_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button button && button.Tag is string brand)
+            if (sender is Button button)
             {
-                // Call LoadProducts with the selected brand
-                LoadProducts(brand);
+                // Check if the "All" button is clicked
+                if (button.Tag is string brand)
+                {
+                    if (brand.Equals("All", StringComparison.OrdinalIgnoreCase))
+                    {
+                        // Load all products without filtering
+                        LoadProducts();
+                    }
+                    else
+                    {
+                        // Load products filtered by the selected brand
+                        LoadProducts(brand);
+                    }
+                }
             }
         }
+
 
         private void LoadProducts(string filterBrand = null)
         {
@@ -217,11 +267,17 @@ namespace LPG_Management_System.View.UserControls
                 products = products.Where(p => p.ProductName.Equals(filterBrand, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
+            // Remove duplicate products based on Brand, Size, and Price
+            var distinctProducts = products
+                .GroupBy(p => new { p.ProductName, p.Size, p.Price })
+                .Select(g => g.First())
+                .ToList();
+
             // Clear existing items in the WrapPanel
             ProductsPanel.Children.Clear();
 
             // Create Product controls and add them to the WrapPanel
-            foreach (var product in products)
+            foreach (var product in distinctProducts)
             {
                 var productControl = new Product
                 {
@@ -240,6 +296,7 @@ namespace LPG_Management_System.View.UserControls
             }
         }
 
-        
+
+
     }
 }

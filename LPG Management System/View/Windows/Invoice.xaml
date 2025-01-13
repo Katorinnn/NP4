@@ -37,7 +37,7 @@
         </Grid>
 
         <!-- DataGrid for Invoice Items -->
-        <DataGrid x:Name="InvoiceDataGrid" Margin="0,140,0,100" AutoGenerateColumns="False" HeadersVisibility="Column">
+        <DataGrid x:Name="InvoiceDataGrid" Margin="0,140,0,100" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True" CanUserSortColumns="False" IsHitTestVisible="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Product" Binding="{Binding Brand}" Width="2*"/>
                 <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>

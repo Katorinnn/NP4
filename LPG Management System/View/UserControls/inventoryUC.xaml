@@ -78,7 +78,7 @@
                       RowHeaderWidth="0" FontFamily="Segoe UI"
                       HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" 
                       ScrollViewer.CanContentScroll="True"  Height="500" Width="1200"
-                      AlternatingRowBackground="#F5F5F5" AlternationCount="2" SelectionChanged="inventoryDG_SelectionChanged">
+                      AlternatingRowBackground="#F5F5F5" AlternationCount="2" >
 
                 <!-- DataGrid Column Header Style -->
                 <DataGrid.ColumnHeaderStyle>
@@ -110,6 +110,7 @@
                     <DataGridTextColumn Header="Tank ID" Binding="{Binding TankID}" Width="210" />
                     <DataGridTextColumn Header="Brand" Binding="{Binding ProductName}" Width="210" />
                     <DataGridTextColumn Header="Size (kg.)" Binding="{Binding Size}" Width="210" />
+                    <DataGridTextColumn Header="Stocks" Binding="{Binding Stocks}" Width="220" />
                     <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="220" />
 
                     <!-- Actions Column (Edit and Delete Buttons) -->

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -28,4 +29,6 @@ namespace LPG_Management_System.Models
         Completed,
         Canceled
     }
+    
+
 }
