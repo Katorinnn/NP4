@@ -2,6 +2,7 @@
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -29,6 +30,7 @@ namespace LPG_Management_System
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             MainContent.Content = new customersUC();
+
         }
 
         private void posBtn_Click(object sender, RoutedEventArgs e)
@@ -41,16 +43,16 @@ namespace LPG_Management_System
             MainContent.Content = new reportsUC();
         }
 
-        private void settingBtn_Click(object sender, RoutedEventArgs e)
+        private void settingsBtn_Click(object sender, RoutedEventArgs e)
         {
             MainContent.Content = new trySettingsUC();
-         
+
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             MainContent.Content = new dashboardUC();
-            
+
         }
 
         private void dashboardBtn_MouseEnter(object sender, MouseEventArgs e)
@@ -86,7 +88,7 @@ namespace LPG_Management_System
 
         private void posBtn_MouseEnter(object sender, MouseEventArgs e)
         {
-            posBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#8ecae6")); 
+            posBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#8ecae6"));
         }
 
         private void posBtn_MouseLeave(object sender, MouseEventArgs e)
@@ -104,19 +106,73 @@ namespace LPG_Management_System
             reportsBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF2C3E50"));
         }
 
-        private void settingBtn_MouseEnter(object sender, MouseEventArgs e)
+        private void settingsBtn_MouseEnter(object sender, MouseEventArgs e)
         {
-            settingBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#8ecae6"));
+            settingsBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#8ecae6"));
         }
 
         private void settingBtn_MouseLeave(object sender, MouseEventArgs e)
         {
-            settingBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF2C3E50"));
+            settingsBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF2C3E50"));
         }
 
         private void dashboardUC_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void NavigationButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Reset the Tag property for all buttons in the sidebar
+            foreach (var child in SidebarPanel.Children)
+            {
+                if (child is Button btn)
+                {
+                    btn.Tag = null; // Clear active state
+                }
+            }
+
+
+            // Reset other buttons
+            custumerBtn.Tag = null;
+            inventoryBtn.Tag = null;
+            posBtn.Tag = null;
+            reportsBtn.Tag = null;
+            settingsBtn.Tag = null;
+
+            // Set active button
+            
+            // Set the clicked button's Tag to "Active"
+            if (sender is Button clickedButton)
+                {
+                    clickedButton.Tag = "Active";
+
+                    // Perform navigation based on the clicked button
+                    if (clickedButton.Name == "dashboardBtn")
+                    {
+                        MainContent.Content = new dashboardUC(); // Load the dashboard user control
+                    }
+                    else if (clickedButton.Name == "custumerBtn")
+                    {
+                        MainContent.Content = new customersUC(); // Load the customers user control
+                    }
+                    else if (clickedButton.Name == "inventoryBtn")
+                    {
+                        MainContent.Content = new inventoryUC(); // Load the inventory user control
+                    }
+                    else if (clickedButton.Name == "posBtn")
+                    {
+                        MainContent.Content = new pointofsaleUC(); // Load the point of sale user control
+                    }
+                    else if (clickedButton.Name == "reportsBtn")
+                    {
+                        MainContent.Content = new reportsUC(); // Load the reports user control
+                    }
+                    else if (clickedButton.Name == "settingsBtn")
+                    {
+                        MainContent.Content = new trySettingsUC(); // Load the settings user control
+                    }
+                }
         }
     }
 }

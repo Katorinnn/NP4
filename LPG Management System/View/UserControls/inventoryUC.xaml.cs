@@ -185,5 +185,17 @@ namespace LPG_Management_System.View.UserControls
                 TextBox.Foreground = Brushes.Gray; // Set text color to placeholder style
             }
         }
+
+        public class InventoryTable
+        {
+            public int TankID { get; set; }
+            public string ProductName { get; set; }
+            public string Size { get; set; }
+            public decimal Price { get; set; }
+            public byte[] ProductImage { get; set; }
+            public int Stock { get; set; } // New stock property
+        }
+
+
     }
 }

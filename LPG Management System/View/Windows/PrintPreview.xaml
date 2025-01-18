@@ -5,8 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LPG_Management_System.View.Windows"
         mc:Ignorable="d"
-        Title="PrintPreview" Height="800" Width="800" WindowStartupLocation="CenterScreen">
+        Title="PrintPreview" Height="800" Width="800" WindowStartupLocation="CenterScreen" AutomationProperties.IsRequiredForForm="True"  ResizeMode="NoResize" WindowStyle="None"
+        Background="{x:Null}" AllowsTransparency="True">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+
     <Grid>
+        <!-- Border to wrap the content and provide rounded corners -->
+        <Border Margin="20" Background="#d1e5f4" BorderBrush="Gray" BorderThickness="1,1,1,1" CornerRadius="15">
+            <Border.Effect>
+                <DropShadowEffect Color="Gray" BlurRadius="30" ShadowDepth="-5" Opacity="0.3"/>
+            </Border.Effect>
+            <!-- Close Button -->
+            <Button Content="X" HorizontalAlignment="Right" VerticalAlignment="Top" Width="46" Height="32" 
+            Margin="0,6,1,0" Background="Transparent" Foreground="Gray" Cursor="Hand" 
+            BorderBrush="{x:Null}" FontSize="19"/>
+
+        </Border>
+    
         <DocumentViewer x:Name="documentViewer" Margin="10" />
     </Grid>
 </Window>

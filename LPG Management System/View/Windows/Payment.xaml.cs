@@ -25,7 +25,7 @@ namespace LPG_Management_System.View.Windows
     {
 
         private DataContext _context; // Declare the context
-
+        
         private double totalPrice;
         public double PaymentAmount { get; private set; } // Holds the entered amount
         public Payment(double totalPrice)
@@ -56,7 +56,7 @@ namespace LPG_Management_System.View.Windows
                 }
 
                 // Retrieve ProductName and TankID from InventoryTable
-                int tankId = int.TryParse(tankIDtxtBox.Text, out int parsedTankId) ? parsedTankId : 0;
+                int tankId = int.TryParse(customerIDtxtBox.Text, out int parsedTankId) ? parsedTankId : 0;
 
                 using (var context = new DataContext())
                 {
@@ -131,14 +131,14 @@ namespace LPG_Management_System.View.Windows
 
         private void NewCustomer_Checked(object sender, RoutedEventArgs e)
         {
-            if (contacttxtBox == null || addresstxtBox == null || customertxtBox == null || tankIDtxtBox == null)
+            if (contacttxtBox == null || addresstxtBox == null || customertxtBox == null || customerIDtxtBox == null)
                 return;
 
             contacttxtBox.IsEnabled = true;
             addresstxtBox.IsEnabled = true;
 
             customertxtBox.Text = "";
-            tankIDtxtBox.Text = "";
+            customerIDtxtBox.Text = "";
             customertxtBox.IsReadOnly = false;
         }
 
@@ -157,9 +157,52 @@ namespace LPG_Management_System.View.Windows
             {
                 var customer = customers.First();
                 customertxtBox.Text = customer.CustomerName;
-                tankIDtxtBox.Text = customer.TankID.ToString();
+                customerIDtxtBox.Text = customer.CustomerID.ToString();
                 addresstxtBox.Text = customer.Address;
             }
         }
+
+        
+
+        private void customerIDtxtBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void exitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void customerIDtxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Allow only numeric input
+            e.Handled = !char.IsDigit(e.Text, 0);
+        }
+
+        private void customertxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Allow only letters and spaces
+            e.Handled = !char.IsLetter(e.Text, 0) && e.Text != " ";
+        }
+
+        private void contacttxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Allow only numeric input for contact number
+            e.Handled = !char.IsDigit(e.Text, 0);
+        }
+
+        private void addresstxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Allow any input for address
+            e.Handled = false; // No restriction, but you can add length validation if necessary
+        }
+
+        private void amounttxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Allow only numeric input and decimal points for amount
+            e.Handled = !char.IsDigit(e.Text, 0) && e.Text != ".";
+        }
+
     }
 }

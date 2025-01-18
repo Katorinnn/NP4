@@ -26,7 +26,7 @@
 
             <!-- StackPanel for New Button -->
             <Grid HorizontalAlignment="Left" Height="36" Margin="330,135,0,0" Grid.Row="1" VerticalAlignment="Top" Width="39" OpacityMask="Black" Background="#FF7C7C7C"/>
-            <Grid HorizontalAlignment="Left" Height="34" Margin="331,136,0,0" Grid.Row="1" VerticalAlignment="Top" Width="37" OpacityMask="Black" Background="White"/>
+            <Grid HorizontalAlignment="Left" Height="34" Margin="330,136,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" OpacityMask="Black" Background="White"/>
 
             <!-- StackPanel for New Button -->
             <Button x:Name="FilterButton" Content="" Width="32" Height="29" VerticalAlignment="Top" 
@@ -59,7 +59,7 @@
                      Text="Search here" 
                      GotFocus="TextBox_GotFocus" 
                      LostFocus="TextBox_LostFocus" 
-                     Grid.Row="1"  />
+                     Grid.Row="1" />
 
             <!-- StackPanel for New Button -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="1050,10,0,10" Width="100">
@@ -70,6 +70,7 @@
             <!-- DataGrid -->
             <DataGrid x:Name="inventoryDG" Grid.Row="1" Margin="12,185,12,40"
                       CanUserResizeColumns="False" GridLinesVisibility="None" 
+                      CanUserReorderColumns="False"
                       HorizontalGridLinesBrush="LightGray"
                       VerticalGridLinesBrush="LightGray" BorderBrush="Gray" BorderThickness="1"
                       CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single" 
@@ -77,7 +78,7 @@
                       RowHeaderWidth="0" FontFamily="Segoe UI"
                       HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" 
                       ScrollViewer.CanContentScroll="True"  Height="500" Width="1200"
-                      AlternatingRowBackground="#F5F5F5" AlternationCount="2">
+                      AlternatingRowBackground="#F5F5F5" AlternationCount="2" >
 
                 <!-- DataGrid Column Header Style -->
                 <DataGrid.ColumnHeaderStyle>
@@ -109,6 +110,7 @@
                     <DataGridTextColumn Header="Tank ID" Binding="{Binding TankID}" Width="210" />
                     <DataGridTextColumn Header="Brand" Binding="{Binding ProductName}" Width="210" />
                     <DataGridTextColumn Header="Size (kg.)" Binding="{Binding Size}" Width="210" />
+                    <DataGridTextColumn Header="Stocks" Binding="{Binding Stocks}" Width="220" />
                     <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="220" />
 
                     <!-- Actions Column (Edit and Delete Buttons) -->
@@ -140,7 +142,7 @@
                                             Cursor="Hand"
                                             Tag="{Binding TankID}" FontFamily="Segoe UI"
                                             Click="DeleteButton_Click">
-                                        
+
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                             <Image Source="/Images/trash.png" Height="20" />
                                         </StackPanel>
@@ -151,10 +153,10 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button x:Name="newBtn" Content="New Brand" 
-                Click="newBtn_Click" Cursor="Hand" Background="#0078D7" Foreground="White" Width="111" Height="36"
+            <Button x:Name="newBtn" Content="New LPG Brand" 
+                Click="newBtn_Click" Cursor="Hand" Background="#0078D7" Foreground="White" Height="36"
                 FontWeight="Bold" BorderThickness="0" BorderBrush="Transparent"
-                FontFamily="Segou UI" Margin="1100,136,19,551"  Grid.Row="1"/>
+                FontFamily="Segou UI" Margin="1078,138,19,554"  Grid.Row="1" RenderTransformOrigin="0.498,0.367"/>
         </Grid>
     </Grid>
 </UserControl>

@@ -2,16 +2,19 @@
 using LPG_Management_System.View.UserControls;
 using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace LPG_Management_System.View
 {
     public partial class inventoryCRUD : Window
     {
+
         public int TankId { get; set; }
         private byte[] selectedImageBytes;
-
+        private Random random = new Random();
         public inventoryCRUD(int tankID)
         {
             InitializeComponent();
@@ -27,7 +30,20 @@ namespace LPG_Management_System.View
                 // LoadItemData(TankId); // Use the TankId to load data if needed
             }
         }
+        private void GenerateTankIDButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+            string newTankID = GenerateTankID(); // Generate a new Tank ID
+            tankIDtxtBox.Text = newTankID;
+            tankIDtxtBox.IsReadOnly = true;
+        }
 
+        private string GenerateTankID()
+        {
+            
+            int tankID = random.Next(100000, 1000000); // Generate a random number and ensure it's 6 digits Between 100000 and 999999
+            return tankID.ToString();
+        }
         private void addBtn_Click(object sender, RoutedEventArgs e)
         {
             string tankIDText = tankIDtxtBox.Text;
@@ -102,6 +118,40 @@ namespace LPG_Management_System.View
                 productImagePreview.Source = new BitmapImage(new Uri(selectedFileName));
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        // Brand TextBox - Only letters and spaces
+        private void brandtxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Allow only letters and spaces
+            e.Handled = !Regex.IsMatch(e.Text, @"^[a-zA-Z\s]+$");
+        }
+
+        // Size TextBox - Only numbers and decimal points
+        private void sizetxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Allow only numbers and decimal points
+            e.Handled = !Regex.IsMatch(e.Text, @"^[0-9]*\.?[0-9]*$");
+        }
+
+        // Price TextBox - Only numbers and decimal points
+        private void pricetxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Allow only numbers and decimal points
+            e.Handled = !Regex.IsMatch(e.Text, @"^[0-9]*\.?[0-9]*$");
+        }
+
+        // Stocks TextBox - Only whole numbers
+        private void stockstxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Allow only whole numbers
+            e.Handled = !Regex.IsMatch(e.Text, @"^[0-9]+$");
+        }
+
 
 
         //private void tankIDtxtBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)

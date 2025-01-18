@@ -22,7 +22,7 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Border BorderBrush="Gray" Background="LightGray" BorderThickness="2" CornerRadius="5" Style="{StaticResource HoverBorderStyle}">
+    <Border BorderBrush="LightGray" Background="AliceBlue" BorderThickness="2" CornerRadius="5" Style="{StaticResource HoverBorderStyle}">
         <Grid>
             <Label x:Name="BrandLabel" Content="Brandname" HorizontalAlignment="Left" Margin="0,152,0,0" VerticalAlignment="Top" Width="100"/>
             <Label x:Name="PriceLabel" Content="Price" HorizontalAlignment="Left" Margin="73,152,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.479,-0.929"/>

@@ -27,6 +27,7 @@
     <None Remove="inventory.png" />
     <None Remove="LPG Background.png" />
     <None Remove="screenbg.png" />
+    <None Remove="View\refresh.png" />
     <None Remove="View\UserControls\filter %281%29.png" />
     <None Remove="View\UserControls\filter.png" />
     <None Remove="View\UserControls\NP4LOGO.png" />
@@ -61,6 +62,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="screenbg.png" />
+    <Resource Include="View\refresh.png" />
     <Resource Include="View\UserControls\filter (1).png" />
     <Resource Include="View\UserControls\filter.png" />
     <Resource Include="View\UserControls\NP4LOGO.png" />
