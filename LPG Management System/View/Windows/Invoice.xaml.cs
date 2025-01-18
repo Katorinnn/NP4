@@ -1,5 +1,4 @@
 ﻿using LPG_Management_System.View.UserControls;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -28,7 +27,7 @@ namespace LPG_Management_System.View.Windows
             InitializeComponent();
 
             // Set customer details
-            CustomerAddressText.Text = $"Address: {customerAddress}";
+            //CustomerAddressText.Text = $"Address: {customerAddress}";
 
             // Bind receipt items to DataGrid
             InvoiceDataGrid.ItemsSource = receiptItems;
@@ -39,18 +38,15 @@ namespace LPG_Management_System.View.Windows
             ChangeText.Text = $"₱{change:F2}";
         }
 
+
+
         private void PrintButton_Click(object sender, RoutedEventArgs e)
         {
             // Generate a FixedDocument
             FixedDocument fixedDoc = GenerateFixedDocument();
 
             // Show Print Preview Window
-            PrintPreview previewWindow = new PrintPreview(fixedDoc)
-            {
-                Title = "Invoice Preview",
-                Owner = this,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner
-            };
+            PrintPreview previewWindow = new PrintPreview(fixedDoc);
             previewWindow.ShowDialog();
 
             // Optional: Print the FixedDocument after preview
@@ -69,13 +65,13 @@ namespace LPG_Management_System.View.Windows
             FixedPage page = new FixedPage
             {
                 Width = 600,  // A4 width in px (96 DPI)
-                Height = 800 // A4 height in px (96 DPI)
+                Height = 700 // A4 height in px (96 DPI)
             };
 
             // Header section (Company and Invoice Details)
             Grid headerGrid = new Grid
             {
-                Margin = new Thickness(20)
+                Margin = new Thickness(20, 20, 20, 0)
             };
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition());
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition());
@@ -86,8 +82,7 @@ namespace LPG_Management_System.View.Windows
                 Text = "NP4 GAS SERVICE\nC 3/4 KABIR NAGAR\nJODHPUR ROAD \"SHAHDARA,\"\nJODHPUR 302001",
                 FontSize = 14,
                 FontWeight = FontWeights.Bold,
-                TextAlignment = TextAlignment.Left,
-                Margin = new Thickness(0, 0, 20, 0)
+                TextAlignment = TextAlignment.Left
             };
             Grid.SetColumn(companyInfo, 0);
             headerGrid.Children.Add(companyInfo);
@@ -98,8 +93,7 @@ namespace LPG_Management_System.View.Windows
                 Text = $"Tax Invoice\nDate: {DateTime.Now:dd/MM/yyyy}\nInvoice No: 12345",
                 FontSize = 14,
                 FontWeight = FontWeights.Bold,
-                TextAlignment = TextAlignment.Right,
-                Margin = new Thickness(20, 0, 0, 0)
+                TextAlignment = TextAlignment.Right
             };
             Grid.SetColumn(invoiceInfo, 1);
             headerGrid.Children.Add(invoiceInfo);
@@ -132,10 +126,10 @@ namespace LPG_Management_System.View.Windows
 
             // Add Table Data
             int row = 1;
-            foreach (var item in InvoiceDataGrid.Items)
+            var items = InvoiceDataGrid.ItemsSource as IEnumerable<pointofsaleUC.ReceiptItem>;
+            if (items != null)
             {
-                var receiptItem = item as pointofsaleUC.ReceiptItem;
-                if (receiptItem != null)
+                foreach (var receiptItem in items)
                 {
                     AddTableRow(
                         tableGrid,
@@ -148,24 +142,18 @@ namespace LPG_Management_System.View.Windows
                     );
                 }
             }
+
+
             page.Children.Add(tableGrid);
 
             // Totals Section
-            Border totalsSeparator = new Border
-            {
-                BorderBrush = System.Windows.Media.Brushes.Black,
-                BorderThickness = new Thickness(0, 1, 0, 0),
-                Margin = new Thickness(20, 20 + (row * 30), 20, 0)
-            };
-            page.Children.Add(totalsSeparator);
-
             TextBlock totals = new TextBlock
             {
                 Text = $"Total: {TotalAmountText.Text}\nAmount Paid: {AmountPaidText.Text}\nNet Due: {ChangeText.Text}",
                 FontSize = 16,
                 FontWeight = FontWeights.Bold,
                 TextAlignment = TextAlignment.Right,
-                Margin = new Thickness(20, 40 + (row * 30), 20, 0)
+                Margin = new Thickness(20, 160 + (row * 30), 20, 0)
             };
             page.Children.Add(totals);
 
@@ -175,10 +163,9 @@ namespace LPG_Management_System.View.Windows
                 Text = "** This is a computer-generated document and needs no signatures.\n** Stay Home, Stay Safe.",
                 FontSize = 12,
                 FontStyle = FontStyles.Italic,
-                Margin = new Thickness(20),
+                Margin = new Thickness(20, 900, 20, 0),
                 TextAlignment = TextAlignment.Center
             };
-            FixedPage.SetBottom(footer, 20);
             page.Children.Add(footer);
 
             // Add the page to the FixedDocument
@@ -189,22 +176,12 @@ namespace LPG_Management_System.View.Windows
             return fixedDoc;
         }
 
+        // Helper Method to Add Rows to Table
         private void AddTableRow(Grid grid, int row, string col1, string col2, string col3, string col4, bool isHeader)
         {
             grid.RowDefinitions.Add(new RowDefinition());
 
             var style = isHeader ? FontWeights.Bold : FontWeights.Normal;
-            var bgColor = isHeader ? System.Windows.Media.Brushes.LightGray : System.Windows.Media.Brushes.Transparent;
-
-            Border rowBackground = new Border
-            {
-                Background = bgColor,
-                Margin = new Thickness(0, row == 0 ? 0 : 1, 0, 0),
-                Height = 30
-            };
-            Grid.SetRow(rowBackground, row);
-            Grid.SetColumnSpan(rowBackground, 4);
-            grid.Children.Add(rowBackground);
 
             AddTextBlockToGrid(grid, col1, 0, row, style);
             AddTextBlockToGrid(grid, col2, 1, row, style);
@@ -226,5 +203,9 @@ namespace LPG_Management_System.View.Windows
             Grid.SetRow(textBlock, row);
             grid.Children.Add(textBlock);
         }
+
+
+
     }
+
 }

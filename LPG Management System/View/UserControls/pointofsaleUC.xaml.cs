@@ -19,9 +19,7 @@ namespace LPG_Management_System.View.UserControls
 
         private Button currentKgButton;
 
-        private ObservableCollection<ReceiptItem> receiptItems = new ObservableCollection<ReceiptItem>();
-
-
+        
         public class ReceiptItem : INotifyPropertyChanged
         {
             private int _quantity = 1;
@@ -54,7 +52,7 @@ namespace LPG_Management_System.View.UserControls
             }
         }
 
-        
+        private ObservableCollection<ReceiptItem> receiptItems = new ObservableCollection<ReceiptItem>();
         public pointofsaleUC()
         {
             InitializeComponent();

@@ -91,7 +91,7 @@ namespace LPG_Management_System.View.Windows
                             ProductName = combinedBrands,   // Combined brands
                             TankID = combinedTankIDs,
                             Quantity = TotalQuantity,
-                            UnitPrice = combinedUnitPrices,
+                            UnitPrice = totalUnitPrice,
                             TotalPrice = totalUnitPrice,
                             PaymentMethod = "Cash",
                             PaidAmount = (decimal)amount,
