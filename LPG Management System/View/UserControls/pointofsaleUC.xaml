@@ -22,7 +22,10 @@
                 <TextBlock VerticalAlignment="Center" Margin="5" Width="536" Height="19"><Run Language="en-ph" Text="NP4 GAS RETAIL SHOP"/></TextBlock>
             </StackPanel>
             <!-- Data Grid for Invoice Items -->
-            <DataGrid x:Name="dataGridItems" Grid.Row="1" AutoGenerateColumns="False" Margin="5" ItemsSource="{Binding}" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False" IsEnabled="False" >
+            <DataGrid x:Name="dataGridItems" Grid.Row="1" AutoGenerateColumns="False" Margin="5" 
+          ItemsSource="{Binding}" CanUserReorderColumns="False" 
+          CanUserResizeColumns="False" CanUserSortColumns="False" 
+          CanUserResizeRows="False" IsEnabled="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Item" Binding="{Binding Brand}" Width="*"/>
                     <DataGridTextColumn Header="Size" Binding="{Binding Size}" Width="100"/>
@@ -30,6 +33,12 @@
                     <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="100"/>
                     <DataGridTextColumn Header="Total" Binding="{Binding Total}" Width="100" IsReadOnly="True"/>
                 </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Reduce Quantity" Click="ReduceQuantity_Click"/>
+                        <MenuItem Header="Remove Item" Click="RemoveItem_Click"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
             </DataGrid>
 
 
@@ -54,9 +63,6 @@
         </Grid>
         <Label Content="TOTAL:" HorizontalAlignment="Left" Height="62" Margin="31,556,0,0" VerticalAlignment="Top" Width="302" FontSize="20"/>
         <Label x:Name="TotalPriceLabel" Content="₱ 0.00" HorizontalAlignment="Left" Height="62" Margin="131,556,0,0" VerticalAlignment="Top" Width="200" FontSize="20" />
-
-        <Label Content="CHANGE:" HorizontalAlignment="Left" Height="62" Margin="338,556,0,0" VerticalAlignment="Top" Width="272" FontSize="20"/>
-        <Label x:Name="ChangeLabel" Content="₱ 0.00" HorizontalAlignment="Left" Height="62" Margin="435,556,0,0" VerticalAlignment="Top" Width="200" FontSize="20" />
 
         <!-- Grid for Products and Kilogram Options -->
         <Grid HorizontalAlignment="Left" Height="713" Margin="600,22,0,0" VerticalAlignment="Top" Width="598" Background="#FF005F8C">

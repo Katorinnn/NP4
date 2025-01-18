@@ -24,5 +24,8 @@ namespace LPG_Management_System.Models
         public decimal Price { get; set; } // Price of the product
 
         public byte[] ProductImage { get; set; } // Image of the product (stored as byte array)
+        public bool IsSold { get; set; } = false; // Whether the tank is sold (default to false)
+        public DateTime Date { get; set; }
+
     }
 }

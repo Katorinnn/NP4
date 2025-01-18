@@ -12,10 +12,10 @@
             <Label Content="NP4 GAS" HorizontalAlignment="Center" VerticalAlignment="Center" Height="193" Width="534" FontSize="50" FontFamily="Arial Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         </Grid>
         <Grid x:Name="leftGrid" Margin="50,400,650,50" Background="#FFFEF9F5" Width="550" Height="400">
-            <Rectangle HorizontalAlignment="Left" Height="145" Margin="50,37,0,0" Stroke="Black" VerticalAlignment="Top" Width="196"/>
-            <Rectangle HorizontalAlignment="Left" Height="145" Margin="300,35,0,0" Stroke="Black" VerticalAlignment="Top" Width="196"/>
-            <Rectangle HorizontalAlignment="Left" Height="145" Margin="50,225,0,0" Stroke="Black" VerticalAlignment="Top" Width="196"/>
-            <Rectangle HorizontalAlignment="Left" Height="145" Margin="300,225,0,0" Stroke="Black" VerticalAlignment="Top" Width="196"/>
+            <Rectangle HorizontalAlignment="Left" Height="130" Margin="50,50,0,0" Stroke="Black" VerticalAlignment="Top" Width="196"/>
+            <Rectangle HorizontalAlignment="Left" Height="130" Margin="300,50,0,0" Stroke="Black" VerticalAlignment="Top" Width="196"/>
+            <Rectangle HorizontalAlignment="Left" Height="130" Margin="50,225,0,0" Stroke="Black" VerticalAlignment="Top" Width="196"/>
+            <Rectangle HorizontalAlignment="Left" Height="130" Margin="300,225,0,0" Stroke="Black" VerticalAlignment="Top" Width="196"/>
         </Grid>
         <Grid x:Name="rightGrid" Margin="650,400,50,50" Background="#FFFEF9F5" Height="400" Width="550">
             <lvc:CartesianChart Name="SalesChart" Margin="10,10,10,28" />
@@ -25,10 +25,13 @@
         <Label Content="Total Income" HorizontalAlignment="Left" Margin="352,729,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center"/>
         <Label Content="Sold LPG" HorizontalAlignment="Left" Margin="101,538,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center"/>
         <Label Content="Stocks" HorizontalAlignment="Left" Margin="352,538,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center"/>
-        <Label Content="1000" HorizontalAlignment="Left" Margin="101,663,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center" Height="61" FontWeight="Bold" FontSize="30"/>
-        <Label Content="1000" HorizontalAlignment="Left" Margin="352,663,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center" Height="61" FontWeight="Bold" FontSize="30"/>
-        <Label Content="1000" HorizontalAlignment="Left" Margin="101,477,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center" Height="61" FontWeight="Bold" FontSize="30"/>
-        <Label Content="1000" HorizontalAlignment="Left" Margin="352,477,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center" Height="61" FontWeight="Bold" FontSize="30"/>
+        <Label x:Name="lblTodaysIncome" Content="Loading..." HorizontalAlignment="Left" Margin="101,665,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center" Height="50" FontWeight="Bold" FontSize="24"/>
+        <Label x:Name="lblTotalIncome" Content="Loading..." HorizontalAlignment="Left" Margin="352,665,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center" Height="50" FontWeight="Bold" FontSize="24"/>
+        <Label x:Name="lblSoldLPG" Content="Loading..." HorizontalAlignment="Left" Margin="100,490,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center" Height="50" FontWeight="Bold" FontSize="24"/>
+        <Label x:Name="lblStocks" Content="Loading..." HorizontalAlignment="Left" Margin="352,490,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center" Height="50" FontWeight="Bold" FontSize="24"/>
+        <Label Content="TODAY" HorizontalAlignment="Left" Margin="101,408,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
+
+
     </Grid>
 
 </UserControl>

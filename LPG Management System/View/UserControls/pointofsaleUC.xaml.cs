@@ -7,6 +7,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace LPG_Management_System.View.UserControls
 {
@@ -18,13 +19,36 @@ namespace LPG_Management_System.View.UserControls
 
         private Button currentKgButton;
 
-        public class ReceiptItem
+        public class ReceiptItem : INotifyPropertyChanged
         {
+            private int _quantity = 1;
+
             public string Brand { get; set; }
             public string Size { get; set; }
             public double Price { get; set; }
-            public int Quantity { get; set; } = 1;
+
+            public int Quantity
+            {
+                get => _quantity;
+                set
+                {
+                    if (_quantity != value)
+                    {
+                        _quantity = value;
+                        OnPropertyChanged(nameof(Quantity));
+                        OnPropertyChanged(nameof(Total)); // Notify Total change as well
+                    }
+                }
+            }
+
             public double Total => Price * Quantity;
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            protected void OnPropertyChanged(string propertyName)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
 
@@ -207,7 +231,7 @@ namespace LPG_Management_System.View.UserControls
                 };
                 productControl.BrandLabel.Content = product.ProductName;
                 productControl.PriceLabel.Content = $"₱{product.Price:F2}";
-                productControl.SizeLabel.Content = product.Size;
+                productControl.SizeLabel.Content = $"{product.Size} Kg";
 
                 if (product.ProductImage != null && product.ProductImage.Length > 0)
                 {
@@ -224,15 +248,49 @@ namespace LPG_Management_System.View.UserControls
 
             if (existingItem != null)
             {
-                existingItem.Quantity++;
+                existingItem.Quantity++; // Increment the quantity
             }
             else
             {
-                receiptItems.Add(item);
-            }
+                receiptItems.Add(item); // Add a new item
+            }   
 
-            UpdateTotalPrice();
+            UpdateTotalPrice(); // Update total price
         }
+
+        private void ReduceQuantity_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataGridItems.SelectedItem is ReceiptItem selectedItem)
+            {
+                // Reduce quantity by 1
+                selectedItem.Quantity--;
+
+                // If quantity is 0, remove the item
+                if (selectedItem.Quantity <= 0)
+                {
+                    receiptItems.Remove(selectedItem);
+                }
+
+                // Refresh the DataGrid and update the total price
+                dataGridItems.Items.Refresh();
+                UpdateTotalPrice();
+            }
+        }
+
+        private void RemoveItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataGridItems.SelectedItem is ReceiptItem selectedItem)
+            {
+                // Remove the selected item from the receipt
+                receiptItems.Remove(selectedItem);
+
+                // Refresh the DataGrid and update the total price
+                dataGridItems.Items.Refresh();
+                UpdateTotalPrice();
+            }
+        }
+
+
 
         private void FilterByBrand_Click(object sender, RoutedEventArgs e)
         {
