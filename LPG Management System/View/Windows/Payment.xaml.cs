@@ -60,6 +60,9 @@ namespace LPG_Management_System.View.Windows
 
                 using (var context = new DataContext())
                 {
+                    // Generate a single transaction ID for the entire purchase
+                    int transactionID = GenerateTransactionID();
+
                     // Fetch available tanks from inventory
                     var availableTanks = context.tbl_inventory
                                                 .Where(i => i.IsSold == false) // Assuming `IsSold` marks if the tank is sold
@@ -84,7 +87,7 @@ namespace LPG_Management_System.View.Windows
                             // Create a new transaction record
                             var newTransaction = new ReportsTable
                             {
-                                TransactionID = GenerateTransactionID(),
+                                TransactionID = transactionID, // Use the same TransactionID for all
                                 Date = DateTime.Now,
                                 ProductName = tank.ProductName,
                                 TankID = tank.TankID,
@@ -119,12 +122,29 @@ namespace LPG_Management_System.View.Windows
         }
 
 
+        // Example method to generate a unique Tank I
+
+        private int GenerateTankID()
+        {
+            // Replace this logic with a more robust method if necessary
+            return new Random().Next(100000, 999999); // Generates a random integer ID
+        }
+
         // Example method to generate a unique transaction ID
         private int GenerateTransactionID()
         {
-            // Replace with logic to generate a unique ID
+            // Replace this logic with an actual Transaction ID generation method
             return new Random().Next(100000, 999999);
         }
+
+
+
+        // Example method to generate a unique transaction ID
+        //private int GenerateTransactionID()
+        //{
+        //    // Replace with logic to generate a unique ID
+        //    return new Random().Next(100000, 999999);
+        //}
 
         private void amounttxtBox_TextChanged(object sender, TextChangedEventArgs e)
         {

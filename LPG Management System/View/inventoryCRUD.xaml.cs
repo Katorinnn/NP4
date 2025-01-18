@@ -11,56 +11,36 @@ namespace LPG_Management_System.View
 {
     public partial class inventoryCRUD : Window
     {
-
-        public int TankId { get; set; }
         private byte[] selectedImageBytes;
-        private Random random = new Random();
-        public inventoryCRUD(int tankID)
+        public inventoryCRUD()
         {
             InitializeComponent();
-            TankId = tankID;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (TankId > 0)
-            {
-                // Example: Display the TankId or prefill data based on it
-                MessageBox.Show($"Editing details for Tank ID: {TankId}");
-                // LoadItemData(TankId); // Use the TankId to load data if needed
-            }
-        }
-        private void GenerateTankIDButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-            string newTankID = GenerateTankID(); // Generate a new Tank ID
-            tankIDtxtBox.Text = newTankID;
-            tankIDtxtBox.IsReadOnly = true;
+            datePicker.SelectedDate = DateTime.Today; // Set today's date
         }
 
-        private string GenerateTankID()
-        {
-            
-            int tankID = random.Next(100000, 1000000); // Generate a random number and ensure it's 6 digits Between 100000 and 999999
-            return tankID.ToString();
-        }
         private void addBtn_Click(object sender, RoutedEventArgs e)
         {
-            string tankIDText = tankIDtxtBox.Text;
             string brandname = brandtxtBox.Text;
             string size = sizetxtBox.Text;
             string priceText = pricetxtBox.Text;
+            string stocksText = stockstxtBox.Text;
+            var selectedDate = datePicker.SelectedDate;
 
-            if (string.IsNullOrEmpty(tankIDText) || string.IsNullOrEmpty(brandname) ||
-                string.IsNullOrEmpty(size) || string.IsNullOrEmpty(priceText) || selectedImageBytes == null)
+            if (string.IsNullOrEmpty(brandname) || string.IsNullOrEmpty(size) ||
+                string.IsNullOrEmpty(priceText) || string.IsNullOrEmpty(stocksText) ||
+                selectedDate == null || selectedImageBytes == null)
             {
-                MessageBox.Show("Please fill in all the fields and select an image.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please fill in all fields and select an image.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            if (!int.TryParse(tankIDText, out int tankID) || !decimal.TryParse(priceText, out decimal price))
+            if (!decimal.TryParse(priceText, out decimal price) || !int.TryParse(stocksText, out int stocks))
             {
-                MessageBox.Show("Tank ID and Price must be valid numbers.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Invalid number format for Price or Stocks.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -70,11 +50,12 @@ namespace LPG_Management_System.View
                 {
                     var inventory = new InventoryTable
                     {
-                        TankID = tankID,
                         ProductName = brandname,
                         Size = size,
                         Price = price,
-                        ProductImage = selectedImageBytes // Save the image as a BLOB
+                        Stocks = stocks,
+                        Date = selectedDate.Value, // Ensure this matches the database type
+                        ProductImage = selectedImageBytes
                     };
 
                     db.tbl_inventory.Add(inventory);
@@ -90,7 +71,6 @@ namespace LPG_Management_System.View
                 MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
 
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -151,12 +131,5 @@ namespace LPG_Management_System.View
             // Allow only whole numbers
             e.Handled = !Regex.IsMatch(e.Text, @"^[0-9]+$");
         }
-
-
-
-        //private void tankIDtxtBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        //{
-
-        //}
     }
 }

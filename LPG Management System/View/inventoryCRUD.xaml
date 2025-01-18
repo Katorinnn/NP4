@@ -27,38 +27,55 @@
         </Border>
 
         <!-- Form Fields -->
-        <Label Content="Tank ID:" HorizontalAlignment="Left" Margin="89,66,0,0" VerticalAlignment="Top" 
-           FontWeight="Bold" FontSize="16" Width="80"/>
+        <!-- <Label Content="Tank ID:" HorizontalAlignment="Left" Margin="89,66,0,0" VerticalAlignment="Top" 
+           FontWeight="Bold" FontSize="16" Width="80"/> -->
 
-        <TextBox x:Name="tankIDtxtBox" HorizontalAlignment="Left" Height="30" Margin="198,66,0,401" Width="200" IsReadOnly="True" FontSize="15" Background="#e5f3fd" BorderBrush="Gray" BorderThickness="1" IsHitTestVisible="False"/>
-        <Button Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="370,71,0,0" Width="25"  Height="25" RenderTransformOrigin="0.027,0.59" Click="GenerateTankIDButton_Click" >
+        <!--<TextBox x:Name="tankIDtxtBox" HorizontalAlignment="Left" Height="30" Margin="198,66,0,401" Width="200" IsReadOnly="True" FontSize="15" Background="#e5f3fd" BorderBrush="Gray" BorderThickness="1" IsHitTestVisible="False"/>  -->
+        <!--<Button Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="370,71,0,0" Width="25"  Height="25" RenderTransformOrigin="0.027,0.59" Click="GenerateTankIDButton_Click" >
             <Button.BorderBrush>
                 <ImageBrush/>
             </Button.BorderBrush>
             <Button.Background>
                 <ImageBrush ImageSource="/View/refresh.png"/>
             </Button.Background>
-        </Button>
+        </Button> -->
 
-        <Label Content="Brand:" HorizontalAlignment="Left" Margin="89,116,0,0" VerticalAlignment="Top" 
+        <Label Content="Brand:" HorizontalAlignment="Left" Margin="81,68,0,0" VerticalAlignment="Top" 
            FontWeight="Bold" FontSize="16" Width="80"/>
-        <TextBox x:Name="brandtxtBox" HorizontalAlignment="Left" Margin="199,116,0,0" VerticalAlignment="Top" 
+        <TextBox x:Name="brandtxtBox" HorizontalAlignment="Left" Margin="191,68,0,0" VerticalAlignment="Top" 
              Width="200" Height="30" Background="#e5f3fd" BorderBrush="Gray" BorderThickness="1" FontSize="15" PreviewTextInput="brandtxtBox_PreviewTextInput"/>
 
-        <Label Content="Size (kg):" HorizontalAlignment="Left" Margin="89,166,0,0" VerticalAlignment="Top" 
+        <Label Content="Size (kg):" HorizontalAlignment="Left" Margin="81,118,0,0" VerticalAlignment="Top" 
            FontWeight="Bold" FontSize="16" Width="80"/>
-        <TextBox x:Name="sizetxtBox" HorizontalAlignment="Left" Margin="199,166,0,0" VerticalAlignment="Top" 
+        <TextBox x:Name="sizetxtBox" HorizontalAlignment="Left" Margin="191,118,0,0" VerticalAlignment="Top" 
              Width="200" Height="30" Background="#e5f3fd" BorderBrush="Gray" BorderThickness="1" FontSize="15" PreviewTextInput="sizetxtBox_PreviewTextInput"/>
 
-        <Label Content="Price:" HorizontalAlignment="Left" Margin="89,260,0,0" VerticalAlignment="Top" 
+        <Label Content="Price:" HorizontalAlignment="Left" Margin="81,212,0,0" VerticalAlignment="Top" 
            FontWeight="Bold" FontSize="16" Width="80"/>
-        <TextBox x:Name="pricetxtBox" HorizontalAlignment="Left" Margin="199,260,0,0" VerticalAlignment="Top" 
+        <TextBox x:Name="pricetxtBox" HorizontalAlignment="Left" Margin="191,211,0,0" VerticalAlignment="Top" 
              Width="200" Height="30" Background="#e5f3fd" BorderBrush="Gray" BorderThickness="1" FontSize="15" PreviewTextInput="pricetxtBox_PreviewTextInput"/>
 
-        <Label Content="Stocks:" HorizontalAlignment="Left" Margin="89,216,0,0" VerticalAlignment="Top" 
+        <Label Content="Stocks:" HorizontalAlignment="Left" Margin="81,168,0,0" VerticalAlignment="Top" 
                FontWeight="Bold" FontSize="16" Width="80"/>
-        <TextBox x:Name="stockstxtBox" HorizontalAlignment="Left" Margin="199,216,0,0" VerticalAlignment="Top" 
+        <TextBox x:Name="stockstxtBox" HorizontalAlignment="Left" Margin="191,168,0,0" VerticalAlignment="Top" 
                Width="200" Height="30" Background="#e5f3fd" BorderBrush="Gray" BorderThickness="1" FontSize="15" PreviewTextInput="stockstxtBox_PreviewTextInput"/>
+
+        <Label Content="Date:" HorizontalAlignment="Left" Margin="81,269,0,0" VerticalAlignment="Top" 
+       FontWeight="Bold" FontSize="16" Width="80"/>
+        <DatePicker x:Name="datePicker" 
+            HorizontalAlignment="Left" 
+            Margin="191,269,0,0" 
+            VerticalAlignment="Top" 
+            Width="200" 
+            Height="30" 
+            Background="#e5f3fd" 
+            BorderBrush="Gray" 
+            BorderThickness="1" 
+            FontSize="15" 
+            SelectedDate="{Binding Date, Mode=TwoWay}" 
+            IsTodayHighlighted="True" />
+
+
 
         <!-- Image Section -->
         <Border HorizontalAlignment="Left" Margin="430,66,0,0" VerticalAlignment="Top" 
