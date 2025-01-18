@@ -19,6 +19,9 @@ namespace LPG_Management_System.View.UserControls
 
         private Button currentKgButton;
 
+        private ObservableCollection<ReceiptItem> receiptItems = new ObservableCollection<ReceiptItem>();
+
+
         public class ReceiptItem : INotifyPropertyChanged
         {
             private int _quantity = 1;
@@ -51,10 +54,7 @@ namespace LPG_Management_System.View.UserControls
             }
         }
 
-
-        private ObservableCollection<ReceiptItem> receiptItems = new ObservableCollection<ReceiptItem>();
-
-
+        
         public pointofsaleUC()
         {
             InitializeComponent();
@@ -153,18 +153,12 @@ namespace LPG_Management_System.View.UserControls
             }
         }
 
-
-
-
-
-
         //Calculatipons of payment
         private void UpdateTotalPrice()
         {
             double totalPrice = receiptItems.Sum(item => item.Total);
             TotalPriceLabel.Content = $"₱{totalPrice:F2}";
         }
-
 
         //products
         private List<InventoryTable> GetProductsFromDatabase()
@@ -213,7 +207,6 @@ namespace LPG_Management_System.View.UserControls
             }
         }
 
-
         private void LoadProducts()
         {
             // Get products from the database using EF
@@ -248,15 +241,18 @@ namespace LPG_Management_System.View.UserControls
 
             if (existingItem != null)
             {
-                existingItem.Quantity++; // Increment the quantity
+                existingItem.Quantity++; // Increment the quantity each time the item is selected
             }
             else
             {
-                receiptItems.Add(item); // Add a new item
-            }   
+                item.Quantity = 1; // First selection sets quantity to 1
+                receiptItems.Add(item); // Add the item to the receipt
+            }
 
-            UpdateTotalPrice(); // Update total price
+            UpdateTotalPrice(); // Update the total price based on all items
         }
+
+
 
         private void ReduceQuantity_Click(object sender, RoutedEventArgs e)
         {

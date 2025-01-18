@@ -45,73 +45,73 @@ namespace LPG_Management_System.View.Windows
         {
             if (double.TryParse(amounttxtBox.Text, out double amount) && amount > 0)
             {
-                PaymentAmount = amount; // Save entered payment amount
+                PaymentAmount = amount; // Save the entered payment amount
 
-                // Calculate change if overpayment occurs
-                decimal changeGiven = (decimal)amount - (decimal)totalPrice;
+                // Total cost of all items in the receipt (sum of quantity * price for each item)
+                decimal totalCost = receiptItems.Sum(item => item.Quantity * item.Price);
+                decimal changeGiven = (decimal)amount - totalCost;
+
                 if (changeGiven < 0)
                 {
                     MessageBox.Show("Insufficient payment amount.", "Payment Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                // Example: Quantity purchased (replace this with the actual input)
-                int quantityPurchased = 2; // Replace with the actual number of tanks bought
-
                 using (var context = new DataContext())
                 {
-                    // Generate a single transaction ID for the entire purchase
-                    int transactionID = GenerateTransactionID();
-
-                    // Fetch available tanks from inventory
-                    var availableTanks = context.tbl_inventory
-                                                .Where(i => i.IsSold == false) // Assuming `IsSold` marks if the tank is sold
-                                                .OrderBy(i => i.TankID) // Optional: Sort by TankID
-                                                .Take(quantityPurchased)
-                                                .ToList();
-
-                    if (availableTanks.Count < quantityPurchased)
-                    {
-                        MessageBox.Show($"Insufficient stock. Only {availableTanks.Count} tanks are available.", "Stock Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-
                     try
                     {
-                        // Create transactions for each tank
-                        foreach (var tank in availableTanks)
+                        // Generate a single transaction ID for the entire purchase
+                        int transactionID = GenerateTransactionID();
+
+                        // Process each item in the receipt
+                        foreach (var receiptItem in receiptItems)
                         {
-                            // Mark the tank as sold
-                            tank.IsSold = true;
+                            // Fetch the required number of tanks for this item
+                            var availableTanks = context.tbl_inventory
+                                                        .Where(i => i.ProductName == receiptItem.Brand && i.Size == receiptItem.Size && i.IsSold == false)
+                                                        .Take(receiptItem.Quantity)
+                                                        .ToList();
 
-                            // Create a new transaction record
-                            var newTransaction = new ReportsTable
+                            if (availableTanks.Count < receiptItem.Quantity)
                             {
-                                TransactionID = transactionID, // Use the same TransactionID for all
-                                Date = DateTime.Now,
-                                ProductName = tank.ProductName,
-                                TankID = tank.TankID,
-                                Quantity = 1, // 1 tank per transaction
-                                UnitPrice = tank.Price,
-                                TotalPrice = tank.Price, // Price per tank
-                                PaymentMethod = "Cash", // Replace with actual payment method if needed
-                                PaidAmount = (decimal)amount / quantityPurchased, // Divide total payment equally (optional)
-                                ChangeGiven = changeGiven / quantityPurchased, // Divide change equally (optional)
-                                Status = TransactionStatus.Completed // Directly use the enum
-                            };
+                                MessageBox.Show($"Insufficient stock for {receiptItem.Brand} ({receiptItem.Size}).", "Stock Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
 
-                            context.tbl_reports.Add(newTransaction); // Add transaction
+                            foreach (var tank in availableTanks)
+                            {
+                                tank.IsSold = true; // Mark each tank as sold
+
+                                // Create a new transaction for each tank
+                                var newTransaction = new ReportsTable
+                                {
+                                    TransactionID = transactionID,
+                                    Date = DateTime.Now,
+                                    ProductName = tank.ProductName,
+                                    TankID = tank.TankID,
+                                    Quantity = 1, // Each transaction corresponds to one tank
+                                    UnitPrice = tank.Price,
+                                    TotalPrice = tank.Price,
+                                    PaymentMethod = "Cash",
+                                    PaidAmount = (decimal)amount / receiptItems.Count, // Divide the payment proportionally
+                                    ChangeGiven = changeGiven / receiptItems.Count, // Divide the change proportionally
+                                    Status = TransactionStatus.Completed
+                                };
+
+                                context.tbl_reports.Add(newTransaction); // Add the transaction to the database
+                            }
                         }
 
-                        context.SaveChanges(); // Persist changes
+                        context.SaveChanges(); // Commit changes to the database
                         MessageBox.Show("Transaction completed successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        this.DialogResult = true; // Close the window with a success result
+                        this.DialogResult = true; // Close the payment window
                         this.Close();
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Error saving transaction: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show($"Error processing transaction: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
@@ -120,6 +120,9 @@ namespace LPG_Management_System.View.Windows
                 MessageBox.Show("Please enter a valid payment amount.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+
+
 
 
         // Example method to generate a unique Tank I
