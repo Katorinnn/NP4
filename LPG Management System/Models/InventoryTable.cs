@@ -23,6 +23,13 @@ namespace LPG_Management_System.Models
         [Range(0.01, double.MaxValue, ErrorMessage = "Price must be positive.")]
         public decimal Price { get; set; } // Price of the product
 
+        public int Stocks { get; set; } // Price of the product
+
         public byte[] ProductImage { get; set; } // Image of the product (stored as byte array)
+
+        public bool IsSold { get; set; } = false; // Whether the tank is sold (default to false)
+
+        public DateTime Date { get; set; }
+
     }
 }

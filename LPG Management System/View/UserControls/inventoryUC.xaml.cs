@@ -115,7 +115,7 @@ namespace LPG_Management_System.View.UserControls
 
         private void newBtn_Click(object sender, RoutedEventArgs e)
         {
-            inventoryCRUD inventoryCRUD = new inventoryCRUD(0);
+            inventoryCRUD inventoryCRUD = new inventoryCRUD(); // No parameter needed
             bool? dialogResult = inventoryCRUD.ShowDialog();
 
             if (dialogResult == true)
@@ -124,6 +124,7 @@ namespace LPG_Management_System.View.UserControls
                 PopulateFilterMenu();
             }
         }
+
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {

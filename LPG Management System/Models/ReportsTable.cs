@@ -29,6 +29,15 @@ namespace LPG_Management_System.Models
         Completed,
         Canceled
     }
-    
+
+    public class StocksTable
+    {
+        [Key]
+        public int StockID { get; set; }
+        public string Description { get; set; }
+        public int Quantity { get; set; }
+        public decimal Available { get; set; }
+        public string OnOrder { get; set; }
+    }
 
 }

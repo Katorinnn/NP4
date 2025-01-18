@@ -17,5 +17,7 @@ namespace LPG_Management_System.Models
         public DbSet<AdminTable> tbl_admin { get; set; }
         public DbSet<CustomersTable> tbl_customers { get; set; }
         public DbSet<ReportsTable> tbl_reports { get; set; }
+
+        public DbSet<StocksTable> tbl_stocks { get; set; }
     }
 }

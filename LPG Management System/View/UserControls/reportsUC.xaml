@@ -5,21 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="850" d:DesignWidth="1230">
-    <Grid Background="#FF8ECAE6" Margin="10,10,0,0">
+             d:DesignHeight="850" d:DesignWidth="1220" >
+    <Grid Background="#FF8ECAE6">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="194*"/>
-            <ColumnDefinition Width="1075*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="reportsDG" HorizontalAlignment="Left" Height="671" Margin="28,135,0,0" VerticalAlignment="Top" Width="1169" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.ColumnSpan="2" ColumnWidth="*" SelectionChanged="reportsDG_SelectionChanged" IsReadOnly="True" />
-        <Grid Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="119" VerticalAlignment="Top" Width="1169" Background="#FFD2D2D2" Margin="28,14,0,0" >
-            <Label Content="Category" HorizontalAlignment="Left" Height="43" Margin="700,36,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontWeight="Bold"/>
-            <Label Content="Begin Date" HorizontalAlignment="Left" Height="43" Margin="875,35,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontWeight="Bold"/>
-            <Label Content="End Date" HorizontalAlignment="Left" Height="43" Margin="1071,33,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontWeight="Bold"/>
+        <DataGrid x:Name="reportsDG" HorizontalAlignment="Left" Height="673" Margin="28,133,0,0" VerticalAlignment="Top" Width="1169" d:ItemsSource="{d:SampleData ItemCount=5}" ColumnWidth="*" SelectionChanged="reportsDG_SelectionChanged" IsReadOnly="True" />
+        <Grid HorizontalAlignment="Left" Height="92" VerticalAlignment="Top" Width="1169" Background="#FFD2D2D2" Margin="28,36,0,0" >
+            <Label Content="Category" HorizontalAlignment="Left" Height="43" Margin="10,28,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontWeight="Bold"/>
+            <Label Content="Begin Date" HorizontalAlignment="Left" Height="43" Margin="630,17,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontWeight="Bold"/>
+            <Label Content="End Date" HorizontalAlignment="Left" Height="44" Margin="909,19,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontWeight="Bold"/>
         </Grid>
-        <DatePicker Grid.Column="1" HorizontalAlignment="Left" Height="36" Margin="635,70,0,0" VerticalAlignment="Top" Width="159" FontSize="16"/>
-        <DatePicker Grid.Column="1" HorizontalAlignment="Left" Height="36" Margin="818,70,0,0" VerticalAlignment="Top" Width="159" FontSize="16"/>
-        <ComboBox Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="450,70,0,0" VerticalAlignment="Top" Width="154" FontSize="16"/>
+        <DatePicker HorizontalAlignment="Left" Height="34" Margin="757,60,0,0" VerticalAlignment="Top" Width="159" FontSize="16"/>
+        <DatePicker HorizontalAlignment="Left" Height="35" Margin="1015,59,0,0" VerticalAlignment="Top" Width="159" FontSize="16"/>
+        <ComboBox x:Name="categoryComboBox" HorizontalAlignment="Left" Height="34" Margin="139,60,0,0" VerticalAlignment="Top" Width="154" FontSize="16" SelectionChanged="categoryComboBox_SelectionChanged"/>
 
 
     </Grid>

@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LPG_Management_System.Models;
 
 namespace LPG_Management_System.View.UserControls
 {
@@ -25,6 +26,8 @@ namespace LPG_Management_System.View.UserControls
         public dashboardUC()
         {
             InitializeComponent();
+            LoadDashboardData();
+
 
             double[] sales = { 150, 200, 180, 250, 350, 450, 400, 380, 420, 450, 470, 500 };
 
@@ -55,6 +58,34 @@ namespace LPG_Management_System.View.UserControls
             });
 
             SalesChart.LegendLocation = LegendLocation.Right;
+        }
+        private void LoadDashboardData()
+        {
+            using (var context = new DataContext())
+            {
+                // Fetch today's income
+                var today = DateTime.Today;
+                var todaysIncome = context.tbl_reports
+                    .Where(r => r.Date.Date == today)
+                    .Sum(r => r.TotalPrice);
+
+                // Fetch total income
+                var totalIncome = context.tbl_reports.Sum(r => r.TotalPrice);
+
+                // Fetch sold LPG
+                var soldLPG = context.tbl_inventory
+                    .Where(i => i.Date.Date == today);
+                //.Sum(i => i.QuantitySold);
+
+                // Fetch stocks
+                var stocks = context.tbl_stocks.Sum(s => s.Quantity);
+
+                // Update UI elements
+                lblTodaysIncome.Content = todaysIncome.ToString("C");
+                lblTotalIncome.Content = totalIncome.ToString("C");
+                lblSoldLPG.Content = soldLPG.ToString();
+                lblStocks.Content = stocks.ToString();
+            }
         }
     }
 }

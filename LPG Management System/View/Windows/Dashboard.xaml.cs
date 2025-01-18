@@ -1,4 +1,5 @@
-﻿using LPG_Management_System.View.UserControls;
+﻿using LPG_Management_System.Models;
+using LPG_Management_System.View.UserControls;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,7 +19,6 @@ namespace LPG_Management_System
         public Dashboard()
         {
             InitializeComponent();
-
         }
 
 
@@ -174,5 +174,7 @@ namespace LPG_Management_System
                     }
                 }
         }
+
+        
     }
 }
