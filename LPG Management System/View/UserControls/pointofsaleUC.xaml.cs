@@ -75,7 +75,6 @@ namespace LPG_Management_System.View.UserControls
         //Payment Options
         private void cashBtn_Click_1(object sender, RoutedEventArgs e)
         {
-            // Check if there are any items in the receipt
             if (receiptItems.Count == 0)
             {
                 MessageBox.Show("Please select at least one product before proceeding with payment.",
@@ -83,23 +82,18 @@ namespace LPG_Management_System.View.UserControls
                 return;
             }
 
-            // Calculate the total price
+            // Calculate total price and quantity
             double totalPrice = receiptItems.Sum(item => item.Total);
+            int totalQuantity = receiptItems.Sum(item => item.Quantity);
 
-            // Create the payment window
-            Payment paymentWindow = new Payment(totalPrice);
+            // Pass total price and quantity to the Payment window
+            Payment paymentWindow = new Payment(totalPrice, totalQuantity);
 
-            // Show payment window and check if the payment is successful
             if (paymentWindow.ShowDialog() == true)
             {
-                // Retrieve the payment amount entered
                 double paymentAmount = paymentWindow.PaymentAmount;
+                double change = paymentAmount - totalPrice;
 
-                // Variables to pass
-                double finalTotalPrice = totalPrice;  // Total price
-                double change = paymentAmount - finalTotalPrice;
-
-                // Check for negative change (insufficient payment)
                 if (change < 0)
                 {
                     MessageBox.Show("Payment amount is less than the total price. Please enter a valid amount.",
@@ -107,7 +101,6 @@ namespace LPG_Management_System.View.UserControls
                     return;
                 }
 
-                // Update the inventory in the database
                 try
                 {
                     using (var dbContext = new DataContext())
@@ -116,10 +109,8 @@ namespace LPG_Management_System.View.UserControls
                         {
                             var product = dbContext.tbl_inventory.FirstOrDefault(p => p.ProductName == item.Brand && p.Size == item.Size && p.Price == (decimal)item.Price);
 
-
                             if (product != null)
                             {
-                                // Update the quantity or remove the product if no stock is left
                                 product.Quantity -= item.Quantity;
 
                                 if (product.Quantity <= 0)
@@ -132,18 +123,12 @@ namespace LPG_Management_System.View.UserControls
                         dbContext.SaveChanges();
                     }
 
-                    // Reload the available products
                     LoadProducts();
-
-                    // Clear the receipt items
                     receiptItems.Clear();
-
-                    // Update the total price label
                     UpdateTotalPrice();
 
-                    // Show the invoice
                     var invoicePage = new Invoice(receiptItems.ToList(), "Customer Address Here",
-                                                  finalTotalPrice, paymentAmount, change);
+                                                  totalPrice, paymentAmount, change);
                     invoicePage.Show();
                 }
                 catch (Exception ex)
@@ -152,6 +137,8 @@ namespace LPG_Management_System.View.UserControls
                 }
             }
         }
+
+
 
         //Calculatipons of payment
         private void UpdateTotalPrice()

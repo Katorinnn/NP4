@@ -14,7 +14,7 @@ namespace LPG_Management_System.Models
         public int TransactionID { get; set; }
         public DateTime Date { get; set; }
         public string ProductName { get; set; }
-        public int TankID { get; set; }
+        public string TankID { get; set; }
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal TotalPrice { get; set; }
