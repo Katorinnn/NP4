@@ -22,11 +22,11 @@ namespace LPG_Management_System.View
             {
                 using (var dbContext = new DataContext())
                 {
-                    var inventoryItem = dbContext.tbl_inventory.FirstOrDefault(i => i.TankID == tankId);
+                    var inventoryItem = dbContext.tbl_inventory.FirstOrDefault(i => i.StocksID == tankId);
                     if (inventoryItem != null)
                     {
                         // Populate the controls (e.g., TextBoxes) with the data from the database
-                        tankIDtxtBox.Text = inventoryItem.TankID.ToString();
+                        tankIDtxtBox.Text = inventoryItem.StocksID.ToString();
                         brandtxtBox.Text = inventoryItem.ProductName;
                         sizetxtBox.Text = inventoryItem.Size;
                         pricetxtBox.Text = inventoryItem.Price.ToString("F2");
@@ -60,7 +60,7 @@ namespace LPG_Management_System.View
             {
                 using (var dbContext = new DataContext())
                 {
-                    var inventoryItem = dbContext.tbl_inventory.FirstOrDefault(i => i.TankID == int.Parse(tankID));
+                    var inventoryItem = dbContext.tbl_inventory.FirstOrDefault(i => i.StocksID == int.Parse(tankID));
                     if (inventoryItem != null)
                     {
                         inventoryItem.ProductName = brandname;

@@ -27,8 +27,9 @@ namespace LPG_Management_System.View.Windows
         private DataContext _context; // Declare the context
         
         private double totalPrice;
+        public int TotalQuantity { get; private set; }
         public double PaymentAmount { get; private set; } // Holds the entered amount
-        public Payment(double totalPrice)
+        public Payment(double totalPrice, int totalQuantity)
         {
             InitializeComponent();
 
@@ -38,6 +39,8 @@ namespace LPG_Management_System.View.Windows
 
             this.totalPrice = totalPrice;
 
+            TotalQuantity = totalQuantity;
+
             TotalAmountLabel.Content = $"Total: ₱{totalPrice:F2}";
         }
 
@@ -45,9 +48,8 @@ namespace LPG_Management_System.View.Windows
         {
             if (double.TryParse(amounttxtBox.Text, out double amount) && amount > 0)
             {
-                PaymentAmount = amount; // Save entered payment amount
+                PaymentAmount = amount;
 
-                // Calculate change if overpayment occurs
                 decimal changeGiven = (decimal)amount - (decimal)totalPrice;
                 if (changeGiven < 0)
                 {
@@ -55,58 +57,54 @@ namespace LPG_Management_System.View.Windows
                     return;
                 }
 
-                // Example: Quantity purchased (replace this with the actual input)
-                int quantityPurchased = 2; // Replace with the actual number of tanks bought
-
                 using (var context = new DataContext())
                 {
-                    // Generate a single transaction ID for the entire purchase
-                    int transactionID = GenerateTransactionID();
-
-                    // Fetch available tanks from inventory
-                    var availableTanks = context.tbl_inventory
-                                                .Where(i => i.IsSold == false) // Assuming `IsSold` marks if the tank is sold
-                                                .OrderBy(i => i.TankID) // Optional: Sort by TankID
-                                                .Take(quantityPurchased)
+                    // Fetch all purchased items
+                    var purchasedItems = context.tbl_inventory
+                                                .Where(i => i.Stocks > 0)
+                                                .Take(TotalQuantity)
                                                 .ToList();
 
-                    if (availableTanks.Count < quantityPurchased)
+                    if (purchasedItems.Count < TotalQuantity)
                     {
-                        MessageBox.Show($"Insufficient stock. Only {availableTanks.Count} tanks are available.", "Stock Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show($"Insufficient stock. Only {purchasedItems.Count} items are available.", "Stock Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
 
                     try
                     {
-                        // Create transactions for each tank
-                        foreach (var tank in availableTanks)
+                        // 🔥 Combine brand names into a single string
+                        string combinedBrands = string.Join(", ", purchasedItems.Select(p => p.ProductName));
+
+                        decimal totalUnitPrice = purchasedItems.Sum(p => p.Price);
+
+                        string combinedUnitPrices = string.Join(", ", purchasedItems.Select(p => p.Price.ToString("F2")));
+
+                        string combinedTankIDs = string.Join(", ", purchasedItems.Select(p => GenerateTankID().ToString()));
+
+
+                        // 🔥 Save all brands in one row
+                        var newTransaction = new ReportsTable
                         {
-                            // Mark the tank as sold
-                            tank.IsSold = true;
+                            TransactionID = GenerateTransactionID(),
+                            Date = DateTime.Now,
+                            ProductName = combinedBrands,   // Combined brands
+                            TankID = combinedTankIDs,
+                            Quantity = TotalQuantity,
+                            UnitPrice = totalUnitPrice,
+                            TotalPrice = totalUnitPrice,
+                            PaymentMethod = "Cash",
+                            PaidAmount = (decimal)amount,
+                            ChangeGiven = changeGiven,
+                            Status = TransactionStatus.Completed
+                        };
 
-                            // Create a new transaction record
-                            var newTransaction = new ReportsTable
-                            {
-                                TransactionID = transactionID, // Use the same TransactionID for all
-                                Date = DateTime.Now,
-                                ProductName = tank.ProductName,
-                                TankID = tank.TankID,
-                                Quantity = 1, // 1 tank per transaction
-                                UnitPrice = tank.Price,
-                                TotalPrice = tank.Price, // Price per tank
-                                PaymentMethod = "Cash", // Replace with actual payment method if needed
-                                PaidAmount = (decimal)amount / quantityPurchased, // Divide total payment equally (optional)
-                                ChangeGiven = changeGiven / quantityPurchased, // Divide change equally (optional)
-                                Status = TransactionStatus.Completed // Directly use the enum
-                            };
+                        context.tbl_reports.Add(newTransaction);
+                        context.SaveChanges();
 
-                            context.tbl_reports.Add(newTransaction); // Add transaction
-                        }
-
-                        context.SaveChanges(); // Persist changes
                         MessageBox.Show("Transaction completed successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        this.DialogResult = true; // Close the window with a success result
+                        this.DialogResult = true;
                         this.Close();
                     }
                     catch (Exception ex)
@@ -122,8 +120,6 @@ namespace LPG_Management_System.View.Windows
         }
 
 
-        // Example method to generate a unique Tank I
-
         private int GenerateTankID()
         {
             // Replace this logic with a more robust method if necessary
@@ -136,15 +132,6 @@ namespace LPG_Management_System.View.Windows
             // Replace this logic with an actual Transaction ID generation method
             return new Random().Next(100000, 999999);
         }
-
-
-
-        // Example method to generate a unique transaction ID
-        //private int GenerateTransactionID()
-        //{
-        //    // Replace with logic to generate a unique ID
-        //    return new Random().Next(100000, 999999);
-        //}
 
         private void amounttxtBox_TextChanged(object sender, TextChangedEventArgs e)
         {

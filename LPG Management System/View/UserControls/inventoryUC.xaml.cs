@@ -44,7 +44,7 @@ namespace LPG_Management_System.View.UserControls
                 try
                 {
                     var filteredData = _context.tbl_inventory
-                        .Where(i => i.TankID.ToString().Contains(searchText) || i.ProductName.Contains(searchText))
+                        .Where(i => i.StocksID.ToString().Contains(searchText) || i.ProductName.Contains(searchText))
                         .ToList();
                     inventoryDG.ItemsSource = filteredData;
                 }
@@ -149,7 +149,7 @@ namespace LPG_Management_System.View.UserControls
             {
                 try
                 {
-                    var itemToDelete = _context.tbl_inventory.FirstOrDefault(i => i.TankID == id);
+                    var itemToDelete = _context.tbl_inventory.FirstOrDefault(i => i.StocksID == id);
                     if (itemToDelete != null)
                     {
                         _context.tbl_inventory.Remove(itemToDelete);

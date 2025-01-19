@@ -108,11 +108,12 @@
                 <!-- Define DataGrid Columns -->
                 <DataGrid.Columns>
                     <!-- <DataGridTextColumn Header="Tank ID" Binding="{Binding TankID}" Width="210" /> -->
+                    <DataGridTextColumn Header="StocksID" Binding="{Binding StocksID}" Width="210" />
                     <DataGridTextColumn Header="Brand" Binding="{Binding ProductName}" Width="210" />
                     <DataGridTextColumn Header="Size (kg.)" Binding="{Binding Size}" Width="210" />
                     <DataGridTextColumn Header="Stocks" Binding="{Binding Stocks}" Width="220" />
                     <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="220" />
-                    <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="220" />
+                    <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="210" />
 
                     <!-- Actions Column (Edit and Delete Buttons) -->
                     <DataGridTemplateColumn Header="Actions" Width="220">
