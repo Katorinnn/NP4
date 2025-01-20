@@ -83,7 +83,7 @@
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                     <!-- Edit Button -->
                                     <Button x:Name="editButton" 
-                                            Tag="{Binding TankID}" 
+                                            Tag="{Binding StocksID}" 
                                             Click="EditButton_Click" 
                                             Width="45" 
                                             Height="45" 

@@ -49,8 +49,8 @@ namespace LPG_Management_System.View.Windows
             if (double.TryParse(amounttxtBox.Text, out double amount) && amount > 0)
             {
                 PaymentAmount = amount;
-
                 decimal changeGiven = (decimal)amount - (decimal)totalPrice;
+
                 if (changeGiven < 0)
                 {
                     MessageBox.Show("Insufficient payment amount.", "Payment Error", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -59,39 +59,40 @@ namespace LPG_Management_System.View.Windows
 
                 using (var context = new DataContext())
                 {
-                    // Fetch all purchased items
-                    var purchasedItems = context.tbl_inventory
-                                                .Where(i => i.Stocks > 0)
-                                                .Take(TotalQuantity)
-                                                .ToList();
-
-                    if (purchasedItems.Count < TotalQuantity)
-                    {
-                        MessageBox.Show($"Insufficient stock. Only {purchasedItems.Count} items are available.", "Stock Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-
                     try
                     {
-                        // 🔥 Combine brand names into a single string
+                        // Fetch purchased items
+                        var purchasedItems = context.tbl_inventory
+                            .Where(i => i.Stocks > 0)
+                            .Take(TotalQuantity)
+                            .ToList();
+
+                        if (purchasedItems.Count < TotalQuantity)
+                        {
+                            MessageBox.Show($"Insufficient stock. Only {purchasedItems.Count} items are available.", "Stock Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
+                        // Update stocks and calculate total dynamically
+                        decimal totalUnitPrice = 0;
                         string combinedBrands = string.Join(", ", purchasedItems.Select(p => p.ProductName));
-
-                        decimal totalUnitPrice = purchasedItems.Sum(p => p.Price);
-
-                        string combinedUnitPrices = string.Join(", ", purchasedItems.Select(p => p.Price.ToString("F2")));
-
                         string combinedTankIDs = string.Join(", ", purchasedItems.Select(p => GenerateTankID().ToString()));
 
+                        foreach (var item in purchasedItems)
+                        {
+                            totalUnitPrice += item.Price * item.Quantity;
+                            item.Stocks -= item.Quantity; // Reduce stock
+                        }
 
-                        // 🔥 Save all brands in one row
+                        // Save transaction
                         var newTransaction = new ReportsTable
                         {
                             TransactionID = GenerateTransactionID(),
                             Date = DateTime.Now,
-                            ProductName = combinedBrands,   // Combined brands
+                            ProductName = combinedBrands,
                             TankID = combinedTankIDs,
                             Quantity = TotalQuantity,
-                            UnitPrice = totalUnitPrice,
+                            UnitPrice = totalUnitPrice / TotalQuantity, // Average unit price
                             TotalPrice = totalUnitPrice,
                             PaymentMethod = "Cash",
                             PaidAmount = (decimal)amount,
@@ -100,10 +101,42 @@ namespace LPG_Management_System.View.Windows
                         };
 
                         context.tbl_reports.Add(newTransaction);
+
+                        // Add or update customer information
+                        if (NewCustomer.IsChecked == true)
+                        {
+                            var newCustomer = new CustomersTable
+                            {
+                                CustomerID = int.Parse(customerIDtxtBox.Text),
+                                CustomerName = customertxtBox.Text,
+                                ContactNumber = contacttxtBox.Text,
+                                Address = addresstxtBox.Text,
+                                TankClassification = tankClassComboBox.Text
+                            };
+                            context.tbl_customers.Add(newCustomer);
+                        }
+                        else if (OldCustomer.IsChecked == true)
+                        {
+                            var existingCustomer = context.tbl_customers
+                                .FirstOrDefault(c => c.CustomerID == int.Parse(customerIDtxtBox.Text));
+
+                            if (existingCustomer != null)
+                            {
+                                existingCustomer.CustomerName = customertxtBox.Text;
+                                existingCustomer.ContactNumber = contacttxtBox.Text;
+                                existingCustomer.Address = addresstxtBox.Text;
+                                existingCustomer.TankClassification = tankClassComboBox.Text;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Customer not found. Please re-check the Customer ID.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                        }
+
                         context.SaveChanges();
 
                         MessageBox.Show("Transaction completed successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-
                         this.DialogResult = true;
                         this.Close();
                     }
@@ -118,6 +151,7 @@ namespace LPG_Management_System.View.Windows
                 MessageBox.Show("Please enter a valid payment amount.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
 
 
         private int GenerateTankID()
@@ -145,10 +179,19 @@ namespace LPG_Management_System.View.Windows
 
         private void OldCustomer_Checked(object sender, RoutedEventArgs e)
         {
+            // Disable fields for new customer and allow search by customer name for old customer
             contacttxtBox.IsEnabled = false;
             addresstxtBox.IsEnabled = false;
+            customertxtBox.IsReadOnly = false; // Allow typing for search functionality
 
-            customerIDtxtBox.IsReadOnly = true; // Allow typing for search functionality
+            // Enable customer ID for search only, to prevent changes
+            customerIDtxtBox.IsReadOnly = true;
+
+            // If no customer is selected or typed in, clear customer data fields
+            customertxtBox.Clear();
+            customerIDtxtBox.Clear();
+            addresstxtBox.Clear();
+            contacttxtBox.Clear();
         }
 
         private void NewCustomer_Checked(object sender, RoutedEventArgs e)
@@ -156,35 +199,79 @@ namespace LPG_Management_System.View.Windows
             if (contacttxtBox == null || addresstxtBox == null || customertxtBox == null || customerIDtxtBox == null)
                 return;
 
+            // Enable contact and address fields for new customer
             contacttxtBox.IsEnabled = true;
             addresstxtBox.IsEnabled = true;
 
-            customertxtBox.Text = "";
-            customerIDtxtBox.Text = "";
-            customertxtBox.IsReadOnly = false;
-        }
+            // Clear the fields for new customer
+            customertxtBox.Clear();
+            customerIDtxtBox.Clear();
+            contacttxtBox.Clear();
+            addresstxtBox.Clear();
 
+            // Allow customer name to be entered freely
+            customertxtBox.IsReadOnly = false;
+
+            // Set the customer ID box to allow entry (for new customer)
+            customerIDtxtBox.IsReadOnly = false;
+        }
 
         private void customertxtBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             string searchQuery = customertxtBox.Text;
 
-            var customers = _context.tbl_customers
-                                    .Where(c => c.CustomerName.Contains(searchQuery))
-                                    .ToList();
-
-            // Optional: Use an autocomplete control to show customer suggestions
-            // For now, select the first match for demonstration
-            if (customers.Any())
+            // Only show customer names for "Old Customer" selection and when there's input
+            if (OldCustomer.IsChecked == true && searchQuery.Length > 0)
             {
-                var customer = customers.First();
-                customertxtBox.Text = customer.CustomerName;
-                customerIDtxtBox.Text = customer.CustomerID.ToString();
-                addresstxtBox.Text = customer.Address;
+                var customers = _context.tbl_customers
+                                        .Where(c => c.CustomerName.Contains(searchQuery))
+                                        .ToList();
+
+                if (customers.Any())
+                {
+                    customerListBox.ItemsSource = customers; // Set the data source for the list box
+                    customerListBox.Visibility = Visibility.Visible; // Show the list box
+                }
+                else
+                {
+                    customerListBox.ItemsSource = null; // Clear the list if no matches
+                    customerListBox.Visibility = Visibility.Collapsed; // Hide the list box if no customers found
+                }
+            }
+            else
+            {
+                // Hide the list box if no search query or if new customer is selected
+                customerListBox.ItemsSource = null;
+                customerListBox.Visibility = Visibility.Collapsed;
             }
         }
 
-        
+        private void customerListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // If an item (customer) is selected from the list
+            if (customerListBox.SelectedItem is CustomersTable selectedCustomer)
+            {
+                // Fill in the remaining fields with the selected customer's details
+                customertxtBox.Text = selectedCustomer.CustomerName;
+                customerIDtxtBox.Text = selectedCustomer.CustomerID.ToString();
+                contacttxtBox.Text = selectedCustomer.ContactNumber;
+                addresstxtBox.Text = selectedCustomer.Address;
+
+                // Hide the list box after selection
+                customerListBox.Visibility = Visibility.Collapsed;
+            }
+        }
+
+
+
+        private void customertxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Allow only letters and spaces for the customer name input (search for old customers)
+            e.Handled = !char.IsLetter(e.Text, 0) && e.Text != " ";
+        }
+
+
+
 
         private void customerIDtxtBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -200,12 +287,6 @@ namespace LPG_Management_System.View.Windows
         {
             // Allow only numeric input
             e.Handled = !char.IsDigit(e.Text, 0);
-        }
-
-        private void customertxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            // Allow only letters and spaces
-            e.Handled = !char.IsLetter(e.Text, 0) && e.Text != " ";
         }
 
         private void contacttxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)

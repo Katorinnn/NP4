@@ -99,18 +99,21 @@ namespace LPG_Management_System.View.UserControls
                     return;
                 }
 
+                // Clear and update inventory in database
                 try
                 {
                     using (var dbContext = new DataContext())
                     {
                         foreach (var item in receiptItems)
                         {
-                            var product = dbContext.tbl_inventory.FirstOrDefault(p => p.ProductName == item.Brand && p.Size == item.Size && p.Price == (decimal)item.Price);
+                            var product = dbContext.tbl_inventory
+                                .FirstOrDefault(p => p.ProductName == item.Brand &&
+                                                     p.Size == item.Size &&
+                                                     p.Price == (decimal)item.Price);
 
                             if (product != null)
                             {
                                 product.Quantity -= item.Quantity;
-
                                 if (product.Quantity <= 0)
                                 {
                                     dbContext.tbl_inventory.Remove(product);
@@ -122,18 +125,20 @@ namespace LPG_Management_System.View.UserControls
                     }
 
                     LoadProducts();
+                    var receiptItemsList = receiptItems.ToList(); // Convert ObservableCollection to List
+                    var invoicePage = new Invoice(receiptItemsList, "Customer Address Here", totalPrice, paymentAmount, change);
+                    invoicePage.Show();
+
+                    // Clear after showing Invoice
                     receiptItems.Clear();
                     UpdateTotalPrice();
-
-                    var invoicePage = new Invoice(receiptItems.ToList(), "Customer Address Here",
-                                                  totalPrice, paymentAmount, change);
-                    invoicePage.Show();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error updating inventory: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+
         }
 
 

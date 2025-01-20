@@ -13,8 +13,12 @@
     </Window.Resources>
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="171*"/>
+            <ColumnDefinition Width="29*"/>
+        </Grid.ColumnDefinitions>
         <!-- Border to wrap the content and provide rounded corners -->
-        <Border Margin="20" Background="#d1e5f4" BorderBrush="Gray" BorderThickness="1,1,1,1" CornerRadius="15">
+        <Border Margin="20,20,20,20" Background="#d1e5f4" BorderBrush="Gray" BorderThickness="1,1,1,1" CornerRadius="15" Grid.ColumnSpan="2">
             <Border.Effect>
                 <DropShadowEffect Color="Gray" BlurRadius="30" ShadowDepth="-5" Opacity="0.3"/>
             </Border.Effect>
@@ -24,7 +28,7 @@
             BorderBrush="{x:Null}" FontSize="19"/>
 
         </Border>
-    
-        <DocumentViewer x:Name="documentViewer" Margin="10" />
+
+        <DocumentViewer x:Name="documentViewer" Margin="10,10,10,10" Grid.ColumnSpan="2" />
     </Grid>
 </Window>

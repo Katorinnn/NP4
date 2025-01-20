@@ -74,7 +74,7 @@
             <StackPanel HorizontalAlignment="Left" Margin="8,8,0,0" Orientation="Horizontal" VerticalAlignment="Top" Width="590">
                 <Button Content="All" Height="57" Width="59" FontSize="20" Click="FilterByBrand_Click" Tag="All" IsDefault="True"/>
                 <Button Content="Coastal" Height="57" Width="131" FontSize="20" Click="FilterByBrand_Click" Tag="Coastal"/>
-                <Button Content="Gaz Lite" Height="57" Width="131" FontSize="20" Click="FilterByBrand_Click" Tag="Gaz Lite"/>
+                <Button Content="GazLite" Height="57" Width="131" FontSize="20" Click="FilterByBrand_Click" Tag="GazLite"/>
                 <Button Content="Solane" Height="57" Width="131" FontSize="20" Click="FilterByBrand_Click" Tag="Solane"/>
                 <Button Content="Regasco" Height="57" Width="130" FontSize="20" Click="FilterByBrand_Click" Tag="Regasco"/>
 

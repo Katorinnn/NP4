@@ -6,6 +6,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Media;
 
 
 namespace LPG_Management_System.View.UserControls
@@ -150,8 +152,8 @@ namespace LPG_Management_System.View.UserControls
         {
             if (beginDatePicker.SelectedDate.HasValue)
             {
-                // Ensure only the date part is displayed (without time)
-                beginDatePicker.SelectedDate = beginDatePicker.SelectedDate.Value.Date;
+                // Optionally display a formatted date (dd/MM/yyyy)
+                beginDatePicker.Text = beginDatePicker.SelectedDate.Value.ToString("yyyy/mm/dd");
             }
         }
 
@@ -159,15 +161,134 @@ namespace LPG_Management_System.View.UserControls
         {
             if (endDatePicker.SelectedDate.HasValue)
             {
-                // Ensure only the date part is displayed (without time)
-                endDatePicker.SelectedDate = endDatePicker.SelectedDate.Value.Date;
+                // Optionally display a formatted date (dd/MM/yyyy)
+                endDatePicker.Text = endDatePicker.SelectedDate.Value.ToString("yyyy/mm/dd");
             }
         }
+
 
         private void reportsDG_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Handle selection changes if necessary
         }
+
+        private void FilterReportsByDate()
+        {
+            if (beginDatePicker.SelectedDate.HasValue && endDatePicker.SelectedDate.HasValue)
+            {
+                // Parse the selected dates
+                DateTime startDate = beginDatePicker.SelectedDate.Value.Date;
+                DateTime endDate = endDatePicker.SelectedDate.Value.Date;
+
+                // Ensure start date is not greater than end date
+                if (startDate > endDate)
+                {
+                    MessageBox.Show("Begin Date cannot be later than End Date.");
+                    return;
+                }
+
+                // Filter the reports
+                var filteredReports = allReports
+                    .Where(report => report.Date.Date >= startDate && report.Date.Date <= endDate)
+                    .ToList();
+
+                // Handle no records case
+                if (filteredReports.Count == 0)
+                {
+                    MessageBox.Show("No records found for the selected date range.");
+                }
+
+                // Update the data grid
+                reportsDG.ItemsSource = filteredReports;
+
+                // Update pagination
+                totalPages = (int)Math.Ceiling((double)filteredReports.Count / itemsPerPage);
+                currentPage = 1; // Reset to first page
+                LoadPage(currentPage);
+            }
+            else
+            {
+                MessageBox.Show("Please select both Begin Date and End Date.");
+            }
+        }
+
+
+
+        private void PrintPreview_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var printDialog = new PrintDialog();
+
+                if (printDialog.ShowDialog() == true)
+                {
+                    FlowDocument document = new FlowDocument
+                    {
+                        FontSize = 12,
+                        FontFamily = new FontFamily("Arial")
+                    };
+
+                    // Create the header
+                    document.Blocks.Add(new Paragraph(new Run("Reports Preview"))
+                    {
+                        FontSize = 16,
+                        FontWeight = FontWeights.Bold,
+                        TextAlignment = TextAlignment.Center
+                    });
+
+                    // Add a table to display the data
+                    Table table = new Table
+                    {
+                        CellSpacing = 0,
+                        BorderBrush = Brushes.Black,
+                        BorderThickness = new Thickness(1)
+                    };
+
+                    // Define columns
+                    table.Columns.Add(new TableColumn() { Width = new GridLength(100) });
+                    table.Columns.Add(new TableColumn() { Width = new GridLength(140) });
+                    table.Columns.Add(new TableColumn() { Width = new GridLength(140) });
+                    table.Columns.Add(new TableColumn() { Width = new GridLength(100) });
+
+                    // Add header row
+                    var headerRow = new TableRow();
+                    headerRow.Cells.Add(new TableCell(new Paragraph(new Run("Transaction ID"))) { FontWeight = FontWeights.Bold });
+                    headerRow.Cells.Add(new TableCell(new Paragraph(new Run("Tank ID"))) { FontWeight = FontWeights.Bold });
+                    headerRow.Cells.Add(new TableCell(new Paragraph(new Run("Product Name"))) { FontWeight = FontWeights.Bold });
+                    headerRow.Cells.Add(new TableCell(new Paragraph(new Run("Date"))) { FontWeight = FontWeights.Bold });
+
+                    var headerRowGroup = new TableRowGroup();
+                    headerRowGroup.Rows.Add(headerRow);
+                    table.RowGroups.Add(headerRowGroup);
+
+                    // Add data rows
+                    foreach (ReportsTable report in reportsDG.Items)
+                    {
+                        var dataRow = new TableRow();
+                        dataRow.Cells.Add(new TableCell(new Paragraph(new Run(report.TransactionID.ToString()))));
+                        dataRow.Cells.Add(new TableCell(new Paragraph(new Run(report.TankID.ToString()))));
+                        dataRow.Cells.Add(new TableCell(new Paragraph(new Run(report.ProductName))));
+                        dataRow.Cells.Add(new TableCell(new Paragraph(new Run(report.Date.ToString("yyyy-MM-dd")))));
+                        headerRowGroup.Rows.Add(dataRow);
+                    }
+
+                    document.Blocks.Add(table);
+
+                    // Print the document
+                    printDialog.PrintDocument(((IDocumentPaginatorSource)document).DocumentPaginator, "Reports Preview");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error generating print preview: " + ex.Message);
+            }
+        }
+
+        private void ApplyFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            FilterReportsByDate();
+        }
+
     }
 }
 

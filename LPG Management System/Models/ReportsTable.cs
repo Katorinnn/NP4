@@ -21,7 +21,6 @@ namespace LPG_Management_System.Models
         public string PaymentMethod { get; set; }
         public decimal PaidAmount { get; set; }
         public decimal ChangeGiven { get; set; }
-
         public DateTime Date { get; set; }
         public TransactionStatus  Status{ get; set; }
     }

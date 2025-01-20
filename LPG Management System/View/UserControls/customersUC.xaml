@@ -135,7 +135,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Classification" Binding="{Binding Class}" Width="170" />
+                    <DataGridTextColumn Header="Classification" Binding="{Binding TankClassification}" Width="170" />
 
                     <!-- Actions Column (Edit and Delete Buttons) -->
                     <DataGridTemplateColumn Header="Actions" Width="220">
@@ -151,7 +151,7 @@
                                     <!-- Bind to Delete Button Click Event -->
                                     <!-- Edit Button -->
                                     <Button x:Name="editButton" 
-                                            Tag="{Binding TankID}" 
+                                            Tag="{Binding CustomerID}" 
                                             Click="EditButton_Click" 
                                             Width="45" 
                                             Height="45" 
@@ -171,7 +171,7 @@
                                             Background="#FF4500" 
                                             Foreground="WhiteSmoke" 
                                             Cursor="Hand"
-                                            Tag="{Binding TankID}" FontFamily="Segoe UI"
+                                            Tag="{Binding CustomerID}" FontFamily="Segoe UI"
                                             Click="DeleteButton_Click">
 
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
