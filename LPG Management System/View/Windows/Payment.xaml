@@ -12,63 +12,76 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Window.Resources>
 
-    <Grid >
+    <Grid Margin="0,0,0,55" >
+
         <!-- Border to wrap the content and provide rounded corners -->
         <Border Margin="20" Background="#d1e5f4" BorderBrush="Gray" BorderThickness="1,1,1,1" CornerRadius="5">
             <Border.Effect>
                 <DropShadowEffect Color="Gray" BlurRadius="30" ShadowDepth="-5" Opacity="0.3"/>
             </Border.Effect>
             <!-- Close Button -->
-            <Button x:Name="exitBtn" Content="X" HorizontalAlignment="Right" VerticalAlignment="Top" Width="46" Height="32" 
-                    Margin="0,6,1,0" 
-                    Background="Transparent" Foreground="Gray" Cursor="Hand" 
-                    BorderBrush="{x:Null}" FontSize="19" Click="exitBtn_Click"/>
+            <ComboBox x:Name="tankClassComboBox" HorizontalAlignment="Left" Height="35" Margin="212,288,0,0" VerticalAlignment="Top" Width="123" BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBoxItem Content="Tank Class" IsEnabled="False" Foreground="Gray" />
+                <ComboBoxItem Content="Class A"/>
+                <ComboBoxItem Content="Class AB"/>
+                <ComboBoxItem Content="Class C"/>
+            </ComboBox>
+
+
+
+
 
         </Border>
-        <Grid HorizontalAlignment="Left" Height="141" Margin="43,311,0,0" VerticalAlignment="Top" Width="600" Background="#FFF7F6F6"/>
-        <Label x:Name="TotalAmountLabel" HorizontalAlignment="Left" Margin="281,326,0,0" VerticalAlignment="Top" FontSize="15" Height="28" Width="144" Content="" Foreground="#DD000000" Background="{x:Null}" FontWeight="Bold"/>
+        <Grid HorizontalAlignment="Left" Height="48" Margin="23,61,0,0" VerticalAlignment="Top" Width="375" Background="#FFD1E5F4"/>
+        <Grid HorizontalAlignment="Left" Height="398" Margin="396,0,0,0" VerticalAlignment="Center" Width="265" Background="#FFB7E1FC"/>
+        <Label x:Name="TotalAmountLabel" HorizontalAlignment="Left" Margin="467,185,0,0" VerticalAlignment="Top" FontSize="15" Height="38" Width="134" Content="" Foreground="#DD000000" Background="{x:Null}" FontWeight="Bold"/>
 
-        <Button x:Name="amountBtn" Content="Proceed" HorizontalAlignment="Left" Margin="302,403,0,0" VerticalAlignment="Top" Click="amountBtn_Click" FontSize="15" RenderTransformOrigin="0.125,0.532"/>
+        <Button x:Name="amountBtn" Content="Proceed" HorizontalAlignment="Left" Margin="487,307,0,0" VerticalAlignment="Top" Click="amountBtn_Click" FontSize="15" RenderTransformOrigin="0.125,0.532" Height="34" Width="95"/>
 
-        <Label Content="Customer ID:" HorizontalAlignment="Left" Height="25" Margin="100,90,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
-        <Label Content="Customer Name:" HorizontalAlignment="Left" Height="27" Margin="100,125,0,0" VerticalAlignment="Top" Width="129" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
-        <Label Content="Contact Number:" HorizontalAlignment="Left" Height="25" Margin="100,160,0,0" VerticalAlignment="Top" Width="134" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
-        <Label Content="Address:" HorizontalAlignment="Left" Height="28" Margin="100,203,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
+        <Label Content="Customer ID:" HorizontalAlignment="Left" Height="25" Margin="55,122,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
+        <Label Content="Customer Name:" HorizontalAlignment="Left" Height="27" Margin="53,163,0,0" VerticalAlignment="Top" Width="129" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
+        <Label Content="Contact Number:" HorizontalAlignment="Left" Height="25" Margin="55,0,0,0" VerticalAlignment="Center" Width="134" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
+        <Label Content="Address:" HorizontalAlignment="Left" Height="28" Margin="55,243,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
 
 
-        <RadioButton Content="New Customer" HorizontalAlignment="Left" Height="25" Margin="457,92,0,0" 
+        <RadioButton Content="New Customer" HorizontalAlignment="Left" Height="25" Margin="49,71,0,0" 
              VerticalAlignment="Top" Width="113" Checked="NewCustomer_Checked" IsChecked="True"/>
 
-        <RadioButton Content="Old Customer" HorizontalAlignment="Left" Height="26" Margin="457,122,0,0" 
+        <RadioButton Content="Old Customer" HorizontalAlignment="Left" Height="26" Margin="170,71,0,0" 
              VerticalAlignment="Top" Width="113" Checked="OldCustomer_Checked"/>
 
-        <TextBox x:Name="customerIDtxtBox" HorizontalAlignment="Left" Height="25" Margin="273,89,0,0" 
-             TextWrapping="Wrap" VerticalAlignment="Top" Width="130" FontFamily="Segoe UI" 
+        <TextBox x:Name="customerIDtxtBox" HorizontalAlignment="Left" Height="31" Margin="201,117,0,0" 
+             TextWrapping="Wrap" VerticalAlignment="Top" Width="154" FontFamily="Segoe UI" 
              BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" 
              IsReadOnly="False" TextChanged="customerIDtxtBox_TextChanged" 
              PreviewTextInput="customerIDtxtBox_PreviewTextInput" />
 
-        <TextBox x:Name="customertxtBox" HorizontalAlignment="Left" Height="25" Margin="273,124,0,0" 
-                 TextWrapping="Wrap" VerticalAlignment="Top" Width="130" FontFamily="Segoe UI" 
+        <TextBox x:Name="customertxtBox" HorizontalAlignment="Left" Height="31" Margin="202,160,0,0" 
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="154" FontFamily="Segoe UI" 
                  BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" 
                  KeyUp="customertxtBox_KeyUp" PreviewTextInput="customertxtBox_PreviewTextInput"/>
 
-        <TextBox x:Name="contacttxtBox" HorizontalAlignment="Left" Height="31" Margin="250,160,0,0" 
-                 TextWrapping="Wrap" VerticalAlignment="Top" Width="153" FontFamily="Segoe UI" 
+        <TextBox x:Name="contacttxtBox" HorizontalAlignment="Left" Height="31" Margin="202,204,0,0" 
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="154" FontFamily="Segoe UI" 
                  BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsEnabled="True" 
                  PreviewTextInput="contacttxtBox_PreviewTextInput"/>
 
-        <TextBox x:Name="addresstxtBox" HorizontalAlignment="Left" Height="45" Margin="214,202,0,0" 
+        <TextBox x:Name="addresstxtBox" HorizontalAlignment="Left" Height="45" Margin="167,248,0,0" 
                  TextWrapping="Wrap" VerticalAlignment="Top" Width="190" FontFamily="Segoe UI" 
                  BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsEnabled="True" 
                  PreviewTextInput="addresstxtBox_PreviewTextInput"/>
 
         <TextBox x:Name="amounttxtBox" HorizontalAlignment="Left" TextWrapping="Wrap" 
-                 VerticalAlignment="Top" Width="180" TextChanged="amounttxtBox_TextChanged" 
-                 FontSize="15" Margin="257,363,0,0" BorderBrush="DimGray" BorderThickness="0.5" 
-                 Background="#e5f3fd" PreviewTextInput="amounttxtBox_PreviewTextInput"/>
+                 VerticalAlignment="Top" Width="196" TextChanged="amounttxtBox_TextChanged" 
+                 FontSize="15" Margin="434,240,0,0" BorderBrush="DimGray" BorderThickness="0.5" 
+                 Background="#e5f3fd" PreviewTextInput="amounttxtBox_PreviewTextInput" Height="45"/>
+        <Label Content="Classification " HorizontalAlignment="Left" Height="28" Margin="57,315,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
 
 
+        <Button x:Name="closeBtn" Content="X" HorizontalAlignment="Right" VerticalAlignment="Top" Width="46" Height="32" 
+                Margin="0,18,17,0" Click="Button_Click" 
+                Background="Transparent" Foreground="Gray" Cursor="Hand" 
+                BorderBrush="{x:Null}" FontSize="19"/>
 
 
     </Grid>

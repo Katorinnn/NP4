@@ -63,8 +63,8 @@
     </Resource>
     <Resource Include="screenbg.png" />
     <Resource Include="View\refresh.png" />
-    <Resource Include="View\UserControls\filter (1).png" />
-    <Resource Include="View\UserControls\filter.png" />
+    <Resource Include="Images\filter %281%29.png" />
+    <Resource Include="Images\filter.png" />
     <Resource Include="View\UserControls\NP4LOGO.png" />
     <Resource Include="View\UserControls\setting.png" />
     <Resource Include="View\Windows\fogsmoke.webp" />
