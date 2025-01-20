@@ -45,10 +45,19 @@
         <TextBox x:Name="brandtxtBox" HorizontalAlignment="Left" Margin="191,68,0,0" VerticalAlignment="Top" 
              Width="200" Height="30" Background="#e5f3fd" BorderBrush="Gray" BorderThickness="1" FontSize="15" PreviewTextInput="brandtxtBox_PreviewTextInput"/>
 
-        <Label Content="Size (kg):" HorizontalAlignment="Left" Margin="81,118,0,0" VerticalAlignment="Top" 
+        <Label Content="Size :" HorizontalAlignment="Left" Margin="81,118,0,0" VerticalAlignment="Top" 
            FontWeight="Bold" FontSize="16" Width="80"/>
-        <TextBox x:Name="sizetxtBox" HorizontalAlignment="Left" Margin="191,118,0,0" VerticalAlignment="Top" 
-             Width="200" Height="30" Background="#e5f3fd" BorderBrush="Gray" BorderThickness="1" FontSize="15" PreviewTextInput="sizetxtBox_PreviewTextInput"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="191,118,0,0" VerticalAlignment="Top">
+            <!-- TextBox for size input -->
+            <TextBox x:Name="sizetxtBox" Width="150" Height="30" Background="#e5f3fd" BorderBrush="Gray" BorderThickness="1" FontSize="15" PreviewTextInput="sizetxtBox_PreviewTextInput"/>
+            <ComboBox x:Name="unitComboBox" Width="49" Height="30" FontSize="15" SelectedIndex="0" Background="#e5f3fd" BorderBrush="Gray" BorderThickness="1">
+                <ComboBoxItem Content="kg"/>
+                <ComboBoxItem Content="g"/>
+            </ComboBox>
+
+            <!-- ComboBox for unit selection (kg, g) -->
+        </StackPanel>
+
 
         <Label Content="Price:" HorizontalAlignment="Left" Margin="81,212,0,0" VerticalAlignment="Top" 
            FontWeight="Bold" FontSize="16" Width="80"/>

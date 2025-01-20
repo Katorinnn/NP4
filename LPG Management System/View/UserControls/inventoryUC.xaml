@@ -22,45 +22,7 @@
                 <!-- For DataGrid -->
             </Grid.RowDefinitions>
 
-            <!-- Search TextBox -->
-
-            <!-- StackPanel for New Button -->
-            <Grid HorizontalAlignment="Left" Height="36" Margin="330,135,0,0" Grid.Row="1" VerticalAlignment="Top" Width="39" OpacityMask="Black" Background="#FF7C7C7C"/>
-            <Grid HorizontalAlignment="Left" Height="34" Margin="330,136,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" OpacityMask="Black" Background="White"/>
-
-            <!-- StackPanel for New Button -->
-            <Button x:Name="FilterButton" Content="" Width="32" Height="29" VerticalAlignment="Top" 
-                    HorizontalAlignment="Left" Margin="334,139,0,0" Grid.Row="1" BorderBrush="{x:Null}">
-                <Button.Background>
-                    <ImageBrush ImageSource="/View/UserControls/setting.png"/>
-                </Button.Background>
-                <Button.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Filter by Brand" />
-                        <MenuItem Header="Filter by Size"/>
-                    </ContextMenu>
-                </Button.ContextMenu>
-            </Button>
-
-            <Button x:Name="ClearFilterButton" Content="Clear" Width="67" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="383,135,0,0" Click="ClearFilterButton_Click" Grid.Row="1"/>
-            <TextBox x:Name="TextBox" 
-                     HorizontalAlignment="Left" 
-                     Background="WhiteSmoke" 
-                     Height="36" 
-                     Margin="30,135,0,0" 
-                     VerticalAlignment="Top" 
-                     Width="300" 
-                     TextWrapping="Wrap" 
-                     FontSize="14" 
-                     Padding="5" 
-                     BorderThickness="1" 
-                     BorderBrush="Gray" 
-                     Foreground="Gray"
-                     Text="Search here" 
-                     GotFocus="TextBox_GotFocus" 
-                     LostFocus="TextBox_LostFocus" 
-                     Grid.Row="1" />
-
+            
             <!-- StackPanel for New Button -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="1050,10,0,10" Width="100">
                 <!-- New Button -->
@@ -69,8 +31,7 @@
 
             <!-- DataGrid -->
             <DataGrid x:Name="inventoryDG" Grid.Row="1" Margin="12,185,12,40"
-                      CanUserResizeColumns="False" GridLinesVisibility="None" 
-                      CanUserReorderColumns="False"
+                      CanUserResizeColumns="False" GridLinesVisibility="None"
                       HorizontalGridLinesBrush="LightGray"
                       VerticalGridLinesBrush="LightGray" BorderBrush="Gray" BorderThickness="1"
                       CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single" 
@@ -108,11 +69,11 @@
                 <!-- Define DataGrid Columns -->
                 <DataGrid.Columns>
                     <!-- <DataGridTextColumn Header="Tank ID" Binding="{Binding TankID}" Width="210" /> -->
-                    <DataGridTextColumn Header="StocksID" Binding="{Binding StocksID}" Width="210" />
-                    <DataGridTextColumn Header="Brand" Binding="{Binding ProductName}" Width="210" />
-                    <DataGridTextColumn Header="Size (kg.)" Binding="{Binding Size}" Width="210" />
-                    <DataGridTextColumn Header="Stocks" Binding="{Binding Stocks}" Width="220" />
-                    <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="220" />
+                    <DataGridTextColumn Header="Stock ID" Binding="{Binding StocksID}" Width="170" />
+                    <DataGridTextColumn Header="Brand" Binding="{Binding ProductName}" Width="170" />
+                    <DataGridTextColumn Header="Size" Binding="{Binding Size}" Width="170" />
+                    <DataGridTextColumn Header="Stocks" Binding="{Binding Stocks}" Width="170" />
+                    <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat=₱{0:F2}}" Width="150" />
                     <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="210" />
 
                     <!-- Actions Column (Edit and Delete Buttons) -->

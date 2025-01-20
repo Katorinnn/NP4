@@ -148,7 +148,7 @@ namespace LPG_Management_System.View.Windows
             contacttxtBox.IsEnabled = false;
             addresstxtBox.IsEnabled = false;
 
-            customertxtBox.IsReadOnly = false; // Allow typing for search functionality
+            customerIDtxtBox.IsReadOnly = true; // Allow typing for search functionality
         }
 
         private void NewCustomer_Checked(object sender, RoutedEventArgs e)
@@ -226,5 +226,18 @@ namespace LPG_Management_System.View.Windows
             e.Handled = !char.IsDigit(e.Text, 0) && e.Text != ".";
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Check if a selection was made other than the first item
+            if (tankClassComboBox.SelectedIndex > 0)
+            {
+                // Remove the first item (Tank Class) when another item is selected
+                tankClassComboBox.Items.RemoveAt(0);
+            }
+        }
     }
 }

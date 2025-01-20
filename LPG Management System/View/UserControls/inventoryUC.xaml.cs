@@ -19,7 +19,7 @@ namespace LPG_Management_System.View.UserControls
             InitializeComponent();
             _context = new DataContext();
             LoadCustomersData();
-            PopulateFilterMenu();
+            
         }
 
         private void LoadCustomersData()
@@ -59,41 +59,7 @@ namespace LPG_Management_System.View.UserControls
             }
         }
 
-        private void PopulateFilterMenu()
-        {
-            FilterContextMenu.Items.Clear();
-
-            try
-            {
-                // Filter by Name
-                MenuItem filterByNameItem = new MenuItem { Header = "Filter by Name" };
-                var brands = _context.tbl_inventory.Select(i => i.ProductName).Distinct().ToList();
-                foreach (var brand in brands)
-                {
-                    MenuItem brandItem = new MenuItem { Header = brand };
-                    brandItem.Click += (sender, args) => ApplyFilter("BrandName", brand);
-                    filterByNameItem.Items.Add(brandItem);
-                }
-
-                // Filter by Size
-                MenuItem filterBySizeItem = new MenuItem { Header = "Filter by Size" };
-                var sizes = _context.tbl_inventory.Select(i => i.Size).Distinct().ToList();
-                foreach (var size in sizes)
-                {
-                    MenuItem sizeItem = new MenuItem { Header = size };
-                    sizeItem.Click += (sender, args) => ApplyFilter("Size", size);
-                    filterBySizeItem.Items.Add(sizeItem);
-                }
-
-                FilterContextMenu.Items.Add(filterByNameItem);
-                FilterContextMenu.Items.Add(filterBySizeItem);
-                FilterButton.ContextMenu = FilterContextMenu;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error populating filter menu: " + ex.Message);
-            }
-        }
+        
 
         private void ApplyFilter(string column, string value)
         {
@@ -121,7 +87,7 @@ namespace LPG_Management_System.View.UserControls
             if (dialogResult == true)
             {
                 LoadCustomersData();
-                PopulateFilterMenu();
+                
             }
         }
 
@@ -169,23 +135,6 @@ namespace LPG_Management_System.View.UserControls
             LoadCustomersData();
         }
 
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (TextBox.Text == "Search here")
-            {
-                TextBox.Text = string.Empty;
-                TextBox.Foreground = Brushes.Black; // Set text color to normal
-            }
-        }
-
-        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(TextBox.Text))
-            {
-                TextBox.Text = "Search here";
-                TextBox.Foreground = Brushes.Gray; // Set text color to placeholder style
-            }
-        }
 
         public class InventoryTable
         {

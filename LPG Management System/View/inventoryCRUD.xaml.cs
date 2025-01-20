@@ -131,5 +131,10 @@ namespace LPG_Management_System.View
             // Allow only whole numbers
             e.Handled = !Regex.IsMatch(e.Text, @"^[0-9]+$");
         }
+
+        private void sizetxtBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+
+        }
     }
 }
