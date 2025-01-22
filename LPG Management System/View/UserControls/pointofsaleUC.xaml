@@ -25,20 +25,26 @@
             <DataGrid x:Name="dataGridItems" Grid.Row="1" AutoGenerateColumns="False" Margin="5" 
           ItemsSource="{Binding}" CanUserReorderColumns="False" 
           CanUserResizeColumns="False" CanUserSortColumns="False" 
-          CanUserResizeRows="False" IsEnabled="True">
+          CanUserResizeRows="False" CanUserAddRows="False" IsEnabled="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Item" Binding="{Binding Brand}" Width="*"/>
                     <DataGridTextColumn Header="Size" Binding="{Binding Size}" Width="100"/>
                     <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="100"/>
-                    <DataGridTemplateColumn Header="Quantity">
+                    <DataGridTemplateColumn Header="Quantity" Width="160">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button Content="-" Width="20" Height="20" Margin="0,0,5,0"
-                                Click="ReduceQuantity_Click"/>
-                                    <TextBlock Text="{Binding Quantity}" Width="40" TextAlignment="Center" VerticalAlignment="Center"/>
-                                    <Button Content="+" Width="20" Height="20" Margin="5,0,0,0"
-                                Click="IncreaseQuantity_Click"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Button Width="38" Height="23" HorizontalAlignment="Center" VerticalAlignment="Center"  Click="ReduceQuantity_Click">
+                                        <Button.Content>
+                                            <Image Source="/View/UserControls/minus.png" Stretch="Uniform" />
+                                        </Button.Content>
+                                    </Button>
+                                    <TextBlock Text="{Binding Quantity}" Width="40" TextAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
+                                    <Button Width="38" Height="23" HorizontalAlignment="Center" VerticalAlignment="Center"  Click="IncreaseQuantity_Click">
+                                        <Button.Content>
+                                            <Image Source="/View/UserControls/plus.png" Stretch="Uniform" />
+                                        </Button.Content>
+                                    </Button>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -67,8 +73,8 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.ColumnSpan="2" Margin="0,204,577,0"/>
         </Grid>
-        <Label Content="TOTAL:" HorizontalAlignment="Left" Height="62" Margin="31,556,0,0" VerticalAlignment="Top" Width="302" FontSize="20"/>
-        <Label x:Name="TotalPriceLabel" Content="₱ 0.00" HorizontalAlignment="Left" Height="62" Margin="131,556,0,0" VerticalAlignment="Top" Width="200" FontSize="20" />
+        <Label Content="TOTAL:" HorizontalAlignment="Left" Height="48" Margin="31,570,0,0" VerticalAlignment="Top" Width="302" FontSize="25"/>
+        <Label x:Name="TotalPriceLabel" Content="₱ 0.00" HorizontalAlignment="Left" Height="48" Margin="131,570,0,0" VerticalAlignment="Top" Width="363" FontSize="25" />
 
         <!-- Grid for Products and Kilogram Options -->
         <Grid HorizontalAlignment="Left" Height="713" Margin="600,22,0,0" VerticalAlignment="Top" Width="598" Background="#FF005F8C">
@@ -77,12 +83,12 @@
                 <RowDefinition Height="504*"/>
             </Grid.RowDefinitions>
             <!-- Product Buttons -->
-            <StackPanel HorizontalAlignment="Left" Margin="8,8,0,0" Orientation="Horizontal" VerticalAlignment="Top" Width="590">
-                <Button Content="All" Height="57" Width="59" FontSize="20" Click="FilterByBrand_Click" Tag="All" IsDefault="True"/>
-                <Button Content="Coastal" Height="57" Width="131" FontSize="20" Click="FilterByBrand_Click" Tag="Coastal"/>
-                <Button Content="GazLite" Height="57" Width="131" FontSize="20" Click="FilterByBrand_Click" Tag="GazLite"/>
-                <Button Content="Solane" Height="57" Width="131" FontSize="20" Click="FilterByBrand_Click" Tag="Solane"/>
-                <Button Content="Regasco" Height="57" Width="130" FontSize="20" Click="FilterByBrand_Click" Tag="Regasco"/>
+            <StackPanel HorizontalAlignment="Left" Margin="8,15,0,0" Orientation="Horizontal" VerticalAlignment="Top" Width="590">
+                <Button Content="All" Height="46" Width="59" FontSize="20" Click="FilterByBrand_Click" Tag="All" IsDefault="True"/>
+                <Button Content="Coastal" Height="46" Width="131" FontSize="20" Click="FilterByBrand_Click" Tag="Coastal"/>
+                <Button Content="GazLite" Height="46" Width="131" FontSize="20" Click="FilterByBrand_Click" Tag="GazLite"/>
+                <Button Content="Solane" Height="46" Width="131" FontSize="20" Click="FilterByBrand_Click" Tag="Solane"/>
+                <Button Content="Regasco" Height="46" Width="130" FontSize="20" Click="FilterByBrand_Click" Tag="Regasco"/>
 
             </StackPanel>
 

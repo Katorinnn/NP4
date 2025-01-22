@@ -64,39 +64,30 @@ namespace LPG_Management_System.View.Windows
                 {
                     try
                     {
-                        // Pass the receipt items here for processing
                         var purchasedItems = receiptItems;
 
-                        // If you have a limit on the quantity of available stock, validate here
-                        if (purchasedItems.Count < TotalQuantity)
+                        // Check stock availability
+                        foreach (var item in purchasedItems)
                         {
-                            MessageBox.Show($"Insufficient stock. Only {purchasedItems.Count} items are available.", "Stock Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
+                            // Query includes both ProductName and Size
+                            var stock = context.tbl_inventory.FirstOrDefault(i => i.ProductName == item.Brand && i.Size == item.Size);
+                            if (stock == null || stock.Stocks < item.Quantity)
+                            {
+                                MessageBox.Show($"Insufficient stock for {item.Brand} ({item.Size}).", "Stock Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
                         }
-
-                        // 🔥 Combine brand names into a single string
-                        string combinedBrands = string.Join(", ", purchasedItems.Select(p => p.Brand));
-
-                        // 🔥 Combine unit prices into a single string (formatted to 2 decimal places)
-                        string combinedUnitPrices = string.Join(", ", purchasedItems.Select(p => p.Price.ToString("F2")));
-
-
-                        // 🔥 Generate tank IDs (assuming GenerateTankID() is defined)
-                        string combinedTankIDs = string.Join(", ", purchasedItems.Select(p => GenerateTankID().ToString()));
-
-                        // 🔥 Calculate the total price from all selected items
-                        decimal totalUnitPrice = purchasedItems.Sum(p => (decimal)p.Price);
 
                         // Save transaction
                         var newTransaction = new ReportsTable
                         {
                             TransactionID = GenerateTransactionID(),
                             Date = DateTime.Now,
-                            ProductName = combinedBrands,
-                            TankID = combinedTankIDs,
+                            ProductName = string.Join(", ", purchasedItems.Select(p => p.Brand)),
+                            TankID = string.Join(", ", purchasedItems.Select(p => GenerateTankID().ToString())),
                             Quantity = TotalQuantity,
-                            UnitPrice = combinedUnitPrices,
-                            TotalPrice = totalUnitPrice,  // Total price for all products
+                            UnitPrice = string.Join(", ", purchasedItems.Select(p => p.Price.ToString("F2"))),
+                            TotalPrice = purchasedItems.Sum(p => (decimal)p.Price),
                             PaymentMethod = "Cash",
                             PaidAmount = (decimal)amount,
                             ChangeGiven = changeGiven,
@@ -104,6 +95,17 @@ namespace LPG_Management_System.View.Windows
                         };
 
                         context.tbl_reports.Add(newTransaction);
+
+                        // Update inventory
+                        foreach (var item in purchasedItems)
+                        {
+                            var stock = context.tbl_inventory.FirstOrDefault(i => i.ProductName == item.Brand && i.Size == item.Size);
+                            if (stock != null)
+                            {
+                                stock.Stocks -= item.Quantity;
+                                context.tbl_inventory.Update(stock);
+                            }
+                        }
 
                         // Add or update customer information
                         if (NewCustomer.IsChecked == true)
@@ -154,6 +156,7 @@ namespace LPG_Management_System.View.Windows
                 MessageBox.Show("Please enter a valid payment amount.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
 
 
 

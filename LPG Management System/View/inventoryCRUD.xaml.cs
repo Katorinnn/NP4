@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
@@ -30,6 +31,12 @@ namespace LPG_Management_System.View
             string stocksText = stockstxtBox.Text;
             var selectedDate = datePicker.SelectedDate;
 
+            // Get the selected unit from the ComboBox
+            string unit = (unitComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+
+            // Combine the size and unit
+            string fullSize = $"{size} {unit}";
+
             if (string.IsNullOrEmpty(brandname) || string.IsNullOrEmpty(size) ||
                 string.IsNullOrEmpty(priceText) || string.IsNullOrEmpty(stocksText) ||
                 selectedDate == null || selectedImageBytes == null)
@@ -51,7 +58,7 @@ namespace LPG_Management_System.View
                     var inventory = new InventoryTable
                     {
                         ProductName = brandname,
-                        Size = size,
+                        Size = fullSize, // Save the combined size and unit
                         Price = price,
                         Stocks = stocks,
                         Date = selectedDate.Value, // Ensure this matches the database type
@@ -71,6 +78,7 @@ namespace LPG_Management_System.View
                 MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
 
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)

@@ -51,7 +51,7 @@
             <!-- TextBox for size input -->
             <TextBox x:Name="sizetxtBox" Width="150" Height="30" Background="#e5f3fd" BorderBrush="Gray" BorderThickness="1" FontSize="15" PreviewTextInput="sizetxtBox_PreviewTextInput"/>
             <ComboBox x:Name="unitComboBox" Width="49" Height="30" FontSize="15" SelectedIndex="0" Background="#e5f3fd" BorderBrush="Gray" BorderThickness="1">
-                <ComboBoxItem Content="kg"/>
+                <ComboBoxItem Content="Kg"/>
                 <ComboBoxItem Content="g"/>
             </ComboBox>
 

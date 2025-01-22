@@ -113,8 +113,8 @@ namespace LPG_Management_System.View.UserControls
 
                             if (product != null)
                             {
-                                product.Quantity -= item.Quantity;
-                                if (product.Quantity <= 0)
+                                product.Stocks -= item.Quantity;
+                                if (product.Stocks <= 0)
                                 {
                                     dbContext.tbl_inventory.Remove(product);
                                 }
@@ -214,7 +214,7 @@ namespace LPG_Management_System.View.UserControls
                 };
                 productControl.BrandLabel.Content = product.ProductName;
                 productControl.PriceLabel.Content = $"₱{product.Price:F2}";
-                productControl.SizeLabel.Content = $"{product.Size} Kg";
+                productControl.SizeLabel.Content = $"{product.Size}";
 
                 if (product.ProductImage != null && product.ProductImage.Length > 0)
                 {
