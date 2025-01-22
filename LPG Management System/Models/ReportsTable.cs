@@ -12,16 +12,14 @@ namespace LPG_Management_System.Models
     {
         [Key]
         public int TransactionID { get; set; }
-
         public string TankID { get; set; }
         public string ProductName { get; set; }
         public int Quantity { get; set; }
-        public decimal UnitPrice { get; set; }
+        public string UnitPrice { get; set; }
         public decimal TotalPrice { get; set; }
         public string PaymentMethod { get; set; }
         public decimal PaidAmount { get; set; }
         public decimal ChangeGiven { get; set; }
-
         public DateTime Date { get; set; }
         public TransactionStatus  Status{ get; set; }
     }

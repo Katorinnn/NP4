@@ -21,22 +21,22 @@ namespace LPG_Management_System.View.Windows
             public double Total => Price * Quantity;
         }
 
-        public Invoice(List<pointofsaleUC.ReceiptItem> receiptItems,
-               string customerAddress, double totalAmount, double amountPaid, double change)
+        public Invoice(List<pointofsaleUC.ReceiptItem> receiptItems, string customerAddress, double totalAmount, double amountPaid, double change)
         {
             InitializeComponent();
 
-            // Set customer details
-            //CustomerAddressText.Text = $"Address: {customerAddress}";
-
             // Bind receipt items to DataGrid
             InvoiceDataGrid.ItemsSource = receiptItems;
+
+            // Display customer details
+            CustomerAddressText.Text = $"Address: {customerAddress}";
 
             // Set totals
             TotalAmountText.Text = $"₱{totalAmount:F2}";
             AmountPaidText.Text = $"₱{amountPaid:F2}";
             ChangeText.Text = $"₱{change:F2}";
         }
+
 
 
 

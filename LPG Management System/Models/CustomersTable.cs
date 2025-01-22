@@ -14,6 +14,7 @@ namespace LPG_Management_System.Models
         public int TankID { get; set; }
         public string CustomerName { get; set; }
         public string ContactNumber { get; set; }
+        public string TankClassification { get; set; }
         public string Address { get; set; }
     }
 }

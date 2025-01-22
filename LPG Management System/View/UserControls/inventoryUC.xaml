@@ -22,7 +22,20 @@
                 <!-- For DataGrid -->
             </Grid.RowDefinitions>
 
-            
+            <Border Background="#003566" Height="83" VerticalAlignment="Top" CornerRadius="0,0,0,0">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
+                    <Image Source="/Images/inventory.png" Height="70" Margin="10,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="INVENTORY" 
+                   Foreground="White" 
+                   FontFamily="Segoe UI" 
+                   FontWeight="Bold" 
+                   FontSize="36" 
+                   VerticalAlignment="Center" 
+                   Margin="20,0,0,0"/>
+                </StackPanel>
+            </Border>
+
+
             <!-- StackPanel for New Button -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="1050,10,0,10" Width="100">
                 <!-- New Button -->
@@ -83,7 +96,7 @@
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                     <!-- Edit Button -->
                                     <Button x:Name="editButton" 
-                                            Tag="{Binding TankID}" 
+                                            Tag="{Binding StocksID}" 
                                             Click="EditButton_Click" 
                                             Width="45" 
                                             Height="45" 
@@ -119,7 +132,7 @@
             <Button x:Name="newBtn" Content="New LPG Brand" 
                 Click="newBtn_Click" Cursor="Hand" Background="#0078D7" Foreground="White" Height="36"
                 FontWeight="Bold" BorderThickness="0" BorderBrush="Transparent"
-                FontFamily="Segou UI" Margin="1078,138,19,554"  Grid.Row="1" RenderTransformOrigin="0.498,0.367"/>
+                FontFamily="Segou UI" Margin="1078,132,19,560"  Grid.Row="1" RenderTransformOrigin="0.498,0.367"/>
         </Grid>
     </Grid>
 </UserControl>

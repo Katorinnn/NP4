@@ -3,6 +3,7 @@ using System;
 using LPG_Management_System.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LPG_Management_System.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250122132252_CompanyTable")]
+    partial class CompanyTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -23,16 +26,9 @@ namespace LPG_Management_System.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("IsPrivacyActive")
-                        .HasColumnType("INTEGER");
-
                     b.Property<byte[]>("Logo")
                         .IsRequired()
                         .HasColumnType("BLOB");
-
-                    b.Property<string>("PrivacyMessage")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("password")
                         .IsRequired()

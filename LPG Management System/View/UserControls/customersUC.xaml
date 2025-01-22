@@ -15,6 +15,8 @@
                     <GradientStop Color="#8ecae6" Offset="2.0" />
                 </LinearGradientBrush>
             </Grid.Background>
+
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" MinHeight="132"/>
                 <!-- For Search and Button -->
@@ -22,13 +24,26 @@
                 <!-- For DataGrid -->
             </Grid.RowDefinitions>
 
+            <Border Background="#003566" Height="83" VerticalAlignment="Top" CornerRadius="0,0,0,0">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
+                    <Image Source="/Images/customer.png" Height="70" Margin="10,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="CUSTOMER" 
+                               Foreground="White" 
+                               FontFamily="Segoe UI" 
+                               FontWeight="Bold" 
+                               FontSize="36" 
+                               VerticalAlignment="Center" 
+                               Margin="20,0,0,0"/>
+                </StackPanel>
+            </Border>
+
             <!-- Search TextBox -->
 
             <TextBox x:Name="TextBox" 
                      HorizontalAlignment="Left" 
                      Background="WhiteSmoke" 
                      Height="36" 
-                     Margin="30,135,0,0" 
+                     Margin="30,81,0,0" 
                      VerticalAlignment="Top" 
                      Width="300" 
                      TextWrapping="Wrap" 
@@ -43,8 +58,8 @@
                      Grid.Row="1" />
 
 
-            <Grid HorizontalAlignment="Left" Height="36" Margin="330,135,0,0" Grid.Row="1" VerticalAlignment="Top" Width="39" OpacityMask="Black" Background="#FF7C7C7C"/>
-            <Grid HorizontalAlignment="Left" Height="34" Margin="330,136,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" OpacityMask="Black" Background="White">
+            <Grid HorizontalAlignment="Left" Height="36" Margin="330,81,0,0" Grid.Row="1" VerticalAlignment="Top" Width="39" OpacityMask="Black" Background="#FF7C7C7C"/>
+            <Grid HorizontalAlignment="Left" Height="34" Margin="330,82,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" OpacityMask="Black" Background="White">
                 <Button x:Name="FilterButton" Content="" Width="32" Height="29" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="{x:Null}" Foreground="{x:Null}">
                     <Button.Background>
                         <ImageBrush ImageSource="/View/UserControls/setting.png"/>
@@ -78,7 +93,7 @@
             </StackPanel>
 
             <!-- DataGrid -->
-            <DataGrid x:Name="customersDG" Grid.Row="1" Margin="12,185,12,40"
+            <DataGrid x:Name="customersDG" Grid.Row="1" Margin="15,142,15,86"
                       CanUserResizeColumns="False" GridLinesVisibility="None" 
                       HorizontalGridLinesBrush="LightGray"
                       VerticalGridLinesBrush="LightGray" BorderBrush="Gray" BorderThickness="1"
@@ -127,7 +142,7 @@
                     </DataGridTemplateColumn>
 
                     <DataGridTextColumn Header="Contact Number" Binding="{Binding ContactNumber}" Width="210" />
-                    
+
                     <DataGridTemplateColumn Header="Address" Width="190">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -135,7 +150,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Classification" Binding="{Binding Class}" Width="170" />
+                    <DataGridTextColumn Header="Classification" Binding="{Binding TankClassification}" Width="170" />
 
                     <!-- Actions Column (Edit and Delete Buttons) -->
                     <DataGridTemplateColumn Header="Actions" Width="220">
@@ -151,7 +166,7 @@
                                     <!-- Bind to Delete Button Click Event -->
                                     <!-- Edit Button -->
                                     <Button x:Name="editButton" 
-                                            Tag="{Binding TankID}" 
+                                            Tag="{Binding CustomerID}" 
                                             Click="EditButton_Click" 
                                             Width="45" 
                                             Height="45" 
@@ -171,7 +186,7 @@
                                             Background="#FF4500" 
                                             Foreground="WhiteSmoke" 
                                             Cursor="Hand"
-                                            Tag="{Binding TankID}" FontFamily="Segoe UI"
+                                            Tag="{Binding CustomerID}" FontFamily="Segoe UI"
                                             Click="DeleteButton_Click">
 
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -184,11 +199,6 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button x:Name="newBtn" Content="New Customer" 
-                        Click="newBtn_Click" Cursor="Hand" Background="#0078D7" Foreground="White" Height="36"
-                        FontWeight="Bold" BorderThickness="0" BorderBrush="Transparent"
-                        FontFamily="Segou UI" Margin="1046,139,20,553" RenderTransformOrigin="0.661,0.485" Grid.Row="1"/>
-            <Label Content="Function will be transfer in Payment " HorizontalAlignment="Left" Margin="1020,104,0,0" Grid.Row="1" VerticalAlignment="Top"/>
         </Grid>
     </Grid>
 </UserControl>

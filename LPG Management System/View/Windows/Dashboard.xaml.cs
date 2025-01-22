@@ -45,7 +45,7 @@ namespace LPG_Management_System
 
         private void settingsBtn_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = new trySettingsUC();
+            MainContent.Content = new settingsUC();
 
         }
 
@@ -170,7 +170,7 @@ namespace LPG_Management_System
                     }
                     else if (clickedButton.Name == "settingsBtn")
                     {
-                        MainContent.Content = new trySettingsUC(); // Load the settings user control
+                        MainContent.Content = new settingsUC(); // Load the settings user control
                     }
                 }
         }

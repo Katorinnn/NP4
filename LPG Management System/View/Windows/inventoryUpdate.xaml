@@ -67,10 +67,11 @@
                 Width="160" Height="160" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
             <Image x:Name="productImagePreview" Stretch="Uniform" />
         </Border>
-        <Label Content="Tank ID:" HorizontalAlignment="Left" Margin="90,58,0,0" VerticalAlignment="Top" 
-            FontWeight="Bold" FontSize="15" Width="80"/>
-        <TextBox x:Name="tankIDtxtBox" HorizontalAlignment="Left" Margin="200,58,0,0" VerticalAlignment="Top" 
-            Width="200" Height="30" Background="#e5f3fd" BorderBrush="Gray" BorderThickness="1"/>
+        <Label Content="Stocks ID:" HorizontalAlignment="Left" Margin="90,58,0,0" VerticalAlignment="Top" 
+    FontWeight="Bold" FontSize="15" Width="80"/>
+        <TextBox x:Name="stockIDtxtBox" HorizontalAlignment="Left" Margin="200,58,0,0" VerticalAlignment="Top" 
+    Width="200" Height="30" Background="#e5f3fd" BorderBrush="Gray" BorderThickness="1" IsReadOnly="True"/>
+
 
     </Grid>
 </Window>

@@ -6,14 +6,14 @@
              xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="850" d:DesignWidth="1220" >
-    
+
 
     <Grid Background="#FF8ECAE6">
         <!-- DataGrid for displaying reports -->
         <DataGrid x:Name="reportsDG" 
-                  HorizontalAlignment="Center" 
+                  HorizontalAlignment="Left" 
                   Height="561" 
-                  Margin="0,245,0,0" 
+                  Margin="15,232,15,0" 
                   VerticalAlignment="Top" 
                   Width="1200" 
                   IsReadOnly="True" 
@@ -48,38 +48,46 @@
 
                 <DataGridTextColumn Header="Paid Amount" Width="140" Binding="{Binding PaidAmount}" />
                 <!--<DataGridTextColumn Header="Change Given" Width="*" Binding="{Binding ChangeGiven}" />-->
-                <DataGridTextColumn Header="Date" Width="*" Binding="{Binding Date, StringFormat='yyyy-MM-dd hh:mm:ss tt'}" />
+                <DataGridTextColumn Header="Date" Width="*" Binding="{Binding Date, StringFormat='dd/MM/yyyy hh:mm:ss'}" />
                 <!--<DataGridTextColumn Header="Status" Width="*" Binding="{Binding Status}" /> -->
             </DataGrid.Columns>
         </DataGrid>
 
         <!-- Header panel with labels (for selecting report filters) -->
-        <Grid HorizontalAlignment="Center" Height="92" VerticalAlignment="Top" Width="1188" Background="WhiteSmoke" Margin="0,138,0,0">
+        <Grid HorizontalAlignment="Left" Height="92" VerticalAlignment="Top" Width="1188" Background="WhiteSmoke" Margin="11,37,0,0">
             <Label Content="Category" HorizontalAlignment="Left" Height="43" Margin="10,28,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontWeight="Bold"/>
-            <Label Content="Begin Date" HorizontalAlignment="Left" Height="43" Margin="630,17,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontWeight="Bold"/>
-            <Label Content="End Date" HorizontalAlignment="Left" Height="44" Margin="909,19,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontWeight="Bold"/>
+            <Label Content="Begin Date" HorizontalAlignment="Left" Height="28" VerticalAlignment="Center" Width="106" FontSize="14" FontWeight="Bold" Margin="502,0,0,0"/>
+            <Label Content="End Date" HorizontalAlignment="Left" Height="28" Margin="758,0,0,0" VerticalAlignment="Center" Width="106" FontSize="14" FontWeight="Bold"/>
         </Grid>
 
         <!-- DatePickers and ComboBox below the header -->
-        <DatePicker x:Name="beginDatePicker" HorizontalAlignment="Left" Height="34" Margin="751,162,0,0" VerticalAlignment="Top" Width="159" FontSize="16" />
-        <DatePicker x:Name="endDatePicker" HorizontalAlignment="Left" Height="35" Margin="1009,161,0,0" VerticalAlignment="Top" Width="159" FontSize="16" />
-        <ComboBox x:Name="categoryComboBox" HorizontalAlignment="Left" Height="34" Margin="133,162,0,0" VerticalAlignment="Top" Width="154" FontSize="16" SelectionChanged="categoryComboBox_SelectionChanged"/>
+        <DatePicker x:Name="beginDatePicker" HorizontalAlignment="Left" Height="29" Margin="598,66,0,0" VerticalAlignment="Top" Width="159" FontSize="16" />
+        <DatePicker x:Name="endDatePicker" HorizontalAlignment="Left" Height="35" Margin="847,63,0,0" VerticalAlignment="Top" Width="159" FontSize="16" />
+        <ComboBox x:Name="categoryComboBox" HorizontalAlignment="Left" Height="34" Margin="98,66,0,0" VerticalAlignment="Top" Width="154" FontSize="16" SelectionChanged="categoryComboBox_SelectionChanged"/>
 
         <!-- Pagination Controls -->
-        <Button HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="47" Height="35" Margin="520,0,0,15" Click="PreviousButton_Click" Background="AliceBlue">
+        <Button HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="45" Height="30" Margin="523,0,0,17" Click="PreviousButton_Click" Background="AliceBlue">
             <Button.Content>
-                <Image Source="/Images/back.png"/>
+                <Image Source="/View/UserControls/back.png"/>
             </Button.Content>
         </Button>
 
-        <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="47" Height="35" Margin="0,0,520,15" Click="NextButton_Click" Background="AliceBlue">
+        <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="45" Height="30" Margin="0,0,520,17" Click="NextButton_Click" Background="AliceBlue">
             <Button.Content>
-                <Image Source="/Images/next.png" />
+                <Image Source="/View/UserControls/next.png" />
             </Button.Content>
         </Button>
 
         <!-- Page Indicator -->
         <TextBlock x:Name="pageIndicator" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16" Margin="0,0,0,30" Foreground="Black"/>
+        <Button Content="Print" HorizontalAlignment="Left" Margin="1060,174,0,0" VerticalAlignment="Top" Width="139"/>
+
+        <Button Content="Apply" HorizontalAlignment="Left" Margin="1022,66,0,0" VerticalAlignment="Top" Width="77" FontSize="16" Click="ApplyFilterButton_Click"/>
+
+        <Button Content="x" HorizontalAlignment="Left" Margin="1113,65,0,0" VerticalAlignment="Top" Width="40" Height="32" FontSize="16" FontWeight="Bold" Background="Red" Foreground="White" Click="CancelFilterButton_Click"/>
+
+        <Button Content="Print Preview" HorizontalAlignment="Left" Margin="1060,168,0,0" VerticalAlignment="Top" Width="139" Click="PrintPreview_Click" Height="38"/>
+
     </Grid>
 
 

@@ -85,8 +85,8 @@ namespace LPG_Management_System.View.UserControls
             int totalQuantity = receiptItems.Sum(item => item.Quantity);
 
             // Pass total price and quantity to the Payment window
-            Payment paymentWindow = new Payment(totalPrice, totalQuantity);
-
+            Payment paymentWindow = new Payment(totalPrice, totalQuantity, receiptItems);
+                
             if (paymentWindow.ShowDialog() == true)
             {
                 double paymentAmount = paymentWindow.PaymentAmount;
@@ -99,19 +99,22 @@ namespace LPG_Management_System.View.UserControls
                     return;
                 }
 
+                // Clear and update inventory in database
                 try
                 {
                     using (var dbContext = new DataContext())
                     {
                         foreach (var item in receiptItems)
                         {
-                            var product = dbContext.tbl_inventory.FirstOrDefault(p => p.ProductName == item.Brand && p.Size == item.Size && p.Price == (decimal)item.Price);
+                            var product = dbContext.tbl_inventory
+                                .FirstOrDefault(p => p.ProductName == item.Brand &&
+                                                     p.Size == item.Size &&
+                                                     p.Price == (decimal)item.Price);
 
                             if (product != null)
                             {
-                                product.Quantity -= item.Quantity;
-
-                                if (product.Quantity <= 0)
+                                product.Stocks -= item.Quantity;
+                                if (product.Stocks <= 0)
                                 {
                                     dbContext.tbl_inventory.Remove(product);
                                 }
@@ -122,18 +125,20 @@ namespace LPG_Management_System.View.UserControls
                     }
 
                     LoadProducts();
+                    var receiptItemsList = receiptItems.ToList(); // Convert ObservableCollection to List
+                    var invoicePage = new Invoice(receiptItemsList, "Customer Address Here", totalPrice, paymentAmount, change);
+                    invoicePage.Show();
+
+                    // Clear after showing Invoice
                     receiptItems.Clear();
                     UpdateTotalPrice();
-
-                    var invoicePage = new Invoice(receiptItems.ToList(), "Customer Address Here",
-                                                  totalPrice, paymentAmount, change);
-                    invoicePage.Show();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error updating inventory: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+
         }
 
 
@@ -209,7 +214,7 @@ namespace LPG_Management_System.View.UserControls
                 };
                 productControl.BrandLabel.Content = product.ProductName;
                 productControl.PriceLabel.Content = $"₱{product.Price:F2}";
-                productControl.SizeLabel.Content = $"{product.Size} Kg";
+                productControl.SizeLabel.Content = $"{product.Size}";
 
                 if (product.ProductImage != null && product.ProductImage.Length > 0)
                 {
@@ -239,37 +244,34 @@ namespace LPG_Management_System.View.UserControls
 
 
 
+        private void IncreaseQuantity_Click(object sender, RoutedEventArgs e)
+        {
+            if (((FrameworkElement)sender).DataContext is ReceiptItem selectedItem)
+            {
+                selectedItem.Quantity++;
+                dataGridItems.Items.Refresh();
+                UpdateTotalPrice();
+            }
+        }
+
         private void ReduceQuantity_Click(object sender, RoutedEventArgs e)
         {
-            if (dataGridItems.SelectedItem is ReceiptItem selectedItem)
+            if (((FrameworkElement)sender).DataContext is ReceiptItem selectedItem)
             {
-                // Reduce quantity by 1
-                selectedItem.Quantity--;
-
-                // If quantity is 0, remove the item
-                if (selectedItem.Quantity <= 0)
+                if (selectedItem.Quantity > 1)
+                {
+                    selectedItem.Quantity--;
+                }
+                else
                 {
                     receiptItems.Remove(selectedItem);
                 }
 
-                // Refresh the DataGrid and update the total price
                 dataGridItems.Items.Refresh();
                 UpdateTotalPrice();
             }
         }
 
-        private void RemoveItem_Click(object sender, RoutedEventArgs e)
-        {
-            if (dataGridItems.SelectedItem is ReceiptItem selectedItem)
-            {
-                // Remove the selected item from the receipt
-                receiptItems.Remove(selectedItem);
-
-                // Refresh the DataGrid and update the total price
-                dataGridItems.Items.Refresh();
-                UpdateTotalPrice();
-            }
-        }
 
 
 

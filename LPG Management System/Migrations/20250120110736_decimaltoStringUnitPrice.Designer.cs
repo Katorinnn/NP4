@@ -3,6 +3,7 @@ using System;
 using LPG_Management_System.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LPG_Management_System.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250120110736_decimaltoStringUnitPrice")]
+    partial class decimaltoStringUnitPrice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
@@ -22,17 +25,6 @@ namespace LPG_Management_System.Migrations
                     b.Property<int>("adminId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsPrivacyActive")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<byte[]>("Logo")
-                        .IsRequired()
-                        .HasColumnType("BLOB");
-
-                    b.Property<string>("PrivacyMessage")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("password")
                         .IsRequired()
@@ -45,33 +37,6 @@ namespace LPG_Management_System.Migrations
                     b.HasKey("adminId");
 
                     b.ToTable("tbl_admin");
-                });
-
-            modelBuilder.Entity("LPG_Management_System.Models.CompanyTable", b =>
-                {
-                    b.Property<int>("CompanyID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("CompanyAddress")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CompanyContact")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CompanyEmail")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CompanyName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("CompanyID");
-
-                    b.ToTable("tbl_company");
                 });
 
             modelBuilder.Entity("LPG_Management_System.Models.CustomersTable", b =>

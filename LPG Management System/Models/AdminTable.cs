@@ -13,5 +13,9 @@ namespace LPG_Management_System.Models
         public int adminId { get; set; }
         public string username { get; set; }
         public string password { get; set; }
+        public byte[] Logo { get; set; }
+
+        public string PrivacyMessage { get; set; }  // To store the privacy message
+        public bool IsPrivacyActive { get; set; }
     }
 }

@@ -29,7 +29,7 @@
         <Label x:Name="lblTotalIncome" Content="Loading..." HorizontalAlignment="Left" Margin="352,665,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center" Height="50" FontWeight="Bold" FontSize="24"/>
         <Label x:Name="lblSoldLPG" Content="Loading..." HorizontalAlignment="Left" Margin="100,490,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center" Height="50" FontWeight="Bold" FontSize="24"/>
         <Label x:Name="lblStocks" Content="Loading..." HorizontalAlignment="Left" Margin="352,490,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center" Height="50" FontWeight="Bold" FontSize="24"/>
-        <Label Content="TODAY" HorizontalAlignment="Left" Margin="101,408,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
+        <Label Content="TODAY" HorizontalAlignment="Left" Margin="71,363,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
 
 
     </Grid>

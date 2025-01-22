@@ -65,6 +65,7 @@ namespace LPG_Management_System.View.UserControls
             {
                 // Fetch today's income
                 var today = DateTime.Today;
+
                 var todaysIncome = context.tbl_reports
                     .Where(r => r.Date.Date == today)
                     .Sum(r => r.TotalPrice);
@@ -74,8 +75,8 @@ namespace LPG_Management_System.View.UserControls
 
                 // Fetch sold LPG
                 var soldLPG = context.tbl_inventory
-                    .Where(i => i.Date.Date == today);
-                //.Sum(i => i.QuantitySold);
+                    .Where(i => i.Date.Date == today)
+                    .Sum(i => i.Quantity);
 
                 // Fetch stocks
                 var stocks = context.tbl_stocks.Sum(s => s.Quantity);

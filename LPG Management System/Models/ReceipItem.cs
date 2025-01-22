@@ -3,7 +3,6 @@
 public class ReceiptItem : INotifyPropertyChanged
 {
     private int _quantity;
-
     public string Brand { get; set; }
     public string Size { get; set; }
     public double Price { get; set; }
