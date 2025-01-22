@@ -85,8 +85,8 @@ namespace LPG_Management_System.View.UserControls
             int totalQuantity = receiptItems.Sum(item => item.Quantity);
 
             // Pass total price and quantity to the Payment window
-            Payment paymentWindow = new Payment(totalPrice, totalQuantity);
-
+            Payment paymentWindow = new Payment(totalPrice, totalQuantity, receiptItems);
+                
             if (paymentWindow.ShowDialog() == true)
             {
                 double paymentAmount = paymentWindow.PaymentAmount;
@@ -244,37 +244,34 @@ namespace LPG_Management_System.View.UserControls
 
 
 
+        private void IncreaseQuantity_Click(object sender, RoutedEventArgs e)
+        {
+            if (((FrameworkElement)sender).DataContext is ReceiptItem selectedItem)
+            {
+                selectedItem.Quantity++;
+                dataGridItems.Items.Refresh();
+                UpdateTotalPrice();
+            }
+        }
+
         private void ReduceQuantity_Click(object sender, RoutedEventArgs e)
         {
-            if (dataGridItems.SelectedItem is ReceiptItem selectedItem)
+            if (((FrameworkElement)sender).DataContext is ReceiptItem selectedItem)
             {
-                // Reduce quantity by 1
-                selectedItem.Quantity--;
-
-                // If quantity is 0, remove the item
-                if (selectedItem.Quantity <= 0)
+                if (selectedItem.Quantity > 1)
+                {
+                    selectedItem.Quantity--;
+                }
+                else
                 {
                     receiptItems.Remove(selectedItem);
                 }
 
-                // Refresh the DataGrid and update the total price
                 dataGridItems.Items.Refresh();
                 UpdateTotalPrice();
             }
         }
 
-        private void RemoveItem_Click(object sender, RoutedEventArgs e)
-        {
-            if (dataGridItems.SelectedItem is ReceiptItem selectedItem)
-            {
-                // Remove the selected item from the receipt
-                receiptItems.Remove(selectedItem);
-
-                // Refresh the DataGrid and update the total price
-                dataGridItems.Items.Refresh();
-                UpdateTotalPrice();
-            }
-        }
 
 
 

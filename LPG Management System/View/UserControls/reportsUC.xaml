@@ -48,7 +48,7 @@
 
                 <DataGridTextColumn Header="Paid Amount" Width="140" Binding="{Binding PaidAmount}" />
                 <!--<DataGridTextColumn Header="Change Given" Width="*" Binding="{Binding ChangeGiven}" />-->
-                <DataGridTextColumn Header="Date" Width="*" Binding="{Binding Date, StringFormat='yyyy-MM-dd hh:mm:ss tt'}" />
+                <DataGridTextColumn Header="Date" Width="*" Binding="{Binding Date, StringFormat='dd/MM/yyyy hh:mm:ss'}" />
                 <!--<DataGridTextColumn Header="Status" Width="*" Binding="{Binding Status}" /> -->
             </DataGrid.Columns>
         </DataGrid>
@@ -82,7 +82,10 @@
         <TextBlock x:Name="pageIndicator" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16" Margin="0,0,0,30" Foreground="Black"/>
         <Button Content="Print" HorizontalAlignment="Left" Margin="1060,174,0,0" VerticalAlignment="Top" Width="139"/>
 
-        <Button Content="Apply Filter" HorizontalAlignment="Left" Margin="1053,68,0,0" VerticalAlignment="Top" Width="120" FontSize="16" Click="ApplyFilterButton_Click"/>
+        <Button Content="Apply" HorizontalAlignment="Left" Margin="1053,68,0,0" VerticalAlignment="Top" Width="77" FontSize="16" Click="ApplyFilterButton_Click"/>
+
+        <Button Content="X" HorizontalAlignment="Left" Margin="1146,66,0,0" VerticalAlignment="Top" Width="53" Height="36" FontSize="16" FontWeight="Bold" Background="Red" Foreground="White" Click="CancelFilterButton_Click"/>
+
         <Button Content="Print Preview" HorizontalAlignment="Left" Margin="1060,174,0,0" VerticalAlignment="Top" Width="139" Click="PrintPreview_Click"/>
 
     </Grid>

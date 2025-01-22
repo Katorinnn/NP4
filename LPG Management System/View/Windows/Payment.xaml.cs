@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using LPG_Management_System.Models;
+using LPG_Management_System.View.UserControls;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,20 +29,21 @@ namespace LPG_Management_System.View.Windows
         private DataContext _context; // Declare the context
         
         private double totalPrice;
+        private ObservableCollection<pointofsaleUC.ReceiptItem> receiptItems; // Add this line
         public int TotalQuantity { get; private set; }
         public double PaymentAmount { get; private set; } // Holds the entered amount
-        public Payment(double totalPrice, int totalQuantity)
+        public Payment(double totalPrice, int totalQuantity, ObservableCollection<pointofsaleUC.ReceiptItem> receiptItems) // Modify constructor
         {
             InitializeComponent();
 
-            _context = new DataContext(); // Initialize the context
+            _context = new DataContext();
 
             NewCustomer_Checked(null, null);
 
             this.totalPrice = totalPrice;
+            this.receiptItems = receiptItems; // Assign to the class variable
 
             TotalQuantity = totalQuantity;
-
             TotalAmountLabel.Content = $"Total: ₱{totalPrice:F2}";
         }
 
@@ -61,28 +64,28 @@ namespace LPG_Management_System.View.Windows
                 {
                     try
                     {
-                        // Fetch purchased items
-                        var purchasedItems = context.tbl_inventory
-                            .Where(i => i.Stocks > 0)
-                            .Take(TotalQuantity)
-                            .ToList();
+                        // Pass the receipt items here for processing
+                        var purchasedItems = receiptItems;
 
+                        // If you have a limit on the quantity of available stock, validate here
                         if (purchasedItems.Count < TotalQuantity)
                         {
                             MessageBox.Show($"Insufficient stock. Only {purchasedItems.Count} items are available.", "Stock Error", MessageBoxButton.OK, MessageBoxImage.Error);
                             return;
                         }
 
-                        // Update stocks and calculate total dynamically
-                        decimal totalUnitPrice = 0;
-                        string combinedBrands = string.Join(", ", purchasedItems.Select(p => p.ProductName));
+                        // 🔥 Combine brand names into a single string
+                        string combinedBrands = string.Join(", ", purchasedItems.Select(p => p.Brand));
+
+                        // 🔥 Combine unit prices into a single string (formatted to 2 decimal places)
+                        string combinedUnitPrices = string.Join(", ", purchasedItems.Select(p => p.Price.ToString("F2")));
+
+
+                        // 🔥 Generate tank IDs (assuming GenerateTankID() is defined)
                         string combinedTankIDs = string.Join(", ", purchasedItems.Select(p => GenerateTankID().ToString()));
 
-                        foreach (var item in purchasedItems)
-                        {
-                            totalUnitPrice += item.Price * item.Quantity;
-                            item.Stocks -= item.Quantity; // Reduce stock
-                        }
+                        // 🔥 Calculate the total price from all selected items
+                        decimal totalUnitPrice = purchasedItems.Sum(p => (decimal)p.Price);
 
                         // Save transaction
                         var newTransaction = new ReportsTable
@@ -92,8 +95,8 @@ namespace LPG_Management_System.View.Windows
                             ProductName = combinedBrands,
                             TankID = combinedTankIDs,
                             Quantity = TotalQuantity,
-                            UnitPrice = totalUnitPrice / TotalQuantity, // Average unit price
-                            TotalPrice = totalUnitPrice,
+                            UnitPrice = combinedUnitPrices,
+                            TotalPrice = totalUnitPrice,  // Total price for all products
                             PaymentMethod = "Cash",
                             PaidAmount = (decimal)amount,
                             ChangeGiven = changeGiven,
@@ -151,6 +154,9 @@ namespace LPG_Management_System.View.Windows
                 MessageBox.Show("Please enter a valid payment amount.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+
+
 
 
 
