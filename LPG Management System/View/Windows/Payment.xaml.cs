@@ -26,13 +26,13 @@ namespace LPG_Management_System.View.Windows
     public partial class Payment : Window
     {
 
-        private DataContext _context; // Declare the context
+        private DataContext _context;
         
         private double totalPrice;
-        private ObservableCollection<pointofsaleUC.ReceiptItem> receiptItems; // Add this line
+        private ObservableCollection<pointofsaleUC.ReceiptItem> receiptItems;
         public int TotalQuantity { get; private set; }
-        public double PaymentAmount { get; private set; } // Holds the entered amount
-        public Payment(double totalPrice, int totalQuantity, ObservableCollection<pointofsaleUC.ReceiptItem> receiptItems) // Modify constructor
+        public double PaymentAmount { get; private set; }
+        public Payment(double totalPrice, int totalQuantity, ObservableCollection<pointofsaleUC.ReceiptItem> receiptItems)
         {
             InitializeComponent();
 
@@ -41,7 +41,7 @@ namespace LPG_Management_System.View.Windows
             NewCustomer_Checked(null, null);
 
             this.totalPrice = totalPrice;
-            this.receiptItems = receiptItems; // Assign to the class variable
+            this.receiptItems = receiptItems;
 
             TotalQuantity = totalQuantity;
             TotalAmountLabel.Content = $"Total: ₱{totalPrice:F2}";
@@ -49,6 +49,18 @@ namespace LPG_Management_System.View.Windows
 
         private void amountBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (NewCustomer.IsChecked == true)
+            {
+                if (string.IsNullOrWhiteSpace(customerIDtxtBox.Text) ||
+                    string.IsNullOrWhiteSpace(customertxtBox.Text) ||
+                    string.IsNullOrWhiteSpace(contacttxtBox.Text) ||
+                    string.IsNullOrWhiteSpace(addresstxtBox.Text) ||
+                    tankClassComboBox.SelectedIndex <= 0)
+                {
+                    MessageBox.Show("All fields are required for a new customer.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+            }
             if (double.TryParse(amounttxtBox.Text, out double amount) && amount > 0)
             {
                 PaymentAmount = amount;
@@ -66,10 +78,8 @@ namespace LPG_Management_System.View.Windows
                     {
                         var purchasedItems = receiptItems;
 
-                        // Check stock availability
                         foreach (var item in purchasedItems)
                         {
-                            // Query includes both ProductName and Size
                             var stock = context.tbl_inventory.FirstOrDefault(i => i.ProductName == item.Brand && i.Size == item.Size);
                             if (stock == null || stock.Stocks < item.Quantity)
                             {
@@ -78,7 +88,6 @@ namespace LPG_Management_System.View.Windows
                             }
                         }
 
-                        // Save transaction
                         var newTransaction = new ReportsTable
                         {
                             TransactionID = GenerateTransactionID(),
@@ -96,7 +105,6 @@ namespace LPG_Management_System.View.Windows
 
                         context.tbl_reports.Add(newTransaction);
 
-                        // Update inventory
                         foreach (var item in purchasedItems)
                         {
                             var stock = context.tbl_inventory.FirstOrDefault(i => i.ProductName == item.Brand && i.Size == item.Size);
@@ -107,7 +115,6 @@ namespace LPG_Management_System.View.Windows
                             }
                         }
 
-                        // Add or update customer information
                         if (NewCustomer.IsChecked == true)
                         {
                             var newCustomer = new CustomersTable

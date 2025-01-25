@@ -30,6 +30,8 @@ namespace LPG_Management_System.View.UserControls
             //PopulateFilterMenu();
         }
 
+
+
         private void LoadCustomersData()
         {
             try
@@ -38,8 +40,15 @@ namespace LPG_Management_System.View.UserControls
                 {
                     var customers = context.tbl_customers.ToList(); // Fetch all customers
 
-                    // Bind data to DataGrid
-                    customersDG.ItemsSource = customers;
+                    // Check if the DataGrid is null
+                    if (customersDG != null)
+                    {
+                        customersDG.ItemsSource = customers; // Bind data to DataGrid
+                    }
+                    else
+                    {
+                        Console.WriteLine("customersDG is null.");
+                    }
                 }
             }
             catch (Exception ex)
@@ -47,6 +56,7 @@ namespace LPG_Management_System.View.UserControls
                 MessageBox.Show("Error fetching data: " + ex.Message);
             }
         }
+
 
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -71,19 +81,27 @@ namespace LPG_Management_System.View.UserControls
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string searchText = (sender as TextBox)?.Text;
+            // Ensure sender is a TextBox and extract the text
+            var textBox = sender as TextBox;
+            if (textBox == null) return;
 
-            if (!string.IsNullOrEmpty(searchText))
+            string searchText = textBox.Text.Trim().ToLower(); // Trim and convert to lowercase
+
+            if (!string.IsNullOrEmpty(searchText) && searchText != "search here")
             {
                 try
                 {
                     using (var context = new DataContext())
                     {
                         var filteredCustomers = context.tbl_customers
-                            .Where(c => c.CustomerName.Contains(searchText) || c.ContactNumber.Contains(searchText))
-                            .ToList();
+                    .Where(c =>
+                            c.CustomerName.ToLower().Contains(searchText) ||
+                            c.ContactNumber.ToLower().Contains(searchText) ||
+                            c.Address.ToLower().Contains(searchText) ||
+                            c.TankClassification.ToLower().Contains(searchText))
+                        .ToList();
 
-                        customersDG.ItemsSource = filteredCustomers;
+                        customersDG.ItemsSource = filteredCustomers; // Bind the filtered data to DataGrid
                     }
                 }
                 catch (Exception ex)
@@ -93,13 +111,11 @@ namespace LPG_Management_System.View.UserControls
             }
             else
             {
-                // Reload all data if search is empty
+                // Reload all data if search is empty or contains default placeholder text
                 LoadCustomersData();
             }
-            
-
-            
         }
+
 
 
         private void customersDG_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -173,9 +189,75 @@ namespace LPG_Management_System.View.UserControls
             }
         }
 
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
+        // Event handler for button click
+        //private void ShowFilterButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    // Toggle the visibility of the ComboBox
+        //    if (FilterComboBox.Visibility == Visibility.Collapsed)
+        //    {
+        //        FilterComboBox.Visibility = Visibility.Visible;
+        //    }
+        //    else
+        //    {
+        //        FilterComboBox.Visibility = Visibility.Collapsed;
+        //    }
+        //}
 
-        }
+        //// Event handler for ComboBox selection change
+        //private void FilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    string selectedFilter = (FilterComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+
+        //    if (!string.IsNullOrEmpty(selectedFilter))
+        //    {
+        //        ApplyFilter(selectedFilter);
+        //    }
+        //}
+
+        //// Apply filter based on selected category
+        //private void ApplyFilter(string column)
+        //{
+        //    string searchText = TextBox.Text;
+
+        //    if (!string.IsNullOrEmpty(searchText) && searchText != "Search here")
+        //    {
+        //        try
+        //        {
+        //            using (var context = new DataContext())
+        //            {
+        //                var filteredCustomers = context.tbl_customers.AsQueryable();
+
+        //                switch (column)
+        //                {
+        //                    case "Customer Name":
+        //                        filteredCustomers = filteredCustomers.Where(c => c.CustomerName.Contains(searchText));
+        //                        break;
+        //                    case "Contact Number":
+        //                        filteredCustomers = filteredCustomers.Where(c => c.ContactNumber.Contains(searchText));
+        //                        break;
+        //                    case "Address":
+        //                        filteredCustomers = filteredCustomers.Where(c => c.Address.Contains(searchText));
+        //                        break;
+        //                    case "Tank Classification":
+        //                        filteredCustomers = filteredCustomers.Where(c => c.TankClassification.Contains(searchText));
+        //                        break;
+        //                    default:
+        //                        break;
+        //                }
+
+        //                customersDG.ItemsSource = filteredCustomers.ToList();
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            MessageBox.Show("Error filtering data: " + ex.Message);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Please enter a valid search term.");
+        //    }
+        //}
+
     }
 }

@@ -134,14 +134,50 @@ namespace LPG_Management_System.View.UserControls
             }
         }
 
+
         private void LoadStockData()
         {
             try
             {
                 using (var dbContext = new DataContext())
                 {
-                    // Fetching all stock data from the tbl_stocks table
-                    var stocks = dbContext.tbl_stocks.ToList();
+                    // Fetching all stock data from the tbl_inventory table
+                    var stocks = dbContext.tbl_inventory.ToList();
+
+                    // Update the DataGrid columns to match the stock data
+                    reportsDG.Columns.Clear();
+
+                    // Add columns specific to the tbl_inventory (example columns)
+                    reportsDG.Columns.Add(new DataGridTextColumn
+                    {
+                        Header = "Stocks ID",
+                        Binding = new Binding("StocksID"),
+                        Width = 120
+                    });
+                    reportsDG.Columns.Add(new DataGridTextColumn
+                    {
+                        Header = "Product Name",
+                        Binding = new Binding("ProductName"),
+                        Width = 200
+                    });
+                    reportsDG.Columns.Add(new DataGridTextColumn
+                    {
+                        Header = "Quantity",
+                        Binding = new Binding("Quantity"),
+                        Width = 100
+                    });
+                    reportsDG.Columns.Add(new DataGridTextColumn
+                    {
+                        Header = "Stocks",
+                        Binding = new Binding("Stocks"),
+                        Width = 100
+                    });
+                    reportsDG.Columns.Add(new DataGridTextColumn
+                    {
+                        Header = "Date",
+                        Binding = new Binding("Date"),
+                        Width = 120
+                    });
 
                     // Bind the data to the DataGrid
                     reportsDG.ItemsSource = stocks;
@@ -152,6 +188,7 @@ namespace LPG_Management_System.View.UserControls
                 MessageBox.Show("Error fetching stock data: " + ex.Message);
             }
         }
+
 
         private void beginDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {

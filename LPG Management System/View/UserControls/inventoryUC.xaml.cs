@@ -97,8 +97,8 @@ namespace LPG_Management_System.View.UserControls
             Button btn = sender as Button;
             if (btn != null)
             {
-                int selectedTankID = Convert.ToInt32(btn.Tag);
-                inventoryUpdate inventoryUpdate = new inventoryUpdate(selectedTankID);
+                int selectedStockID = Convert.ToInt32(btn.Tag);
+                inventoryUpdate inventoryUpdate = new inventoryUpdate(selectedStockID);
                 inventoryUpdate.ShowDialog();
                 LoadCustomersData();
             }
@@ -145,6 +145,7 @@ namespace LPG_Management_System.View.UserControls
             public byte[] ProductImage { get; set; }
             public int Stock { get; set; } // New stock property
         }
+
 
 
     }

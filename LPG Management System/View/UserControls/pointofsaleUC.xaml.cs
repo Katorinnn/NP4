@@ -37,7 +37,7 @@ namespace LPG_Management_System.View.UserControls
                     {
                         _quantity = value;
                         OnPropertyChanged(nameof(Quantity));
-                        OnPropertyChanged(nameof(Total)); // Notify Total change as well
+                        OnPropertyChanged(nameof(Total));
                     }
                 }
             }
@@ -63,12 +63,10 @@ namespace LPG_Management_System.View.UserControls
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // Navigate to the Dashboard window when this button is clicked
+            
             Dashboard dashboard = new Dashboard();
             dashboard.Show();
         }
-
-
 
         //Payment Options
         private void cashBtn_Click_1(object sender, RoutedEventArgs e)
@@ -80,11 +78,9 @@ namespace LPG_Management_System.View.UserControls
                 return;
             }
 
-            // Calculate total price and quantity
             double totalPrice = receiptItems.Sum(item => item.Total);
             int totalQuantity = receiptItems.Sum(item => item.Quantity);
 
-            // Pass total price and quantity to the Payment window
             Payment paymentWindow = new Payment(totalPrice, totalQuantity, receiptItems);
                 
             if (paymentWindow.ShowDialog() == true)
@@ -99,7 +95,6 @@ namespace LPG_Management_System.View.UserControls
                     return;
                 }
 
-                // Clear and update inventory in database
                 try
                 {
                     using (var dbContext = new DataContext())
@@ -125,11 +120,9 @@ namespace LPG_Management_System.View.UserControls
                     }
 
                     LoadProducts();
-                    var receiptItemsList = receiptItems.ToList(); // Convert ObservableCollection to List
+                    var receiptItemsList = receiptItems.ToList();
                     var invoicePage = new Invoice(receiptItemsList, "Customer Address Here", totalPrice, paymentAmount, change);
                     invoicePage.Show();
-
-                    // Clear after showing Invoice
                     receiptItems.Clear();
                     UpdateTotalPrice();
                 }
@@ -141,16 +134,11 @@ namespace LPG_Management_System.View.UserControls
 
         }
 
-
-
-        //Calculatipons of payment
         private void UpdateTotalPrice()
         {
             double totalPrice = receiptItems.Sum(item => item.Total);
             TotalPriceLabel.Content = $"₱{totalPrice:F2}";
         }
-
-        //products
         private List<InventoryTable> GetProductsFromDatabase()
         {
             var productList = new List<InventoryTable>();
@@ -199,13 +187,10 @@ namespace LPG_Management_System.View.UserControls
 
         private void LoadProducts()
         {
-            // Get products from the database using EF
             var products = GetProductsFromDatabase();
 
-            // Clear existing items in the WrapPanel
             ProductsPanel.Children.Clear();
 
-            // Create Product controls and add them to the WrapPanel
             foreach (var product in products)
             {
                 var productControl = new Product
@@ -231,15 +216,15 @@ namespace LPG_Management_System.View.UserControls
 
             if (existingItem != null)
             {
-                existingItem.Quantity++; // Increment the quantity each time the item is selected
+                existingItem.Quantity++;
             }
             else
             {
-                item.Quantity = 1; // First selection sets quantity to 1
-                receiptItems.Add(item); // Add the item to the receipt
+                item.Quantity = 1;
+                receiptItems.Add(item);
             }
 
-            UpdateTotalPrice(); // Update the total price based on all items
+            UpdateTotalPrice();
         }
 
 
@@ -279,17 +264,14 @@ namespace LPG_Management_System.View.UserControls
         {
             if (sender is Button button)
             {
-                // Check if the "All" button is clicked
                 if (button.Tag is string brand)
                 {
                     if (brand.Equals("All", StringComparison.OrdinalIgnoreCase))
                     {
-                        // Load all products without filtering
                         LoadProducts();
                     }
                     else
                     {
-                        // Load products filtered by the selected brand
                         LoadProducts(brand);
                     }
                 }
@@ -299,25 +281,20 @@ namespace LPG_Management_System.View.UserControls
 
         private void LoadProducts(string filterBrand = null)
         {
-            // Get products from the database using EF
             var products = GetProductsFromDatabase();
 
-            // Apply brand filter if specified
             if (!string.IsNullOrEmpty(filterBrand))
             {
                 products = products.Where(p => p.ProductName.Equals(filterBrand, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
-            // Remove duplicate products based on Brand, Size, and Price
             var distinctProducts = products
                 .GroupBy(p => new { p.ProductName, p.Size, p.Price })
                 .Select(g => g.First())
                 .ToList();
 
-            // Clear existing items in the WrapPanel
             ProductsPanel.Children.Clear();
 
-            // Create Product controls and add them to the WrapPanel
             foreach (var product in distinctProducts)
             {
                 var productControl = new Product

@@ -74,12 +74,10 @@ namespace LPG_Management_System.View.UserControls
                 var totalIncome = context.tbl_reports.Sum(r => r.TotalPrice);
 
                 // Fetch sold LPG
-                var soldLPG = context.tbl_inventory
-                    .Where(i => i.Date.Date == today)
-                    .Sum(i => i.Quantity);
+                var soldLPG = context.tbl_reports.Sum(r => r.Quantity);
 
                 // Fetch stocks
-                var stocks = context.tbl_stocks.Sum(s => s.Quantity);
+                var stocks = context.tbl_inventory.Sum(s => s.Stocks);
 
                 // Update UI elements
                 lblTodaysIncome.Content = todaysIncome.ToString("C");
