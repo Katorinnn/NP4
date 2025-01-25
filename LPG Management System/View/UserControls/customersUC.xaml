@@ -24,9 +24,9 @@
                 <!-- For DataGrid -->
             </Grid.RowDefinitions>
 
-            <Border Background="#003566" Height="83" VerticalAlignment="Top" CornerRadius="0,0,0,0">
+            <Border Background="#003566" Height="70" VerticalAlignment="Top" CornerRadius="0,0,0,0" Margin="-2,0,0,0">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
-                    <Image Source="/Images/customer.png" Height="70" Margin="10,0" VerticalAlignment="Center"/>
+                    <Image Source="/Images/customer.png" Height="60" Margin="10,0" VerticalAlignment="Center"/>
                     <TextBlock Text="CUSTOMER" 
                                Foreground="White" 
                                FontFamily="Segoe UI" 
@@ -43,7 +43,7 @@
                      HorizontalAlignment="Left" 
                      Background="WhiteSmoke" 
                      Height="36" 
-                     Margin="30,81,0,0" 
+                     Margin="16,90,0,0" 
                      VerticalAlignment="Top" 
                      Width="300" 
                      TextWrapping="Wrap" 
@@ -55,36 +55,25 @@
                      Text="Search here" 
                      GotFocus="TextBox_GotFocus" 
                      LostFocus="TextBox_LostFocus" 
-                     Grid.Row="1" />
+                     Grid.Row="1" TextChanged="TextBox_TextChanged" />
 
 
-            <Grid HorizontalAlignment="Left" Height="36" Margin="330,81,0,0" Grid.Row="1" VerticalAlignment="Top" Width="39" OpacityMask="Black" Background="#FF7C7C7C"/>
-            <Grid HorizontalAlignment="Left" Height="34" Margin="330,82,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" OpacityMask="Black" Background="White">
-                <Button x:Name="FilterButton" Content="" Width="32" Height="29" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="{x:Null}" Foreground="{x:Null}">
+            <!--<Grid HorizontalAlignment="Left" Height="36" Margin="330,81,0,0" Grid.Row="1" VerticalAlignment="Top" Width="39" OpacityMask="Black" Background="#FF7C7C7C"/>
+             <Grid HorizontalAlignment="Left" Height="34" Margin="330,82,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" OpacityMask="Black" Background="White">
+                <Button x:Name="FilterButton" Width="32" Height="29" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="{x:Null}">
                     <Button.Background>
                         <ImageBrush ImageSource="/View/UserControls/setting.png"/>
                     </Button.Background>
+                    <Button.ContextMenu>
+                        <ContextMenu x:Name="FilterMenu">
+                            <MenuItem Header="Filter by Customer Name" Click="FilterByCustomerName_Click" />
+                            <MenuItem Header="Filter by Contact Number" Click="FilterByContactNumber_Click" />
+                            <MenuItem Header="Filter by Address" Click="FilterByAddress_Click" />
+                            <MenuItem Header="Filter by Classification" Click="FilterByClassification_Click" />
+                        </ContextMenu>
+                    </Button.ContextMenu>
                 </Button>
-            </Grid>
-
-            <!-- Search TextBox 
-            <TextBox x:Name="TextBox" 
-                 HorizontalAlignment="Left" 
-                 Background="WhiteSmoke" 
-                 Height="36" 
-                 Margin="30,135,0,0" 
-                 VerticalAlignment="Top" 
-                 Width="300" 
-                 TextWrapping="Wrap" 
-                 FontSize="14" 
-                 Padding="5" 
-                 BorderThickness="1" 
-                 BorderBrush="Gray" 
-                 Foreground="Gray"
-                 Text="Search here" 
-                 GotFocus="TextBox_GotFocus" 
-                 LostFocus="TextBox_LostFocus" 
-                 Grid.Row="1"  /> -->
+            </Grid>  -->
 
             <!-- StackPanel for New Button -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="1050,10,0,10" Width="100">
@@ -97,9 +86,9 @@
                       CanUserResizeColumns="False" GridLinesVisibility="None" 
                       HorizontalGridLinesBrush="LightGray"
                       VerticalGridLinesBrush="LightGray" BorderBrush="Gray" BorderThickness="1"
-                      CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single" 
-                      SelectionUnit="FullRow" AutoGenerateColumns="False" MinRowHeight="30" 
-                      RowHeaderWidth="0" FontFamily="Segoe UI"
+                      CanUserAddRows="False"  SelectionMode="Single" 
+                      SelectionUnit="FullRow" MinRowHeight="30" 
+                      RowHeaderWidth="0" FontFamily="Segoe UI" 
                       HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" 
                       ScrollViewer.CanContentScroll="True" SelectionChanged="customersDG_SelectionChanged" Width="1200" Height="500">
 

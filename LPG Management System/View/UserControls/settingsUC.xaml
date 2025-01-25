@@ -13,7 +13,12 @@
                 <Grid Background="White" Margin="0,0,0,0">
 
                     <Label Content="Company Details" HorizontalAlignment="Left" Height="47" Margin="55,52,0,0" VerticalAlignment="Top" Width="221" FontSize="25" FontWeight="Bold" FontFamily="Segoe UI"/>
-                    <Image Source="/View/UserControls/edit.png" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="281,60,0,0" Width="30" Height="30" Cursor="Hand" MouseDown="EditButton_Click"/>
+                    <Button Width="60" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="271,54,0,0" Cursor="Hand"  Click="EditButton_Click">
+                        <Button.Content>
+                            <Image Source="/View/UserControls/edit.png" Width="25" Height="30" />
+                        </Button.Content>
+                    </Button>
+
 
                     <Label Content="Address:" HorizontalAlignment="Left" Height="35" Margin="55,173,0,0" VerticalAlignment="Top" Width="106" FontSize="15" FontFamily="Segoe UI"/>
                     <Label Content="Name:" HorizontalAlignment="Left" Height="32" Margin="55,136,0,0" VerticalAlignment="Top" Width="128" FontSize="15" FontFamily="Segoe UI"/>
@@ -38,14 +43,11 @@
                     BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsEnabled="True"/>
                     <Button x:Name="SavePrivacyButton" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="305,509,0,0" Width="100" Height="30" FontSize="14" FontFamily="Segoe UI" IsEnabled="False" Click="SavePrivacyButton_Click"/>
                     <Button x:Name="CancelPrivacyButton" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="196,509,0,0" Width="100" Height="30" FontSize="14" FontFamily="Segoe UI" IsEnabled="False" Click="CancelPrivacyButton_Click"/>
-                    <Image Source="/View/UserControls/edit.png" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="315,372,0,0" Width="50" Height="30" Cursor="Hand" MouseDown="EditPrivacyButton_Click">
-                        <Image.OpacityMask>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="Black"/>
-                                <GradientStop Color="#FFE21313" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Image.OpacityMask>
-                    </Image>
+                    <Button Width="60" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="325,362,0,0" Cursor="Hand" MouseDown="EditPrivacyButton_Click" Click="EditPrivacyButton_Click">
+                        <Button.Content>
+                            <Image Source="/View/UserControls/edit.png" Width="25" Height="30" />
+                        </Button.Content>
+                    </Button>
                     <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="305,309,0,0" Width="100" Height="30" FontSize="14" FontFamily="Segoe UI" IsEnabled="False" Click="SaveButton_Click"/>
                     <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="196,309,0,0" Width="100" Height="30" FontSize="14" FontFamily="Segoe UI" IsEnabled="False" Click="CancelButton_Click"/>
 

@@ -26,7 +26,7 @@
 
             <!-- Sidebar Buttons -->
             <!-- Dashboard Button -->
-            <Button x:Name="dashboardBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="100" FontWeight="Bold">
+            <Button x:Name="dashboardBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="96" FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>
@@ -63,7 +63,7 @@
             </Button>
 
             <!-- Customer Button -->
-            <Button x:Name="custumerBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="100" FontWeight="Bold">
+            <Button x:Name="custumerBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="97" FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>
@@ -100,7 +100,7 @@
             </Button>
 
             <!-- Inventory Button -->
-            <Button x:Name="inventoryBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="100" FontWeight="Bold">
+            <Button x:Name="inventoryBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="96" FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>
@@ -137,7 +137,7 @@
             </Button>
 
             <!-- POS Button -->
-            <Button x:Name="posBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="100" FontWeight="Bold">
+            <Button x:Name="posBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="97" FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>
@@ -174,7 +174,7 @@
             </Button>
 
             <!-- Reports Button -->
-            <Button x:Name="reportsBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="100" FontWeight="Bold">
+            <Button x:Name="reportsBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="96" FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>
@@ -211,7 +211,7 @@
             </Button>
 
             <!-- Settings Button -->
-            <Button x:Name="settingsBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="100" FontWeight="Bold">
+            <Button x:Name="settingsBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="97" FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Grid>

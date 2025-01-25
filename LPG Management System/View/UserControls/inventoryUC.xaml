@@ -81,7 +81,6 @@
 
                 <!-- Define DataGrid Columns -->
                 <DataGrid.Columns>
-                    <!-- <DataGridTextColumn Header="Tank ID" Binding="{Binding TankID}" Width="210" /> -->
                     <DataGridTextColumn Header="Stock ID" Binding="{Binding StocksID}" Width="170" />
                     <DataGridTextColumn Header="Brand" Binding="{Binding ProductName}" Width="170" />
                     <DataGridTextColumn Header="Size" Binding="{Binding Size}" Width="170" />
@@ -116,7 +115,7 @@
                                             Background="#FF4500" 
                                             Foreground="WhiteSmoke" 
                                             Cursor="Hand"
-                                            Tag="{Binding TankID}" FontFamily="Segoe UI"
+                                            Tag="{Binding StocksID}" FontFamily="Segoe UI"
                                             Click="DeleteButton_Click">
 
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
