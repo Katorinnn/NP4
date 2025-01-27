@@ -169,7 +169,7 @@ namespace LPG_Management_System.View.UserControls
                     reportsDG.Columns.Add(new DataGridTextColumn
                     {
                         Header = "Stocks",
-                        Binding = new Binding("Stocks"),
+                        Binding = new Binding("StocksFtrF"),
                         Width = 100
                     });
                     reportsDG.Columns.Add(new DataGridTextColumn
@@ -310,9 +310,21 @@ namespace LPG_Management_System.View.UserControls
                 grid.Children.Add(CreateHeaderCell("Product Name", 2));
                 grid.Children.Add(CreateHeaderCell("Date", 3));
 
-                // Add data rows
+                // Filter applied check
+                IEnumerable<ReportsTable> filteredReports = allReports;
+
+                // Apply date filters if any
+                if (beginDatePicker.SelectedDate.HasValue && endDatePicker.SelectedDate.HasValue)
+                {
+                    DateTime startDate = beginDatePicker.SelectedDate.Value.Date;
+                    DateTime endDate = endDatePicker.SelectedDate.Value.Date.AddDays(1).AddMilliseconds(-1); // Set to 23:59:59.999
+
+                    filteredReports = filteredReports.Where(report => report.Date >= startDate && report.Date <= endDate);
+                }
+
+                // Add data rows based on filtered data
                 int rowIndex = 1;
-                foreach (ReportsTable report in reportsDG.Items)
+                foreach (ReportsTable report in filteredReports)
                 {
                     grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                     grid.Children.Add(CreateDataCell(report.TransactionID.ToString(), rowIndex, 0));
@@ -338,6 +350,8 @@ namespace LPG_Management_System.View.UserControls
                 MessageBox.Show("Error generating print preview: " + ex.Message);
             }
         }
+
+
 
         private UIElement CreateHeaderCell(string text, int column)
         {

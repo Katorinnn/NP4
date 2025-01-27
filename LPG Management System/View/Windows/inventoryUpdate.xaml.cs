@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace LPG_Management_System.View
@@ -9,13 +10,17 @@ namespace LPG_Management_System.View
     public partial class inventoryUpdate : Window
     {
         public int StocksID { get; set; }
+        private DataGrid inventoryDataGrid; // Field to store the DataGrid reference
 
-        public inventoryUpdate(int StocksID)
+
+        public inventoryUpdate(int StocksID, DataGrid inventoryDataGrid)
         {
             InitializeComponent();
             this.StocksID = StocksID;
+            this.inventoryDataGrid = inventoryDataGrid; // Assigning the DataGrid reference
             LoadItemData(StocksID);
         }
+
 
         private byte[] imageBytes; // Class-level variable to hold image byte array
 
@@ -159,6 +164,10 @@ namespace LPG_Management_System.View
                         dbContext.SaveChanges();  // Save the changes to the database
 
                         MessageBox.Show("Inventory updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        // Refresh the DataGrid
+                        RefreshDataGrid();
+
                         this.DialogResult = true;
                         this.Close();
                     }
@@ -173,6 +182,18 @@ namespace LPG_Management_System.View
                 MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void RefreshDataGrid()
+        {
+            // Refresh the DataGrid by re-binding it to the updated data from the database
+            using (var dbContext = new DataContext())
+            {
+                var updatedInventoryList = dbContext.tbl_inventory.ToList();  // Fetch updated data
+                inventoryDataGrid.ItemsSource = updatedInventoryList;  // Re-bind the DataGrid
+            }
+        }
+
+
 
 
 

@@ -54,7 +54,7 @@
         <TextBox x:Name="customerIDtxtBox" HorizontalAlignment="Left" Height="31" Margin="201,117,0,0" 
              TextWrapping="Wrap" VerticalAlignment="Top" Width="154" FontFamily="Segoe UI" 
              BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" 
-             IsReadOnly="False" TextChanged="customerIDtxtBox_TextChanged" 
+             IsReadOnly="False" 
              PreviewTextInput="customerIDtxtBox_PreviewTextInput" />
 
         <TextBox x:Name="customertxtBox" HorizontalAlignment="Left" Height="31" Margin="202,160,0,0" 
@@ -77,7 +77,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-
+        
 
         <TextBox x:Name="addresstxtBox" HorizontalAlignment="Left" Height="45" Margin="167,248,0,0" 
                  TextWrapping="Wrap" VerticalAlignment="Top" Width="190" FontFamily="Segoe UI" 

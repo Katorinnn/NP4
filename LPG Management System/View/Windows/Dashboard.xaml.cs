@@ -1,5 +1,6 @@
 ﻿using LPG_Management_System.Models;
 using LPG_Management_System.View.UserControls;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,15 +12,121 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace LPG_Management_System
 {
     public partial class Dashboard : Window
     {
+
+        public class Company
+        {
+            public BitmapImage Logo { get; set; }
+        }
+
         public Dashboard()
         {
             InitializeComponent();
+
+            SetCompanyLogo();  // Set the logo initially when the window is created
         }
+
+        private void SetCompanyLogo()
+        {
+            var company = GetCompanyFromDatabase();
+            this.DataContext = company;  // Set the data context to bind the LogoImagePath
+        }
+
+        private Company GetCompanyFromDatabase()
+        {
+            var company = new CompanyTable
+            {
+                Logo = GetLogoFromDatabase() // Fetch the logo byte array from the database
+            };
+
+            return new Company
+            {
+                Logo = ConvertByteArrayToBitmapImage(company.Logo) // Convert byte[] to BitmapImage
+            };
+        }
+
+        private byte[] GetLogoFromDatabase()
+        {
+            // Fetch the logo byte array from the database
+            var dbContext = new DataContext(); // Replace with your actual DbContext
+            var company = dbContext.tbl_company.FirstOrDefault(); // Fetch the company
+
+            return company?.Logo;
+        }
+
+        private BitmapImage ConvertByteArrayToBitmapImage(byte[] byteArray)
+        {
+            if (byteArray == null || byteArray.Length == 0) return null;
+
+            using (MemoryStream stream = new MemoryStream(byteArray))
+            {
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = stream;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+                return bitmapImage;
+            }
+        }
+
+        private void NavigationButton_Click(object sender, RoutedEventArgs e)
+{
+    // Reload the logo when any button is clicked
+    SetCompanyLogo();
+
+    // Reset the Tag property for all buttons in the sidebar
+    foreach (var child in SidebarPanel.Children)
+    {
+        if (child is Button btn)
+        {
+            btn.Tag = null; // Clear active state
+        }
+    }
+
+    // Reset other buttons
+    custumerBtn.Tag = null;
+    inventoryBtn.Tag = null;
+    posBtn.Tag = null;
+    reportsBtn.Tag = null;
+    settingsBtn.Tag = null;
+
+    // Set active button
+    if (sender is Button clickedButton)
+    {
+        clickedButton.Tag = "Active";
+
+        // Perform navigation based on the clicked button
+        if (clickedButton.Name == "dashboardBtn")
+        {
+            MainContent.Content = new dashboardUC(); // Load the dashboard user control
+        }
+        else if (clickedButton.Name == "custumerBtn")
+        {
+            MainContent.Content = new customersUC(); // Load the customers user control
+        }
+        else if (clickedButton.Name == "inventoryBtn")
+        {
+            MainContent.Content = new inventoryUC(); // Load the inventory user control
+        }
+        else if (clickedButton.Name == "posBtn")
+        {
+            MainContent.Content = new pointofsaleUC(); // Load the point of sale user control
+        }
+        else if (clickedButton.Name == "reportsBtn")
+        {
+            MainContent.Content = new reportsUC(); // Load the reports user control
+        }
+        else if (clickedButton.Name == "settingsBtn")
+        {
+            MainContent.Content = new settingsUC(); // Load the settings user control
+        }
+    }
+}
 
 
         private void inventoryBtn_Click(object sender, RoutedEventArgs e)
@@ -120,61 +227,6 @@ namespace LPG_Management_System
         {
 
         }
-
-        private void NavigationButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Reset the Tag property for all buttons in the sidebar
-            foreach (var child in SidebarPanel.Children)
-            {
-                if (child is Button btn)
-                {
-                    btn.Tag = null; // Clear active state
-                }
-            }
-
-
-            // Reset other buttons
-            custumerBtn.Tag = null;
-            inventoryBtn.Tag = null;
-            posBtn.Tag = null;
-            reportsBtn.Tag = null;
-            settingsBtn.Tag = null;
-
-            // Set active button
-            
-            // Set the clicked button's Tag to "Active"
-            if (sender is Button clickedButton)
-                {
-                    clickedButton.Tag = "Active";
-
-                    // Perform navigation based on the clicked button
-                    if (clickedButton.Name == "dashboardBtn")
-                    {
-                        MainContent.Content = new dashboardUC(); // Load the dashboard user control
-                    }
-                    else if (clickedButton.Name == "custumerBtn")
-                    {
-                        MainContent.Content = new customersUC(); // Load the customers user control
-                    }
-                    else if (clickedButton.Name == "inventoryBtn")
-                    {
-                        MainContent.Content = new inventoryUC(); // Load the inventory user control
-                    }
-                    else if (clickedButton.Name == "posBtn")
-                    {
-                        MainContent.Content = new pointofsaleUC(); // Load the point of sale user control
-                    }
-                    else if (clickedButton.Name == "reportsBtn")
-                    {
-                        MainContent.Content = new reportsUC(); // Load the reports user control
-                    }
-                    else if (clickedButton.Name == "settingsBtn")
-                    {
-                        MainContent.Content = new settingsUC(); // Load the settings user control
-                    }
-                }
-        }
-
         
     }
 }
