@@ -74,7 +74,7 @@
 
 
             <!-- DataGrid -->
-            <DataGrid x:Name="inventoryDG" Grid.Row="1" Margin="15,192,15,47"
+            <DataGrid x:Name="inventoryDG" Grid.Row="1" Margin="15,130,15,47"
                       CanUserResizeColumns="False" GridLinesVisibility="None"
                       HorizontalGridLinesBrush="LightGray"
                       VerticalGridLinesBrush="LightGray" BorderBrush="Gray" BorderThickness="1"
@@ -163,19 +163,16 @@
             <Button x:Name="newBtn" Content="New LPG Brand" 
                 Click="newBtn_Click" Cursor="Hand" Background="#0078D7" Foreground="White"
                 FontWeight="Bold" BorderThickness="0" BorderBrush="Transparent"
-                FontFamily="Segou UI" Margin="1064,28,33,36" RenderTransformOrigin="0.498,0.367"/>
+                FontFamily="Segou UI" Margin="846,78,251,654" RenderTransformOrigin="0.498,0.367" Grid.Row="1"/>
 
-            <UniformGrid Rows="1" Columns="2" Margin="998,99,15,551" Grid.Row="1">
+            <UniformGrid Rows="1" Columns="2" Margin="998,44,15,598" Grid.Row="1">
+                <!-- List View Button -->
                 <!-- List View Button -->
                 <ToggleButton x:Name="listViewButton" Content="List" 
                   Style="{StaticResource ViewToggleButtonStyle}"
-                  IsChecked="True"
-                  Checked="ListViewButton_Checked"
-                  Unchecked="ListViewButton_Unchecked" />
+                  IsChecked="True" Margin="2,26,6,48"/>
                 <ToggleButton x:Name="gridViewButton" Content="Grid" 
-                  Style="{StaticResource ViewToggleButtonStyle}"
-                  Checked="GridViewButton_Checked"
-                  Unchecked="GridViewButton_Unchecked" Margin="0,36,0,36" />
+                  Style="{StaticResource ViewToggleButtonStyle}" Margin="6,26,3,48" />
 
                 <!-- Grid View Button -->
             </UniformGrid>

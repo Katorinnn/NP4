@@ -2,12 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace LPG_Management_System.View.UserControls
 {
@@ -21,8 +19,6 @@ namespace LPG_Management_System.View.UserControls
             InitializeComponent();
             _context = new DataContext();
             LoadCustomersData();
-            LoadListViewData();
-            LoadGridViewData();
 
 
         }
@@ -88,12 +84,11 @@ namespace LPG_Management_System.View.UserControls
         {
             inventoryCRUD inventoryCRUD = new inventoryCRUD(); // No parameter needed
             bool? dialogResult = inventoryCRUD.ShowDialog();
-
             if (dialogResult == true)
             {
                 LoadCustomersData();
-                
             }
+
         }
 
 
@@ -103,11 +98,10 @@ namespace LPG_Management_System.View.UserControls
             if (btn != null)
             {
                 int selectedStockID = Convert.ToInt32(btn.Tag);
-                inventoryUpdate inventoryUpdate = new inventoryUpdate(selectedStockID, inventoryDG);
-                inventoryUpdate.ShowDialog();
-                LoadCustomersData();
+                OpenInventoryUpdateWindow(selectedStockID);  // Ensure this is called to open the update window
             }
         }
+
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
@@ -151,129 +145,28 @@ namespace LPG_Management_System.View.UserControls
             public int Stock { get; set; } // New stock property
         }
 
-        private void OpenInventoryUpdate(int stocksID)
+        // Assuming you are opening inventoryUpdate from another window (e.g. the main window)
+        private void OpenInventoryUpdateWindow(int stocksID)
         {
-            // Pass the correct DataGrid reference (inventoryDG) to inventoryUpdate
-            inventoryUpdate inventoryUpdateWindow = new inventoryUpdate(stocksID, inventoryDG);
-            inventoryUpdateWindow.ShowDialog();
+            // Create an instance of inventoryUpdate
+            inventoryUpdate updateWindow = new inventoryUpdate(stocksID, inventoryDG);
+
+            // Subscribe to the event to refresh the DataGrid when update is successful
+            updateWindow.OnInventoryUpdated += RefreshDataGrid;
+
+            // Show the window
+            updateWindow.ShowDialog();
         }
 
-        private void ListViewButton_Checked(object sender, RoutedEventArgs e)
+        private void RefreshDataGrid()
         {
-            // Show the DataGrid and hide the Product Grid
-            inventoryDG.Visibility = Visibility.Visible;
-            productView.Visibility = Visibility.Collapsed;
-
-            // Ensure GridViewButton is unchecked when ListViewButton is checked
-            gridViewButton.IsChecked = false;
-        }
-
-        private void GridViewButton_Checked(object sender, RoutedEventArgs e)
-        {
-            // Show the Product Grid and hide the DataGrid
-            inventoryDG.Visibility = Visibility.Collapsed;
-            productView.Visibility = Visibility.Visible;
-
-            // Ensure ListViewButton is unchecked when GridViewButton is checked
-            listViewButton.IsChecked = false;
-        }
-
-        private void ListViewButton_Unchecked(object sender, RoutedEventArgs e)
-        {
-            // Code to handle when the ListView button is unchecked
-            inventoryDG.Visibility = Visibility.Collapsed;
-            productView.Visibility = Visibility.Collapsed;
-        }
-
-        private void GridViewButton_Unchecked(object sender, RoutedEventArgs e)
-        {
-            // Code to handle when the GridView button is unchecked
-            inventoryDG.Visibility = Visibility.Visible;
-            productView.Visibility = Visibility.Collapsed;
-        }
-
-
-
-        private void LoadListViewData()
-        {
-            try
+            // Re-fetch the updated data from the database and re-bind the DataGrid
+            using (var dbContext = new DataContext())
             {
-                var inventoryData = _context.tbl_inventory.ToList();  // Correct DbSet reference
-                inventoryDG.ItemsSource = inventoryData;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error fetching data: " + ex.Message);
+                var updatedInventoryList = dbContext.tbl_inventory.ToList();  // Fetch updated data
+                inventoryDG.ItemsSource = updatedInventoryList;  // Re-bind the DataGrid
             }
         }
-
-        private void LoadGridViewData()
-        {
-            try
-            {
-                // Clear existing items in the WrapPanel
-                productView.Children.Clear();
-
-                // Fetch products from the database
-                var products = _context.tbl_inventory.ToList();
-
-                // Dynamically create Product user controls and add them to the WrapPanel
-                foreach (var product in products)
-                {
-                    // Create a new instance of the Product user control
-                    var productControl = new Product
-                    {
-                        BrandLabel = { Content = product.ProductName },
-                        PriceLabel = { Content = $"₱{product.Price:F2}" },
-                        SizeLabel = { Content = product.Size }
-                    };
-
-                    // Set product image if available
-                    if (product.ProductImage?.Length > 0)
-                    {
-                        productControl.ProductImage.Source = ConvertToImageSource(product.ProductImage);
-                    }
-
-                    // Add a click event to handle actions (e.g., editing or selecting the product)
-                    productControl.MouseLeftButtonUp += (sender, e) =>
-                    {
-                        // Handle product click
-                        OpenInventoryUpdate(product.StocksID);
-                    };
-
-                    // Add the control to the WrapPanel
-                    productView.Children.Add(productControl);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error loading grid view data: " + ex.Message);
-            }
-        }
-
-        private System.Windows.Media.ImageSource ConvertToImageSource(byte[] imageBytes)
-        {
-            if (imageBytes == null || imageBytes.Length == 0) return null;
-
-            try
-            {
-                using var ms = new MemoryStream(imageBytes);
-                var image = new BitmapImage();
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.StreamSource = ms;
-                image.EndInit();
-                return image;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error converting image: " + ex.Message);
-                return null;
-            }
-        }
-
-
-
 
 
 

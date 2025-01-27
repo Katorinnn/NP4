@@ -68,14 +68,16 @@
 
         </Grid>
 
-        <Grid x:Name="rightGrid" Margin="69,387,65,50" Background="#FFFEF9F5">
-            <lvc:CartesianChart Name="SalesChart" Margin="10,10,10,28" />
-            <Label Content="Monthly Sales" HorizontalAlignment="Center" VerticalAlignment="Top" Width="344" Height="41" Margin="0,362,0,0" FontSize="25" HorizontalContentAlignment="Center" FontWeight="Bold"/>
+        <Grid x:Name="MonthlySalesChartContainer" Margin="82,425,668,34" Background="White" Width="500">
+            <lvc:CartesianChart Name="MonthlySalesChart" Margin="25"/>
+            <TextBlock Text="Monthly Sales Trend" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,0"/>
         </Grid>
 
-
-
-
+        <!-- Right Chart: Sales Distribution -->
+        <Grid x:Name="SalesByProductChartContainer" Margin="662,425,88,34" Background="White" Width="500">
+            <lvc:PieChart Name="SalesDistributionChart" Margin="25"/>
+            <TextBlock Text="Sales by Product" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+        </Grid>
 
     </Grid>
 

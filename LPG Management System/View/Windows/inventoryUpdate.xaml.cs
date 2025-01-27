@@ -9,6 +9,7 @@ namespace LPG_Management_System.View
 {
     public partial class inventoryUpdate : Window
     {
+        public event Action OnInventoryUpdated;
         public int StocksID { get; set; }
         private DataGrid inventoryDataGrid; // Field to store the DataGrid reference
 
@@ -37,6 +38,16 @@ namespace LPG_Management_System.View
                         stockIDtxtBox.Text = inventoryItem.StocksID.ToString();
                         brandtxtBox.Text = inventoryItem.ProductName;
                         sizetxtBox.Text = inventoryItem.Size;
+
+                        // Split size if it includes the unit (e.g., "2 kg")
+                        var sizeParts = inventoryItem.Size.Split(' ');
+                        if (sizeParts.Length == 2)
+                        {
+                            sizetxtBox.Text = sizeParts[0]; // Size value
+                            sizeUnitComboBox.SelectedItem = sizeUnitComboBox.Items.Cast<ComboBoxItem>()
+                                .FirstOrDefault(item => item.Content.ToString() == sizeParts[1]); // Select the unit
+                        }
+
                         stockstxtBox.Text = inventoryItem.Stocks.ToString();
                         pricetxtBox.Text = inventoryItem.Price.ToString("F2");
 
@@ -70,6 +81,7 @@ namespace LPG_Management_System.View
                 MessageBox.Show("Error loading item data: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
 
 
 
@@ -114,6 +126,7 @@ namespace LPG_Management_System.View
             string stock = stockstxtBox.Text; // Get stock value
             string size = sizetxtBox.Text;
             string price = pricetxtBox.Text;
+            string sizeUnit = (sizeUnitComboBox.SelectedItem as ComboBoxItem)?.Content.ToString(); // Get selected unit
 
             // Validate StocksID is an integer
             int parsedStocksID;
@@ -123,7 +136,7 @@ namespace LPG_Management_System.View
                 return;
             }
 
-            if (string.IsNullOrEmpty(brandname) || string.IsNullOrEmpty(size) || string.IsNullOrEmpty(price))
+            if (string.IsNullOrEmpty(brandname) || string.IsNullOrEmpty(size) || string.IsNullOrEmpty(price) || string.IsNullOrEmpty(sizeUnit))
             {
                 MessageBox.Show("Please fill in all the fields.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -151,7 +164,7 @@ namespace LPG_Management_System.View
                     if (inventoryItem != null)
                     {
                         inventoryItem.ProductName = brandname;
-                        inventoryItem.Size = size;
+                        inventoryItem.Size = size + " " + sizeUnit; // Append the selected unit to the size
                         inventoryItem.Price = parsedPrice;
                         inventoryItem.Stocks = parsedStocks; // Update the Stocks field
 
@@ -165,12 +178,13 @@ namespace LPG_Management_System.View
 
                         MessageBox.Show("Inventory updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        // Refresh the DataGrid
-                        RefreshDataGrid();
+                        // Trigger the event to refresh the DataGrid in the parent
+                        OnInventoryUpdated?.Invoke();
 
                         this.DialogResult = true;
                         this.Close();
                     }
+
                     else
                     {
                         MessageBox.Show("Item not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -182,6 +196,7 @@ namespace LPG_Management_System.View
                 MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
 
         private void RefreshDataGrid()
         {

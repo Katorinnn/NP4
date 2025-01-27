@@ -1,10 +1,18 @@
 ﻿using LPG_Management_System.View.UserControls;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection.Metadata;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Markup;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using static LPG_Management_System.Dashboard;
+using System;
+using LPG_Management_System.Models;
 
 namespace LPG_Management_System.View.Windows
 {
@@ -42,139 +50,170 @@ namespace LPG_Management_System.View.Windows
 
         private void PrintButton_Click(object sender, RoutedEventArgs e)
         {
-            // Generate a FixedDocument
-            FixedDocument fixedDoc = GenerateFixedDocument();
-
-            // Show Print Preview Window
-            PrintPreview previewWindow = new PrintPreview(fixedDoc);
-            previewWindow.ShowDialog();
-
-            // Optional: Print the FixedDocument after preview
-            PrintDialog printDialog = new PrintDialog();
-            if (printDialog.ShowDialog() == true)
+            try
             {
-                printDialog.PrintDocument(fixedDoc.DocumentPaginator, "Invoice Print");
-            }
-        }
+                // Fetch company details
+                var companyDetails = GetCompanyDetails();
 
-        private FixedDocument GenerateFixedDocument()
-        {
-            FixedDocument fixedDoc = new FixedDocument();
-
-            // Create a page
-            FixedPage page = new FixedPage
-            {
-                Width = 600,  // A4 width in px (96 DPI)
-                Height = 700 // A4 height in px (96 DPI)
-            };
-
-            // Header section (Company and Invoice Details)
-            Grid headerGrid = new Grid
-            {
-                Margin = new Thickness(20, 20, 20, 0)
-            };
-            headerGrid.ColumnDefinitions.Add(new ColumnDefinition());
-            headerGrid.ColumnDefinitions.Add(new ColumnDefinition());
-
-            // Left side: Company Info
-            TextBlock companyInfo = new TextBlock
-            {
-                Text = "NP4 GAS SERVICE\nC 3/4 KABIR NAGAR\nJODHPUR ROAD \"SHAHDARA,\"\nJODHPUR 302001",
-                FontSize = 14,
-                FontWeight = FontWeights.Bold,
-                TextAlignment = TextAlignment.Left
-            };
-            Grid.SetColumn(companyInfo, 0);
-            headerGrid.Children.Add(companyInfo);
-
-            // Right side: Invoice Info
-            TextBlock invoiceInfo = new TextBlock
-            {
-                Text = $"Tax Invoice\nDate: {DateTime.Now:dd/MM/yyyy}\nInvoice No: 12345",
-                FontSize = 14,
-                FontWeight = FontWeights.Bold,
-                TextAlignment = TextAlignment.Right
-            };
-            Grid.SetColumn(invoiceInfo, 1);
-            headerGrid.Children.Add(invoiceInfo);
-
-            page.Children.Add(headerGrid);
-
-            // Line separator
-            Border separator = new Border
-            {
-                BorderBrush = System.Windows.Media.Brushes.Black,
-                BorderThickness = new Thickness(0, 1, 0, 0),
-                Margin = new Thickness(20, 120, 20, 0)
-            };
-            page.Children.Add(separator);
-
-            // Invoice Items Table
-            Grid tableGrid = new Grid
-            {
-                Margin = new Thickness(20, 140, 20, 0)
-            };
-
-            // Define Columns
-            tableGrid.ColumnDefinitions.Add(new ColumnDefinition());
-            tableGrid.ColumnDefinitions.Add(new ColumnDefinition());
-            tableGrid.ColumnDefinitions.Add(new ColumnDefinition());
-            tableGrid.ColumnDefinitions.Add(new ColumnDefinition());
-
-            // Add Table Header
-            AddTableRow(tableGrid, 0, "Product", "Size", "Price", "Total", true);
-
-            // Add Table Data
-            int row = 1;
-            var items = InvoiceDataGrid.ItemsSource as IEnumerable<pointofsaleUC.ReceiptItem>;
-            if (items != null)
-            {
-                foreach (var receiptItem in items)
+                using (MemoryStream memoryStream = new MemoryStream())
                 {
-                    AddTableRow(
-                        tableGrid,
-                        row++,
-                        receiptItem.Brand,
-                        receiptItem.Size,
-                        $"₱{receiptItem.Price:F2}",
-                        $"₱{receiptItem.Total:F2}",
-                        false
-                    );
+                    var items = InvoiceDataGrid.ItemsSource as IEnumerable<pointofsaleUC.ReceiptItem>;
+                    int numberOfItems = items?.Count() ?? 0;
+
+                    // Set a fixed height per item and add padding
+                    float itemHeight = 15f;  // Height for each item in the receipt
+                    float paddingHeight = 100f;  // Padding for header, footer, etc.
+                    float totalHeight = Math.Max(itemHeight * numberOfItems + paddingHeight, 320f);  // Ensure a minimum height
+
+                    float width = 200f;
+                    iTextSharp.text.Rectangle pageSize = new iTextSharp.text.Rectangle(width, totalHeight);
+
+                    iTextSharp.text.Document doc = new iTextSharp.text.Document(pageSize, 5f, 5f, 5f, 5f);
+                    PdfWriter writer = PdfWriter.GetInstance(doc, memoryStream);
+                    writer.CloseStream = false;
+
+                    doc.Open();
+
+                    // Add Logo (fetched from database)
+                    if (companyDetails != null && companyDetails.Logo != null && companyDetails.Logo.Length > 0)
+                    {
+                        using (MemoryStream logoStream = new MemoryStream(companyDetails.Logo))
+                        {
+                            // Load the image into a Bitmap
+                            using (var originalImage = System.Drawing.Image.FromStream(logoStream))
+                            {
+                                // Convert the image to grayscale
+                                using (var grayscaleImage = new System.Drawing.Bitmap(originalImage.Width, originalImage.Height))
+                                {
+                                    using (var g = System.Drawing.Graphics.FromImage(grayscaleImage))
+                                    {
+                                        var colorMatrix = new System.Drawing.Imaging.ColorMatrix(
+                                            new float[][]
+                                            {
+                            new float[] {0.3f, 0.3f, 0.3f, 0, 0},
+                            new float[] {0.59f, 0.59f, 0.59f, 0, 0},
+                            new float[] {0.11f, 0.11f, 0.11f, 0, 0},
+                            new float[] {0, 0, 0, 1, 0},
+                            new float[] {0, 0, 0, 0, 1}
+                                            });
+
+                                        var attributes = new System.Drawing.Imaging.ImageAttributes();
+                                        attributes.SetColorMatrix(colorMatrix);
+
+                                        g.DrawImage(
+                                            originalImage,
+                                            new System.Drawing.Rectangle(0, 0, grayscaleImage.Width, grayscaleImage.Height),
+                                            0, 0, originalImage.Width, originalImage.Height,
+                                            System.Drawing.GraphicsUnit.Pixel,
+                                            attributes
+                                        );
+                                    }
+
+                                    // Save the grayscale image into a MemoryStream for iTextSharp
+                                    using (var grayscaleStream = new MemoryStream())
+                                    {
+                                        grayscaleImage.Save(grayscaleStream, System.Drawing.Imaging.ImageFormat.Png);
+                                        grayscaleStream.Position = 0;
+
+                                        // Add the grayscale image to the PDF
+                                        iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance(grayscaleStream);
+                                        logo.ScaleToFit(100f, 100f);
+                                        logo.Alignment = iTextSharp.text.Element.ALIGN_CENTER;
+                                        doc.Add(logo);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+
+                    // Header (dynamic data)
+                    Font headerFont = new Font(Font.FontFamily.HELVETICA, 10f, Font.BOLD);
+                    Font normalFont = new Font(Font.FontFamily.HELVETICA, 8f, Font.NORMAL);
+
+                    if (companyDetails != null)
+                    {
+                        doc.Add(new iTextSharp.text.Paragraph(companyDetails.CompanyName, headerFont) { Alignment = Element.ALIGN_CENTER });
+                        doc.Add(new iTextSharp.text.Paragraph(companyDetails.CompanyAddress, normalFont) { Alignment = Element.ALIGN_CENTER });
+                        doc.Add(new iTextSharp.text.Paragraph(companyDetails.CompanyEmail, normalFont) { Alignment = Element.ALIGN_CENTER });
+                        doc.Add(new iTextSharp.text.Paragraph("---------------------------------------------", normalFont) { Alignment = Element.ALIGN_CENTER });
+                    }
+
+                    // Order Details
+                    doc.Add(new iTextSharp.text.Paragraph($"Order ID: {12345}", normalFont) { Alignment = Element.ALIGN_CENTER });
+                    doc.Add(new iTextSharp.text.Paragraph($"Cashier: John Doe", normalFont) { Alignment = Element.ALIGN_CENTER });
+                    doc.Add(new iTextSharp.text.Paragraph($"Payment Mode: CASH", normalFont) { Alignment = Element.ALIGN_CENTER });
+                    doc.Add(new iTextSharp.text.Paragraph("---------------------------------------------", normalFont) { Alignment = Element.ALIGN_CENTER });
+
+                    // Items
+                    PdfPTable table = new PdfPTable(2)
+                    {
+                        WidthPercentage = 100
+                    };
+                    table.SetWidths(new float[] { 6f, 4f });
+
+                    table.AddCell(new PdfPCell(new Phrase("Items", headerFont)) { Border = 0, HorizontalAlignment = PdfPCell.ALIGN_CENTER });
+                    table.AddCell(new PdfPCell(new Phrase("Total", headerFont)) { Border = 0, HorizontalAlignment = PdfPCell.ALIGN_CENTER });
+
+                    //var items = InvoiceDataGrid.ItemsSource as IEnumerable<pointofsaleUC.ReceiptItem>;
+                    if (items != null)
+                    {
+                        foreach (var item in items)
+                        {
+                            table.AddCell(new PdfPCell(new Phrase($"{item.Quantity} {item.Brand} {item.Size} ({item.Price:F2})", normalFont)) { Border = 0, HorizontalAlignment = PdfPCell.ALIGN_CENTER });
+                            table.AddCell(new PdfPCell(new Phrase($"{item.Total:F2}", normalFont)) { Border = 0, HorizontalAlignment = PdfPCell.ALIGN_CENTER });
+                        }
+                    }
+
+                    doc.Add(table);
+
+                    // Totals
+                    doc.Add(new iTextSharp.text.Paragraph("---------------------------------------------", normalFont) { Alignment = Element.ALIGN_CENTER });
+                    doc.Add(new iTextSharp.text.Paragraph($"TOTAL: {TotalAmountText.Text}", headerFont) { Alignment = Element.ALIGN_CENTER });
+                    doc.Add(new iTextSharp.text.Paragraph($"Date: {DateTime.Now:yyyy-MM-dd}", normalFont) { Alignment = Element.ALIGN_CENTER });
+
+                    // Footer
+                    doc.Add(new iTextSharp.text.Paragraph("Thank you! Please come again.", normalFont) { Alignment = Element.ALIGN_CENTER });
+                    doc.Add(new iTextSharp.text.Paragraph("** This is a computer-generated receipt.", normalFont) { Alignment = Element.ALIGN_CENTER });
+
+                    doc.Close();
+                    memoryStream.Position = 0;
+
+                    // Save the PDF to a temporary location
+                    string tempFilePath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), $"{Guid.NewGuid()}.pdf");
+                    File.WriteAllBytes(tempFilePath, memoryStream.ToArray());
+
+                    // Open the PDF for preview
+                    Process.Start(new ProcessStartInfo(tempFilePath) { UseShellExecute = true });
+
+                    Task.Run(() =>
+                    {
+                        Thread.Sleep(50000);
+                        if (File.Exists(tempFilePath))
+                        {
+                            File.Delete(tempFilePath);
+                        }
+                    });
                 }
             }
-
-
-            page.Children.Add(tableGrid);
-
-            // Totals Section
-            TextBlock totals = new TextBlock
+            catch (Exception ex)
             {
-                Text = $"Total: {TotalAmountText.Text}\nAmount Paid: {AmountPaidText.Text}\nNet Due: {ChangeText.Text}",
-                FontSize = 16,
-                FontWeight = FontWeights.Bold,
-                TextAlignment = TextAlignment.Right,
-                Margin = new Thickness(20, 160 + (row * 30), 20, 0)
-            };
-            page.Children.Add(totals);
-
-            // Footer
-            TextBlock footer = new TextBlock
-            {
-                Text = "** This is a computer-generated document and needs no signatures.\n** Stay Home, Stay Safe.",
-                FontSize = 12,
-                FontStyle = FontStyles.Italic,
-                Margin = new Thickness(20, 900, 20, 0),
-                TextAlignment = TextAlignment.Center
-            };
-            page.Children.Add(footer);
-
-            // Add the page to the FixedDocument
-            PageContent pageContent = new PageContent();
-            ((IAddChild)pageContent).AddChild(page);
-            fixedDoc.Pages.Add(pageContent);
-
-            return fixedDoc;
+                MessageBox.Show($"Error generating receipt: {ex.Message}");
+            }
         }
+
+
+        private CompanyTable GetCompanyDetails()
+        {
+            using (var context = new DataContext())
+            {
+                // Assuming there is only one company record
+                return context.tbl_company.FirstOrDefault();
+            }
+        }
+
+
 
         // Helper Method to Add Rows to Table
         private void AddTableRow(Grid grid, int row, string col1, string col2, string col3, string col4, bool isHeader)

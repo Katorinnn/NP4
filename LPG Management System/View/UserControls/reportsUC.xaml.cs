@@ -16,77 +16,156 @@ namespace LPG_Management_System.View.UserControls
 {
     public partial class reportsUC : UserControl
     {
-        private int currentPage = 1;
-        private const int itemsPerPage = 20;
-        private int totalPages;
-        private List<ReportsTable> allReports;
+        private int inventorySalesCurrentPage = 1;
+        private int stockCheckCurrentPage = 1;
+        private int salesByProductCurrentPage = 1;
+
+        private const int itemsPerPage = 15;
+
+        private int inventorySalesTotalPages;
+        private int stockCheckTotalPages;
+        private int salesByProductTotalPages;
+
+        private List<ReportsTable> allInventorySalesReports;
+        private List<InventoryTable> allStockCheckReports;
+        private List<dynamic> allSalesByProductReports;
 
         public reportsUC()
         {
             InitializeComponent();
-            LoadReportsData();
+            LoadInventorySalesData();
+            LoadStockCheckData();
+            LoadSalesByProductData();
             InitializeCategoryComboBox();
 
-            // Set the MinDate for the DatePickers to prevent future dates
             beginDatePicker.DisplayDateEnd = DateTime.Today;
             endDatePicker.DisplayDateEnd = DateTime.Today;
         }
 
-        private void LoadReportsData()
+        private void LoadInventorySalesData()
         {
             try
             {
                 using (var dbContext = new DataContext())
                 {
-                    // Fetch all reports from the tbl_reports table and order by Date descending
-                    allReports = dbContext.tbl_reports
-                        .OrderByDescending(report => report.Date)
-                        .ToList();
+                    allInventorySalesReports = dbContext.tbl_reports.OrderByDescending(r => r.Date).ToList();
+                    inventorySalesTotalPages = (int)Math.Ceiling((double)allInventorySalesReports.Count / itemsPerPage);
+                    LoadPage("InventorySales", inventorySalesCurrentPage);
+                }
+            }
+            catch (Exception ex)
+            {   
+                MessageBox.Show($"Error fetching inventory sales data: {ex.Message}");
+            }
+        }
 
-                    // Calculate the total number of pages
-                    totalPages = (int)Math.Ceiling((double)allReports.Count / itemsPerPage);
-
-                    // Load the first page of reports
-                    LoadPage(currentPage);
+        private void LoadStockCheckData()
+        {
+            try
+            {
+                using (var dbContext = new DataContext())
+                {
+                    var stockData = dbContext.tbl_inventory.ToList();
+                    stockCheckDG.ItemsSource = stockData;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error fetching data: " + ex.Message);
+                MessageBox.Show($"Error loading stock check data: {ex.Message}");
             }
         }
 
-        private void LoadPage(int page)
+        private void LoadSalesByProductData()
         {
-            // Calculate the starting index for the page
+            try
+            {
+                using (var dbContext = new DataContext())
+                {
+                    var salesData = dbContext.tbl_reports
+                        .GroupBy(report => report.ProductName)
+                        .Select(group => new
+                        {
+                            ProductName = group.Key,
+                            TotalQuantitySold = group.Sum(report => report.Quantity),
+                            TotalSales = group.Sum(report => report.TotalPrice)
+                        })
+                        .ToList();
+                    salesByProductDG.ItemsSource = salesData;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading sales by product data: {ex.Message}");
+            }
+        }
+
+
+        private void LoadPage(string category, int page)
+        {
             int startIndex = (page - 1) * itemsPerPage;
 
-            // Get the data for the current page
-            var pageData = allReports.Skip(startIndex).Take(itemsPerPage).ToList();
+            switch (category)
+            {
+                case "InventorySales":
+                    var inventoryPageData = allInventorySalesReports.Skip(startIndex).Take(itemsPerPage).ToList();
+                    inventorySalesDG.ItemsSource = inventoryPageData;
+                    pageIndicator.Text = $"Page {inventorySalesCurrentPage} of {inventorySalesTotalPages}";
+                    break;
 
-            // Bind the data to the DataGrid
-            reportsDG.ItemsSource = pageData;
+                case "StockCheck":
+                    var stockPageData = allStockCheckReports.Skip(startIndex).Take(itemsPerPage).ToList();
+                    stockCheckDG.ItemsSource = stockPageData;
+                    break;
 
-            // Update the page indicator
-            pageIndicator.Text = $"Page {currentPage} of {totalPages}";
+                case "SalesByProduct":
+                    var salesPageData = allSalesByProductReports.Skip(startIndex).Take(itemsPerPage).ToList();
+                    salesByProductDG.ItemsSource = salesPageData;
+                    break;
+            }
         }
 
 
         private void PreviousButton_Click(object sender, RoutedEventArgs e)
         {
-            if (currentPage > 1)
+            if (categoryComboBox.SelectedItem is string selectedCategory)
             {
-                currentPage--;
-                LoadPage(currentPage);
+                if (selectedCategory == "Inventory Sales Report" && inventorySalesCurrentPage > 1)
+                {
+                    inventorySalesCurrentPage--;
+                    LoadPage("InventorySales", inventorySalesCurrentPage);
+                }
+                else if (selectedCategory == "Stock Check Sheets" && stockCheckCurrentPage > 1)
+                {
+                    stockCheckCurrentPage--;
+                    LoadPage("StockCheck", stockCheckCurrentPage);
+                }
+                else if (selectedCategory == "Sales by Product" && salesByProductCurrentPage > 1)
+                {
+                    salesByProductCurrentPage--;
+                    LoadPage("SalesByProduct", salesByProductCurrentPage);
+                }
             }
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            if (currentPage < totalPages)
+            if (categoryComboBox.SelectedItem is string selectedCategory)
             {
-                currentPage++;
-                LoadPage(currentPage);
+                if (selectedCategory == "Inventory Sales Report" && inventorySalesCurrentPage < inventorySalesTotalPages)
+                {
+                    inventorySalesCurrentPage++;
+                    LoadPage("InventorySales", inventorySalesCurrentPage);
+                }
+                else if (selectedCategory == "Stock Check Sheets" && stockCheckCurrentPage < stockCheckTotalPages)
+                {
+                    stockCheckCurrentPage++;
+                    LoadPage("StockCheck", stockCheckCurrentPage);
+                }
+                else if (selectedCategory == "Sales by Product" && salesByProductCurrentPage < salesByProductTotalPages)
+                {
+                    salesByProductCurrentPage++;
+                    LoadPage("SalesByProduct", salesByProductCurrentPage);
+                }
             }
         }
 
@@ -94,20 +173,17 @@ namespace LPG_Management_System.View.UserControls
         {
             try
             {
-                // Define the report categories
-                var categories = new List<string>
+                categoryComboBox.ItemsSource = new List<string>
                 {
                     "Inventory Sales Report",
-                    "Stock Check Sheets"
+                    "Stock Check Sheets",
+                    "Sales by Product"
                 };
-
-                // Bind the categories to the ComboBox
-                categoryComboBox.ItemsSource = categories;
-                categoryComboBox.SelectedIndex = 0; // Optionally set a default selection
+                categoryComboBox.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error initializing category combo box: " + ex.Message);
+                MessageBox.Show($"Error initializing categories: {ex.Message}");
             }
         }
 
@@ -115,79 +191,31 @@ namespace LPG_Management_System.View.UserControls
         {
             if (categoryComboBox.SelectedItem is string selectedCategory)
             {
-                try
+                // Hide all DataGrids initially
+                inventorySalesDG.Visibility = Visibility.Collapsed;
+                stockCheckDG.Visibility = Visibility.Collapsed;
+                salesByProductDG.Visibility = Visibility.Collapsed;
+
+                switch (selectedCategory)
                 {
-                    // Check the selected category and load corresponding data
-                    if (selectedCategory == "Inventory Sales Report")
-                    {
-                        LoadReportsData();
-                    }
-                    else if (selectedCategory == "Stock Check Sheets")
-                    {
-                        LoadStockData();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error handling category selection: " + ex.Message);
+                    case "Inventory Sales Report":
+                        inventorySalesDG.Visibility = Visibility.Visible;
+                        LoadInventorySalesData();
+                        break;
+
+                    case "Stock Check Sheets":
+                        stockCheckDG.Visibility = Visibility.Visible;
+                        LoadStockCheckData();
+                        break;
+
+                    case "Sales by Product":
+                        salesByProductDG.Visibility = Visibility.Visible;
+                        LoadSalesByProductData();
+                        break;
                 }
             }
         }
 
-
-        private void LoadStockData()
-        {
-            try
-            {
-                using (var dbContext = new DataContext())
-                {
-                    // Fetching all stock data from the tbl_inventory table
-                    var stocks = dbContext.tbl_inventory.ToList();
-
-                    // Update the DataGrid columns to match the stock data
-                    reportsDG.Columns.Clear();
-
-                    // Add columns specific to the tbl_inventory (example columns)
-                    reportsDG.Columns.Add(new DataGridTextColumn
-                    {
-                        Header = "Stocks ID",
-                        Binding = new Binding("StocksID"),
-                        Width = 120
-                    });
-                    reportsDG.Columns.Add(new DataGridTextColumn
-                    {
-                        Header = "Product Name",
-                        Binding = new Binding("ProductName"),
-                        Width = 200
-                    });
-                    reportsDG.Columns.Add(new DataGridTextColumn
-                    {
-                        Header = "Quantity",
-                        Binding = new Binding("Quantity"),
-                        Width = 100
-                    });
-                    reportsDG.Columns.Add(new DataGridTextColumn
-                    {
-                        Header = "Stocks",
-                        Binding = new Binding("StocksFtrF"),
-                        Width = 100
-                    });
-                    reportsDG.Columns.Add(new DataGridTextColumn
-                    {
-                        Header = "Date",
-                        Binding = new Binding("Date"),
-                        Width = 120
-                    });
-
-                    // Bind the data to the DataGrid
-                    reportsDG.ItemsSource = stocks;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error fetching stock data: " + ex.Message);
-            }
-        }
 
 
         private void beginDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -214,36 +242,43 @@ namespace LPG_Management_System.View.UserControls
             // Handle selection changes if necessary
         }
 
-        private void FilterReportsByDate()
+        //private void FilterReportsByDate()
+        //{
+        //    if (beginDatePicker.SelectedDate.HasValue && endDatePicker.SelectedDate.HasValue)
+        //    {
+        //        DateTime startDate = beginDatePicker.SelectedDate.Value.Date;
+        //        DateTime endDate = endDatePicker.SelectedDate.Value.Date.AddDays(1).AddMilliseconds(-1);
+
+        //        if (startDate > endDate)
+        //        {
+        //            MessageBox.Show("Begin Date cannot be later than End Date.");
+        //            return;
+        //        }
+
+        //        var filteredReports = allReports
+        //            .Where(report => report.Date >= startDate && report.Date <= endDate)
+        //            .ToList();
+
+        //        if (filteredReports.Count == 0)
+        //        {
+        //            MessageBox.Show("No records found for the selected date range.");
+        //            return;
+        //        }
+
+        //        allReports = filteredReports;
+        //        currentPage = 1;
+        //        totalPages = (int)Math.Ceiling((double)allReports.Count / itemsPerPage);
+        //        LoadPage(currentPage);
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Please select both Begin Date and End Date.");
+        //    }
+        //}
+
+        private void ApplyFilterButton_Click(object sender, RoutedEventArgs e)
         {
-            if (beginDatePicker.SelectedDate.HasValue && endDatePicker.SelectedDate.HasValue)
-            {
-                DateTime startDate = beginDatePicker.SelectedDate.Value.Date;
-                DateTime endDate = endDatePicker.SelectedDate.Value.Date.AddDays(1).AddMilliseconds(-1); // Set to 23:59:59.999
-
-                if (startDate > endDate)
-                {
-                    MessageBox.Show("Begin Date cannot be later than End Date.");
-                    return;
-                }
-
-                allReports = allReports
-                    .Where(report => report.Date >= startDate && report.Date <= endDate)
-                    .ToList();
-
-                if (allReports.Count == 0)
-                {
-                    MessageBox.Show("No records found for the selected date range.");
-                }
-
-                currentPage = 1;
-                totalPages = (int)Math.Ceiling((double)allReports.Count / itemsPerPage);
-                LoadPage(currentPage);
-            }
-            else
-            {
-                MessageBox.Show("Please select both Begin Date and End Date.");
-            }
+            //FilterReportsByDate();
         }
 
         private void CancelFilterButton_Click(object sender, RoutedEventArgs e)
@@ -256,7 +291,7 @@ namespace LPG_Management_System.View.UserControls
             categoryComboBox.SelectedIndex = 0;
 
             // Reload all reports without filtering
-            LoadReportsData();
+            LoadInventorySalesData();
         }
 
 
@@ -267,89 +302,54 @@ namespace LPG_Management_System.View.UserControls
         {
             try
             {
-                // Create a FixedDocument to hold the preview content
-                FixedDocument fixedDocument = new FixedDocument();
-
-                // Define a page size
-                Size pageSize = new Size(800, 1120); // A4 size (8.3 x 11.7 inches in pixels at 96 DPI)
-                fixedDocument.DocumentPaginator.PageSize = pageSize;
-
-                // Create a FixedPage for each page of content
-                FixedPage fixedPage = new FixedPage
+                if (categoryComboBox.SelectedItem is string selectedCategory)
                 {
-                    Width = pageSize.Width,
-                    Height = pageSize.Height
-                };
+                    DataGrid targetDataGrid = selectedCategory switch
+                    {
+                        "Inventory Sales Report" => inventorySalesDG,
+                        "Stock Check Sheets" => stockCheckDG,
+                        "Sales by Product" => salesByProductDG,
+                        _ => null
+                    };
 
-                // Add a title
-                TextBlock title = new TextBlock
-                {
-                    Text = "Reports Preview",
-                    FontSize = 16,
-                    FontWeight = FontWeights.Bold,
-                    TextAlignment = TextAlignment.Center,
-                    Margin = new Thickness(0, 20, 50, 20)
-                };
-                FixedPage.SetLeft(title, (pageSize.Width - title.ActualWidth) / 2);
-                fixedPage.Children.Add(title);
+                    if (targetDataGrid == null) return;
 
-                // Add a DataGrid-like table representation
-                var grid = new Grid();
-                grid.Margin = new Thickness(100);
-
-                // Define columns
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-
-                // Add header row
-                grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-                grid.Children.Add(CreateHeaderCell("Transaction ID", 0));
-                grid.Children.Add(CreateHeaderCell("Tank ID", 1));
-                grid.Children.Add(CreateHeaderCell("Product Name", 2));
-                grid.Children.Add(CreateHeaderCell("Date", 3));
-
-                // Filter applied check
-                IEnumerable<ReportsTable> filteredReports = allReports;
-
-                // Apply date filters if any
-                if (beginDatePicker.SelectedDate.HasValue && endDatePicker.SelectedDate.HasValue)
-                {
-                    DateTime startDate = beginDatePicker.SelectedDate.Value.Date;
-                    DateTime endDate = endDatePicker.SelectedDate.Value.Date.AddDays(1).AddMilliseconds(-1); // Set to 23:59:59.999
-
-                    filteredReports = filteredReports.Where(report => report.Date >= startDate && report.Date <= endDate);
+                    var printPreviewWindow = new PrintPreview(CreateFixedDocumentFromDataGrid(targetDataGrid));
+                    printPreviewWindow.ShowDialog();
                 }
-
-                // Add data rows based on filtered data
-                int rowIndex = 1;
-                foreach (ReportsTable report in filteredReports)
-                {
-                    grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-                    grid.Children.Add(CreateDataCell(report.TransactionID.ToString(), rowIndex, 0));
-                    grid.Children.Add(CreateDataCell(report.TankID.ToString(), rowIndex, 1));
-                    grid.Children.Add(CreateDataCell(report.ProductName, rowIndex, 2));
-                    grid.Children.Add(CreateDataCell(report.Date.ToString("yyyy-MM-dd"), rowIndex, 3));
-                    rowIndex++;
-                }
-
-                fixedPage.Children.Add(grid);
-
-                // Add the page to the FixedDocument
-                PageContent pageContent = new PageContent();
-                ((IAddChild)pageContent).AddChild(fixedPage);
-                fixedDocument.Pages.Add(pageContent);
-
-                // Open the PrintPreview window with the generated document
-                PrintPreview previewWindow = new PrintPreview(fixedDocument);
-                previewWindow.ShowDialog();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error generating print preview: " + ex.Message);
+                MessageBox.Show($"Error generating print preview: {ex.Message}");
             }
         }
+
+        private FixedDocument CreateFixedDocumentFromDataGrid(DataGrid dataGrid)
+        {
+            FixedDocument document = new FixedDocument();
+            Size pageSize = new Size(800, 1120);
+            document.DocumentPaginator.PageSize = pageSize;
+
+            FixedPage page = new FixedPage { Width = pageSize.Width, Height = pageSize.Height };
+            page.Children.Add(new TextBlock
+            {
+                Text = "Report Preview",
+                FontSize = 16,
+                FontWeight = FontWeights.Bold,
+                Margin = new Thickness(10),
+                TextAlignment = TextAlignment.Center
+            });
+
+            DataGrid printGrid = new DataGrid { ItemsSource = dataGrid.ItemsSource, Width = 750, Height = 1000 };
+            page.Children.Add(printGrid);
+
+            PageContent pageContent = new PageContent();
+            ((IAddChild)pageContent).AddChild(page);
+            document.Pages.Add(pageContent);
+
+            return document;
+        }
+
 
 
 
@@ -385,13 +385,6 @@ namespace LPG_Management_System.View.UserControls
 
             return border;
         }
-
-
-        private void ApplyFilterButton_Click(object sender, RoutedEventArgs e)
-        {
-            FilterReportsByDate();
-        }
-
     }
 }
 
