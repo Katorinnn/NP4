@@ -2,10 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace LPG_Management_System.View.UserControls
 {
@@ -165,6 +167,149 @@ namespace LPG_Management_System.View.UserControls
             {
                 var updatedInventoryList = dbContext.tbl_inventory.ToList();  // Fetch updated data
                 inventoryDG.ItemsSource = updatedInventoryList;  // Re-bind the DataGrid
+            }
+        }
+
+        private void LoadProductsForDisplay(InventoryTable selectedItem)
+        {
+            ProductsWrapPanel.Children.Clear();
+
+            // Fetch product data (can be filtered based on the selected item if needed)
+            var products = _context.tbl_inventory.ToList();
+
+            if (selectedItem != null)
+            {
+                products = products.Where(p => p.ProductName == selectedItem.ProductName).ToList();
+            }
+
+            foreach (var product in products.GroupBy(p => new { p.ProductName, p.Size, p.Price }).Select(g => g.First()))
+            {
+                // Create a container for each product (e.g., StackPanel)
+                var productContainer = new StackPanel
+                {
+                    Margin = new Thickness(10),
+                    Background = Brushes.LightGray,
+                    Width = 200,
+                    Height = 250
+                };
+
+                // Add product image
+                var image = new Image
+                {
+                    Source = ConvertToImageSource(product.ProductImage),
+                    Height = 120,
+                    Margin = new Thickness(5)
+                };
+
+                // Add product details
+                var brandText = new TextBlock
+                {
+                    Text = $"Brand: {product.ProductName}",
+                    FontWeight = FontWeights.Bold,
+                    Margin = new Thickness(5)
+                };
+
+                var sizeText = new TextBlock
+                {
+                    Text = $"Size: {product.Size}",
+                    Margin = new Thickness(5)
+                };
+
+                var priceText = new TextBlock
+                {
+                    Text = $"₱{product.Price:F2}",
+                    Margin = new Thickness(5)
+                };
+
+                // Add all elements to the container
+                productContainer.Children.Add(image);
+                productContainer.Children.Add(brandText);
+                productContainer.Children.Add(sizeText);
+                productContainer.Children.Add(priceText);
+
+                // Add the container to the WrapPanel
+                ProductsWrapPanel.Children.Add(productContainer);
+            }
+        }
+
+
+
+        // Method to convert byte array to ImageSource
+        private ImageSource ConvertToImageSource(byte[] imageBytes)
+        {
+            if (imageBytes == null || imageBytes.Length == 0) return null;
+
+            try
+            {
+                using var ms = new MemoryStream(imageBytes);
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.StreamSource = ms;
+                image.EndInit();
+                return image;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading image: {ex.Message}");
+                return null;
+            }
+        }
+
+
+        private void GridView_Click(object sender, RoutedEventArgs e)
+        {
+            // Show Grid View and hide WrapPanel
+ 
+            inventoryDG.Visibility = Visibility.Collapsed;
+            ProductScrollViewer.Visibility = Visibility.Visible;
+            ProductsWrapPanel.Visibility = Visibility.Visible;
+
+            LoadProductsForDisplay(null);
+
+            // Uncheck ListView button
+            listViewButton.IsChecked = false;
+
+            // Check GridView button
+            gridViewButton.IsChecked = true;
+        }
+
+        private void ListView_Click(object sender, RoutedEventArgs e)
+        {
+            // Show WrapPanel and hide Grid View
+            inventoryDG.Visibility = Visibility.Visible;
+            ProductsWrapPanel.Visibility = Visibility.Collapsed;
+            ProductScrollViewer.Visibility = Visibility.Collapsed;
+
+            // Load all products to the WrapPanel for List view
+            // Pass null if no specific item is selected
+
+            // Uncheck GridView button
+            gridViewButton.IsChecked = false;
+
+            // Check ListView button
+            listViewButton.IsChecked = true;
+        }
+
+
+
+        private void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Check if an item is selected
+            if (inventoryDG.SelectedItem is InventoryTable selectedItem)
+            {
+                // Hide the DataGrid and show the WrapPanel
+                inventoryDG.Visibility = Visibility.Collapsed;
+                ProductsWrapPanel.Visibility = Visibility.Visible;
+
+                // Load products into the WrapPanel
+                LoadProductsForDisplay(selectedItem); // Pass selectedItem to display product details
+            }
+            else
+            {
+                // If no item is selected, return to the GridView
+                inventoryDG.Visibility = Visibility.Visible;
+                ProductsWrapPanel.Visibility = Visibility.Collapsed;
             }
         }
 

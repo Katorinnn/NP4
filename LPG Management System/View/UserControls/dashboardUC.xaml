@@ -16,10 +16,22 @@
     </UserControl.Resources>
 
     <Grid Background="{StaticResource BackgroundGradient}">
+        <Border Background="#003566" Height="70" VerticalAlignment="Top" CornerRadius="0,0,0,0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
+                <Image Source="/Images/dashboard.png" Height="50" Margin="10,0" VerticalAlignment="Center"/>
+                <TextBlock Text="DASHBOARD" 
+                   Foreground="White" 
+                   FontFamily="Segoe UI" 
+                   FontWeight="Bold" 
+                   FontSize="36" 
+                   VerticalAlignment="Center" 
+                   Margin="20,0,0,0"/>
+            </StackPanel>
+        </Border>
         <Grid x:Name="topGrid" Margin="48,23,52,498">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,72,0,0">
                 <!-- First Metric: Today's Income -->
-                <!-- First Metric: Today's Income -->
+
                 <Border CornerRadius="5" BorderBrush="Gray" BorderThickness="1" Padding="10" Width="255" Height="162" Background="White" Margin="10,0,10,0">
                     <Border.Effect>
                         <DropShadowEffect Color="LightGray" Direction="300" ShadowDepth="5" BlurRadius="5" Opacity="0.5"/>

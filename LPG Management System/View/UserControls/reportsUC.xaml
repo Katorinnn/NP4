@@ -19,6 +19,19 @@
             <RowDefinition Height="199*"/>
             <RowDefinition Height="651*"/>
         </Grid.RowDefinitions>
+
+        <Border Background="#003566" Height="70" VerticalAlignment="Top" CornerRadius="0,0,0,0" Margin="-2,0,0,0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
+                <Image Source="/Images/reports.png" Height="60" Margin="10,0" VerticalAlignment="Center"/>
+                <TextBlock Text="REPORTS" 
+                   Foreground="White" 
+                   FontFamily="Segoe UI" 
+                   FontWeight="Bold" 
+                   FontSize="36" 
+                   VerticalAlignment="Center" 
+                   Margin="20,0,0,0"/>
+            </StackPanel>
+        </Border>
         <!-- DataGrid for displaying reports -->
         <DataGrid x:Name="inventorySalesDG" 
                   HorizontalAlignment="Center" 
@@ -121,20 +134,20 @@ AutoGenerateColumns="False" Grid.Row="1">
         <ComboBox x:Name="categoryComboBox" HorizontalAlignment="Left" Height="30" Margin="116,134,0,0" VerticalAlignment="Top" Width="200" FontSize="14" SelectionChanged="categoryComboBox_SelectionChanged"/>
 
         <!-- Pagination Controls -->
-        <Button HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="42" Height="30" Margin="523,0,0,23" Click="PreviousButton_Click" Background="AliceBlue" Grid.Row="1">
+        <Button x:Name="previousButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="42" Height="30" Margin="520,0,0,23" Click="PreviousButton_Click" Background="AliceBlue" Grid.Row="1">
             <Button.Content>
                 <Image Source="/View/UserControls/back.png"/>
             </Button.Content>
         </Button>
 
-        <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="42" Height="30" Margin="0,0,520,23" Click="NextButton_Click" Background="AliceBlue" BorderBrush="{x:Null}" Grid.Row="1">
+        <Button x:Name="nextButton" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="42" Height="30" Margin="0,0,518,23" Click="NextButton_Click" Background="AliceBlue" BorderBrush="{x:Null}" Grid.Row="1">
             <Button.Content>
                 <Image Source="/View/UserControls/next.png" />
             </Button.Content>
         </Button>
 
         <!-- Page Indicator -->
-        <TextBlock x:Name="pageIndicator" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16" Margin="0,587,0,0" Foreground="Black" Grid.Row="1" Height="21" Width="0"/>
+        <TextBlock x:Name="pageIndicator"  HorizontalAlignment="Left" FontSize="16" Margin="572,608,0,19" Foreground="Black" Grid.Row="1" Width="86" Text="Page"/>
 
 
         <Button Content="Apply" HorizontalAlignment="Left" Margin="1018,132,0,0" VerticalAlignment="Top" Width="82" FontSize="16" Click="ApplyFilterButton_Click" Height="36"/>

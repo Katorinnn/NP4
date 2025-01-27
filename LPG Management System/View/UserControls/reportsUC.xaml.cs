@@ -1,8 +1,11 @@
-﻿using LPG_Management_System.Models;
+﻿using iTextSharp.text.pdf;
+using iTextSharp.text;
+using LPG_Management_System.Models;
 using LPG_Management_System.View.Windows;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -58,6 +61,8 @@ namespace LPG_Management_System.View.UserControls
                 MessageBox.Show($"Error fetching inventory sales data: {ex.Message}");
             }
         }
+
+
 
         private void LoadStockCheckData()
         {
@@ -115,11 +120,13 @@ namespace LPG_Management_System.View.UserControls
                 case "StockCheck":
                     var stockPageData = allStockCheckReports.Skip(startIndex).Take(itemsPerPage).ToList();
                     stockCheckDG.ItemsSource = stockPageData;
+                    pageIndicator.Text = $"Page {inventorySalesCurrentPage} of {inventorySalesTotalPages}";
                     break;
 
                 case "SalesByProduct":
                     var salesPageData = allSalesByProductReports.Skip(startIndex).Take(itemsPerPage).ToList();
                     salesByProductDG.ItemsSource = salesPageData;
+                    pageIndicator.Text = $"Page {inventorySalesCurrentPage} of {inventorySalesTotalPages}";
                     break;
             }
         }
@@ -191,7 +198,6 @@ namespace LPG_Management_System.View.UserControls
         {
             if (categoryComboBox.SelectedItem is string selectedCategory)
             {
-                // Hide all DataGrids initially
                 inventorySalesDG.Visibility = Visibility.Collapsed;
                 stockCheckDG.Visibility = Visibility.Collapsed;
                 salesByProductDG.Visibility = Visibility.Collapsed;
@@ -242,44 +248,108 @@ namespace LPG_Management_System.View.UserControls
             // Handle selection changes if necessary
         }
 
-        //private void FilterReportsByDate()
-        //{
-        //    if (beginDatePicker.SelectedDate.HasValue && endDatePicker.SelectedDate.HasValue)
-        //    {
-        //        DateTime startDate = beginDatePicker.SelectedDate.Value.Date;
-        //        DateTime endDate = endDatePicker.SelectedDate.Value.Date.AddDays(1).AddMilliseconds(-1);
+        private void FilterReportsByDate(DataGrid targetDataGrid)
+        {
+            if (!beginDatePicker.SelectedDate.HasValue || !endDatePicker.SelectedDate.HasValue)
+            {
+                MessageBox.Show("Please select both Begin Date and End Date.");
+                return;
+            }
 
-        //        if (startDate > endDate)
-        //        {
-        //            MessageBox.Show("Begin Date cannot be later than End Date.");
-        //            return;
-        //        }
+            DateTime startDate = beginDatePicker.SelectedDate.Value.Date;
+            DateTime endDate = endDatePicker.SelectedDate.Value.Date;
 
-        //        var filteredReports = allReports
-        //            .Where(report => report.Date >= startDate && report.Date <= endDate)
-        //            .ToList();
+            if (startDate > endDate)
+            {
+                MessageBox.Show("Begin Date cannot be later than End Date.");
+                return;
+            }
 
-        //        if (filteredReports.Count == 0)
-        //        {
-        //            MessageBox.Show("No records found for the selected date range.");
-        //            return;
-        //        }
+            if (targetDataGrid == inventorySalesDG)
+            {
+                var filteredReports = allInventorySalesReports
+                    .Where(report => report.Date.Date >= startDate && report.Date.Date <= endDate)
+                    .ToList();
 
-        //        allReports = filteredReports;
-        //        currentPage = 1;
-        //        totalPages = (int)Math.Ceiling((double)allReports.Count / itemsPerPage);
-        //        LoadPage(currentPage);
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Please select both Begin Date and End Date.");
-        //    }
-        //}
+                inventorySalesDG.ItemsSource = filteredReports;
+                inventorySalesTotalPages = (int)Math.Ceiling((double)filteredReports.Count / itemsPerPage);
+                inventorySalesCurrentPage = 1;
 
+                if (filteredReports.Count == 0)
+                {
+                    MessageBox.Show("No records found for the selected date range.");
+                }
+            }
+            else if (targetDataGrid == stockCheckDG)
+            {
+                var filteredReports = allStockCheckReports
+                    .Where(report => report.Date.Date >= startDate && report.Date.Date <= endDate)
+                    .ToList();
+
+                stockCheckDG.ItemsSource = filteredReports;
+                stockCheckTotalPages = (int)Math.Ceiling((double)filteredReports.Count / itemsPerPage);
+                stockCheckCurrentPage = 1;
+
+                if (filteredReports.Count == 0)
+                {
+                    MessageBox.Show("No records found for the selected date range.");
+                }
+            }
+            else if (targetDataGrid == salesByProductDG)
+            {
+                var filteredReports = allSalesByProductReports
+                    .Where(report => report.Date.Date >= startDate && report.Date.Date <= endDate)
+                    .ToList();
+
+                salesByProductDG.ItemsSource = filteredReports;
+                salesByProductTotalPages = (int)Math.Ceiling((double)filteredReports.Count / itemsPerPage);
+                salesByProductCurrentPage = 1;
+
+                if (filteredReports.Count == 0)
+                {
+                    MessageBox.Show("No records found for the selected date range.");
+                }
+            }
+
+            // Update the pagination UI
+            UpdatePaginationUI(targetDataGrid);
+        }
+
+
+        private void UpdatePaginationUI(DataGrid targetDataGrid)
+        {
+            if (targetDataGrid == inventorySalesDG)
+            {
+                pageIndicator.Text = $"Page {inventorySalesCurrentPage} of {inventorySalesTotalPages}";
+            }
+            else if (targetDataGrid == stockCheckDG)
+            {
+                pageIndicator.Text = $"Page {stockCheckCurrentPage} of {stockCheckTotalPages}";
+            }
+            else if (targetDataGrid == salesByProductDG)
+            {
+                pageIndicator.Text = $"Page {salesByProductCurrentPage} of {salesByProductTotalPages}";
+            }
+        }
         private void ApplyFilterButton_Click(object sender, RoutedEventArgs e)
         {
-            //FilterReportsByDate();
+            if (categoryComboBox.SelectedItem is string selectedCategory)
+            {
+                if (selectedCategory == "Inventory Sales Report")
+                {
+                    FilterReportsByDate(inventorySalesDG);
+                }
+                else if (selectedCategory == "Stock Check Sheets")
+                {
+                    FilterReportsByDate(stockCheckDG);
+                }
+                else if (selectedCategory == "Sales by Product")
+                {
+                    FilterReportsByDate(salesByProductDG);
+                }
+            }
         }
+
 
         private void CancelFilterButton_Click(object sender, RoutedEventArgs e)
         {
@@ -314,76 +384,81 @@ namespace LPG_Management_System.View.UserControls
 
                     if (targetDataGrid == null) return;
 
-                    var printPreviewWindow = new PrintPreview(CreateFixedDocumentFromDataGrid(targetDataGrid));
-                    printPreviewWindow.ShowDialog();
+                    // Create the PDF using iTextSharp
+                    using (MemoryStream memoryStream = new MemoryStream())
+                    {
+                        float width = 600f;
+                        float height = targetDataGrid.Items.Count * 15f + 100f; // Dynamically set height based on number of items
+                        iTextSharp.text.Rectangle pageSize = new iTextSharp.text.Rectangle(width, height);
+
+                        iTextSharp.text.Document doc = new iTextSharp.text.Document(pageSize, 5f, 5f, 5f, 5f);
+                        PdfWriter writer = PdfWriter.GetInstance(doc, memoryStream);
+                        writer.CloseStream = false;
+
+                        doc.Open();
+
+                        // Add Title and Date of Report
+                        Font headerFont = new Font(Font.FontFamily.HELVETICA, 12f, Font.BOLD);
+                        Font normalFont = new Font(Font.FontFamily.HELVETICA, 10f, Font.NORMAL);
+
+                        doc.Add(new iTextSharp.text.Paragraph($"Report: {selectedCategory}", headerFont) { Alignment = Element.ALIGN_CENTER });
+                        doc.Add(new iTextSharp.text.Paragraph($"Date: {DateTime.Now:yyyy-MM-dd}", normalFont) { Alignment = Element.ALIGN_CENTER });
+                        doc.Add(new iTextSharp.text.Paragraph(new string('-', 40), normalFont) { Alignment = Element.ALIGN_CENTER });
+
+                        // Add the DataGrid content to the PDF
+                        PdfPTable table = new PdfPTable(targetDataGrid.Columns.Count)
+                        {
+                            WidthPercentage = 100
+                        };
+
+                        // Add column headers
+                        foreach (var column in targetDataGrid.Columns)
+                        {
+                            table.AddCell(new PdfPCell(new Phrase(column.Header.ToString(), headerFont)) { Border = 0, HorizontalAlignment = PdfPCell.ALIGN_CENTER });
+                        }
+
+                        // Add data rows
+                        foreach (var item in targetDataGrid.ItemsSource)
+                        {
+                            foreach (var column in targetDataGrid.Columns)
+                            {
+                                var cellContent = column.GetCellContent(item) as TextBlock;
+                                table.AddCell(new PdfPCell(new Phrase(cellContent?.Text ?? string.Empty, normalFont)) { Border = 0, HorizontalAlignment = PdfPCell.ALIGN_CENTER });
+                            }
+                        }
+
+                        // Add the table to the document
+                        doc.Add(table);
+
+                        // Add Footer
+                        doc.Add(new iTextSharp.text.Paragraph(new string('-', 40), normalFont) { Alignment = Element.ALIGN_CENTER });
+                        doc.Add(new iTextSharp.text.Paragraph("End of Report", normalFont) { Alignment = Element.ALIGN_CENTER });
+
+                        doc.Close();
+
+                        // Save the PDF to a temporary location
+                        string tempFilePath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), $"{Guid.NewGuid()}.pdf");
+                        File.WriteAllBytes(tempFilePath, memoryStream.ToArray());
+
+                        // Open the PDF for preview
+                        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(tempFilePath) { UseShellExecute = true });
+
+                        // Clean up the file after a delay
+                        Task.Run(() =>
+                        {
+                            System.Threading.Thread.Sleep(50000);
+                            if (File.Exists(tempFilePath))
+                            {
+                                File.Delete(tempFilePath);
+                            }
+                        });
+                    }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error generating print preview: {ex.Message}");
             }
-        }
-
-        private FixedDocument CreateFixedDocumentFromDataGrid(DataGrid dataGrid)
-        {
-            FixedDocument document = new FixedDocument();
-            Size pageSize = new Size(800, 1120);
-            document.DocumentPaginator.PageSize = pageSize;
-
-            FixedPage page = new FixedPage { Width = pageSize.Width, Height = pageSize.Height };
-            page.Children.Add(new TextBlock
-            {
-                Text = "Report Preview",
-                FontSize = 16,
-                FontWeight = FontWeights.Bold,
-                Margin = new Thickness(10),
-                TextAlignment = TextAlignment.Center
-            });
-
-            DataGrid printGrid = new DataGrid { ItemsSource = dataGrid.ItemsSource, Width = 750, Height = 1000 };
-            page.Children.Add(printGrid);
-
-            PageContent pageContent = new PageContent();
-            ((IAddChild)pageContent).AddChild(page);
-            document.Pages.Add(pageContent);
-
-            return document;
-        }
-
-
-
-
-        private UIElement CreateHeaderCell(string text, int column)
-        {
-            return CreateTextCell(text, column, FontWeights.Bold);
-        }
-
-        private UIElement CreateDataCell(string text, int row, int column)
-        {
-            return CreateTextCell(text, column, FontWeights.Normal, row);
-        }
-
-        private UIElement CreateTextCell(string text, int column, FontWeight fontWeight, int row = 0)
-        {
-            TextBlock textBlock = new TextBlock
-            {
-                Text = text,
-                FontWeight = fontWeight,
-                Margin = new Thickness(2),
-                TextAlignment = TextAlignment.Center
-            };
-
-            Border border = new Border
-            {
-                BorderBrush = Brushes.Black,
-                BorderThickness = new Thickness(0.5),
-                Child = textBlock
-            };
-
-            Grid.SetColumn(border, column);
-            Grid.SetRow(border, row);
-
-            return border;
         }
     }
 }
