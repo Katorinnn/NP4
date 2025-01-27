@@ -16,7 +16,7 @@
 
     <Grid Background="{StaticResource BackgroundGradient}">
         <!-- DataGrid for displaying reports -->
-        <DataGrid x:Name="reportsDG" 
+        <DataGrid x:Name="inventorySalesDG" 
                   HorizontalAlignment="Center" 
                   Height="580" 
                   Margin="0,202,0,0" 
@@ -61,6 +61,45 @@
                 <!--<DataGridTextColumn Header="Status" Width="*" Binding="{Binding Status}" /> -->
             </DataGrid.Columns>
         </DataGrid>
+
+        <DataGrid x:Name="stockCheckDG" Visibility="Collapsed" HorizontalAlignment="Center" 
+Height="580" 
+Margin="0,202,0,0" 
+VerticalAlignment="Top" 
+Width="1190" 
+IsReadOnly="True" 
+HorizontalScrollBarVisibility="Auto" 
+VerticalScrollBarVisibility="Auto"
+CanUserReorderColumns="False"
+CanUserResizeColumns="False" 
+AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="StockID" Binding="{Binding StocksID}" />
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Stocks}" />
+                <DataGridTextColumn Header="Date Checked" Binding="{Binding Date}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- DataGrid for Sales by Product -->
+        <DataGrid x:Name="salesByProductDG" Visibility="Collapsed" HorizontalAlignment="Center" 
+Height="580" 
+Margin="0,202,0,0" 
+VerticalAlignment="Top" 
+Width="1190" 
+IsReadOnly="True" 
+HorizontalScrollBarVisibility="Auto" 
+VerticalScrollBarVisibility="Auto"
+CanUserReorderColumns="False"
+CanUserResizeColumns="False" 
+AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Product Name" Binding="{Binding ProductName}" />
+                <DataGridTextColumn Header="Total Quantity Sold" Binding="{Binding TotalQuantitySold}" />
+                <DataGridTextColumn Header="Total Sales" Binding="{Binding TotalSales}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+
 
         <!-- Header panel with labels (for selecting report filters) -->
         <Grid HorizontalAlignment="Center" Height="94" VerticalAlignment="Top" Width="1190" Background="WhiteSmoke" Margin="0,103,0,0">

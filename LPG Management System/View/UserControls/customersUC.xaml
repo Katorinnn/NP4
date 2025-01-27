@@ -18,7 +18,7 @@
 
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" MinHeight="132"/>
+                <RowDefinition Height="Auto" MinHeight="96"/>
                 <!-- For Search and Button -->
                 <RowDefinition/>
                 <!-- For DataGrid -->
@@ -82,7 +82,7 @@
             </StackPanel>
 
             <!-- DataGrid -->
-            <DataGrid x:Name="customersDG" Grid.Row="1" Margin="15,142,15,86"
+            <DataGrid x:Name="customersDG" Grid.Row="1" Margin="15,133,15,100"
                       CanUserResizeColumns="False" GridLinesVisibility="None" 
                       HorizontalGridLinesBrush="LightGray"
                       VerticalGridLinesBrush="LightGray" BorderBrush="Gray" BorderThickness="1"
@@ -90,7 +90,7 @@
                       SelectionUnit="FullRow" MinRowHeight="30" 
                       RowHeaderWidth="0" FontFamily="Segoe UI" 
                       HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" 
-                      ScrollViewer.CanContentScroll="True" SelectionChanged="customersDG_SelectionChanged" Width="1200" Height="500">
+                      ScrollViewer.CanContentScroll="True" SelectionChanged="customersDG_SelectionChanged">
 
                 <!-- DataGrid Column Header Style -->
                 <DataGrid.ColumnHeaderStyle>
