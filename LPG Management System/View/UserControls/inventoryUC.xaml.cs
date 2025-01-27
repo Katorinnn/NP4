@@ -19,7 +19,8 @@ namespace LPG_Management_System.View.UserControls
             InitializeComponent();
             _context = new DataContext();
             LoadCustomersData();
-            
+
+
         }
 
         private void LoadCustomersData()
@@ -83,12 +84,11 @@ namespace LPG_Management_System.View.UserControls
         {
             inventoryCRUD inventoryCRUD = new inventoryCRUD(); // No parameter needed
             bool? dialogResult = inventoryCRUD.ShowDialog();
-
             if (dialogResult == true)
             {
                 LoadCustomersData();
-                
             }
+
         }
 
 
@@ -98,11 +98,10 @@ namespace LPG_Management_System.View.UserControls
             if (btn != null)
             {
                 int selectedStockID = Convert.ToInt32(btn.Tag);
-                inventoryUpdate inventoryUpdate = new inventoryUpdate(selectedStockID, inventoryDG);
-                inventoryUpdate.ShowDialog();
-                LoadCustomersData();
+                OpenInventoryUpdateWindow(selectedStockID);  // Ensure this is called to open the update window
             }
         }
+
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
@@ -147,12 +146,29 @@ namespace LPG_Management_System.View.UserControls
         }
 
         // Assuming you are opening inventoryUpdate from another window (e.g. the main window)
-        private void OpenInventoryUpdate(int stocksID)
+        private void OpenInventoryUpdateWindow(int stocksID)
         {
-            // Pass the correct DataGrid reference (inventoryDG) to inventoryUpdate
-            inventoryUpdate inventoryUpdateWindow = new inventoryUpdate(stocksID, inventoryDG);
-            inventoryUpdateWindow.ShowDialog();
+            // Create an instance of inventoryUpdate
+            inventoryUpdate updateWindow = new inventoryUpdate(stocksID, inventoryDG);
+
+            // Subscribe to the event to refresh the DataGrid when update is successful
+            updateWindow.OnInventoryUpdated += RefreshDataGrid;
+
+            // Show the window
+            updateWindow.ShowDialog();
         }
+
+        private void RefreshDataGrid()
+        {
+            // Re-fetch the updated data from the database and re-bind the DataGrid
+            using (var dbContext = new DataContext())
+            {
+                var updatedInventoryList = dbContext.tbl_inventory.ToList();  // Fetch updated data
+                inventoryDG.ItemsSource = updatedInventoryList;  // Re-bind the DataGrid
+            }
+        }
+
+
 
     }
 }
