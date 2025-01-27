@@ -18,18 +18,12 @@ namespace LPG_Management_System.View
             InitializeComponent();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            datePicker.SelectedDate = DateTime.Today; // Set today's date
-        }
-
         private void addBtn_Click(object sender, RoutedEventArgs e)
         {
             string brandname = brandtxtBox.Text;
             string size = sizetxtBox.Text;
             string priceText = pricetxtBox.Text;
             string stocksText = stockstxtBox.Text;
-            var selectedDate = datePicker.SelectedDate;
 
             // Get the selected unit from the ComboBox
             string unit = (unitComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
@@ -39,7 +33,7 @@ namespace LPG_Management_System.View
 
             if (string.IsNullOrEmpty(brandname) || string.IsNullOrEmpty(size) ||
                 string.IsNullOrEmpty(priceText) || string.IsNullOrEmpty(stocksText) ||
-                selectedDate == null || selectedImageBytes == null)
+                selectedImageBytes == null)
             {
                 MessageBox.Show("Please fill in all fields and select an image.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -61,7 +55,7 @@ namespace LPG_Management_System.View
                         Size = fullSize, // Save the combined size and unit
                         Price = price,
                         Stocks = stocks,
-                        Date = selectedDate.Value, // Ensure this matches the database type
+                        Date = DateTime.Now, // Ensure this matches the database type
                         ProductImage = selectedImageBytes
                     };
 

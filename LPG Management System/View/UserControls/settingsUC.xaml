@@ -24,7 +24,7 @@
 
 
         <Label Content="Company Details" HorizontalAlignment="Left" Height="48" Margin="14,33,0,0" VerticalAlignment="Top" Width="221" FontSize="25" FontWeight="Bold" FontFamily="Segoe UI" Grid.Column="2"/>
-        <Button Width="60" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,41,0,0" Cursor="Hand"  Click="EditButton_Click" Grid.Column="2">
+        <Button Width="56" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,41,0,0" Cursor="Hand"  Click="EditButton_Click" Grid.Column="2">
             <Button.Content>
                 <Image Source="/View/UserControls/edit.png" Width="30" Height="22" />
             </Button.Content>
@@ -54,7 +54,7 @@
                     BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsEnabled="True" Grid.Column="2"/>
         <Button x:Name="SavePrivacyButton" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="264,547,0,0" Width="100" Height="30" FontSize="14" FontFamily="Segoe UI" IsEnabled="False" Click="SavePrivacyButton_Click" Grid.Column="2"/>
         <Button x:Name="CancelPrivacyButton" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="155,547,0,0" Width="100" Height="30" FontSize="14" FontFamily="Segoe UI" IsEnabled="False" Click="CancelPrivacyButton_Click" Grid.Column="2"/>
-        <Button Width="60" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="284,399,0,0" Cursor="Hand" MouseDown="EditPrivacyButton_Click" Click="EditPrivacyButton_Click" Grid.Column="2">
+        <Button Width="56" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="284,399,0,0" Cursor="Hand" MouseDown="EditPrivacyButton_Click" Click="EditPrivacyButton_Click" Grid.Column="2">
             <Button.Content>
                 <Image Source="/View/UserControls/edit.png" Width="25" Height="30" />
             </Button.Content>
@@ -64,13 +64,13 @@
 
 
         <Label Content="Email address:" HorizontalAlignment="Left" Height="32" Margin="15,232,0,0" VerticalAlignment="Top" Width="128" FontSize="15" FontFamily="Segoe UI" Grid.Column="2"/>
-        <Button Content="Upload Image" HorizontalAlignment="Left" Margin="102,399,0,0" VerticalAlignment="Top" Click="UploadImage_Click" Height="50" Width="121" Grid.Column="1"/>
+        <Button Content="Upload Image" HorizontalAlignment="Left" Margin="102,399,0,0" VerticalAlignment="Top" Click="UploadImage_Click" Height="50" Width="147" Grid.Column="1"/>
 
         <Border BorderBrush="Black" BorderThickness="2" CornerRadius="10" HorizontalAlignment="Right" Margin="0,116,306,0" VerticalAlignment="Top" Grid.Column="1">
             <Image x:Name="logoPlaceholder" Height="260" Width="276" OpacityMask="#FFC3BABA"/>
         </Border>
 
-        <Label Content="Company Logo" HorizontalAlignment="Left" Height="48" Margin="9,33,0,0" VerticalAlignment="Top" Width="222" FontSize="25" FontWeight="Bold" FontFamily="Segoe UI" Grid.Column="1"/>
+        <Label Content="Company Logo" HorizontalAlignment="Left" Height="48" Margin="27,33,0,0" VerticalAlignment="Top" Width="222" FontSize="25" FontWeight="Bold" FontFamily="Segoe UI" Grid.Column="1"/>
 
 
     </Grid>

@@ -88,21 +88,17 @@ namespace LPG_Management_System.View
 
         private void imageSelectBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Create an OpenFileDialog to select an image file
             Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
-            openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif"; // Filter for image files
+            openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
 
-            // Show the dialog and check if the user selected a file
             if (openFileDialog.ShowDialog() == true)
             {
                 try
                 {
-                    // Load the selected image into the Image control
                     string imagePath = openFileDialog.FileName;
                     var bitmap = new BitmapImage(new Uri(imagePath));
                     productImagePreview.Source = bitmap;
 
-                    // Load the image into a byte array
                     using (var fs = new System.IO.FileStream(imagePath, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                     {
                         byte[] newImageBytes = new byte[fs.Length];
@@ -128,7 +124,6 @@ namespace LPG_Management_System.View
             string price = pricetxtBox.Text;
             string sizeUnit = (sizeUnitComboBox.SelectedItem as ComboBoxItem)?.Content.ToString(); // Get selected unit
 
-            // Validate StocksID is an integer
             int parsedStocksID;
             if (!int.TryParse(stocksID, out parsedStocksID))
             {
@@ -164,9 +159,10 @@ namespace LPG_Management_System.View
                     if (inventoryItem != null)
                     {
                         inventoryItem.ProductName = brandname;
-                        inventoryItem.Size = size + " " + sizeUnit; // Append the selected unit to the size
+                        inventoryItem.Size = size + " " + sizeUnit; 
                         inventoryItem.Price = parsedPrice;
-                        inventoryItem.Stocks = parsedStocks; // Update the Stocks field
+                        inventoryItem.Stocks = parsedStocks;
+                        inventoryItem.Date = DateTime.Now;
 
                         // Save the image if it's updated
                         if (this.imageBytes != null && this.imageBytes.Length > 0)

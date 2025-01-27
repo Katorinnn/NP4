@@ -15,11 +15,15 @@
     </UserControl.Resources>
 
     <Grid Background="{StaticResource BackgroundGradient}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="199*"/>
+            <RowDefinition Height="651*"/>
+        </Grid.RowDefinitions>
         <!-- DataGrid for displaying reports -->
         <DataGrid x:Name="inventorySalesDG" 
                   HorizontalAlignment="Center" 
                   Height="580" 
-                  Margin="0,202,0,0" 
+                  Margin="0,4,0,0" 
                   VerticalAlignment="Top" 
                   Width="1190" 
                   IsReadOnly="True" 
@@ -27,7 +31,7 @@
                   VerticalScrollBarVisibility="Auto"
                   CanUserReorderColumns="False"
                   CanUserResizeColumns="False" 
-                  AutoGenerateColumns="False">
+                  AutoGenerateColumns="False" Grid.Row="1">
 
 
 
@@ -62,9 +66,10 @@
             </DataGrid.Columns>
         </DataGrid>
 
+
         <DataGrid x:Name="stockCheckDG" Visibility="Collapsed" HorizontalAlignment="Center" 
 Height="580" 
-Margin="0,202,0,0" 
+Margin="0,4,0,0" 
 VerticalAlignment="Top" 
 Width="1190" 
 IsReadOnly="True" 
@@ -72,7 +77,7 @@ HorizontalScrollBarVisibility="Auto"
 VerticalScrollBarVisibility="Auto"
 CanUserReorderColumns="False"
 CanUserResizeColumns="False" 
-AutoGenerateColumns="False">
+AutoGenerateColumns="False" Grid.Row="1">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="StockID" Binding="{Binding StocksID}" />
                 <DataGridTextColumn Header="Quantity" Binding="{Binding Stocks}" />
@@ -83,7 +88,7 @@ AutoGenerateColumns="False">
         <!-- DataGrid for Sales by Product -->
         <DataGrid x:Name="salesByProductDG" Visibility="Collapsed" HorizontalAlignment="Center" 
 Height="580" 
-Margin="0,202,0,0" 
+Margin="0,4,0,0" 
 VerticalAlignment="Top" 
 Width="1190" 
 IsReadOnly="True" 
@@ -91,7 +96,7 @@ HorizontalScrollBarVisibility="Auto"
 VerticalScrollBarVisibility="Auto"
 CanUserReorderColumns="False"
 CanUserResizeColumns="False" 
-AutoGenerateColumns="False">
+AutoGenerateColumns="False" Grid.Row="1">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Product Name" Binding="{Binding ProductName}" />
                 <DataGridTextColumn Header="Total Quantity Sold" Binding="{Binding TotalQuantitySold}" />
@@ -102,39 +107,41 @@ AutoGenerateColumns="False">
 
 
         <!-- Header panel with labels (for selecting report filters) -->
-        <Grid HorizontalAlignment="Center" Height="94" VerticalAlignment="Top" Width="1190" Background="WhiteSmoke" Margin="0,103,0,0">
-            <Label Content="Category" HorizontalAlignment="Left" Height="28" Margin="18,38,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontWeight="Bold"/>
-            <Label Content="Begin Date" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="106" FontSize="14" FontWeight="Bold" Margin="348,38,0,0"/>
-            <Label Content="End Date" HorizontalAlignment="Left" Height="28" Margin="695,38,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontWeight="Bold"/>
-        </Grid>
+        <Border BorderBrush="#8ecae6" BorderThickness="1" CornerRadius="5" Background="WhiteSmoke" Margin="15,110,15,1">
+            <Grid HorizontalAlignment="Center" Height="94" VerticalAlignment="Top" Width="1190">
+                <Label Content="Category" HorizontalAlignment="Left" Height="28" Margin="18,27,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontWeight="Bold"/>
+                <Label Content="Begin Date" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="83" FontSize="14" FontWeight="Bold" Margin="442,31,0,0"/>
+                <Label Content="End Date" HorizontalAlignment="Left" Height="28" Margin="722,31,0,0" VerticalAlignment="Top" Width="76" FontSize="14" FontWeight="Bold"/>
+            </Grid>
+        </Border>
 
         <!-- DatePickers and ComboBox below the header -->
-        <DatePicker x:Name="beginDatePicker" HorizontalAlignment="Left" Height="30" Margin="458,140,0,0" VerticalAlignment="Top" Width="200" FontSize="14" />
-        <DatePicker x:Name="endDatePicker" HorizontalAlignment="Left" Height="30" Margin="791,140,0,0" VerticalAlignment="Top" Width="200" FontSize="14" />
-        <ComboBox x:Name="categoryComboBox" HorizontalAlignment="Left" Height="30" Margin="116,140,0,0" VerticalAlignment="Top" Width="200" FontSize="14" SelectionChanged="categoryComboBox_SelectionChanged"/>
+        <DatePicker x:Name="beginDatePicker" HorizontalAlignment="Left" Height="30" Margin="559,139,0,0" VerticalAlignment="Top" Width="175" FontSize="14" />
+        <DatePicker x:Name="endDatePicker" HorizontalAlignment="Left" Height="30" Margin="818,138,0,0" VerticalAlignment="Top" Width="175" FontSize="14" />
+        <ComboBox x:Name="categoryComboBox" HorizontalAlignment="Left" Height="30" Margin="116,134,0,0" VerticalAlignment="Top" Width="200" FontSize="14" SelectionChanged="categoryComboBox_SelectionChanged"/>
 
         <!-- Pagination Controls -->
-        <Button HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="45" Height="30" Margin="523,0,0,23" Click="PreviousButton_Click" Background="AliceBlue">
+        <Button HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="42" Height="30" Margin="523,0,0,23" Click="PreviousButton_Click" Background="AliceBlue" Grid.Row="1">
             <Button.Content>
                 <Image Source="/View/UserControls/back.png"/>
             </Button.Content>
         </Button>
 
-        <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="45" Height="30" Margin="0,0,520,23" Click="NextButton_Click" Background="AliceBlue" BorderBrush="{x:Null}">
+        <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="42" Height="30" Margin="0,0,520,23" Click="NextButton_Click" Background="AliceBlue" BorderBrush="{x:Null}" Grid.Row="1">
             <Button.Content>
                 <Image Source="/View/UserControls/next.png" />
             </Button.Content>
         </Button>
 
         <!-- Page Indicator -->
-        <TextBlock x:Name="pageIndicator" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="16" Margin="0,0,0,30" Foreground="Black"/>
+        <TextBlock x:Name="pageIndicator" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16" Margin="0,587,0,0" Foreground="Black" Grid.Row="1" Height="21" Width="0"/>
 
 
         <Button Content="Apply" HorizontalAlignment="Left" Margin="1018,132,0,0" VerticalAlignment="Top" Width="82" FontSize="16" Click="ApplyFilterButton_Click" Height="36"/>
 
         <Button Content="Clear" HorizontalAlignment="Left" Margin="1111,132,0,0" VerticalAlignment="Top" Width="83" Height="36" FontSize="16" FontWeight="Bold" Background="Red" Foreground="White" Click="CancelFilterButton_Click"/>
 
-        <Button Content="Export Data" HorizontalAlignment="Left" Margin="1082,795,0,0" VerticalAlignment="Top" Width="123" Click="PrintPreview_Click" Height="34" Background="#2ecc71" Foreground="White"/>
+        <Button Content="Generate Report" HorizontalAlignment="Left" Margin="1046,598,0,0" VerticalAlignment="Top" Width="148" Click="PrintPreview_Click" Height="34" Background="#2ecc71" Foreground="White" Grid.Row="1"/>
 
     </Grid>
 
