@@ -6,6 +6,42 @@
              xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="850" d:DesignWidth="1230" Cursor="Hand">
+
+    <UserControl.Resources>
+        <!-- Style for the Toggle Buttons -->
+        <Style x:Key="ViewToggleButtonStyle" TargetType="ToggleButton">
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="#1E1E2C" />
+            <Setter Property="BorderBrush" Value="#444" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="20">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <!-- Change color when toggled -->
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="#0078D7" />
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
     <Grid x:Name="mainGrid">
         <Grid Margin="0,0,0,-10">
             <Grid.Background>
@@ -16,7 +52,7 @@
             </Grid.Background>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" MinHeight="132"/>
+                <RowDefinition Height="Auto" MinHeight="96"/>
                 <!-- For Search and Button -->
                 <RowDefinition/>
                 <!-- For DataGrid -->
@@ -36,14 +72,9 @@
             </Border>
 
 
-            <!-- StackPanel for New Button -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="1050,10,0,10" Width="100">
-                <!-- New Button -->
-
-            </StackPanel>
 
             <!-- DataGrid -->
-            <DataGrid x:Name="inventoryDG" Grid.Row="1" Margin="12,185,12,40"
+            <DataGrid x:Name="inventoryDG" Grid.Row="1" Margin="15,192,15,47"
                       CanUserResizeColumns="False" GridLinesVisibility="None"
                       HorizontalGridLinesBrush="LightGray"
                       VerticalGridLinesBrush="LightGray" BorderBrush="Gray" BorderThickness="1"
@@ -51,7 +82,7 @@
                       SelectionUnit="FullRow" AutoGenerateColumns="False" MinRowHeight="30" 
                       RowHeaderWidth="0" FontFamily="Segoe UI"
                       HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" 
-                      ScrollViewer.CanContentScroll="True"  Height="500" Width="1200"
+                      ScrollViewer.CanContentScroll="True"
                       AlternatingRowBackground="#F5F5F5" AlternationCount="2" >
 
                 <!-- DataGrid Column Header Style -->
@@ -128,10 +159,34 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
+
             <Button x:Name="newBtn" Content="New LPG Brand" 
-                Click="newBtn_Click" Cursor="Hand" Background="#0078D7" Foreground="White" Height="36"
+                Click="newBtn_Click" Cursor="Hand" Background="#0078D7" Foreground="White"
                 FontWeight="Bold" BorderThickness="0" BorderBrush="Transparent"
-                FontFamily="Segou UI" Margin="1078,132,19,560"  Grid.Row="1" RenderTransformOrigin="0.498,0.367"/>
+                FontFamily="Segou UI" Margin="1064,28,33,36" RenderTransformOrigin="0.498,0.367"/>
+
+            <UniformGrid Rows="1" Columns="2" Margin="998,99,15,551" Grid.Row="1">
+                <!-- List View Button -->
+                <ToggleButton x:Name="listViewButton" Content="List" 
+                  Style="{StaticResource ViewToggleButtonStyle}"
+                  IsChecked="True"
+                  Checked="ListViewButton_Checked"
+                  Unchecked="ListViewButton_Unchecked" />
+                <ToggleButton x:Name="gridViewButton" Content="Grid" 
+                  Style="{StaticResource ViewToggleButtonStyle}"
+                  Checked="GridViewButton_Checked"
+                  Unchecked="GridViewButton_Unchecked" Margin="0,36,0,36" />
+
+                <!-- Grid View Button -->
+            </UniformGrid>
+
+            <!-- List View -->
+
+            <!-- Product View -->
+            <ScrollViewer Grid.Row="1" Visibility="Collapsed">
+                <WrapPanel x:Name="productView" Margin="10">
+                </WrapPanel>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </UserControl>

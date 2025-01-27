@@ -7,29 +7,73 @@
              xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="850" d:DesignWidth="1250">
-    <Grid Background="#FFDFEDFE">
-        <Grid x:Name="topGrid" Margin="48,23,52,498" Background="#FFFEF9F5">
-            <Rectangle HorizontalAlignment="Left" Height="150" Margin="614,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="200"/>
-            <Rectangle HorizontalAlignment="Left" Height="150" Margin="878,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="200"/>
-            <Rectangle HorizontalAlignment="Left" Height="150" Margin="334,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="200"/>
-            <Rectangle HorizontalAlignment="Left" Height="150" Margin="59,0,0,0" Stroke="Black" VerticalAlignment="Center" Width="200"/>
+
+    <UserControl.Resources>
+        <LinearGradientBrush x:Key="BackgroundGradient" StartPoint="1,0" EndPoint="1,1">
+            <GradientStop Color="WhiteSmoke" Offset="0.1" />
+            <GradientStop Color="#8ecae6" Offset="2.0" />
+        </LinearGradientBrush>
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource BackgroundGradient}">
+        <Grid x:Name="topGrid" Margin="48,23,52,498">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,72,0,0">
+                <!-- First Metric: Today's Income -->
+                <!-- First Metric: Today's Income -->
+                <Border CornerRadius="5" BorderBrush="Gray" BorderThickness="1" Padding="10" Width="255" Height="162" Background="White" Margin="10,0,10,0">
+                    <Border.Effect>
+                        <DropShadowEffect Color="LightGray" Direction="300" ShadowDepth="5" BlurRadius="5" Opacity="0.5"/>
+                    </Border.Effect>
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Today's Income" FontSize="20" FontWeight="SemiBold" Foreground="#023047" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <Label x:Name="lblTodaysIncome" Content="Loading..." FontSize="22" FontWeight="Bold" Foreground="Black" HorizontalContentAlignment="Center" Height="50"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Second Metric: Total Income -->
+                <Border CornerRadius="5" BorderBrush="Gray" BorderThickness="1" Padding="10" Width="256" Height="162" Background="White" Margin="10,0,10,0">
+                    <Border.Effect>
+                        <DropShadowEffect Color="LightGray"  Direction="300" ShadowDepth="5" BlurRadius="5" Opacity="0.5"/>
+                    </Border.Effect>
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Stocks" FontSize="20" FontWeight="SemiBold" Foreground="#023047" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <Label x:Name="lblStocks" Content="Loading..." FontSize="22" FontWeight="Bold" Foreground="Black" HorizontalContentAlignment="Center" Height="50"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Third Metric: Sold LPG -->
+                <Border CornerRadius="5" BorderBrush="Gray" BorderThickness="1" Padding="10" Width="255" Height="162" Background="White" Margin="10,0,10,0">
+                    <Border.Effect>
+                        <DropShadowEffect Color="LightGray"  Direction="300" ShadowDepth="5" BlurRadius="5" Opacity="0.5"/>
+                    </Border.Effect>
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Sold LPG" FontSize="20" FontWeight="SemiBold" Foreground="#023047" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <Label x:Name="lblSoldLPG" Content="Loading..." FontSize="22" FontWeight="Bold" Foreground="Black" HorizontalContentAlignment="Center" Height="50"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Fourth Metric: Total Income -->
+                <Border CornerRadius="5" BorderBrush="Gray" BorderThickness="1" Padding="10" Width="254" Height="162" Background="White" Margin="10,0,10,0">
+                    <Border.Effect>
+                        <DropShadowEffect Color="LightGray"  Direction="300" ShadowDepth="5" BlurRadius="5" Opacity="0.5"/>
+                    </Border.Effect>
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Total Income" FontSize="20" FontWeight="SemiBold" Foreground="#023047" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <Label x:Name="lblTotalIncome" Content="Loading..." FontSize="22" FontWeight="Bold" Foreground="Black" HorizontalContentAlignment="Center" Height="50"/>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+
 
         </Grid>
 
-        <Grid x:Name="rightGrid" Margin="67,400,50,50" Background="#FFFEF9F5" Height="400">
+        <Grid x:Name="rightGrid" Margin="69,387,65,50" Background="#FFFEF9F5">
             <lvc:CartesianChart Name="SalesChart" Margin="10,10,10,28" />
-            <Label Content="Monthly Sales" HorizontalAlignment="Center" VerticalAlignment="Top" Width="344" Height="41" Margin="0,359,0,0" FontSize="25" HorizontalContentAlignment="Center" FontWeight="Bold"/>
+            <Label Content="Monthly Sales" HorizontalAlignment="Center" VerticalAlignment="Top" Width="344" Height="41" Margin="0,362,0,0" FontSize="25" HorizontalContentAlignment="Center" FontWeight="Bold"/>
         </Grid>
 
 
-        <Label Content="Today's Income" HorizontalAlignment="Left" Margin="668,216,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center"/>
-        <Label Content="Total Income" HorizontalAlignment="Left" Margin="927,216,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center"/>
-        <Label Content="Sold LPG" HorizontalAlignment="Left" Margin="108,216,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center"/>
-        <Label Content="Stocks" HorizontalAlignment="Left" Margin="382,219,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center"/>
-        <Label x:Name="lblTodaysIncome" Content="Loading..." HorizontalAlignment="Left" Margin="668,154,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center" Height="50" FontWeight="Bold" FontSize="24"/>
-        <Label x:Name="lblTotalIncome" Content="Loading..." HorizontalAlignment="Left" Margin="931,153,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center" Height="50" FontWeight="Bold" FontSize="24"/>
-        <Label x:Name="lblSoldLPG" Content="Loading..." HorizontalAlignment="Left" Margin="386,158,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center" Height="50" FontWeight="Bold" FontSize="24"/>
-        <Label x:Name="lblStocks" Content="Loading..." HorizontalAlignment="Left" Margin="110,153,0,0" VerticalAlignment="Top" Width="194" HorizontalContentAlignment="Center" Height="50" FontWeight="Bold" FontSize="24"/>
 
 
 

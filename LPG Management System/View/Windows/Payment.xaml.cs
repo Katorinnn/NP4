@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using LPG_Management_System.Migrations;
 using LPG_Management_System.Models;
 using LPG_Management_System.View.UserControls;
 using Microsoft.Data.Sqlite;
@@ -49,18 +50,6 @@ namespace LPG_Management_System.View.Windows
 
         private void amountBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (NewCustomer.IsChecked == true)
-            {
-                if (string.IsNullOrWhiteSpace(customerIDtxtBox.Text) ||
-                    string.IsNullOrWhiteSpace(customertxtBox.Text) ||
-                    string.IsNullOrWhiteSpace(contacttxtBox.Text) ||
-                    string.IsNullOrWhiteSpace(addresstxtBox.Text) ||
-                    tankClassComboBox.SelectedIndex <= 0)
-                {
-                    MessageBox.Show("All fields are required for a new customer.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-            }
             if (double.TryParse(amounttxtBox.Text, out double amount) && amount > 0)
             {
                 PaymentAmount = amount;
@@ -77,17 +66,7 @@ namespace LPG_Management_System.View.Windows
                     try
                     {
                         var purchasedItems = receiptItems;
-
-                        foreach (var item in purchasedItems)
-                        {
-                            var stock = context.tbl_inventory.FirstOrDefault(i => i.ProductName == item.Brand && i.Size == item.Size);
-                            if (stock == null || stock.Stocks < item.Quantity)
-                            {
-                                MessageBox.Show($"Insufficient stock for {item.Brand} ({item.Size}).", "Stock Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                return;
-                            }
-                        }
-
+                        // Create and add the transaction record
                         var newTransaction = new ReportsTable
                         {
                             TransactionID = GenerateTransactionID(),
@@ -105,16 +84,7 @@ namespace LPG_Management_System.View.Windows
 
                         context.tbl_reports.Add(newTransaction);
 
-                        foreach (var item in purchasedItems)
-                        {
-                            var stock = context.tbl_inventory.FirstOrDefault(i => i.ProductName == item.Brand && i.Size == item.Size);
-                            if (stock != null)
-                            {
-                                stock.Stocks -= item.Quantity;
-                                context.tbl_inventory.Update(stock);
-                            }
-                        }
-
+                        // Add or update customer details
                         if (NewCustomer.IsChecked == true)
                         {
                             var newCustomer = new CustomersTable
@@ -141,21 +111,46 @@ namespace LPG_Management_System.View.Windows
                             }
                             else
                             {
-                                MessageBox.Show("Customer not found. Please re-check the Customer ID.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                return;
+                                throw new Exception("Customer not found. Please re-check the Customer ID.");
                             }
                         }
 
+                        // Save changes to add transaction and customer updates first
                         context.SaveChanges();
 
+                        // Update the inventory after saving transaction and customer details
+                        foreach (var item in purchasedItems)
+                        {
+                            var stock = context.tbl_inventory.FirstOrDefault(i => i.ProductName == item.Brand && i.Size == item.Size);
+                            if (stock != null)
+                            {
+                                if (stock.Stocks >= item.Quantity)
+                                {
+                                    stock.Stocks -= item.Quantity;
+                                }
+                                else
+                                {
+                                    throw new Exception($"Insufficient stock for {item.Brand} ({item.Size}).");
+                                }
+                            }
+                            else
+                            {
+                                throw new Exception($"Stock for {item.Brand} ({item.Size}) not found.");
+                            }
+                        }
+
+                        // Notify the user of success
                         MessageBox.Show("Transaction completed successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.DialogResult = true;
                         this.Close();
                     }
                     catch (Exception ex)
                     {
+                        // Handle any exception by showing an error message
                         MessageBox.Show($"Error saving transaction: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+
+
                 }
             }
             else
@@ -195,20 +190,59 @@ namespace LPG_Management_System.View.Windows
 
         private void OldCustomer_Checked(object sender, RoutedEventArgs e)
         {
-            // Disable fields for new customer and allow search by customer name for old customer
+            // Disable fields for new customers and allow search for old customers
             contacttxtBox.IsEnabled = false;
             addresstxtBox.IsEnabled = false;
             customertxtBox.IsReadOnly = false; // Allow typing for search functionality
-
-            // Enable customer ID for search only, to prevent changes
             customerIDtxtBox.IsReadOnly = true;
 
-            // If no customer is selected or typed in, clear customer data fields
+            // Clear customer data fields
             customertxtBox.Clear();
             customerIDtxtBox.Clear();
             addresstxtBox.Clear();
             contacttxtBox.Clear();
+
+            // Load tank classifications into the combo box
+            try
+            {
+                using (var context = new DataContext())
+                {
+                    var classifications = context.tbl_customers
+                                                  .Select(c => c.TankClassification)
+                                                  .Distinct()
+                                                  .ToList();
+
+                    tankClassComboBox.Items.Clear();
+                    tankClassComboBox.Items.Add(new ComboBoxItem
+                    {
+                        Content = "Tank Class",
+                        IsEnabled = false,
+                        Foreground = Brushes.Gray
+                    });
+
+                    foreach (var classification in classifications)
+                    {
+                        if (!string.IsNullOrEmpty(classification))
+                        {
+                            tankClassComboBox.Items.Add(new ComboBoxItem
+                            {
+                                Content = classification
+                            });
+                        }
+                    }
+
+                    // Set the default selection to the first item (or ensure it's reset)
+                    tankClassComboBox.SelectedIndex = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading tank classifications: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
+
+
 
         private void NewCustomer_Checked(object sender, RoutedEventArgs e)
         {
@@ -224,6 +258,7 @@ namespace LPG_Management_System.View.Windows
             customerIDtxtBox.Clear();
             contacttxtBox.Clear();
             addresstxtBox.Clear();
+            tankClassComboBox.SelectedIndex = 0;
 
             // Allow customer name to be entered freely
             customertxtBox.IsReadOnly = false;
@@ -273,10 +308,28 @@ namespace LPG_Management_System.View.Windows
                 contacttxtBox.Text = selectedCustomer.ContactNumber;
                 addresstxtBox.Text = selectedCustomer.Address;
 
+                // Set the Tank Classification in the ComboBox
+                // Ensure ComboBox has the correct selection, you may want to ensure that the combo box items are already populated
+                if (tankClassComboBox.ItemsSource != null && tankClassComboBox.Items.Count > 0)
+                {
+                    // Set the Tank Classification from the selected customer
+                    var selectedItem = tankClassComboBox.Items
+                        .OfType<ComboBoxItem>()
+                        .FirstOrDefault(item => item.Content.ToString() == selectedCustomer.TankClassification);
+
+                    // Ensure we have found a matching item and set it as selected
+                    if (selectedItem != null)
+                    {
+                        tankClassComboBox.SelectedItem = selectedItem;
+                    }
+                }
+
                 // Hide the list box after selection
                 customerListBox.Visibility = Visibility.Collapsed;
             }
         }
+
+
 
 
 

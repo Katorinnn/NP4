@@ -88,16 +88,19 @@ namespace LPG_Management_System.View.UserControls
                     // Convert the image to byte[] for storing in the database
                     byte[] imageBytes = File.ReadAllBytes(selectedFilePath);
 
-                    // Update the logo in the database using Entity Framework
+                    // Update the logo in the company table using Entity Framework
                     using (var context = new DataContext())  // Replace with your actual DbContext
                     {
-                        var admin = context.tbl_admin.FirstOrDefault(a => a.adminId == 1); // Replace with dynamic admin ID
-                        if (admin != null)
+                        var company = context.tbl_company.FirstOrDefault(c => c.CompanyID == 1); // Replace with dynamic company ID
+                        if (company != null)
                         {
-                            admin.Logo = imageBytes;  // Save the byte[] in the Logo field
+                            company.Logo = imageBytes;  // Save the byte[] in the Logo field
                             context.SaveChanges(); // Save the changes to the database
                         }
                     }
+
+                    // Refresh the logo to reflect changes immediately after save
+                    LoadCompanyLogo();
                 }
                 catch (Exception ex)
                 {
@@ -105,19 +108,21 @@ namespace LPG_Management_System.View.UserControls
                 }
             }
         }
+
+
         private void LoadCompanyLogo()
         {
             try
             {
                 using (var context = new DataContext())  // Replace with your actual DbContext
                 {
-                    var admin = context.tbl_admin.FirstOrDefault(a => a.adminId == 1); // Replace with dynamic admin ID
-                    if (admin != null)
+                    var company = context.tbl_company.FirstOrDefault(c => c.CompanyID == 1); // Replace with dynamic admin ID
+                    if (company != null)
                     {
-                        if (admin.Logo != null && admin.Logo.Length > 0)
+                        if (company.Logo != null && company.Logo.Length > 0)
                         {
                             // Convert byte[] to BitmapImage
-                            using (var ms = new MemoryStream(admin.Logo))
+                            using (var ms = new MemoryStream(company.Logo))
                             {
                                 var bitmap = new BitmapImage();
                                 bitmap.BeginInit();
@@ -204,8 +209,13 @@ namespace LPG_Management_System.View.UserControls
                 AddCompanyDataToDatabase(updatedCompany);
             }
 
+            // Reload the company data to reflect changes
+            LoadCompanyData();
+
+            // Disable editing controls
             DisableEditing();
         }
+
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
@@ -317,8 +327,13 @@ namespace LPG_Management_System.View.UserControls
                 AddAdminDataToDatabase(updatedAdmin);
             }
 
+            // Reload the privacy settings to reflect changes
+            LoadPrivacySettings();
+
+            // Disable privacy editing controls
             DisablePrivacyEditing();
         }
+
         private void CancelPrivacyButton_Click(object sender, RoutedEventArgs e)
         {
             if (originalAdminData != null)

@@ -11,15 +11,8 @@ using System.ComponentModel;
 
 namespace LPG_Management_System.View.UserControls
 {
-    /// <summary>
-    /// Interaction logic for pointofsaleUC.xaml
-    /// </summary>
     public partial class pointofsaleUC : UserControl
     {
-
-        private Button currentKgButton;
-
-        
         public class ReceiptItem : INotifyPropertyChanged
         {
             private int _quantity = 1;
@@ -46,13 +39,11 @@ namespace LPG_Management_System.View.UserControls
 
             public event PropertyChangedEventHandler PropertyChanged;
 
-            protected void OnPropertyChanged(string propertyName)
-            {
+            protected void OnPropertyChanged(string propertyName) =>
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
         }
 
-        private ObservableCollection<ReceiptItem> receiptItems = new ObservableCollection<ReceiptItem>();
+        private ObservableCollection<ReceiptItem> receiptItems = new();
         public pointofsaleUC()
         {
             InitializeComponent();
@@ -60,148 +51,131 @@ namespace LPG_Management_System.View.UserControls
             LoadProducts();
         }
 
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
-            Dashboard dashboard = new Dashboard();
-            dashboard.Show();
+            new Dashboard().Show();
         }
 
-        //Payment Options
         private void cashBtn_Click_1(object sender, RoutedEventArgs e)
         {
-            if (receiptItems.Count == 0)
+            if (!receiptItems.Any())
             {
-                MessageBox.Show("Please select at least one product before proceeding with payment.",
-                                "No Products Selected", MessageBoxButton.OK, MessageBoxImage.Warning);
+                ShowWarning("Please select at least one product before proceeding with payment.");
                 return;
             }
 
             double totalPrice = receiptItems.Sum(item => item.Total);
             int totalQuantity = receiptItems.Sum(item => item.Quantity);
 
-            Payment paymentWindow = new Payment(totalPrice, totalQuantity, receiptItems);
-                
+            var paymentWindow = new Payment(totalPrice, totalQuantity, receiptItems);
             if (paymentWindow.ShowDialog() == true)
             {
-                double paymentAmount = paymentWindow.PaymentAmount;
-                double change = paymentAmount - totalPrice;
+                ProcessPayment(paymentWindow.PaymentAmount, totalPrice);
+            }
+        }
 
-                if (change < 0)
-                {
-                    MessageBox.Show("Payment amount is less than the total price. Please enter a valid amount.",
-                                    "Insufficient Payment", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
+        private void ProcessPayment(double paymentAmount, double totalPrice)
+        {
+            double change = paymentAmount - totalPrice;
+            if (change < 0)
+            {
+                ShowError("Payment amount is less than the total price. Please enter a valid amount.");
+                return;
+            }
 
-                try
+            try
+            {
+                UpdateInventory();
+                GenerateInvoice(paymentAmount, change, totalPrice);
+            }
+            catch (Exception ex)
+            {
+                ShowError($"Error updating inventory: {ex.Message}");
+            }
+        }
+
+        private void UpdateInventory()
+        {
+            using var dbContext = new DataContext();
+            var groupedItems = receiptItems
+                .GroupBy(item => new { item.Brand, item.Size, item.Price })
+                .Select(group => new
                 {
-                    using (var dbContext = new DataContext())
+                    group.Key.Brand,
+                    group.Key.Size,
+                    group.Key.Price,
+                    TotalQuantity = group.Sum(item => item.Quantity)
+                });
+
+            foreach (var group in groupedItems)
+            {
+                var product = dbContext.tbl_inventory
+                    .FirstOrDefault(p => p.ProductName == group.Brand &&
+                                         p.Size == group.Size &&
+                                         p.Price == (decimal)group.Price);
+
+                if (product != null)
+                {
+                    product.Stocks -= group.TotalQuantity;
+                    if (product.Stocks <= 0)
                     {
-                        foreach (var item in receiptItems)
-                        {
-                            var product = dbContext.tbl_inventory
-                                .FirstOrDefault(p => p.ProductName == item.Brand &&
-                                                     p.Size == item.Size &&
-                                                     p.Price == (decimal)item.Price);
-
-                            if (product != null)
-                            {
-                                product.Stocks -= item.Quantity;
-                                if (product.Stocks <= 0)
-                                {
-                                    dbContext.tbl_inventory.Remove(product);
-                                }
-                            }
-                        }
-
-                        dbContext.SaveChanges();
+                        dbContext.tbl_inventory.Remove(product);
                     }
-
-                    LoadProducts();
-                    var receiptItemsList = receiptItems.ToList();
-                    var invoicePage = new Invoice(receiptItemsList, "Customer Address Here", totalPrice, paymentAmount, change);
-                    invoicePage.Show();
-                    receiptItems.Clear();
-                    UpdateTotalPrice();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error updating inventory: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
 
+            dbContext.SaveChanges();
+        }
+
+        private void GenerateInvoice(double paymentAmount, double change, double totalPrice)
+        {
+            var receiptItemsList = receiptItems.ToList();
+            new Invoice(receiptItemsList, "Customer Address Here", totalPrice, paymentAmount, change).Show();
+            receiptItems.Clear();
+            UpdateTotalPrice();
+            LoadProducts();
         }
 
         private void UpdateTotalPrice()
         {
-            double totalPrice = receiptItems.Sum(item => item.Total);
-            TotalPriceLabel.Content = $"₱{totalPrice:F2}";
+            TotalPriceLabel.Content = $"₱{receiptItems.Sum(item => item.Total):F2}";
         }
+
         private List<InventoryTable> GetProductsFromDatabase()
         {
-            var productList = new List<InventoryTable>();
-
             try
             {
-                using (var dbContext = new DataContext())
-                {
-                    productList = dbContext.tbl_inventory.ToList();
-                }
+                using var dbContext = new DataContext();
+                return dbContext.tbl_inventory.ToList();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error retrieving data: {ex.Message}");
-            }
-
-            return productList;
-        }
-
-        private System.Windows.Media.ImageSource ConvertToImageSource(byte[] imageBytes)
-        {
-            if (imageBytes == null || imageBytes.Length == 0)
-            {
-                MessageBox.Show("The image data is invalid or empty.", "Image Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return null;
-            }
-
-            try
-            {
-                using (var ms = new MemoryStream(imageBytes))
-                {
-                    var image = new BitmapImage();
-                    image.BeginInit();
-                    image.CacheOption = BitmapCacheOption.OnLoad;
-                    image.StreamSource = ms;
-                    image.EndInit();
-                    return image;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading image: {ex.Message}", "Image Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return null;
+                ShowError($"Error retrieving data: {ex.Message}");
+                return new List<InventoryTable>();
             }
         }
 
-        private void LoadProducts()
+        private void LoadProducts(string filterBrand = null)
         {
             var products = GetProductsFromDatabase();
 
-            ProductsPanel.Children.Clear();
+            if (!string.IsNullOrEmpty(filterBrand))
+            {
+                products = products.Where(p => p.ProductName.Equals(filterBrand, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
 
-            foreach (var product in products)
+            ProductsPanel.Children.Clear();
+            foreach (var product in products.GroupBy(p => new { p.ProductName, p.Size, p.Price }).Select(g => g.First()))
             {
                 var productControl = new Product
                 {
-                    DataContext = this
+                    DataContext = this,
+                    BrandLabel = { Content = product.ProductName },
+                    PriceLabel = { Content = $"₱{product.Price:F2}" },
+                    SizeLabel = { Content = product.Size }
                 };
-                productControl.BrandLabel.Content = product.ProductName;
-                productControl.PriceLabel.Content = $"₱{product.Price:F2}";
-                productControl.SizeLabel.Content = $"{product.Size}";
 
-                if (product.ProductImage != null && product.ProductImage.Length > 0)
+                if (product.ProductImage?.Length > 0)
                 {
                     productControl.ProductImage.Source = ConvertToImageSource(product.ProductImage);
                 }
@@ -210,31 +184,54 @@ namespace LPG_Management_System.View.UserControls
             }
         }
 
+        private System.Windows.Media.ImageSource ConvertToImageSource(byte[] imageBytes)
+        {
+            if (imageBytes == null || imageBytes.Length == 0) return null;
+
+            try
+            {
+                using var ms = new MemoryStream(imageBytes);
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.StreamSource = ms;
+                image.EndInit();
+                return image;
+            }
+            catch (Exception ex)
+            {
+                ShowError($"Error loading image: {ex.Message}");
+                return null;
+            }
+        }
+
         public void AddToReceipt(ReceiptItem item)
         {
             var existingItem = receiptItems.FirstOrDefault(r => r.Brand == item.Brand && r.Size == item.Size && r.Price == item.Price);
-
             if (existingItem != null)
             {
                 existingItem.Quantity++;
             }
             else
             {
-                item.Quantity = 1;
                 receiptItems.Add(item);
             }
-
             UpdateTotalPrice();
         }
 
-
+        private void FilterByBrand_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button { Tag: string brand })
+            {
+                LoadProducts(brand.Equals("All", StringComparison.OrdinalIgnoreCase) ? null : brand);
+            }
+        }
 
         private void IncreaseQuantity_Click(object sender, RoutedEventArgs e)
         {
             if (((FrameworkElement)sender).DataContext is ReceiptItem selectedItem)
             {
                 selectedItem.Quantity++;
-                dataGridItems.Items.Refresh();
                 UpdateTotalPrice();
             }
         }
@@ -251,70 +248,14 @@ namespace LPG_Management_System.View.UserControls
                 {
                     receiptItems.Remove(selectedItem);
                 }
-
-                dataGridItems.Items.Refresh();
                 UpdateTotalPrice();
             }
         }
 
 
-
-
-        private void FilterByBrand_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button)
-            {
-                if (button.Tag is string brand)
-                {
-                    if (brand.Equals("All", StringComparison.OrdinalIgnoreCase))
-                    {
-                        LoadProducts();
-                    }
-                    else
-                    {
-                        LoadProducts(brand);
-                    }
-                }
-            }
-        }
-
-
-        private void LoadProducts(string filterBrand = null)
-        {
-            var products = GetProductsFromDatabase();
-
-            if (!string.IsNullOrEmpty(filterBrand))
-            {
-                products = products.Where(p => p.ProductName.Equals(filterBrand, StringComparison.OrdinalIgnoreCase)).ToList();
-            }
-
-            var distinctProducts = products
-                .GroupBy(p => new { p.ProductName, p.Size, p.Price })
-                .Select(g => g.First())
-                .ToList();
-
-            ProductsPanel.Children.Clear();
-
-            foreach (var product in distinctProducts)
-            {
-                var productControl = new Product
-                {
-                    DataContext = this
-                };
-                productControl.BrandLabel.Content = product.ProductName;
-                productControl.PriceLabel.Content = $"₱{product.Price:F2}";
-                productControl.SizeLabel.Content = product.Size;
-
-                if (product.ProductImage != null && product.ProductImage.Length > 0)
-                {
-                    productControl.ProductImage.Source = ConvertToImageSource(product.ProductImage);
-                }
-
-                ProductsPanel.Children.Add(productControl);
-            }
-        }
-
-
-
+        private void ShowWarning(string message) => MessageBox.Show(message, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+        private void ShowError(string message) => MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
     }
+
+
 }

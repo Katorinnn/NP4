@@ -21,8 +21,9 @@
         <StackPanel Background="#FF2C3E50" Grid.Column="0" x:Name="SidebarPanel">
             <!-- Logo or Header -->
             <Grid Background="#FF34495E" Height="276">
-                <Image Source="/Images/NP4LOGO.png" HorizontalAlignment="Left" Height="190" Margin="49,37,0,0" VerticalAlignment="Top" Width="230" />
+                <Image Source="{Binding Logo}" HorizontalAlignment="Left" Height="190" Margin="49,37,0,0" VerticalAlignment="Top" Width="230" />
             </Grid>
+
 
             <!-- Sidebar Buttons -->
             <!-- Dashboard Button -->

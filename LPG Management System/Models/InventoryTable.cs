@@ -16,10 +16,6 @@ namespace LPG_Management_System.Models
         public string Size { get; set; } // Size of the tank (e.g., "11 kg")
 
         [Required]
-        [Range(0, int.MaxValue, ErrorMessage = "Quantity must be non-negative.")]
-        public int Quantity { get; set; } // Available quantity in stock
-
-        [Required]
         [Range(0.01, double.MaxValue, ErrorMessage = "Price must be positive.")]
         public decimal Price { get; set; } // Price of the product
 

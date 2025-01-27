@@ -15,6 +15,7 @@ namespace LPG_Management_System.Models
         public string CompanyAddress { get; set; }
         public string CompanyContact { get; set; }
         public string CompanyEmail { get; set; }
+        public byte[] Logo { get; set; }
 
     }
 }
