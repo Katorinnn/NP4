@@ -44,6 +44,10 @@
 
     <Grid x:Name="mainGrid">
         <Grid Margin="0,0,0,-10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="583*"/>
+                <ColumnDefinition Width="32*"/>
+            </Grid.ColumnDefinitions>
             <Grid.Background>
                 <LinearGradientBrush StartPoint="1,0" EndPoint="1,1">
                     <GradientStop Color="WhiteSmoke" Offset="0.1" />
@@ -58,10 +62,10 @@
                 <!-- For DataGrid -->
             </Grid.RowDefinitions>
 
-            <Border Background="#003566" Height="83" VerticalAlignment="Top" CornerRadius="0,0,0,0">
+            <Border Background="#003566" Height="70" VerticalAlignment="Top" CornerRadius="0,0,0,0" Grid.ColumnSpan="2">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
-                    <Image Source="/Images/inventory.png" Height="70" Margin="10,0" VerticalAlignment="Center"/>
-                    <TextBlock Text="INVENTORY" 
+                    <Image Source="/Images/inventory.png" Height="60" Margin="10,0" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="PreviousButton" Text="INVENTORY" 
                    Foreground="White" 
                    FontFamily="Segoe UI" 
                    FontWeight="Bold" 
@@ -83,7 +87,7 @@
                       RowHeaderWidth="0" FontFamily="Segoe UI"
                       HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" 
                       ScrollViewer.CanContentScroll="True"
-                      AlternatingRowBackground="#F5F5F5" AlternationCount="2" >
+                      AlternatingRowBackground="#F5F5F5" AlternationCount="2" Grid.ColumnSpan="2" >
 
                 <!-- DataGrid Column Header Style -->
                 <DataGrid.ColumnHeaderStyle>
@@ -163,16 +167,14 @@
             <Button x:Name="newBtn" Content="New LPG Brand" 
                 Click="newBtn_Click" Cursor="Hand" Background="#0078D7" Foreground="White"
                 FontWeight="Bold" BorderThickness="0" BorderBrush="Transparent"
-                FontFamily="Segou UI" Margin="846,78,251,654" RenderTransformOrigin="0.498,0.367" Grid.Row="1"/>
+                FontFamily="Segou UI" Margin="15,93,1018,639" RenderTransformOrigin="0.498,0.367" Grid.Row="1"/>
 
-            <UniformGrid Rows="1" Columns="2" Margin="998,44,15,598" Grid.Row="1">
-                <!-- List View Button -->
-                <!-- List View Button -->
+            <UniformGrid Rows="1" Columns="2" Margin="998,72,15,629" Grid.ColumnSpan="2" Grid.Row="1">
                 <ToggleButton x:Name="listViewButton" Content="List" 
                   Style="{StaticResource ViewToggleButtonStyle}"
-                  IsChecked="True" Margin="2,26,6,48"/>
+                  IsChecked="True" Margin="2" Click="ListView_Click"/>
                 <ToggleButton x:Name="gridViewButton" Content="Grid" 
-                  Style="{StaticResource ViewToggleButtonStyle}" Margin="6,26,3,48" />
+                Style="{StaticResource ViewToggleButtonStyle}" Margin="2" Click="GridView_Click"/>
 
                 <!-- Grid View Button -->
             </UniformGrid>
@@ -180,8 +182,8 @@
             <!-- List View -->
 
             <!-- Product View -->
-            <ScrollViewer Grid.Row="1" Visibility="Collapsed">
-                <WrapPanel x:Name="productView" Margin="10">
+            <ScrollViewer x:Name="ProductScrollViewer" Grid.Row="1" Visibility="Collapsed" Grid.ColumnSpan="2" Margin="15,130,15,47">
+                <WrapPanel x:Name="ProductsWrapPanel" Margin="10">
                 </WrapPanel>
             </ScrollViewer>
         </Grid>

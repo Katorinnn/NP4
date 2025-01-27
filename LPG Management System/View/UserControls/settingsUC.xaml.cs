@@ -85,7 +85,6 @@ namespace LPG_Management_System.View.UserControls
                     string selectedFilePath = openFileDialog.FileName;
                     logoPlaceholder.Source = new BitmapImage(new Uri(selectedFilePath));
 
-                    // Convert the image to byte[] for storing in the database
                     byte[] imageBytes = File.ReadAllBytes(selectedFilePath);
 
                     // Update the logo in the company table using Entity Framework
@@ -158,7 +157,6 @@ namespace LPG_Management_System.View.UserControls
                     originalCompanyData = context.tbl_company.FirstOrDefault();
                     if (originalCompanyData != null)
                     {
-                        // Populate the fields with existing data
                         NameTextBox.Text = originalCompanyData.CompanyName;
                         AddressTextBox.Text = originalCompanyData.CompanyAddress;
                         ContactTextBox.Text = originalCompanyData.CompanyContact;
@@ -166,7 +164,6 @@ namespace LPG_Management_System.View.UserControls
                     }
                     else
                     {
-                        // If no data exists, clear the fields
                         NameTextBox.Clear();
                         AddressTextBox.Clear();
                         ContactTextBox.Clear();
@@ -200,12 +197,10 @@ namespace LPG_Management_System.View.UserControls
 
             if (originalCompanyData != null)
             {
-                // If data already exists, update it
                 SaveCompanyDataToDatabase(updatedCompany);
             }
             else
             {
-                // If no data exists, insert new data into the database
                 AddCompanyDataToDatabase(updatedCompany);
             }
 
@@ -221,7 +216,6 @@ namespace LPG_Management_System.View.UserControls
         {
             if (originalCompanyData != null)
             {
-                // Revert to the original data if available
                 NameTextBox.Text = originalCompanyData.CompanyName;
                 AddressTextBox.Text = originalCompanyData.CompanyAddress;
                 ContactTextBox.Text = originalCompanyData.CompanyContact;
@@ -229,7 +223,6 @@ namespace LPG_Management_System.View.UserControls
             }
             else
             {
-                // Clear the fields if no data exists
                 NameTextBox.Clear();
                 AddressTextBox.Clear();
                 ContactTextBox.Clear();
@@ -274,7 +267,6 @@ namespace LPG_Management_System.View.UserControls
             SaveButton.IsEnabled = false;
             CancelButton.IsEnabled = false;
         }
-        //privacy settings
         private void LoadPrivacySettings()
         {
             try
@@ -284,13 +276,11 @@ namespace LPG_Management_System.View.UserControls
                     originalAdminData = context.tbl_admin.FirstOrDefault();
                     if (originalAdminData != null)
                     {
-                        // Populate the fields with existing data
                         UsernameTextBox.Text = originalAdminData.username;
                         PasswordTextBox.Password = originalAdminData.password;
                     }
                     else
                     {
-                        // If no data exists, clear the fields
                         UsernameTextBox.Clear();
                         PasswordTextBox.Clear();
                     }
@@ -310,10 +300,24 @@ namespace LPG_Management_System.View.UserControls
         }
         private void SavePrivacyButton_Click(object sender, RoutedEventArgs e)
         {
+            // Validate that username and password are not empty
+            if (string.IsNullOrWhiteSpace(UsernameTextBox.Text))
+            {
+                MessageBox.Show("Username cannot be empty.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(PasswordTextBox.Password))
+            {
+                MessageBox.Show("Password cannot be empty.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Create an updated admin object
             var updatedAdmin = new AdminTable
             {
-                username = UsernameTextBox.Text,
-                password = PasswordTextBox.Password
+                username = UsernameTextBox.Text.Trim(), // Trim any extra whitespace
+                password = PasswordTextBox.Password.Trim()
             };
 
             if (originalAdminData != null)
@@ -332,7 +336,10 @@ namespace LPG_Management_System.View.UserControls
 
             // Disable privacy editing controls
             DisablePrivacyEditing();
+
+            MessageBox.Show("Privacy settings saved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
 
         private void CancelPrivacyButton_Click(object sender, RoutedEventArgs e)
         {
