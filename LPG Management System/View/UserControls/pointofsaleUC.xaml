@@ -77,7 +77,7 @@
         <Label x:Name="TotalPriceLabel" Content="₱ 0.00" HorizontalAlignment="Left" Height="48" Margin="131,570,0,0" VerticalAlignment="Top" Width="363" FontSize="25" />
 
         <!-- Grid for Products and Kilogram Options -->
-        <Grid HorizontalAlignment="Left" Height="713" Margin="600,22,0,0" VerticalAlignment="Top" Width="598" Background="#FF005F8C">
+        <Grid HorizontalAlignment="Left" Height="713" Margin="600,22,0,0" VerticalAlignment="Top" Width="614" Background="#FF005F8C">
             <Grid.RowDefinitions>
                 <RowDefinition Height="209*"/>
                 <RowDefinition Height="504*"/>
@@ -88,7 +88,7 @@
                 <Button Content="Coastal" Height="46" Width="131" FontSize="20" Click="FilterByBrand_Click" Tag="Coastal"/>
                 <Button Content="GazLite" Height="46" Width="131" FontSize="20" Click="FilterByBrand_Click" Tag="GazLite"/>
                 <Button Content="Solane" Height="46" Width="131" FontSize="20" Click="FilterByBrand_Click" Tag="Solane"/>
-                <Button Content="Regasco" Height="46" Width="130" FontSize="20" Click="FilterByBrand_Click" Tag="Regasco"/>
+                <Button Content="Regasco" Height="46" Width="138" FontSize="20" Click="FilterByBrand_Click" Tag="Regasco"/>
 
             </StackPanel>
 
@@ -104,7 +104,12 @@
 
             <!-- Regasco Kilogram Buttons (Initially Hidden) -->
             <StackPanel x:Name="RegascoPanel" HorizontalAlignment="Left" Margin="520,100,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed"/>
-            <WrapPanel x:Name="ProductsPanel" Margin="14,86,14,0" Background="#FF005F8C" Height="685" VerticalAlignment="Top" Grid.RowSpan="2"/>
+
+
+            <ScrollViewer x:Name="ProductScrollViewer" Margin="8,66,0,0" Grid.RowSpan="2"  >
+                <WrapPanel x:Name="ProductsPanel" Margin="0" Background="#FF005F8C" Height="616" Grid.RowSpan="2" Width="575"/>
+            </ScrollViewer>
+
 
         </Grid>
     </Grid>

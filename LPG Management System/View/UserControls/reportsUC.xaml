@@ -20,7 +20,7 @@
             <RowDefinition Height="651*"/>
         </Grid.RowDefinitions>
 
-        <Border Background="#003566" Height="70" VerticalAlignment="Top" CornerRadius="0,0,0,0" Margin="-2,0,0,0">
+        <Border Background="SteelBlue" Height="70" VerticalAlignment="Top" CornerRadius="0,0,0,0" Margin="-2,0,0,0">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
                 <Image Source="/Images/reports.png" Height="60" Margin="10,0" VerticalAlignment="Center"/>
                 <TextBlock Text="REPORTS" 
@@ -45,9 +45,6 @@
                   CanUserReorderColumns="False"
                   CanUserResizeColumns="False" 
                   AutoGenerateColumns="False" Grid.Row="1">
-
-
-
             <!-- Define the columns with TextWrapping using a TemplateColumn -->
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Transaction ID" Width="120" Binding="{Binding TransactionID}"  />
@@ -161,6 +158,33 @@ AutoGenerateColumns="False" Grid.Row="1">
         <Button Content="Clear" HorizontalAlignment="Left" Margin="1111,178,0,0" VerticalAlignment="Top" Width="83" Height="36" FontSize="16" FontWeight="Bold" Background="Red" Foreground="White" Click="CancelFilterButton_Click" Grid.RowSpan="2"/>
 
         <Button Content="Generate Report" HorizontalAlignment="Left" Margin="1046,598,0,0" VerticalAlignment="Top" Width="148" Click="PrintPreview_Click" Height="34" Background="#2ecc71" Foreground="White" Grid.Row="1"/>
+        <TextBox x:Name="TextBox" 
+Background="WhiteSmoke" 
+TextWrapping="Wrap" 
+FontSize="16" 
+Padding="10,5" 
+Foreground="Gray"
+Text="Search here" 
+GotFocus="TextBox_GotFocus" 
+LostFocus="TextBox_LostFocus" 
+TextChanged="TextBox_TextChanged" Margin="894,18,26,147">
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TextBox}">
+                                <Border Background="{TemplateBinding Background}" 
+                       BorderBrush="Gray" 
+                       BorderThickness="1" 
+                       CornerRadius="7">
+                                    <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
 
     </Grid>
 

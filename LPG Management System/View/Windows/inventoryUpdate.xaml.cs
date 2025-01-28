@@ -217,7 +217,6 @@ namespace LPG_Management_System.View
             // Parse the current stock value from the TextBox
             if (int.TryParse(stockstxtBox.Text, out int currentStock))
             {
-                // Increment the stock value
                 currentStock++;
                 stockstxtBox.Text = currentStock.ToString();
             }
@@ -237,16 +236,14 @@ namespace LPG_Management_System.View
         }
 
 
-
-
-
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
+        private void stockstxtBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
 
-
+        }
     }
 }

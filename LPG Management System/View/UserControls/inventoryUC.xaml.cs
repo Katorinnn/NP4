@@ -21,17 +21,31 @@ namespace LPG_Management_System.View.UserControls
         {
             InitializeComponent();
             _context = new DataContext();
-            LoadCustomersData();
+            LoadInventoryData();
 
 
         }
 
-        private void LoadCustomersData()
+        private void LoadInventoryData()
         {
+           
+
             try
             {
-                var inventoryData = _context.tbl_inventory.ToList();  // Correct DbSet reference
-                inventoryDG.ItemsSource = inventoryData;
+                using (var context = new DataContext())
+                {
+                    var customers = context.tbl_inventory.ToList(); // Fetch all customers
+
+                    // Check if the DataGrid is null
+                    if (inventoryDG != null)
+                    {
+                        inventoryDG.ItemsSource = customers; // Bind data to DataGrid
+                    }
+                    else
+                    {
+                        Console.WriteLine("customersDG is null.");
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -41,16 +55,30 @@ namespace LPG_Management_System.View.UserControls
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string searchText = (sender as TextBox)?.Text;
+            // Ensure sender is a TextBox and extract the text
+            var textBox = sender as TextBox;
+            if (textBox == null) return;
 
-            if (!string.IsNullOrEmpty(searchText))
+            string searchText = textBox.Text.Trim().ToLower(); // Trim and convert to lowercase
+
+            if (!string.IsNullOrEmpty(searchText) && searchText != "search here")
             {
                 try
                 {
-                    var filteredData = _context.tbl_inventory
-                        .Where(i => i.StocksID.ToString().Contains(searchText) || i.ProductName.Contains(searchText))
-                        .ToList();
-                    inventoryDG.ItemsSource = filteredData;
+                    using (var context = new DataContext())
+                    {
+                        var filteredInventory = context.tbl_inventory
+                            .Where(i =>
+                                i.ProductName.ToLower().Contains(searchText) ||
+                                i.Size.ToLower().Contains(searchText) ||
+                                i.Stocks.ToString().Contains(searchText) ||
+                                i.Price.ToString().Contains(searchText) ||
+                                i.Date.ToString().Contains(searchText) ||
+                                i.StocksID.ToString().Contains(searchText))
+                            .ToList();
+
+                        inventoryDG.ItemsSource = filteredInventory; // Bind the filtered data to DataGrid
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -59,11 +87,31 @@ namespace LPG_Management_System.View.UserControls
             }
             else
             {
-                LoadCustomersData();
+                // Reload all data if search is empty or contains default placeholder text
+                LoadInventoryData(); // Assuming LoadInventoryData() loads all inventory items
             }
         }
 
-        
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (TextBox.Text == "Search here")
+            {
+                TextBox.Text = string.Empty;
+                TextBox.Foreground = Brushes.Black; // Set text color to normal
+            }
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(TextBox.Text))
+            {
+                TextBox.Text = "Search here";
+                TextBox.Foreground = Brushes.Gray; // Set text color to placeholder style
+            }
+        }
+
+
+
 
         private void ApplyFilter(string column, string value)
         {
@@ -89,7 +137,7 @@ namespace LPG_Management_System.View.UserControls
             bool? dialogResult = inventoryCRUD.ShowDialog();
             if (dialogResult == true)
             {
-                LoadCustomersData();
+                LoadInventoryData();
             }
 
         }
@@ -122,7 +170,7 @@ namespace LPG_Management_System.View.UserControls
                     {
                         _context.tbl_inventory.Remove(itemToDelete);
                         _context.SaveChanges();
-                        LoadCustomersData();
+                        LoadInventoryData();
                     }
                 }
                 catch (Exception ex)
@@ -134,7 +182,7 @@ namespace LPG_Management_System.View.UserControls
 
         private void ClearFilterButton_Click(object sender, RoutedEventArgs e)
         {
-            LoadCustomersData();
+            LoadInventoryData();
         }
 
 
@@ -207,7 +255,7 @@ namespace LPG_Management_System.View.UserControls
                 // Add zoom effect on hover
                 productContainer.MouseEnter += (s, e) =>
                 {
-                    productContainer.RenderTransform = new ScaleTransform(1.1, 1.1); // Scale up
+                    productContainer.RenderTransform = new ScaleTransform(1.05, 1.05); // Scale up
                     productContainer.RenderTransformOrigin = new Point(0.5, 0.5);    // Center the scaling
                 };
 

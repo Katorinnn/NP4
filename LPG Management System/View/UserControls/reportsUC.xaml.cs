@@ -483,6 +483,7 @@ namespace LPG_Management_System.View.UserControls
 
                         doc.Open();
 
+
                         PdfPTable topBorderTable = new PdfPTable(1)
                         {
                             WidthPercentage = 100
@@ -506,6 +507,11 @@ namespace LPG_Management_System.View.UserControls
                         titleTable.SetWidths(new float[] { 70f, 30f });  // Adjust the values based on your layout needs
 
                         // Add the category name to the left column
+                        // Add space (vertical gap)
+                        // Add horizontal space using Phrase
+                        doc.Add(new iTextSharp.text.Paragraph(new iTextSharp.text.Phrase(new string(' ', 70)))); // Adjust the number of spaces as needed
+                                                                                                                 
+
                         titleTable.AddCell(new PdfPCell(new Phrase(selectedCategory, headerFont))
                         {
                             Border = 0,
@@ -531,7 +537,13 @@ namespace LPG_Management_System.View.UserControls
                         topBorderTable.DefaultCell.BorderWidthTop = 1.5f;
                         topBorderTable.DefaultCell.Border = Rectangle.TOP_BORDER; // Add a top border
                         topBorderTable.AddCell(""); // Add a blank cell to create the border effect
+                                                    // Add horizontal space using Phrase
+                        doc.Add(new iTextSharp.text.Paragraph(new iTextSharp.text.Phrase(new string(' ', 70)))); // Adjust the number of spaces as needed
+                                                                                                                 // Add horizontal space using Phras
+
                         doc.Add(topBorderTable);
+
+
 
                         // Add the DataGrid content to the PDF
                         PdfPTable table = new PdfPTable(targetDataGrid.Columns.Count)
@@ -656,6 +668,66 @@ namespace LPG_Management_System.View.UserControls
 
             return null;
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string searchQuery = TextBox.Text.ToLower();
+
+            // Apply the filter based on the selected category
+            if (categoryComboBox.SelectedItem is string selectedCategory)
+            {
+                switch (selectedCategory)
+                {
+                    case "Inventory Sales Report":
+                        filteredInventorySalesReports = allInventorySalesReports
+                            .Where(report => report.ProductName.ToLower().Contains(searchQuery) ||
+                                             report.TransactionID.ToString().Contains(searchQuery) ||
+                                             report.Quantity.ToString().Contains(searchQuery) ||
+                                             report.TotalPrice.ToString().Contains(searchQuery))
+                            .ToList();
+                        inventorySalesTotalPages = (int)Math.Ceiling((double)filteredInventorySalesReports.Count / itemsPerPage);
+                        LoadPage("InventorySales", inventorySalesCurrentPage);
+                        break;
+
+                    case "Stock Check Sheets":
+                        filteredStockCheckReports = allStockCheckReports
+                            .Where(stock => stock.ProductName.ToLower().Contains(searchQuery) ||
+                                            stock.Stocks.ToString().Contains(searchQuery))
+                            .ToList();
+                        stockCheckTotalPages = (int)Math.Ceiling((double)filteredStockCheckReports.Count / itemsPerPage);
+                        LoadPage("StockCheck", stockCheckCurrentPage);
+                        break;
+
+                    case "Sales by Product":
+                        filteredSalesByProductReports = allSalesByProductReports
+                            .Where(sales => sales.ProductName.ToLower().Contains(searchQuery) ||
+                                            sales.TotalQuantitySold.ToString().Contains(searchQuery) ||
+                                            sales.TotalSales.ToString().Contains(searchQuery))
+                            .ToList();
+                        salesByProductTotalPages = (int)Math.Ceiling((double)filteredSalesByProductReports.Count / itemsPerPage);
+                        LoadPage("SalesByProduct", salesByProductCurrentPage);
+                        break;
+                }
+            }
+        }
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (TextBox.Text == "Search here")
+            {
+                TextBox.Text = string.Empty;
+                TextBox.Foreground = Brushes.Black; // Set text color to normal
+            }
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(TextBox.Text))
+            {
+                TextBox.Text = "Search here";
+                TextBox.Foreground = Brushes.Gray; // Set text color to placeholder style
+            }
+        }
+
     }
 }
 

@@ -24,7 +24,7 @@
                 <!-- For DataGrid -->
             </Grid.RowDefinitions>
 
-            <Border Background="#003566" Height="70" VerticalAlignment="Top" CornerRadius="0,0,0,0" Margin="-2,0,0,0">
+            <Border Background="SteelBlue" Height="70" VerticalAlignment="Top" CornerRadius="0,0,0,0" Margin="-2,0,0,0">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
                     <Image Source="/Images/customer.png" Height="60" Margin="10,0" VerticalAlignment="Center"/>
                     <TextBlock Text="CUSTOMER" 
@@ -40,22 +40,38 @@
             <!-- Search TextBox -->
 
             <TextBox x:Name="TextBox" 
-                     HorizontalAlignment="Left" 
-                     Background="WhiteSmoke" 
-                     Height="36" 
-                     Margin="16,90,0,0" 
-                     VerticalAlignment="Top" 
-                     Width="300" 
-                     TextWrapping="Wrap" 
-                     FontSize="14" 
-                     Padding="5" 
-                     BorderThickness="1" 
-                     BorderBrush="Gray" 
-                     Foreground="Gray"
-                     Text="Search here" 
-                     GotFocus="TextBox_GotFocus" 
-                     LostFocus="TextBox_LostFocus" 
-                     Grid.Row="1" TextChanged="TextBox_TextChanged" />
+         HorizontalAlignment="Left" 
+         Background="WhiteSmoke" 
+         Height="35" 
+         Margin="16,82,0,0" 
+         VerticalAlignment="Top" 
+         Width="300" 
+         TextWrapping="Wrap" 
+         FontSize="16" 
+         Padding="10,5" 
+         Foreground="Gray"
+         Text="Search here" 
+         GotFocus="TextBox_GotFocus" 
+         LostFocus="TextBox_LostFocus" 
+         Grid.Row="1" 
+         TextChanged="TextBox_TextChanged">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="TextBox">
+                                    <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="Gray" 
+                                BorderThickness="1" 
+                                CornerRadius="7">
+                                        <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
 
 
             <!--<Grid HorizontalAlignment="Left" Height="36" Margin="330,81,0,0" Grid.Row="1" VerticalAlignment="Top" Width="39" OpacityMask="Black" Background="#FF7C7C7C"/>
@@ -82,15 +98,15 @@
             </StackPanel>
 
             <!-- DataGrid -->
-            <DataGrid x:Name="customersDG" Grid.Row="1" Margin="15,133,15,100"
+            <DataGrid x:Name="customersDG" Grid.Row="1" Margin="15,133,15,47"
                       CanUserResizeColumns="False" GridLinesVisibility="None" 
                       HorizontalGridLinesBrush="LightGray"
                       VerticalGridLinesBrush="LightGray" BorderBrush="Gray" BorderThickness="1"
                       CanUserAddRows="False"  SelectionMode="Single" 
                       SelectionUnit="FullRow" MinRowHeight="30" 
                       RowHeaderWidth="0" FontFamily="Segoe UI" 
-                      HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" 
-                      ScrollViewer.CanContentScroll="True" SelectionChanged="customersDG_SelectionChanged">
+                      HorizontalScrollBarVisibility="Disabled" FrozenColumnCount="0" VerticalScrollBarVisibility="Auto" 
+                      SelectionChanged="customersDG_SelectionChanged">
 
                 <!-- DataGrid Column Header Style -->
                 <DataGrid.ColumnHeaderStyle>
@@ -120,7 +136,7 @@
                 <!-- Define DataGrid Columns -->
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Customer ID" Binding="{Binding CustomerID}" Width="150" />
-                    <DataGridTextColumn Header="Tank ID" Binding="{Binding TankID}" Width="150" />
+                    <DataGridTextColumn Header="Transaction ID" Binding="{Binding TankID}" Width="150" />
 
                     <DataGridTemplateColumn Header="Customer Name" Width="190">
                         <DataGridTemplateColumn.CellTemplate>
