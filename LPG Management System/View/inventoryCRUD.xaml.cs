@@ -31,17 +31,25 @@ namespace LPG_Management_System.View
             // Combine the size and unit
             string fullSize = $"{size} {unit}";
 
+            // Validate required fields
             if (string.IsNullOrEmpty(brandname) || string.IsNullOrEmpty(size) ||
                 string.IsNullOrEmpty(priceText) || string.IsNullOrEmpty(stocksText) ||
                 selectedImageBytes == null)
             {
-                MessageBox.Show("Please fill in all fields and select an image.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please fill in all fields, including stocks, and select an image.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            if (!decimal.TryParse(priceText, out decimal price) || !int.TryParse(stocksText, out int stocks))
+            // Validate numeric inputs
+            if (!decimal.TryParse(priceText, out decimal price) || price <= 0)
             {
-                MessageBox.Show("Invalid number format for Price or Stocks.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Price must be a positive number.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (!int.TryParse(stocksText, out int stocks) || stocks < 0)
+            {
+                MessageBox.Show("Stocks must be a non-negative whole number.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -70,6 +78,41 @@ namespace LPG_Management_System.View
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+        private void ReduceQuantity_Click(object sender, RoutedEventArgs e)
+        {
+            // Parse the current stock value from the TextBox
+            if (int.TryParse(stockstxtBox.Text, out int currentStock))
+            {
+                // Decrement the stock value, ensuring it doesn't go below 0
+                if (currentStock > 0)
+                {
+                    currentStock--;
+                    stockstxtBox.Text = currentStock.ToString();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Invalid stock value.");
+            }
+        }
+
+        // Event handler for the increment button
+        private void IncreaseQuantity_Click(object sender, RoutedEventArgs e)
+        {
+            // Parse the current stock value from the TextBox
+            if (int.TryParse(stockstxtBox.Text, out int currentStock))
+            {
+                // Increment the stock value
+                currentStock++;
+                stockstxtBox.Text = currentStock.ToString();
+            }
+            else
+            {
+                MessageBox.Show("Invalid stock value.");
             }
         }
 

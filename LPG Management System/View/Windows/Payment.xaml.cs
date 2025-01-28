@@ -46,10 +46,36 @@ namespace LPG_Management_System.View.Windows
 
             TotalQuantity = totalQuantity;
             TotalAmountLabel.Content = $"Total: ₱{totalPrice:F2}";
+
+            GenerateCustomerID();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Auto-generate the Customer ID and display it
+            GenerateCustomerID();
+        }
+
+        private void GenerateCustomerID()
+        {
+            Random random = new Random();
+            int customerID = random.Next(100000, 999999);
+
+            customerIDtxtBox.Text = customerID.ToString();
         }
 
         private void amountBtn_Click(object sender, RoutedEventArgs e)
         {
+
+            string input = contacttxtBox.Text;
+
+            // Check if the length is 11 and starts with "09"
+            if (input.Length != 11 || !input.StartsWith("09"))
+            {
+                MessageBox.Show("The phone number must start with '09' and contain exactly 11 digits.");
+                return; // Prevent proceeding if the validation fails
+            }
+
             if (double.TryParse(amounttxtBox.Text, out double amount) && amount > 0)
             {
                 PaymentAmount = amount;
@@ -66,7 +92,9 @@ namespace LPG_Management_System.View.Windows
                     try
                     {
                         var purchasedItems = receiptItems;
-                        // Create and add the transaction record
+
+                        int generatedTankID = GenerateTankID();
+
                         var newTransaction = new ReportsTable
                         {
                             TransactionID = GenerateTransactionID(),
@@ -79,7 +107,8 @@ namespace LPG_Management_System.View.Windows
                             PaymentMethod = "Cash",
                             PaidAmount = (decimal)amount,
                             ChangeGiven = changeGiven,
-                            Status = TransactionStatus.Completed
+                            Status = TransactionStatus.Completed,
+                            CustomerName = customertxtBox.Text
                         };
 
                         context.tbl_reports.Add(newTransaction);
@@ -93,7 +122,8 @@ namespace LPG_Management_System.View.Windows
                                 CustomerName = customertxtBox.Text,
                                 ContactNumber = contacttxtBox.Text,
                                 Address = addresstxtBox.Text,
-                                TankClassification = tankClassComboBox.Text
+                                TankClassification = tankClassComboBox.Text,
+                                TankID = generatedTankID
                             };
                             context.tbl_customers.Add(newCustomer);
                         }
@@ -115,7 +145,6 @@ namespace LPG_Management_System.View.Windows
                             }
                         }
 
-                        // Save changes to add transaction and customer updates first
                         context.SaveChanges();
 
                         // Update the inventory after saving transaction and customer details
@@ -158,23 +187,14 @@ namespace LPG_Management_System.View.Windows
                 MessageBox.Show("Please enter a valid payment amount.", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
-
-
-
-
-
-
-
         private int GenerateTankID()
         {
-            // Replace this logic with a more robust method if necessary
-            return new Random().Next(100000, 999999); // Generates a random integer ID
+
+            return new Random().Next(100000, 999999);
         }
 
-        // Example method to generate a unique transaction ID
         private int GenerateTransactionID()
         {
-            // Replace this logic with an actual Transaction ID generation method
             return new Random().Next(100000, 999999);
         }
 
@@ -190,10 +210,9 @@ namespace LPG_Management_System.View.Windows
 
         private void OldCustomer_Checked(object sender, RoutedEventArgs e)
         {
-            // Disable fields for new customers and allow search for old customers
             contacttxtBox.IsEnabled = false;
             addresstxtBox.IsEnabled = false;
-            customertxtBox.IsReadOnly = false; // Allow typing for search functionality
+            customertxtBox.IsReadOnly = false;
             customerIDtxtBox.IsReadOnly = true;
 
             // Clear customer data fields
@@ -201,47 +220,10 @@ namespace LPG_Management_System.View.Windows
             customerIDtxtBox.Clear();
             addresstxtBox.Clear();
             contacttxtBox.Clear();
+            tankClassComboBox.SelectedIndex = 0;
 
-            // Load tank classifications into the combo box
-            try
-            {
-                using (var context = new DataContext())
-                {
-                    var classifications = context.tbl_customers
-                                                  .Select(c => c.TankClassification)
-                                                  .Distinct()
-                                                  .ToList();
 
-                    tankClassComboBox.Items.Clear();
-                    tankClassComboBox.Items.Add(new ComboBoxItem
-                    {
-                        Content = "Tank Class",
-                        IsEnabled = false,
-                        Foreground = Brushes.Gray
-                    });
-
-                    foreach (var classification in classifications)
-                    {
-                        if (!string.IsNullOrEmpty(classification))
-                        {
-                            tankClassComboBox.Items.Add(new ComboBoxItem
-                            {
-                                Content = classification
-                            });
-                        }
-                    }
-
-                    // Set the default selection to the first item (or ensure it's reset)
-                    tankClassComboBox.SelectedIndex = 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading tank classifications: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
         }
-
-
 
 
         private void NewCustomer_Checked(object sender, RoutedEventArgs e)
@@ -299,38 +281,30 @@ namespace LPG_Management_System.View.Windows
 
         private void customerListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // If an item (customer) is selected from the list
             if (customerListBox.SelectedItem is CustomersTable selectedCustomer)
             {
-                // Fill in the remaining fields with the selected customer's details
+                // Set the customer fields
                 customertxtBox.Text = selectedCustomer.CustomerName;
                 customerIDtxtBox.Text = selectedCustomer.CustomerID.ToString();
                 contacttxtBox.Text = selectedCustomer.ContactNumber;
                 addresstxtBox.Text = selectedCustomer.Address;
 
-                // Set the Tank Classification in the ComboBox
-                // Ensure ComboBox has the correct selection, you may want to ensure that the combo box items are already populated
-                if (tankClassComboBox.ItemsSource != null && tankClassComboBox.Items.Count > 0)
+                // Properly set the selected item in the ComboBox
+                if (tankClassComboBox.Items.Contains(selectedCustomer.TankClassification))
                 {
-                    // Set the Tank Classification from the selected customer
-                    var selectedItem = tankClassComboBox.Items
-                        .OfType<ComboBoxItem>()
-                        .FirstOrDefault(item => item.Content.ToString() == selectedCustomer.TankClassification);
-
-                    // Ensure we have found a matching item and set it as selected
-                    if (selectedItem != null)
-                    {
-                        tankClassComboBox.SelectedItem = selectedItem;
-                    }
+                    tankClassComboBox.SelectedItem = selectedCustomer.TankClassification;
+                }
+                else
+                {
+                    // Add the tank classification if not already present in the ComboBox
+                    tankClassComboBox.Items.Add(selectedCustomer.TankClassification);
+                    tankClassComboBox.SelectedItem = selectedCustomer.TankClassification;
                 }
 
                 // Hide the list box after selection
                 customerListBox.Visibility = Visibility.Collapsed;
             }
         }
-
-
-
 
 
         private void customertxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -360,9 +334,13 @@ namespace LPG_Management_System.View.Windows
 
         private void contacttxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            // Allow only numeric input for contact number
-            e.Handled = !char.IsDigit(e.Text, 0);
+            // Check if the entered character is a digit
+            if (!Char.IsDigit(e.Text, 0))
+            {
+                e.Handled = true; // Prevent non-digit characters from being typed
+            }
         }
+
 
         private void addresstxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -389,5 +367,38 @@ namespace LPG_Management_System.View.Windows
                 tankClassComboBox.Items.RemoveAt(0);
             }
         }
+
+        private void contacttxtBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            string input = contacttxtBox.Text;
+
+            // Check if the length is 11 and starts with "09"
+            if (input.Length != 11 || !input.StartsWith("09"))
+            {
+                MessageBox.Show("The phone number must start with '09' and contain exactly 11 digits.");
+                // Optionally focus back on the TextBox to correct the input
+                contacttxtBox.Focus();
+            }
+            else
+            {
+                // Format the number with a space after the second character
+                contacttxtBox.Text = input.Substring(0, 2) + " " + input.Substring(2);
+            }
+        }
+
+        private void contacttxtBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            string input = contacttxtBox.Text;
+
+            if (input.Length == 11)
+            {
+                contacttxtBox.SelectionStart = contacttxtBox.Text.Length;// Keep the cursor at the end
+            }
+        }
+
+
+
+
+
     }
 }
