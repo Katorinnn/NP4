@@ -23,7 +23,7 @@ namespace LPG_Management_System.View.UserControls
         private int stockCheckCurrentPage = 1;
         private int salesByProductCurrentPage = 1;
 
-        private const int itemsPerPage = 15;
+        private const int itemsPerPage = 14;
 
         private int inventorySalesTotalPages;
         private int stockCheckTotalPages;
@@ -32,6 +32,10 @@ namespace LPG_Management_System.View.UserControls
         private List<ReportsTable> allInventorySalesReports;
         private List<InventoryTable> allStockCheckReports;
         private List<dynamic> allSalesByProductReports;
+
+        private List<ReportsTable> filteredInventorySalesReports;
+        private List<InventoryTable> filteredStockCheckReports;
+        private List<dynamic> filteredSalesByProductReports;
 
         public reportsUC()
         {
@@ -104,6 +108,40 @@ namespace LPG_Management_System.View.UserControls
             }
         }
 
+        private int CalculateItemsPerPage(DataGrid dataGrid)
+        {
+            // Get the height of the DataGrid
+            double dataGridHeight = dataGrid.ActualHeight;
+
+            // Estimate the height of the header row
+            double headerHeight = dataGrid.ColumnHeaderHeight;
+
+            // Calculate the available height for rows
+            double availableHeight = dataGridHeight - headerHeight;
+
+            // Measure the height of an average row
+            double averageRowHeight = 0;
+            if (dataGrid.Items.Count > 0)
+            {
+                // Use the first visible row to estimate the row height
+                var firstRow = dataGrid.ItemContainerGenerator.ContainerFromIndex(0) as DataGridRow;
+                if (firstRow != null)
+                {
+                    averageRowHeight = firstRow.ActualHeight;
+                }
+            }
+
+            // Fallback to a default row height if no rows are visible yet
+            if (averageRowHeight == 0)
+            {
+                averageRowHeight = 30; // Default row height (adjust as needed)
+            }
+
+            // Calculate how many rows can fit in the available space
+            return (int)(availableHeight / averageRowHeight);
+        }
+
+
 
         private void LoadPage(string category, int page)
         {
@@ -112,24 +150,53 @@ namespace LPG_Management_System.View.UserControls
             switch (category)
             {
                 case "InventorySales":
-                    var inventoryPageData = allInventorySalesReports.Skip(startIndex).Take(itemsPerPage).ToList();
+                    var inventoryPageData = filteredInventorySalesReports?.Skip(startIndex).Take(itemsPerPage).ToList()
+                                          ?? allInventorySalesReports.Skip(startIndex).Take(itemsPerPage).ToList();
                     inventorySalesDG.ItemsSource = inventoryPageData;
+
                     pageIndicator.Text = $"Page {inventorySalesCurrentPage} of {inventorySalesTotalPages}";
+                    UpdatePaginationVisibility(inventorySalesTotalPages);
                     break;
 
                 case "StockCheck":
-                    var stockPageData = allStockCheckReports.Skip(startIndex).Take(itemsPerPage).ToList();
+                    var stockPageData = filteredStockCheckReports?.Skip(startIndex).Take(itemsPerPage).ToList()
+                                      ?? allStockCheckReports.Skip(startIndex).Take(itemsPerPage).ToList();
                     stockCheckDG.ItemsSource = stockPageData;
-                    pageIndicator.Text = $"Page {inventorySalesCurrentPage} of {inventorySalesTotalPages}";
+
+                    pageIndicator.Text = $"Page {stockCheckCurrentPage} of {stockCheckTotalPages}";
+                    UpdatePaginationVisibility(stockCheckTotalPages);
                     break;
 
                 case "SalesByProduct":
-                    var salesPageData = allSalesByProductReports.Skip(startIndex).Take(itemsPerPage).ToList();
+                    var salesPageData = filteredSalesByProductReports?.Skip(startIndex).Take(itemsPerPage).ToList()
+                                       ?? allSalesByProductReports.Skip(startIndex).Take(itemsPerPage).ToList();
                     salesByProductDG.ItemsSource = salesPageData;
-                    pageIndicator.Text = $"Page {inventorySalesCurrentPage} of {inventorySalesTotalPages}";
+
+                    pageIndicator.Text = $"Page {salesByProductCurrentPage} of {salesByProductTotalPages}";
+                    UpdatePaginationVisibility(salesByProductTotalPages);
                     break;
             }
         }
+
+
+        private void UpdatePaginationVisibility(int totalPages)
+        {
+            if (totalPages > 1)
+            {
+                // Show pagination controls if more than one page
+                pageIndicator.Visibility = Visibility.Visible;
+                previousButton.Visibility = Visibility.Visible;
+                nextButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                // Hide pagination controls if only one page
+                pageIndicator.Visibility = Visibility.Collapsed;
+                previousButton.Visibility = Visibility.Collapsed;
+                nextButton.Visibility = Visibility.Collapsed;
+            }
+        }
+
 
 
         private void PreviousButton_Click(object sender, RoutedEventArgs e)
@@ -207,20 +274,24 @@ namespace LPG_Management_System.View.UserControls
                     case "Inventory Sales Report":
                         inventorySalesDG.Visibility = Visibility.Visible;
                         LoadInventorySalesData();
+                        UpdatePaginationVisibility(inventorySalesTotalPages); // Ensure visibility updates
                         break;
 
                     case "Stock Check Sheets":
                         stockCheckDG.Visibility = Visibility.Visible;
                         LoadStockCheckData();
+                        UpdatePaginationVisibility(stockCheckTotalPages); // Ensure visibility updates
                         break;
 
                     case "Sales by Product":
                         salesByProductDG.Visibility = Visibility.Visible;
                         LoadSalesByProductData();
+                        UpdatePaginationVisibility(salesByProductTotalPages); // Ensure visibility updates
                         break;
                 }
             }
         }
+
 
 
 
@@ -250,70 +321,85 @@ namespace LPG_Management_System.View.UserControls
 
         private void FilterReportsByDate(DataGrid targetDataGrid)
         {
-            if (!beginDatePicker.SelectedDate.HasValue || !endDatePicker.SelectedDate.HasValue)
+            DateTime? startDate = beginDatePicker.SelectedDate?.Date;
+            DateTime? endDate = endDatePicker.SelectedDate?.Date;
+
+            if (startDate == null && endDate == null)
             {
-                MessageBox.Show("Please select both Begin Date and End Date.");
+                MessageBox.Show("Please select at least one date (Begin Date or End Date).");
                 return;
             }
 
-            DateTime startDate = beginDatePicker.SelectedDate.Value.Date;
-            DateTime endDate = endDatePicker.SelectedDate.Value.Date;
-
-            if (startDate > endDate)
+            if (startDate != null && endDate != null && startDate > endDate)
             {
                 MessageBox.Show("Begin Date cannot be later than End Date.");
                 return;
             }
 
+            DateTime endDateExclusive = endDate?.AddDays(1) ?? DateTime.MaxValue;
+
             if (targetDataGrid == inventorySalesDG)
             {
-                var filteredReports = allInventorySalesReports
-                    .Where(report => report.Date.Date >= startDate && report.Date.Date <= endDate)
+                // Filter the data
+                filteredInventorySalesReports = allInventorySalesReports
+                    .Where(report =>
+                        (startDate == null || report.Date >= startDate) &&
+                        (endDate == null || report.Date < endDateExclusive))
                     .ToList();
 
-                inventorySalesDG.ItemsSource = filteredReports;
-                inventorySalesTotalPages = (int)Math.Ceiling((double)filteredReports.Count / itemsPerPage);
+                // Update pagination and load the first page
+                inventorySalesTotalPages = (int)Math.Ceiling((double)filteredInventorySalesReports.Count / itemsPerPage);
                 inventorySalesCurrentPage = 1;
 
-                if (filteredReports.Count == 0)
+                if (filteredInventorySalesReports.Count == 0)
                 {
                     MessageBox.Show("No records found for the selected date range.");
                 }
+
+                LoadPage("InventorySales", inventorySalesCurrentPage);
             }
             else if (targetDataGrid == stockCheckDG)
             {
-                var filteredReports = allStockCheckReports
-                    .Where(report => report.Date.Date >= startDate && report.Date.Date <= endDate)
+                filteredStockCheckReports = allStockCheckReports
+                    .Where(report =>
+                        (startDate == null || report.Date.Date >= startDate) &&
+                        (endDate == null || report.Date.Date < endDateExclusive))
                     .ToList();
 
-                stockCheckDG.ItemsSource = filteredReports;
-                stockCheckTotalPages = (int)Math.Ceiling((double)filteredReports.Count / itemsPerPage);
+                stockCheckTotalPages = (int)Math.Ceiling((double)filteredStockCheckReports.Count / itemsPerPage);
                 stockCheckCurrentPage = 1;
 
-                if (filteredReports.Count == 0)
+                if (filteredStockCheckReports.Count == 0)
                 {
                     MessageBox.Show("No records found for the selected date range.");
                 }
+
+                LoadPage("StockCheck", stockCheckCurrentPage);
             }
             else if (targetDataGrid == salesByProductDG)
             {
-                var filteredReports = allSalesByProductReports
-                    .Where(report => report.Date.Date >= startDate && report.Date.Date <= endDate)
+                filteredSalesByProductReports = allSalesByProductReports
+                    .Where(report =>
+                        (startDate == null || report.Date.Date >= startDate) &&
+                        (endDate == null || report.Date.Date < endDateExclusive))
                     .ToList();
 
-                salesByProductDG.ItemsSource = filteredReports;
-                salesByProductTotalPages = (int)Math.Ceiling((double)filteredReports.Count / itemsPerPage);
+                salesByProductTotalPages = (int)Math.Ceiling((double)filteredSalesByProductReports.Count / itemsPerPage);
                 salesByProductCurrentPage = 1;
 
-                if (filteredReports.Count == 0)
+                if (filteredSalesByProductReports.Count == 0)
                 {
                     MessageBox.Show("No records found for the selected date range.");
                 }
+
+                LoadPage("SalesByProduct", salesByProductCurrentPage);
             }
 
             // Update the pagination UI
             UpdatePaginationUI(targetDataGrid);
         }
+
+
 
 
         private void UpdatePaginationUI(DataGrid targetDataGrid)
@@ -338,17 +424,21 @@ namespace LPG_Management_System.View.UserControls
                 if (selectedCategory == "Inventory Sales Report")
                 {
                     FilterReportsByDate(inventorySalesDG);
+                    UpdatePaginationVisibility(inventorySalesTotalPages);
                 }
                 else if (selectedCategory == "Stock Check Sheets")
                 {
                     FilterReportsByDate(stockCheckDG);
+                    UpdatePaginationVisibility(stockCheckTotalPages);
                 }
                 else if (selectedCategory == "Sales by Product")
                 {
                     FilterReportsByDate(salesByProductDG);
+                    UpdatePaginationVisibility(salesByProductTotalPages);
                 }
             }
         }
+
 
 
         private void CancelFilterButton_Click(object sender, RoutedEventArgs e)
@@ -356,9 +446,6 @@ namespace LPG_Management_System.View.UserControls
             // Reset the DatePickers to null (clear the selected dates)
             beginDatePicker.SelectedDate = null;
             endDatePicker.SelectedDate = null;
-
-            // Optionally, reset other filters like Category combo box
-            categoryComboBox.SelectedIndex = 0;
 
             // Reload all reports without filtering
             LoadInventorySalesData();
@@ -370,6 +457,8 @@ namespace LPG_Management_System.View.UserControls
 
         private void PrintPreview_Click(object sender, RoutedEventArgs e)
         {
+            var companyDetails = GetCompanyDetails();
+
             try
             {
                 if (categoryComboBox.SelectedItem is string selectedCategory)
@@ -387,23 +476,62 @@ namespace LPG_Management_System.View.UserControls
                     // Create the PDF using iTextSharp
                     using (MemoryStream memoryStream = new MemoryStream())
                     {
-                        float width = 600f;
-                        float height = targetDataGrid.Items.Count * 15f + 100f; // Dynamically set height based on number of items
-                        iTextSharp.text.Rectangle pageSize = new iTextSharp.text.Rectangle(width, height);
-
-                        iTextSharp.text.Document doc = new iTextSharp.text.Document(pageSize, 5f, 5f, 5f, 5f);
+                        // Use the A4 page size (portrait)
+                        iTextSharp.text.Document doc = new iTextSharp.text.Document(iTextSharp.text.PageSize.A4, 36f, 36f, 36f, 36f); // A4 with 1-inch margins (36f points)
                         PdfWriter writer = PdfWriter.GetInstance(doc, memoryStream);
                         writer.CloseStream = false;
 
                         doc.Open();
 
+                        PdfPTable topBorderTable = new PdfPTable(1)
+                        {
+                            WidthPercentage = 100
+                        };
+                        topBorderTable.DefaultCell.BorderWidthTop = 1.5f;
+                        topBorderTable.DefaultCell.Border = Rectangle.TOP_BORDER; // Add a top border
+                        topBorderTable.AddCell(""); // Add a blank cell to create the border effect
+                        doc.Add(topBorderTable);
+
                         // Add Title and Date of Report
                         Font headerFont = new Font(Font.FontFamily.HELVETICA, 12f, Font.BOLD);
+                        Font semiheaderFont = new Font(Font.FontFamily.HELVETICA, 10f, Font.BOLD);
                         Font normalFont = new Font(Font.FontFamily.HELVETICA, 10f, Font.NORMAL);
 
-                        doc.Add(new iTextSharp.text.Paragraph($"Report: {selectedCategory}", headerFont) { Alignment = Element.ALIGN_CENTER });
-                        doc.Add(new iTextSharp.text.Paragraph($"Date: {DateTime.Now:yyyy-MM-dd}", normalFont) { Alignment = Element.ALIGN_CENTER });
-                        doc.Add(new iTextSharp.text.Paragraph(new string('-', 40), normalFont) { Alignment = Element.ALIGN_CENTER });
+                        PdfPTable titleTable = new PdfPTable(2)
+                        {
+                            WidthPercentage = 100
+                        };
+
+                        // Set column widths (the first column will take more space, the second column will take the minimum space)
+                        titleTable.SetWidths(new float[] { 70f, 30f });  // Adjust the values based on your layout needs
+
+                        // Add the category name to the left column
+                        titleTable.AddCell(new PdfPCell(new Phrase(selectedCategory, headerFont))
+                        {
+                            Border = 0,
+                            HorizontalAlignment = Element.ALIGN_LEFT,
+                            VerticalAlignment = Element.ALIGN_MIDDLE
+                        });
+
+                        // Add the company name to the right column
+                        titleTable.AddCell(new PdfPCell(new Phrase(companyDetails.CompanyName, headerFont))
+                        {
+                            Border = 0,
+                            HorizontalAlignment = Element.ALIGN_RIGHT,
+                            VerticalAlignment = Element.ALIGN_MIDDLE
+                        });
+
+                        // Add the table to the document
+                        doc.Add(titleTable);
+                        doc.Add(new iTextSharp.text.Paragraph($"Date: {DateTime.Now:yyyy-MM-dd}", normalFont) { Alignment = Element.ALIGN_LEFT });
+                        PdfPTable BottomHeaderBorder = new PdfPTable(1)
+                        {
+                            WidthPercentage = 100
+                        };
+                        topBorderTable.DefaultCell.BorderWidthTop = 1.5f;
+                        topBorderTable.DefaultCell.Border = Rectangle.TOP_BORDER; // Add a top border
+                        topBorderTable.AddCell(""); // Add a blank cell to create the border effect
+                        doc.Add(topBorderTable);
 
                         // Add the DataGrid content to the PDF
                         PdfPTable table = new PdfPTable(targetDataGrid.Columns.Count)
@@ -414,7 +542,7 @@ namespace LPG_Management_System.View.UserControls
                         // Add column headers
                         foreach (var column in targetDataGrid.Columns)
                         {
-                            table.AddCell(new PdfPCell(new Phrase(column.Header.ToString(), headerFont)) { Border = 0, HorizontalAlignment = PdfPCell.ALIGN_CENTER });
+                            table.AddCell(new PdfPCell(new Phrase(column.Header.ToString(), semiheaderFont)) { Border = 0, HorizontalAlignment = PdfPCell.ALIGN_CENTER });
                         }
 
                         // Add data rows
@@ -422,17 +550,54 @@ namespace LPG_Management_System.View.UserControls
                         {
                             foreach (var column in targetDataGrid.Columns)
                             {
-                                var cellContent = column.GetCellContent(item) as TextBlock;
-                                table.AddCell(new PdfPCell(new Phrase(cellContent?.Text ?? string.Empty, normalFont)) { Border = 0, HorizontalAlignment = PdfPCell.ALIGN_CENTER });
+                                var cellContent = column.GetCellContent(item);
+
+                                // Variable to hold the actual text
+                                string cellText = string.Empty;
+
+                                // Check if the content is a ContentPresenter, as that's what typically holds the TextBlock
+                                if (cellContent is ContentPresenter contentPresenter)
+                                {
+                                    // Use VisualTreeHelper to find the TextBlock inside the ContentPresenter
+                                    var textBlock = FindChild<TextBlock>(contentPresenter);
+
+                                    // If we find the TextBlock, extract its text
+                                    if (textBlock != null)
+                                    {
+                                        cellText = textBlock.Text;
+                                    }
+                                }
+                                else if (cellContent is TextBlock textBlock)
+                                {
+                                    // If the content is directly a TextBlock, extract the text
+                                    cellText = textBlock.Text;
+                                }
+                                else
+                                {
+                                    // If it's neither a ContentPresenter nor a TextBlock, use ToString
+                                    cellText = cellContent?.ToString() ?? string.Empty;
+                                }
+
+                                // Add the cell's text to the PDF table cell
+                                table.AddCell(new PdfPCell(new Phrase(cellText, normalFont)) { Border = 0, HorizontalAlignment = PdfPCell.ALIGN_CENTER });
                             }
                         }
+
+
+
 
                         // Add the table to the document
                         doc.Add(table);
 
                         // Add Footer
-                        doc.Add(new iTextSharp.text.Paragraph(new string('-', 40), normalFont) { Alignment = Element.ALIGN_CENTER });
-                        doc.Add(new iTextSharp.text.Paragraph("End of Report", normalFont) { Alignment = Element.ALIGN_CENTER });
+                        PdfPTable BottomBorder = new PdfPTable(1)
+                        {
+                            WidthPercentage = 100
+                        };
+                        topBorderTable.DefaultCell.BorderWidthTop = 1.5f;
+                        topBorderTable.DefaultCell.Border = Rectangle.TOP_BORDER; // Add a top border
+                        topBorderTable.AddCell(""); // Add a blank cell to create the border effect
+                        doc.Add(topBorderTable);
 
                         doc.Close();
 
@@ -446,7 +611,7 @@ namespace LPG_Management_System.View.UserControls
                         // Clean up the file after a delay
                         Task.Run(() =>
                         {
-                            System.Threading.Thread.Sleep(50000);
+                            System.Threading.Thread.Sleep(500000);
                             if (File.Exists(tempFilePath))
                             {
                                 File.Delete(tempFilePath);
@@ -459,6 +624,37 @@ namespace LPG_Management_System.View.UserControls
             {
                 MessageBox.Show($"Error generating print preview: {ex.Message}");
             }
+        }
+        private CompanyTable GetCompanyDetails()
+        {
+            using (var context = new DataContext())
+            {
+                // Assuming there is only one company record
+                return context.tbl_company.FirstOrDefault();
+            }
+        }
+
+        private T FindChild<T>(DependencyObject parent) where T : DependencyObject
+        {
+            // Check if the parent is null
+            if (parent == null)
+                return null;
+
+            // Try to find the child of the given type (T)
+            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < childrenCount; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is T)
+                    return (T)child;
+
+                // Recursively search in the child
+                var result = FindChild<T>(child);
+                if (result != null)
+                    return result;
+            }
+
+            return null;
         }
     }
 }

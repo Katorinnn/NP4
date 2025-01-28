@@ -87,7 +87,7 @@
                       RowHeaderWidth="0" FontFamily="Segoe UI"
                       HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" 
                       ScrollViewer.CanContentScroll="True"
-                      AlternatingRowBackground="#F5F5F5" AlternationCount="2" Grid.ColumnSpan="2" >
+                      AlternatingRowBackground="#F5F5F5" AlternationCount="2" Grid.ColumnSpan="2" CanUserReorderColumns="False" >
 
                 <!-- DataGrid Column Header Style -->
                 <DataGrid.ColumnHeaderStyle>
@@ -167,14 +167,14 @@
             <Button x:Name="newBtn" Content="New LPG Brand" 
                 Click="newBtn_Click" Cursor="Hand" Background="#0078D7" Foreground="White"
                 FontWeight="Bold" BorderThickness="0" BorderBrush="Transparent"
-                FontFamily="Segou UI" Margin="15,93,1018,639" RenderTransformOrigin="0.498,0.367" Grid.Row="1"/>
+                FontFamily="Segou UI" Margin="23,83,1010,649" RenderTransformOrigin="0.498,0.367" Grid.Row="1"/>
 
             <UniformGrid Rows="1" Columns="2" Margin="998,72,15,629" Grid.ColumnSpan="2" Grid.Row="1">
                 <ToggleButton x:Name="listViewButton" Content="List" 
                   Style="{StaticResource ViewToggleButtonStyle}"
-                  IsChecked="True" Margin="2" Click="ListView_Click"/>
+                  IsChecked="True" Margin="4,2,4,21" Click="ListView_Click"/>
                 <ToggleButton x:Name="gridViewButton" Content="Grid" 
-                Style="{StaticResource ViewToggleButtonStyle}" Margin="2" Click="GridView_Click"/>
+                Style="{StaticResource ViewToggleButtonStyle}" Margin="4,2,4,21" Click="GridView_Click"/>
 
                 <!-- Grid View Button -->
             </UniformGrid>
@@ -182,8 +182,8 @@
             <!-- List View -->
 
             <!-- Product View -->
-            <ScrollViewer x:Name="ProductScrollViewer" Grid.Row="1" Visibility="Collapsed" Grid.ColumnSpan="2" Margin="15,130,15,47">
-                <WrapPanel x:Name="ProductsWrapPanel" Margin="10">
+            <ScrollViewer x:Name="ProductScrollViewer" Grid.Row="1"  Grid.ColumnSpan="2" Margin="15,130,15,47" Visibility="Collapsed" Background="White">
+                <WrapPanel x:Name="ProductsWrapPanel" Margin="10" Width="1180">
                 </WrapPanel>
             </ScrollViewer>
         </Grid>

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 
 namespace LPG_Management_System.View.UserControls
@@ -184,13 +185,41 @@ namespace LPG_Management_System.View.UserControls
 
             foreach (var product in products.GroupBy(p => new { p.ProductName, p.Size, p.Price }).Select(g => g.First()))
             {
-                // Create a container for each product (e.g., StackPanel)
-                var productContainer = new StackPanel
+                var productContainer = new Border
                 {
                     Margin = new Thickness(10),
-                    Background = Brushes.LightGray,
-                    Width = 200,
-                    Height = 250
+                    Background = Brushes.AliceBlue,
+                    Width = 210,
+                    Height = 270,
+                    CornerRadius = new CornerRadius(10),
+                    BorderBrush = Brushes.LightGray,
+                    BorderThickness = new Thickness(1),
+                    Effect = new DropShadowEffect
+                    {
+                        Color = Colors.Gray,
+                        Direction = 315,
+                        ShadowDepth = 1,
+                        BlurRadius = 5,
+                        Opacity = 0.5
+                    }
+                };
+
+                // Add zoom effect on hover
+                productContainer.MouseEnter += (s, e) =>
+                {
+                    productContainer.RenderTransform = new ScaleTransform(1.1, 1.1); // Scale up
+                    productContainer.RenderTransformOrigin = new Point(0.5, 0.5);    // Center the scaling
+                };
+
+                productContainer.MouseLeave += (s, e) =>
+                {
+                    productContainer.RenderTransform = new ScaleTransform(1.0, 1.0); // Scale back to normal
+                };
+
+                // Create a StackPanel inside the Border to hold product content
+                var stackPanel = new StackPanel
+                {
+                    Orientation = Orientation.Vertical
                 };
 
                 // Add product image
@@ -198,39 +227,49 @@ namespace LPG_Management_System.View.UserControls
                 {
                     Source = ConvertToImageSource(product.ProductImage),
                     Height = 120,
-                    Margin = new Thickness(5)
+                    Margin = new Thickness(20)
                 };
 
                 // Add product details
                 var brandText = new TextBlock
                 {
                     Text = $"Brand: {product.ProductName}",
-                    FontWeight = FontWeights.Bold,
-                    Margin = new Thickness(5)
+                    FontWeight = FontWeights.SemiBold,
+                    FontFamily = new FontFamily("Segoe UI"),
+                    FontSize = 16,
+                    Margin = new Thickness(15, 5, 5, 5)
                 };
 
                 var sizeText = new TextBlock
                 {
                     Text = $"Size: {product.Size}",
-                    Margin = new Thickness(5)
+                    FontFamily = new FontFamily("Segoe UI"),
+                    FontSize = 13,
+                    Margin = new Thickness(15, 5, 5, 5)
                 };
 
                 var priceText = new TextBlock
                 {
                     Text = $"₱{product.Price:F2}",
-                    Margin = new Thickness(5)
+                    FontFamily = new FontFamily("Segoe UI"),
+                    FontSize = 13,
+                    Margin = new Thickness(15, 5, 5, 5)
                 };
 
-                // Add all elements to the container
-                productContainer.Children.Add(image);
-                productContainer.Children.Add(brandText);
-                productContainer.Children.Add(sizeText);
-                productContainer.Children.Add(priceText);
+                // Add all elements to the StackPanel
+                stackPanel.Children.Add(image);
+                stackPanel.Children.Add(brandText);
+                stackPanel.Children.Add(sizeText);
+                stackPanel.Children.Add(priceText);
+
+                // Set the content of the Border to be the StackPanel
+                productContainer.Child = stackPanel;
 
                 // Add the container to the WrapPanel
                 ProductsWrapPanel.Children.Add(productContainer);
             }
         }
+
 
 
 

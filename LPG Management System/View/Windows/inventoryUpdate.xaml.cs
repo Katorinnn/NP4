@@ -193,7 +193,39 @@ namespace LPG_Management_System.View
             }
         }
 
+        private void ReduceQuantity_Click(object sender, RoutedEventArgs e)
+        {
+            // Parse the current stock value from the TextBox
+            if (int.TryParse(stockstxtBox.Text, out int currentStock))
+            {
+                // Decrement the stock value, ensuring it doesn't go below 0
+                if (currentStock > 0)
+                {
+                    currentStock--;
+                    stockstxtBox.Text = currentStock.ToString();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Invalid stock value.");
+            }
+        }
 
+        // Event handler for the increment button
+        private void IncreaseQuantity_Click(object sender, RoutedEventArgs e)
+        {
+            // Parse the current stock value from the TextBox
+            if (int.TryParse(stockstxtBox.Text, out int currentStock))
+            {
+                // Increment the stock value
+                currentStock++;
+                stockstxtBox.Text = currentStock.ToString();
+            }
+            else
+            {
+                MessageBox.Show("Invalid stock value.");
+            }
+        }
         private void RefreshDataGrid()
         {
             // Refresh the DataGrid by re-binding it to the updated data from the database

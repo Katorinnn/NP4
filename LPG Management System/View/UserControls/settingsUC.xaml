@@ -31,17 +31,17 @@
         </Button>
 
 
-        <Label Content="Address:" HorizontalAlignment="Left" Height="35" Margin="14,153,0,0" VerticalAlignment="Top" Width="106" FontSize="15" FontFamily="Segoe UI" Grid.Column="2"/>
+        <Label Content="Address:" HorizontalAlignment="Left" Height="35" Margin="18,241,0,0" VerticalAlignment="Top" Width="106" FontSize="15" FontFamily="Segoe UI" Grid.Column="2"/>
         <Label Content="Name:" HorizontalAlignment="Left" Height="32" Margin="15,116,0,0" VerticalAlignment="Top" Width="128" FontSize="15" FontFamily="Segoe UI" Grid.Column="2"/>
-        <Label Content="Contact number:" HorizontalAlignment="Left" Height="32" Margin="15,195,0,0" VerticalAlignment="Top" Width="128" FontSize="15" FontFamily="Segoe UI" Grid.Column="2"/>
+        <Label Content="Contact number:" HorizontalAlignment="Left" Height="32" Margin="15,151,0,0" VerticalAlignment="Top" Width="128" FontSize="15" FontFamily="Segoe UI" Grid.Column="2"/>
 
         <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Margin="169,116,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="31" FontSize="14" FontFamily="Segoe UI"
                              BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsReadOnly="True" TextChanged="TextBox_TextChanged" Grid.Column="2"/>
-        <TextBox x:Name="AddressTextBox" HorizontalAlignment="Left" Margin="169,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="31" FontSize="14" FontFamily="Segoe UI"
+        <TextBox x:Name="AddressTextBox" HorizontalAlignment="Left" Margin="168,242,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="60" FontSize="14" FontFamily="Segoe UI"
                              BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsReadOnly="True" Grid.Column="2"/>
-        <TextBox x:Name="ContactTextBox" HorizontalAlignment="Left" Margin="169,193,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Height="31" FontSize="14" FontFamily="Segoe UI"
+        <TextBox x:Name="ContactTextBox" HorizontalAlignment="Left" Margin="171,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Height="31" FontSize="14" FontFamily="Segoe UI"
                              BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsReadOnly="True" Grid.Column="2"/>
-        <TextBox x:Name="EmailTextBox" HorizontalAlignment="Left" Margin="169,231,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="31" FontSize="14" FontFamily="Segoe UI"
+        <TextBox x:Name="EmailTextBox" HorizontalAlignment="Left" Margin="170,194,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="31" FontSize="14" FontFamily="Segoe UI"
                     BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsReadOnly="False" Grid.Column="2"/>
 
 
@@ -52,18 +52,18 @@
                     BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsReadOnly="True" Grid.Column="2"/>
         <PasswordBox x:Name="PasswordTextBox" HorizontalAlignment="Left" Margin="114,493,0,0" VerticalAlignment="Top" Width="190" Height="32" FontSize="14" FontFamily="Segoe UI"
                     BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsEnabled="True" Grid.Column="2"/>
-        <Button x:Name="SavePrivacyButton" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="264,547,0,0" Width="100" Height="30" FontSize="14" FontFamily="Segoe UI" IsEnabled="False" Click="SavePrivacyButton_Click" Grid.Column="2"/>
-        <Button x:Name="CancelPrivacyButton" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="155,547,0,0" Width="100" Height="30" FontSize="14" FontFamily="Segoe UI" IsEnabled="False" Click="CancelPrivacyButton_Click" Grid.Column="2"/>
+        <Button x:Name="SavePrivacyButton" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="264,547,0,0" Width="100" Height="30" FontSize="14" FontFamily="Segoe UI" Visibility="Collapsed" Click="SavePrivacyButton_Click" Grid.Column="2"/>
+        <Button x:Name="CancelPrivacyButton" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="155,547,0,0" Width="100" Height="30" FontSize="14" FontFamily="Segoe UI" Visibility="Collapsed" Click="CancelPrivacyButton_Click" Grid.Column="2"/>
         <Button Width="56" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="284,399,0,0" Cursor="Hand" MouseDown="EditPrivacyButton_Click" Click="EditPrivacyButton_Click" Grid.Column="2">
             <Button.Content>
                 <Image Source="/View/UserControls/edit.png" Width="25" Height="30" />
             </Button.Content>
         </Button>
-        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="264,289,0,0" Width="100" Height="30" FontSize="14" FontFamily="Segoe UI" IsEnabled="False" Click="SaveButton_Click" Grid.Column="2"/>
-        <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="155,289,0,0" Width="100" Height="30" FontSize="14" FontFamily="Segoe UI" IsEnabled="False" Click="CancelButton_Click" Grid.Column="2"/>
+        <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="268,331,0,0" Width="100" Height="30" FontSize="14" FontFamily="Segoe UI" Visibility="Collapsed" Click="SaveButton_Click" Grid.Column="2"/>
+        <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="159,331,0,0" Width="100" Height="30" FontSize="14" FontFamily="Segoe UI"  Visibility="Collapsed" Click="CancelButton_Click" Grid.Column="2"/>
 
 
-        <Label Content="Email address:" HorizontalAlignment="Left" Height="32" Margin="15,232,0,0" VerticalAlignment="Top" Width="128" FontSize="15" FontFamily="Segoe UI" Grid.Column="2"/>
+        <Label Content="Email address:" HorizontalAlignment="Left" Height="32" Margin="15,184,0,0" VerticalAlignment="Top" Width="128" FontSize="15" FontFamily="Segoe UI" Grid.Column="2"/>
         <Button Content="Upload Image" HorizontalAlignment="Left" Margin="102,399,0,0" VerticalAlignment="Top" Click="UploadImage_Click" Height="50" Width="147" Grid.Column="1"/>
 
         <Border BorderBrush="Black" BorderThickness="2" CornerRadius="10" HorizontalAlignment="Right" Margin="0,116,306,0" VerticalAlignment="Top" Grid.Column="1">

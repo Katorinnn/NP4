@@ -181,9 +181,12 @@ namespace LPG_Management_System.View.UserControls
             NameTextBox.IsReadOnly = false;
             AddressTextBox.IsReadOnly = false;
             ContactTextBox.IsReadOnly = false;
-            SaveButton.IsEnabled = true;
-            CancelButton.IsEnabled = true;
+            EmailTextBox.IsReadOnly = false;
+
+            SaveButton.Visibility = Visibility.Visible;
+            CancelButton.Visibility = Visibility.Visible;
         }
+
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -209,7 +212,12 @@ namespace LPG_Management_System.View.UserControls
 
             // Disable editing controls
             DisableEditing();
+
+            // Hide Save and Cancel buttons
+            SaveButton.Visibility = Visibility.Collapsed;
+            CancelButton.Visibility = Visibility.Collapsed;
         }
+
 
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -230,7 +238,12 @@ namespace LPG_Management_System.View.UserControls
             }
 
             DisableEditing();
+
+            // Hide Save and Cancel buttons
+            SaveButton.Visibility = Visibility.Collapsed;
+            CancelButton.Visibility = Visibility.Collapsed;
         }
+
 
 
         private void SaveCompanyDataToDatabase(CompanyTable company)
@@ -264,9 +277,8 @@ namespace LPG_Management_System.View.UserControls
             AddressTextBox.IsReadOnly = true;
             ContactTextBox.IsReadOnly = true;
             EmailTextBox.IsReadOnly = true;
-            SaveButton.IsEnabled = false;
-            CancelButton.IsEnabled = false;
         }
+
         private void LoadPrivacySettings()
         {
             try
@@ -297,10 +309,12 @@ namespace LPG_Management_System.View.UserControls
             PasswordTextBox.IsEnabled = true;
             SavePrivacyButton.IsEnabled = true;
             CancelPrivacyButton.IsEnabled = true;
+
+            SavePrivacyButton.Visibility = Visibility.Visible;
+            CancelPrivacyButton.Visibility = Visibility.Visible;
         }
         private void SavePrivacyButton_Click(object sender, RoutedEventArgs e)
         {
-            // Validate that username and password are not empty
             if (string.IsNullOrWhiteSpace(UsernameTextBox.Text))
             {
                 MessageBox.Show("Username cannot be empty.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -312,30 +326,25 @@ namespace LPG_Management_System.View.UserControls
                 MessageBox.Show("Password cannot be empty.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-
-            // Create an updated admin object
             var updatedAdmin = new AdminTable
             {
-                username = UsernameTextBox.Text.Trim(), // Trim any extra whitespace
+                username = UsernameTextBox.Text.Trim(), 
                 password = PasswordTextBox.Password.Trim()
             };
 
             if (originalAdminData != null)
             {
-                // If data already exists, update it
                 SaveAdminDataToDatabase(updatedAdmin);
             }
             else
             {
-                // If no data exists, insert new data into the database
                 AddAdminDataToDatabase(updatedAdmin);
             }
-
-            // Reload the privacy settings to reflect changes
             LoadPrivacySettings();
-
-            // Disable privacy editing controls
             DisablePrivacyEditing();
+
+            SavePrivacyButton.Visibility = Visibility.Collapsed;
+            CancelPrivacyButton.Visibility = Visibility.Collapsed;
 
             MessageBox.Show("Privacy settings saved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
@@ -345,18 +354,19 @@ namespace LPG_Management_System.View.UserControls
         {
             if (originalAdminData != null)
             {
-                // Revert to the original data if available
                 UsernameTextBox.Text = originalAdminData.username;
                 PasswordTextBox.Password = originalAdminData.password;
             }
             else
             {
-                // Clear the fields if no data exists
                 UsernameTextBox.Clear();
                 PasswordTextBox.Clear();
             }
 
             DisablePrivacyEditing();
+
+            SavePrivacyButton.Visibility = Visibility.Collapsed;
+            CancelPrivacyButton.Visibility = Visibility.Collapsed;
         }
         private void SaveAdminDataToDatabase(AdminTable admin)
         {
