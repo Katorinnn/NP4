@@ -60,6 +60,7 @@ namespace LPG_Management_System.View.Windows
         {
             Random random = new Random();
             int customerID = random.Next(100000, 999999);
+            
 
             customerIDtxtBox.Text = customerID.ToString();
         }
@@ -68,6 +69,7 @@ namespace LPG_Management_System.View.Windows
         {
 
             string input = contacttxtBox.Text;
+            int transactionID = GenerateTransactionID();
 
             // Check if the length is 11 and starts with "09"
             if (input.Length != 11 || !input.StartsWith("09"))
@@ -93,13 +95,11 @@ namespace LPG_Management_System.View.Windows
                     {
                         var purchasedItems = receiptItems;
 
-                        int generatedTankID = GenerateTankID();
-
                         var newTransaction = new ReportsTable
                         {
-                            TransactionID = GenerateTransactionID(),
+                            TransactionID = transactionID,
                             Date = DateTime.Now,
-                            ProductName = string.Join(", ", purchasedItems.Select(p => p.Brand)),
+                            ProductName = string.Join(", ", purchasedItems.Select(p => $"{p.Brand} ({p.Size})")), // Include size
                             TankID = string.Join(", ", purchasedItems.Select(p => GenerateTankID().ToString())),
                             Quantity = TotalQuantity,
                             UnitPrice = string.Join(", ", purchasedItems.Select(p => p.Price.ToString("F2"))),
@@ -110,6 +110,7 @@ namespace LPG_Management_System.View.Windows
                             Status = TransactionStatus.Completed,
                             CustomerName = customertxtBox.Text
                         };
+
 
                         context.tbl_reports.Add(newTransaction);
 
@@ -123,7 +124,7 @@ namespace LPG_Management_System.View.Windows
                                 ContactNumber = contacttxtBox.Text,
                                 Address = addresstxtBox.Text,
                                 TankClassification = tankClassComboBox.Text,
-                                TankID = generatedTankID
+                                TankID = transactionID
                             };
                             context.tbl_customers.Add(newCustomer);
                         }
@@ -138,6 +139,8 @@ namespace LPG_Management_System.View.Windows
                                 existingCustomer.ContactNumber = contacttxtBox.Text;
                                 existingCustomer.Address = addresstxtBox.Text;
                                 existingCustomer.TankClassification = tankClassComboBox.Text;
+                                existingCustomer.TankID = transactionID;
+
                             }
                             else
                             {

@@ -97,6 +97,11 @@ namespace LPG_Management_System
         {
             loginBtn.Background = System.Windows.Media.Brushes.Transparent;
         }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
 

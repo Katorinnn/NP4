@@ -26,12 +26,15 @@
     <None Remove="Images\trash.png" />
     <None Remove="inventory.png" />
     <None Remove="LPG Background.png" />
+    <None Remove="Resources\NP4LOGO.ico" />
     <None Remove="screenbg.png" />
     <None Remove="View\refresh.png" />
     <None Remove="View\UserControls\back.png" />
     <None Remove="View\UserControls\edit.png" />
     <None Remove="View\UserControls\filter %281%29.png" />
     <None Remove="View\UserControls\filter.png" />
+    <None Remove="View\UserControls\menu %281%29.png" />
+    <None Remove="View\UserControls\menu.png" />
     <None Remove="View\UserControls\minus.png" />
     <None Remove="View\UserControls\next.png" />
     <None Remove="View\UserControls\plus.png" />
@@ -41,6 +44,7 @@
     <None Remove="View\Windows\fogsmoke.webp" />
     <None Remove="View\Windows\loginBackground.jpg" />
     <None Remove="View\Windows\NP4bg.jpg" />
+    <None Remove="View\Windows\NP4LOGO.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -65,12 +69,15 @@
     <Resource Include="Images\trash.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\NP4LOGO.ico" />
     <Resource Include="screenbg.png" />
     <Resource Include="View\refresh.png" />
     <Resource Include="Images\filter %281%29.png" />
     <Resource Include="Images\filter.png" />
     <Resource Include="View\UserControls\back.png" />
     <Resource Include="View\UserControls\edit.png" />
+    <Resource Include="View\UserControls\menu (1).png" />
+    <Resource Include="View\UserControls\menu.png" />
     <Resource Include="View\UserControls\minus.png" />
     <Resource Include="View\UserControls\next.png" />
     <Resource Include="View\UserControls\plus.png" />
@@ -78,6 +85,7 @@
     <Resource Include="View\Windows\fogsmoke.webp" />
     <Resource Include="View\Windows\loginBackground.jpg" />
     <Resource Include="View\Windows\NP4bg.jpg" />
+    <Resource Include="View\Windows\NP4LOGO.png" />
   </ItemGroup>
 
   <ItemGroup>

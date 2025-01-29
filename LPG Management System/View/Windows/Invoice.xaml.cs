@@ -22,6 +22,8 @@ namespace LPG_Management_System.View.Windows
 
         private double _amountPaid;
         private double _change;
+
+
         public class ReceiptItem
         {
 
@@ -39,16 +41,13 @@ namespace LPG_Management_System.View.Windows
             _amountPaid = amountPaid;
             _change = change;
 
-            // Bind receipt items to DataGrid
             InvoiceDataGrid.ItemsSource = receiptItems;
 
-            // Display customer details
             CustomerAddressText.Text = $"Address: {customerAddress}";
 
-            // Set totals
-            TotalAmountText.Text = $"₱{totalAmount:F2}";
-            AmountPaidText.Text = $"₱{amountPaid:F2}";
-            ChangeText.Text = $"₱{change:F2}";
+            TotalAmountText.Text = $"₱ {totalAmount:F2}";
+            AmountPaidText.Text = $"₱ {amountPaid:F2}";
+            ChangeText.Text = $"₱ {change:F2}";
         
         }
 
@@ -58,11 +57,10 @@ namespace LPG_Management_System.View.Windows
             return random.Next(100000, 999999).ToString();  // Generates a random number between 100000 and 999999
         }
 
-
-
-
         private void PrintButton_Click(object sender, RoutedEventArgs e)
         {
+            BaseFont customBaseFont = BaseFont.CreateFont("C:/Windows/Fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            Font customFont = new Font(customBaseFont, 10f, Font.NORMAL);
             try
             {
                 // Fetch company details
@@ -76,7 +74,7 @@ namespace LPG_Management_System.View.Windows
                     // Set a fixed height per item and add padding
                     float itemHeight = 15f;  // Height for each item in the receipt
                     float paddingHeight = 100f;  // Padding for header, footer, etc.
-                    float totalHeight = Math.Max(itemHeight * numberOfItems + paddingHeight, 450f);  // Ensure a minimum height
+                    float totalHeight = Math.Max(itemHeight * numberOfItems + paddingHeight, 500f);  // Ensure a minimum height
 
                     float width = 200f;
                     iTextSharp.text.Rectangle pageSize = new iTextSharp.text.Rectangle(width, totalHeight);
@@ -160,16 +158,12 @@ namespace LPG_Management_System.View.Windows
                     doc.Add(new iTextSharp.text.Paragraph($"Payment Mode: CASH", normalFont) { Alignment = Element.ALIGN_CENTER });
                     doc.Add(new iTextSharp.text.Paragraph(new string('-', 70), normalFont) { Alignment = Element.ALIGN_CENTER });
 
-
-                    // Items
-                    // Items
                     PdfPTable table = new PdfPTable(2)
                     {
                         WidthPercentage = 100
                     };
 
-                    // Adjust column widths to allow space for margins
-                    table.SetWidths(new float[] { 5f, 5f });  // Adjust the ratio for padding space
+                    table.SetWidths(new float[] { 5f, 5f });  
 
                     // Add a little padding inside the table cells
                     PdfPCell itemHeaderCell = new PdfPCell(new Phrase("Items", headerFont))
@@ -194,21 +188,21 @@ namespace LPG_Management_System.View.Windows
                     {
                         foreach (var item in items)
                         {
-                            PdfPCell itemCell = new PdfPCell(new Phrase($"{item.Quantity} {item.Brand} {item.Size} ({item.Price:F2})", normalFont))
+                            PdfPCell itemCell = new PdfPCell(new Phrase($"{item.Quantity} {item.Brand} {item.Size} (₱ {item.Price:F2})", normalFont))
                             {
                                 Border = 0,
                                 HorizontalAlignment = PdfPCell.ALIGN_LEFT,
-                                PaddingLeft = 10f,  // Adding left padding
-                                PaddingRight = 10f  // Adding right padding
+                                PaddingLeft = 10f,  
+                                PaddingRight = 10f  
                             };
                             table.AddCell(itemCell);
 
-                            PdfPCell totalCell = new PdfPCell(new Phrase($"{item.Total:F2}", normalFont))
+                            PdfPCell totalCell = new PdfPCell(new Phrase($"₱ {item.Total:F2}", normalFont))
                             {
                                 Border = 0,
                                 HorizontalAlignment = PdfPCell.ALIGN_RIGHT,
-                                PaddingLeft = 10f,  // Adding left padding
-                                PaddingRight = 10f  // Adding right padding
+                                PaddingLeft = 10f,  
+                                PaddingRight = 10f  
                             };
                             table.AddCell(totalCell);
                         }
@@ -236,7 +230,7 @@ namespace LPG_Management_System.View.Windows
                         PaddingRight = 10f  // Right padding
                     });
 
-                    totalsTable.AddCell(new PdfPCell(new Phrase($"₱{TotalAmountText.Text}", normalFont))
+                    totalsTable.AddCell(new PdfPCell(new Phrase($"₱ {TotalAmountText.Text}", normalFont))
                     {
                         Border = 0,
                         HorizontalAlignment = PdfPCell.ALIGN_RIGHT,
@@ -253,7 +247,7 @@ namespace LPG_Management_System.View.Windows
                         PaddingRight = 10f  // Right padding
                     });
 
-                    totalsTable.AddCell(new PdfPCell(new Phrase($"₱{_amountPaid:F2}", normalFont))
+                    totalsTable.AddCell(new PdfPCell(new Phrase($"₱ {_amountPaid:F2}", normalFont))
                     {
                         Border = 0,
                         HorizontalAlignment = PdfPCell.ALIGN_RIGHT,
@@ -270,7 +264,8 @@ namespace LPG_Management_System.View.Windows
                         PaddingRight = 10f  // Right padding
                     });
 
-                    totalsTable.AddCell(new PdfPCell(new Phrase($"₱{_change:F2}", normalFont))
+                    totalsTable.AddCell(new PdfPCell(new Phrase($"₱ {_change:F2}", normalFont))
+
                     {
                         Border = 0,
                         HorizontalAlignment = PdfPCell.ALIGN_RIGHT,

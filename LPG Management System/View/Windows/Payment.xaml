@@ -1,4 +1,5 @@
 ﻿<Window x:Class="LPG_Management_System.View.Windows.Payment"
+        Icon="pack://application:,,,/Resources/NP4LOGO.ico"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -51,9 +52,9 @@
         <Grid HorizontalAlignment="Left" Height="398" Margin="396,0,0,0" VerticalAlignment="Center" Width="265" Background="#FFB7E1FC"/>
         <Label x:Name="TotalAmountLabel" HorizontalAlignment="Left" Margin="465,210,0,0" VerticalAlignment="Top" FontSize="15" Height="38" Width="134" Content="" Foreground="#DD000000" Background="{x:Null}" FontWeight="Bold"/>
 
-        <Button x:Name="amountBtn" Content="Proceed" HorizontalAlignment="Left" Margin="487,323,0,0" VerticalAlignment="Top" Click="amountBtn_Click" FontSize="15" RenderTransformOrigin="0.125,0.532" Height="34" Width="95"/>
+        <Button x:Name="amountBtn" Content="Proceed" HorizontalAlignment="Left" Margin="489,323,0,0" VerticalAlignment="Top" Click="amountBtn_Click" FontSize="15" RenderTransformOrigin="0.125,0.532" Height="34" Width="95"/>
 
-        <Label Content="Customer ID:" HorizontalAlignment="Left" Height="25" Margin="55,118,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
+        <Label Content="Customer ID:" HorizontalAlignment="Left" Height="25" Margin="55,118,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontSize="15" FontWeight="Bold"/>
         <Label Content="Customer Name:" HorizontalAlignment="Left" Height="27" Margin="55,161,0,0" VerticalAlignment="Top" Width="129" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
 
         <Label Content="Contact Number:" Margin="55,208,493,210" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
@@ -66,14 +67,14 @@
         <RadioButton x:Name="OldCustomer" Content="Old Customer" HorizontalAlignment="Left" Height="30" Margin="176,64,0,0" 
              VerticalAlignment="Top" Width="113" Checked="OldCustomer_Checked"/>
 
-        <TextBox x:Name="customerIDtxtBox" HorizontalAlignment="Left" Height="31" Margin="201,117,0,0" 
+        <TextBox x:Name="customerIDtxtBox" HorizontalAlignment="Left" Height="30" Margin="201,117,0,0" 
              TextWrapping="Wrap" VerticalAlignment="Top" Width="154" FontFamily="Segoe UI" 
              BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" 
              IsReadOnly="True" />
         <!-- Making it Read-Only -->
 
 
-        <TextBox x:Name="customertxtBox" HorizontalAlignment="Left" Height="31" Margin="202,160,0,0" 
+        <TextBox x:Name="customertxtBox" HorizontalAlignment="Left" Height="30" Margin="202,160,0,0" 
                  TextWrapping="Wrap" VerticalAlignment="Top" Width="154" FontFamily="Segoe UI" 
                  BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" 
                  KeyUp="customertxtBox_KeyUp" PreviewTextInput="customertxtBox_PreviewTextInput"/>
@@ -102,15 +103,22 @@
                  PreviewTextInput="addresstxtBox_PreviewTextInput"/>
 
         <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Width="196" Height="48" Margin="434,270,0,0">
-            <!-- Peso Sign -->
-            <TextBlock Text="₱" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" FontSize="18" Foreground="Gray"/>
-
-            <!-- Input TextBox -->
-            <TextBox x:Name="amounttxtBox" TextWrapping="Wrap" 
-             VerticalAlignment="Center" Margin="20,0,0,0"
-             BorderBrush="DimGray" BorderThickness="0.5" 
-             Background="#e5f3fd" FontSize="15" 
-             TextChanged="amounttxtBox_TextChanged" PreviewTextInput="amounttxtBox_PreviewTextInput" Height="30" />
+            <!-- Peso Sign inside the TextBox -->
+            <Border BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" CornerRadius="5">
+                <Grid>
+                    <TextBlock Text="₱" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="18" Foreground="Gray"/>
+                    <TextBox x:Name="amounttxtBox" 
+                     TextWrapping="Wrap" 
+                     VerticalAlignment="Center" 
+                     Margin="25,0,0,0"
+                     BorderBrush="{x:Null}" 
+                     Background="Transparent" 
+                     FontSize="15"  
+                     TextChanged="amounttxtBox_TextChanged" 
+                     PreviewTextInput="amounttxtBox_PreviewTextInput"
+                     Height="30" />
+                </Grid>
+            </Border>
         </Grid>
 
         <Label Content="Classification " HorizontalAlignment="Left" Height="28" Margin="55,322,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>

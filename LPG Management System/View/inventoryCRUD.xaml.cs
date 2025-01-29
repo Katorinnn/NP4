@@ -25,13 +25,10 @@ namespace LPG_Management_System.View
             string priceText = pricetxtBox.Text;
             string stocksText = stockstxtBox.Text;
 
-            // Get the selected unit from the ComboBox
             string unit = (unitComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
 
-            // Combine the size and unit
             string fullSize = $"{size} {unit}";
 
-            // Validate required fields
             if (string.IsNullOrEmpty(brandname) || string.IsNullOrEmpty(size) ||
                 string.IsNullOrEmpty(priceText) || string.IsNullOrEmpty(stocksText) ||
                 selectedImageBytes == null)
@@ -40,7 +37,6 @@ namespace LPG_Management_System.View
                 return;
             }
 
-            // Validate numeric inputs
             if (!decimal.TryParse(priceText, out decimal price) || price <= 0)
             {
                 MessageBox.Show("Price must be a positive number.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -57,6 +53,19 @@ namespace LPG_Management_System.View
             {
                 using (var db = new DataContext())
                 {
+                    // Check if a product with the same brand and size already exists
+                    var existingProduct = db.tbl_inventory
+                        .AsEnumerable() // Forces in-memory comparison
+                        .FirstOrDefault(i => i.ProductName.Equals(brandname, StringComparison.Ordinal)
+                                          && i.Size.Equals(fullSize, StringComparison.Ordinal));
+
+                    if (existingProduct != null)
+                    {
+                        MessageBox.Show("A product with the exact same brand name and size already exists.",
+                                        "Duplicate Product", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
                     var inventory = new InventoryTable
                     {
                         ProductName = brandname,
@@ -80,6 +89,7 @@ namespace LPG_Management_System.View
                 MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
 
 
         private void ReduceQuantity_Click(object sender, RoutedEventArgs e)
