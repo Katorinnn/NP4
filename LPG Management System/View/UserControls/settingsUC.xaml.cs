@@ -34,6 +34,7 @@ namespace LPG_Management_System.View.UserControls
             LoadCompanyLogo();
             LoadCompanyData();
             LoadPrivacySettings();
+            DisablePrivacyEditing();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -397,6 +398,19 @@ namespace LPG_Management_System.View.UserControls
             CancelPrivacyButton.IsEnabled = false;
         }
 
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Navigate to Login.xaml
+            Login loginWindow = new Login();
+            loginWindow.Show();
+
+            // Close the current window or hide the user control if needed
+            Window currentWindow = Window.GetWindow(this);
+            if (currentWindow != null)
+            {
+                currentWindow.Close();
+            }
+        }
     }
 }
 

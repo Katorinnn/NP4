@@ -99,7 +99,7 @@ namespace LPG_Management_System.View.Windows
                         {
                             TransactionID = transactionID,
                             Date = DateTime.Now,
-                            ProductName = string.Join(", ", purchasedItems.Select(p => p.Brand)),
+                            ProductName = string.Join(", ", purchasedItems.Select(p => $"{p.Brand} ({p.Size})")), // Include size
                             TankID = string.Join(", ", purchasedItems.Select(p => GenerateTankID().ToString())),
                             Quantity = TotalQuantity,
                             UnitPrice = string.Join(", ", purchasedItems.Select(p => p.Price.ToString("F2"))),
@@ -110,6 +110,7 @@ namespace LPG_Management_System.View.Windows
                             Status = TransactionStatus.Completed,
                             CustomerName = customertxtBox.Text
                         };
+
 
                         context.tbl_reports.Add(newTransaction);
 

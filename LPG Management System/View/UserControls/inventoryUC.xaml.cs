@@ -351,6 +351,7 @@ namespace LPG_Management_System.View.UserControls
             inventoryDG.Visibility = Visibility.Collapsed;
             ProductScrollViewer.Visibility = Visibility.Visible;
             ProductsWrapPanel.Visibility = Visibility.Visible;
+            ProductBorder.Visibility = Visibility.Visible;
 
             LoadProductsForDisplay(null);
 
@@ -367,6 +368,7 @@ namespace LPG_Management_System.View.UserControls
             inventoryDG.Visibility = Visibility.Visible;
             ProductsWrapPanel.Visibility = Visibility.Collapsed;
             ProductScrollViewer.Visibility = Visibility.Collapsed;
+            ProductBorder.Visibility = Visibility.Collapsed;
 
             // Load all products to the WrapPanel for List view
             // Pass null if no specific item is selected
@@ -388,6 +390,7 @@ namespace LPG_Management_System.View.UserControls
                 // Hide the DataGrid and show the WrapPanel
                 inventoryDG.Visibility = Visibility.Collapsed;
                 ProductsWrapPanel.Visibility = Visibility.Visible;
+                ProductBorder.Visibility = Visibility.Visible;
 
                 // Load products into the WrapPanel
                 LoadProductsForDisplay(selectedItem); // Pass selectedItem to display product details
@@ -397,10 +400,18 @@ namespace LPG_Management_System.View.UserControls
                 // If no item is selected, return to the GridView
                 inventoryDG.Visibility = Visibility.Visible;
                 ProductsWrapPanel.Visibility = Visibility.Collapsed;
+                ProductBorder.Visibility = Visibility.Collapsed;
             }
         }
 
+        private void gridViewButton_Checked(object sender, RoutedEventArgs e)
+        {
+            TextBox.Visibility = Visibility.Collapsed;
+        }
 
-
+        private void listViewButton_Checked(object sender, RoutedEventArgs e)
+        {
+            TextBox.Visibility = Visibility.Visible;
+        }
     }
 }

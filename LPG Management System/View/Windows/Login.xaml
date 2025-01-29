@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LPG_Management_System"
         mc:Ignorable="d"
-        Title="Login" Height="377" Width="526" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Login" Height="490" Width="680" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/Images/NP4LOGO.png" WindowStyle="None">
 
 
-    <Grid HorizontalAlignment="Center" Width="528">
+    <Grid HorizontalAlignment="Center" Width="680">
         <Grid.Background>
             <LinearGradientBrush StartPoint="1,0" EndPoint="1,1">
                 <GradientStop Color="white" Offset="0.1" />
@@ -25,26 +25,38 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBox x:Name="unametxtBox" HorizontalAlignment="Center" Margin="0,130,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="150" Height="25" TextChanged="unametxtBox_TextChanged" Cursor="IBeam" Foreground="Black" BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" Grid.Column="1" Grid.Row="1"/>
-        <Label x:Name="unameLabel" Content="username: " HorizontalAlignment="Left" Margin="45,131,0,0" VerticalAlignment="Top" Grid.Column="1" Height="27" Width="83" Grid.Row="1" FontWeight="Bold" FontSize="15"/>
+        <TextBox x:Name="unametxtBox" HorizontalAlignment="Left" Margin="186,242,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="186" Height="34" TextChanged="unametxtBox_TextChanged" Cursor="IBeam" Foreground="Black" BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" Grid.Column="1" Grid.Row="1"/>
+        <Label x:Name="unameLabel" Content="username: " HorizontalAlignment="Left" Margin="87,250,0,0" VerticalAlignment="Top" Grid.Column="1" Height="27" Width="83" Grid.Row="1" FontWeight="Bold" FontSize="15"/>
         <TextBlock x:Name="unameError" HorizontalAlignment="Left" Margin="140,157,0,0" Text="Invalid username" Foreground="Red" Visibility="Collapsed" Grid.Column="1"  Grid.Row="1"/>
 
-        <PasswordBox x:Name="pwordBox" HorizontalAlignment="Center" Margin="0,180,0,0" VerticalAlignment="Top" Width="150" Height="25" Foreground="Black" BorderBrush="DimGray" BorderThickness="0.5" Grid.Column="1" Grid.Row="1"  Background="#e5f3fd"/>
-        <Label x:Name="pwordLabel" Content="password: " HorizontalAlignment="Left" Margin="45,178,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.039,1.347" Grid.Column="1" Height="28" Width="84" Grid.Row="1" FontWeight="Bold" FontSize="15"/>
+        <PasswordBox x:Name="pwordBox" HorizontalAlignment="Left" Margin="186,291,0,0" VerticalAlignment="Top" Width="186" Height="36" Foreground="Black" BorderBrush="DimGray" BorderThickness="0.5" Grid.Column="1" Grid.Row="1"  Background="#e5f3fd"/>
+        <Label x:Name="pwordLabel" Content="password: " HorizontalAlignment="Left" Margin="87,297,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.039,1.347" Grid.Column="1" Height="28" Width="84" Grid.Row="1" FontWeight="Bold" FontSize="15"/>
         <TextBlock x:Name="pwordError" HorizontalAlignment="Left" Margin="140,205,0,0" Text="Invalid password" Foreground="Red" Visibility="Collapsed" Grid.Column="1"  Grid.Row="1"/>
 
-        <Button x:Name="loginBtn" Content="LOGIN" HorizontalAlignment="Left" Margin="105,247,0,0" VerticalAlignment="Top" Click="Button_Click" Width="144" Height="42" Cursor="Hand" MouseEnter="loginBtn_MouseEnter" Grid.Column="1" Grid.Row="1" >
+        <Button x:Name="loginBtn" Content="LOGIN" HorizontalAlignment="Left" Margin="163,379,0,0" VerticalAlignment="Top" Click="Button_Click" Width="144" Height="42" Cursor="Hand" MouseEnter="loginBtn_MouseEnter" Grid.Column="1" Grid.Row="1" >
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Border Background="{TemplateBinding Background}" 
                     BorderBrush="{TemplateBinding BorderBrush}" 
                     BorderThickness="{TemplateBinding BorderThickness}" 
-                    CornerRadius="20" Margin="0,0,0,0">
+                    CornerRadius="5" Margin="0,0,0,0">
                         <!-- Set CornerRadius here -->
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                 </ControlTemplate>
             </Button.Template>
         </Button>
+        <Border Margin="0,0,0,451" Background="SteelBlue" CornerRadius="2" Grid.ColumnSpan="2" Grid.RowSpan="2">
+
+            <!-- Close Button -->
+            <Button Content="X" HorizontalAlignment="Left" Width="46" Click="ExitButton_Click" 
+                Background="Transparent" Foreground="White" Cursor="Hand" 
+                BorderBrush="{x:Null}" FontSize="19" Margin="634,4,0,3"/>
+
+        </Border>
+        <Image HorizontalAlignment="Left" Height="148" Grid.RowSpan="2" VerticalAlignment="Top" Width="169" Source="/Images/NP4LOGO.png" Margin="113,83,0,0" Grid.ColumnSpan="2"/>
+        <Label x:Name="unameLabel_Copy" Content=" RETAIL SHOP" HorizontalAlignment="Left" Margin="163,145,0,0" VerticalAlignment="Top" Grid.Column="1" Height="61" Width="400" Grid.Row="1" FontWeight="Bold" FontSize="40"/>
+        <Label Content="Login" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" 
+            FontWeight="Bold" FontSize="16" Width="218" Foreground="White" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
     </Grid>
 </Window>

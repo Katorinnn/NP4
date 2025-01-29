@@ -40,30 +40,30 @@
             <!-- Search TextBox -->
 
             <TextBox x:Name="TextBox" 
-         HorizontalAlignment="Left" 
-         Background="WhiteSmoke" 
-         Height="35" 
-         Margin="16,82,0,0" 
-         VerticalAlignment="Top" 
-         Width="300" 
-         TextWrapping="Wrap" 
-         FontSize="16" 
-         Padding="10,5" 
-         Foreground="Gray"
-         Text="Search here" 
-         GotFocus="TextBox_GotFocus" 
-         LostFocus="TextBox_LostFocus" 
-         Grid.Row="1" 
-         TextChanged="TextBox_TextChanged">
+                     HorizontalAlignment="Left" 
+                     Background="WhiteSmoke" 
+                     Height="35" 
+                     Margin="16,82,0,0" 
+                     VerticalAlignment="Top" 
+                     Width="300" 
+                     TextWrapping="Wrap" 
+                     FontSize="16" 
+                     Padding="10,5" 
+                     Foreground="Gray"
+                     Text="Search here" 
+                     GotFocus="TextBox_GotFocus" 
+                     LostFocus="TextBox_LostFocus" 
+                     Grid.Row="1" 
+                     TextChanged="TextBox_TextChanged">
                 <TextBox.Style>
                     <Style TargetType="TextBox">
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="TextBox">
                                     <Border Background="{TemplateBinding Background}" 
-                                BorderBrush="Gray" 
-                                BorderThickness="1" 
-                                CornerRadius="7">
+                                            BorderBrush="Gray" 
+                                            BorderThickness="1" 
+                                            CornerRadius="2">
                                         <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
                                     </Border>
                                 </ControlTemplate>

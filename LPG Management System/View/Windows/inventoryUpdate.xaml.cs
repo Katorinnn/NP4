@@ -245,5 +245,10 @@ namespace LPG_Management_System.View
         {
 
         }
+
+        private void cancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

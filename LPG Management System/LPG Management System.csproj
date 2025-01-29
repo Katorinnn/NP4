@@ -26,6 +26,7 @@
     <None Remove="Images\trash.png" />
     <None Remove="inventory.png" />
     <None Remove="LPG Background.png" />
+    <None Remove="Resources\NP4LOGO.ico" />
     <None Remove="screenbg.png" />
     <None Remove="View\refresh.png" />
     <None Remove="View\UserControls\back.png" />
@@ -43,6 +44,7 @@
     <None Remove="View\Windows\fogsmoke.webp" />
     <None Remove="View\Windows\loginBackground.jpg" />
     <None Remove="View\Windows\NP4bg.jpg" />
+    <None Remove="View\Windows\NP4LOGO.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -67,6 +69,7 @@
     <Resource Include="Images\trash.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\NP4LOGO.ico" />
     <Resource Include="screenbg.png" />
     <Resource Include="View\refresh.png" />
     <Resource Include="Images\filter %281%29.png" />
@@ -82,6 +85,7 @@
     <Resource Include="View\Windows\fogsmoke.webp" />
     <Resource Include="View\Windows\loginBackground.jpg" />
     <Resource Include="View\Windows\NP4bg.jpg" />
+    <Resource Include="View\Windows\NP4LOGO.png" />
   </ItemGroup>
 
   <ItemGroup>

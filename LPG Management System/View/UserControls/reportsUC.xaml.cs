@@ -33,6 +33,7 @@ namespace LPG_Management_System.View.UserControls
         private List<InventoryTable> allStockCheckReports;
         private List<dynamic> allSalesByProductReports;
 
+
         private List<ReportsTable> filteredInventorySalesReports;
         private List<InventoryTable> filteredStockCheckReports;
         private List<dynamic> filteredSalesByProductReports;
@@ -76,6 +77,7 @@ namespace LPG_Management_System.View.UserControls
                 {
                     var stockData = dbContext.tbl_inventory.ToList();
                     stockCheckDG.ItemsSource = stockData;
+                    allStockCheckReports = stockData; // Add this line to assign to the list
                 }
             }
             catch (Exception ex)
@@ -90,15 +92,27 @@ namespace LPG_Management_System.View.UserControls
             {
                 using (var dbContext = new DataContext())
                 {
-                    var salesData = dbContext.tbl_reports
-                        .GroupBy(report => report.ProductName)
+                    // Load data into memory first
+                    var reports = dbContext.tbl_reports.ToList();
+
+                    // Split product names and group by product
+                    var salesData = reports
+                        .SelectMany(report => report.ProductName.Split(',')
+                            .Select(product => new
+                            {
+                                ProductName = product.Trim(),
+                                report.Quantity,
+                                report.TotalPrice
+                            }))
+                        .GroupBy(entry => entry.ProductName)
                         .Select(group => new
                         {
                             ProductName = group.Key,
-                            TotalQuantitySold = group.Sum(report => report.Quantity),
-                            TotalSales = group.Sum(report => report.TotalPrice)
+                            TotalQuantitySold = group.Sum(entry => entry.Quantity),
+                            TotalSales = group.Sum(entry => entry.TotalPrice)
                         })
                         .ToList();
+
                     salesByProductDG.ItemsSource = salesData;
                 }
             }
@@ -107,6 +121,8 @@ namespace LPG_Management_System.View.UserControls
                 MessageBox.Show($"Error loading sales by product data: {ex.Message}");
             }
         }
+
+
 
         private int CalculateItemsPerPage(DataGrid dataGrid)
         {
@@ -299,7 +315,6 @@ namespace LPG_Management_System.View.UserControls
         {
             if (beginDatePicker.SelectedDate.HasValue)
             {
-                // Optionally display a formatted date (dd/MM/yyyy)
                 beginDatePicker.Text = beginDatePicker.SelectedDate.Value.ToString("yyyy/MM/dd");
             }
         }
@@ -308,7 +323,6 @@ namespace LPG_Management_System.View.UserControls
         {
             if (endDatePicker.SelectedDate.HasValue)
             {
-                // Optionally display a formatted date (dd/MM/yyyy)
                 endDatePicker.Text = endDatePicker.SelectedDate.Value.ToString("yyyy/MM/dd");
             }
         }
@@ -321,86 +335,78 @@ namespace LPG_Management_System.View.UserControls
 
         private void FilterReportsByDate(DataGrid targetDataGrid)
         {
-            DateTime? startDate = beginDatePicker.SelectedDate?.Date;
-            DateTime? endDate = endDatePicker.SelectedDate?.Date;
-
-            if (startDate == null && endDate == null)
+            if (targetDataGrid == null)
             {
-                MessageBox.Show("Please select at least one date (Begin Date or End Date).");
+                MessageBox.Show("Invalid data grid. Please try again.");
                 return;
             }
+    DateTime? startDate = beginDatePicker.SelectedDate?.Date;
+    DateTime? endDate = endDatePicker.SelectedDate?.Date;
 
-            if (startDate != null && endDate != null && startDate > endDate)
+    if (startDate == null && endDate == null)
+    {
+        MessageBox.Show("Please select at least one date (Begin Date or End Date).");
+        return;
+    }
+
+    if (startDate != null && endDate != null && startDate > endDate)
+    {
+        MessageBox.Show("Begin Date cannot be later than End Date.");
+        return;
+    }
+
+    DateTime endDateExclusive = endDate?.AddDays(1) ?? DateTime.MaxValue;
+
+    if (targetDataGrid.ItemsSource == null)
+    {
+        MessageBox.Show("No data available to filter.");
+        return;
+    }
+
+    if (targetDataGrid == inventorySalesDG)
+    {
+        filteredInventorySalesReports = allInventorySalesReports
+            .Where(report =>
+                (startDate == null || report.Date >= startDate) &&
+                (endDate == null || report.Date < endDateExclusive))
+            .ToList();
+
+        inventorySalesTotalPages = (int)Math.Ceiling((double)filteredInventorySalesReports.Count / itemsPerPage);
+        inventorySalesCurrentPage = 1;
+
+        if (!filteredInventorySalesReports.Any())
+        {
+            MessageBox.Show("No records found for the selected date range.");
+        }
+
+        LoadPage("InventorySales", inventorySalesCurrentPage);
+    }
+            else if (targetDataGrid == stockCheckDG)
             {
-                MessageBox.Show("Begin Date cannot be later than End Date.");
-                return;
-            }
+                if (allStockCheckReports == null)
+                {
+                    MessageBox.Show("Stock Check Reports data is missing. Please ensure data is loaded.");
+                    return;
+                }
 
-            DateTime endDateExclusive = endDate?.AddDays(1) ?? DateTime.MaxValue;
-
-            if (targetDataGrid == inventorySalesDG)
-            {
-                // Filter the data
-                filteredInventorySalesReports = allInventorySalesReports
+                filteredStockCheckReports = allStockCheckReports
                     .Where(report =>
                         (startDate == null || report.Date >= startDate) &&
                         (endDate == null || report.Date < endDateExclusive))
                     .ToList();
 
-                // Update pagination and load the first page
-                inventorySalesTotalPages = (int)Math.Ceiling((double)filteredInventorySalesReports.Count / itemsPerPage);
-                inventorySalesCurrentPage = 1;
-
-                if (filteredInventorySalesReports.Count == 0)
-                {
-                    MessageBox.Show("No records found for the selected date range.");
-                }
-
-                LoadPage("InventorySales", inventorySalesCurrentPage);
-            }
-            else if (targetDataGrid == stockCheckDG)
-            {
-                filteredStockCheckReports = allStockCheckReports
-                    .Where(report =>
-                        (startDate == null || report.Date.Date >= startDate) &&
-                        (endDate == null || report.Date.Date < endDateExclusive))
-                    .ToList();
-
                 stockCheckTotalPages = (int)Math.Ceiling((double)filteredStockCheckReports.Count / itemsPerPage);
                 stockCheckCurrentPage = 1;
 
-                if (filteredStockCheckReports.Count == 0)
+                if (!filteredStockCheckReports.Any())
                 {
                     MessageBox.Show("No records found for the selected date range.");
                 }
 
                 LoadPage("StockCheck", stockCheckCurrentPage);
             }
-            else if (targetDataGrid == salesByProductDG)
-            {
-                filteredSalesByProductReports = allSalesByProductReports
-                    .Where(report =>
-                        (startDate == null || report.Date.Date >= startDate) &&
-                        (endDate == null || report.Date.Date < endDateExclusive))
-                    .ToList();
-
-                salesByProductTotalPages = (int)Math.Ceiling((double)filteredSalesByProductReports.Count / itemsPerPage);
-                salesByProductCurrentPage = 1;
-
-                if (filteredSalesByProductReports.Count == 0)
-                {
-                    MessageBox.Show("No records found for the selected date range.");
-                }
-
-                LoadPage("SalesByProduct", salesByProductCurrentPage);
-            }
-
-            // Update the pagination UI
             UpdatePaginationUI(targetDataGrid);
         }
-
-
-
 
         private void UpdatePaginationUI(DataGrid targetDataGrid)
         {
@@ -443,13 +449,28 @@ namespace LPG_Management_System.View.UserControls
 
         private void CancelFilterButton_Click(object sender, RoutedEventArgs e)
         {
-            // Reset the DatePickers to null (clear the selected dates)
             beginDatePicker.SelectedDate = null;
             endDatePicker.SelectedDate = null;
 
-            // Reload all reports without filtering
-            LoadInventorySalesData();
+            if (categoryComboBox.SelectedItem is string selectedCategory)
+            {
+                switch (selectedCategory)
+                {
+                    case "Inventory Sales Report":
+                        LoadInventorySalesData();
+                        break;
+
+                    case "Stock Check Sheets":
+                        LoadStockCheckData();
+                        break;
+
+                    case "Sales by Product":
+                        LoadSalesByProductData();
+                        break;
+                }
+            }
         }
+
 
 
 
@@ -473,10 +494,8 @@ namespace LPG_Management_System.View.UserControls
 
                     if (targetDataGrid == null) return;
 
-                    // Create the PDF using iTextSharp
                     using (MemoryStream memoryStream = new MemoryStream())
                     {
-                        // Use the A4 page size (portrait)
                         iTextSharp.text.Document doc = new iTextSharp.text.Document(iTextSharp.text.PageSize.A4, 36f, 36f, 36f, 36f); // A4 with 1-inch margins (36f points)
                         PdfWriter writer = PdfWriter.GetInstance(doc, memoryStream);
                         writer.CloseStream = false;
@@ -493,7 +512,6 @@ namespace LPG_Management_System.View.UserControls
                         topBorderTable.AddCell(""); // Add a blank cell to create the border effect
                         doc.Add(topBorderTable);
 
-                        // Add Title and Date of Report
                         Font headerFont = new Font(Font.FontFamily.HELVETICA, 12f, Font.BOLD);
                         Font semiheaderFont = new Font(Font.FontFamily.HELVETICA, 10f, Font.BOLD);
                         Font normalFont = new Font(Font.FontFamily.HELVETICA, 10f, Font.NORMAL);
@@ -502,13 +520,8 @@ namespace LPG_Management_System.View.UserControls
                         {
                             WidthPercentage = 100
                         };
+                        titleTable.SetWidths(new float[] { 70f, 30f });
 
-                        // Set column widths (the first column will take more space, the second column will take the minimum space)
-                        titleTable.SetWidths(new float[] { 70f, 30f });  // Adjust the values based on your layout needs
-
-                        // Add the category name to the left column
-                        // Add space (vertical gap)
-                        // Add horizontal space using Phrase
                         doc.Add(new iTextSharp.text.Paragraph(new iTextSharp.text.Phrase(new string(' ', 70)))); // Adjust the number of spaces as needed
                                                                                                                  
 
@@ -715,7 +728,7 @@ namespace LPG_Management_System.View.UserControls
             if (TextBox.Text == "Search here")
             {
                 TextBox.Text = string.Empty;
-                TextBox.Foreground = Brushes.Black; // Set text color to normal
+                TextBox.Foreground = Brushes.Black;
             }
         }
 
@@ -724,11 +737,11 @@ namespace LPG_Management_System.View.UserControls
             if (string.IsNullOrWhiteSpace(TextBox.Text))
             {
                 TextBox.Text = "Search here";
-                TextBox.Foreground = Brushes.Gray; // Set text color to placeholder style
+                TextBox.Foreground = Brushes.Gray; 
             }
         }
 
+
+
     }
 }
-
-

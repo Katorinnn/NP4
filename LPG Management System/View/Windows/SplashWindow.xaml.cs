@@ -46,7 +46,7 @@ namespace LPG_Management_System.View.Windows
                 for (int i = 0; i <= 100; i++)
                 {
                     worker.ReportProgress(i);
-                    Thread.Sleep(80);
+                    Thread.Sleep(40);
                 }
             }
             else

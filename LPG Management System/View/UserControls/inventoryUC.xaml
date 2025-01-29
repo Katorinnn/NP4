@@ -25,7 +25,7 @@
                         <Border Background="{TemplateBinding Background}" 
                                 BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="{TemplateBinding BorderThickness}" 
-                                CornerRadius="10">
+                                CornerRadius="2">
                             <ContentPresenter HorizontalAlignment="Center" 
                                               VerticalAlignment="Center" />
                         </Border>
@@ -165,30 +165,30 @@
             </DataGrid>
 
             <TextBox x:Name="TextBox" 
-HorizontalAlignment="Left" 
-Background="WhiteSmoke" 
-Height="35" 
-Margin="22,82,0,0" 
-VerticalAlignment="Top" 
-Width="300" 
-TextWrapping="Wrap" 
-FontSize="16" 
-Padding="10,5" 
-Foreground="Gray"
-Text="Search here" 
-GotFocus="TextBox_GotFocus" 
-LostFocus="TextBox_LostFocus" 
-Grid.Row="1" 
-TextChanged="TextBox_TextChanged">
+                    HorizontalAlignment="Left" 
+                    Background="WhiteSmoke" 
+                    Height="35" 
+                    Margin="22,82,0,0" 
+                    VerticalAlignment="Top" 
+                    Width="300" 
+                    TextWrapping="Wrap" 
+                    FontSize="16" 
+                    Padding="10,5" 
+                    Foreground="Gray"
+                    Text="Search here" 
+                    GotFocus="TextBox_GotFocus" 
+                    LostFocus="TextBox_LostFocus" 
+                    Grid.Row="1" 
+                    TextChanged="TextBox_TextChanged">
                 <TextBox.Style>
                     <Style TargetType="TextBox">
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="TextBox">
                                     <Border Background="{TemplateBinding Background}" 
-                       BorderBrush="Gray" 
-                       BorderThickness="1" 
-                       CornerRadius="7">
+                                           BorderBrush="Gray" 
+                                           BorderThickness="1" 
+                                           CornerRadius="2">
                                         <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
                                     </Border>
                                 </ControlTemplate>
@@ -198,39 +198,39 @@ TextChanged="TextBox_TextChanged">
                 </TextBox.Style>
             </TextBox>
             <Button x:Name="newBtn" Content="Add" 
-                Click="newBtn_Click" Cursor="Hand" Background="#0078D7" Foreground="White"
+                Click="newBtn_Click" Cursor="Hand" Background="Green" Foreground="White"
                 FontWeight="Bold" BorderThickness="0" BorderBrush="Transparent" Height="40"
-                FontFamily="Segou UI" Margin="994,0,91,644" RenderTransformOrigin="0.498,0.367" Grid.Row="1" FontSize="15" VerticalAlignment="Bottom"/>
+                FontFamily="Segou UI" Margin="995,0,91,663" RenderTransformOrigin="0.498,0.367" Grid.Row="1" FontSize="15" VerticalAlignment="Bottom"/>
 
-            <UniformGrid Rows="1" Columns="2" Margin="1080,76,10,625" Grid.Row="1" Grid.ColumnSpan="2">
+            <UniformGrid Rows="1" Columns="2" Margin="1080,66,10,635" Grid.Row="1" Grid.ColumnSpan="2">
                 <!-- List View Button -->
                 <ToggleButton x:Name="listViewButton" 
                   Style="{StaticResource ViewToggleButtonStyle}" 
                   IsChecked="True" 
-                  Margin="4,2,-4,21" Width="60"
-                  Click="ListView_Click">
+                  Margin="7,2,3,21" Width="60"
+                  Click="ListView_Click" Checked="listViewButton_Checked">
                     <Image Source="/View/UserControls/menu.png" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </ToggleButton>
+                <ToggleButton x:Name="gridViewButton" 
+                  Style="{StaticResource ViewToggleButtonStyle}" 
+                  Margin="3,2,7,21" Width="60"
+                  Click="GridView_Click" Checked="gridViewButton_Checked">
+                    <Image Source="/View/UserControls/menu (1).png" Width="24" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </ToggleButton>
 
                 <!-- Grid View Button -->
-                <ToggleButton x:Name="gridViewButton" 
-                  Style="{StaticResource ViewToggleButtonStyle}" 
-                  Margin="0,2,4,21" Width="60"
-                  Click="GridView_Click">
-                    <Image Source="/View/UserControls/menu (1).png" Width="24" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </ToggleButton>
             </UniformGrid>
 
 
             <!-- List View -->
 
             <!-- Product View -->
-            <ScrollViewer x:Name="ProductScrollViewer" Grid.Row="1" Grid.ColumnSpan="2" Margin="15,130,15,47" Visibility="Collapsed" Background="White">
-                <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="10">
+            <Border x:Name="ProductBorder" BorderBrush="LightGray" Grid.Row="1" BorderThickness="1" Margin="15,130,15,47" CornerRadius="10" Background="SteelBlue" Grid.ColumnSpan="2" Visibility="Collapsed">
+                <ScrollViewer x:Name="ProductScrollViewer"  Grid.ColumnSpan="2"  Visibility="Collapsed" >
                     <WrapPanel x:Name="ProductsWrapPanel" Margin="10" Width="1180">
                     </WrapPanel>
-                </Border>
-            </ScrollViewer>
+                </ScrollViewer>
+            </Border>
         </Grid>
     </Grid>
 </UserControl>
