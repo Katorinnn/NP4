@@ -19,51 +19,25 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" MinHeight="96"/>
-                <!-- For Search and Button -->
                 <RowDefinition/>
-                <!-- For DataGrid -->
             </Grid.RowDefinitions>
 
             <Border Background="SteelBlue" Height="70" VerticalAlignment="Top" CornerRadius="0,0,0,0" Margin="-2,0,0,0">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
                     <Image Source="/Images/customer.png" Height="60" Margin="10,0" VerticalAlignment="Center"/>
-                    <TextBlock Text="CUSTOMER" 
-                               Foreground="White" 
-                               FontFamily="Segoe UI" 
-                               FontWeight="Bold" 
-                               FontSize="36" 
-                               VerticalAlignment="Center" 
-                               Margin="20,0,0,0"/>
+                    <TextBlock Text="CUSTOMER"  Foreground="White" FontFamily="Segoe UI" FontWeight="Bold" FontSize="36" VerticalAlignment="Center" Margin="20,0,0,0"/>
                 </StackPanel>
             </Border>
 
-            <!-- Search TextBox -->
-
             <TextBox x:Name="TextBox" 
-                     HorizontalAlignment="Left" 
-                     Background="WhiteSmoke" 
-                     Height="35" 
-                     Margin="16,82,0,0" 
-                     VerticalAlignment="Top" 
-                     Width="300" 
-                     TextWrapping="Wrap" 
-                     FontSize="16" 
-                     Padding="10,5" 
-                     Foreground="Gray"
-                     Text="Search here" 
-                     GotFocus="TextBox_GotFocus" 
-                     LostFocus="TextBox_LostFocus" 
-                     Grid.Row="1" 
-                     TextChanged="TextBox_TextChanged">
+                     HorizontalAlignment="Left" Background="WhiteSmoke" Height="35" Margin="16,82,0,0" VerticalAlignment="Top" Width="300" TextWrapping="Wrap" FontSize="16" Padding="10,5"  Foreground="Gray" Text="Search here" 
+                     Grid.Row="1" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus" TextChanged="TextBox_TextChanged">
                 <TextBox.Style>
                     <Style TargetType="TextBox">
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="TextBox">
-                                    <Border Background="{TemplateBinding Background}" 
-                                            BorderBrush="Gray" 
-                                            BorderThickness="1" 
-                                            CornerRadius="2">
+                                    <Border Background="{TemplateBinding Background}"  BorderBrush="Gray" BorderThickness="1" CornerRadius="2">
                                         <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
                                     </Border>
                                 </ControlTemplate>
@@ -73,42 +47,11 @@
                 </TextBox.Style>
             </TextBox>
 
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="1050,10,0,10" Width="100"/>
 
-            <!--<Grid HorizontalAlignment="Left" Height="36" Margin="330,81,0,0" Grid.Row="1" VerticalAlignment="Top" Width="39" OpacityMask="Black" Background="#FF7C7C7C"/>
-             <Grid HorizontalAlignment="Left" Height="34" Margin="330,82,0,0" Grid.Row="1" VerticalAlignment="Top" Width="38" OpacityMask="Black" Background="White">
-                <Button x:Name="FilterButton" Width="32" Height="29" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="{x:Null}">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/View/UserControls/setting.png"/>
-                    </Button.Background>
-                    <Button.ContextMenu>
-                        <ContextMenu x:Name="FilterMenu">
-                            <MenuItem Header="Filter by Customer Name" Click="FilterByCustomerName_Click" />
-                            <MenuItem Header="Filter by Contact Number" Click="FilterByContactNumber_Click" />
-                            <MenuItem Header="Filter by Address" Click="FilterByAddress_Click" />
-                            <MenuItem Header="Filter by Classification" Click="FilterByClassification_Click" />
-                        </ContextMenu>
-                    </Button.ContextMenu>
-                </Button>
-            </Grid>  -->
+            <DataGrid x:Name="customersDG" Grid.Row="1" Margin="15,133,15,47" CanUserResizeColumns="False" GridLinesVisibility="None"  HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray" BorderBrush="Gray" BorderThickness="1" CanUserAddRows="False"  SelectionMode="Single"  SelectionUnit="FullRow" MinRowHeight="30" 
+                      RowHeaderWidth="0" FontFamily="Segoe UI"  HorizontalScrollBarVisibility="Disabled" FrozenColumnCount="0" VerticalScrollBarVisibility="Auto">
 
-            <!-- StackPanel for New Button -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="1050,10,0,10" Width="100">
-                <!-- New Button -->
-
-            </StackPanel>
-
-            <!-- DataGrid -->
-            <DataGrid x:Name="customersDG" Grid.Row="1" Margin="15,133,15,47"
-                      CanUserResizeColumns="False" GridLinesVisibility="None" 
-                      HorizontalGridLinesBrush="LightGray"
-                      VerticalGridLinesBrush="LightGray" BorderBrush="Gray" BorderThickness="1"
-                      CanUserAddRows="False"  SelectionMode="Single" 
-                      SelectionUnit="FullRow" MinRowHeight="30" 
-                      RowHeaderWidth="0" FontFamily="Segoe UI" 
-                      HorizontalScrollBarVisibility="Disabled" FrozenColumnCount="0" VerticalScrollBarVisibility="Auto" 
-                      SelectionChanged="customersDG_SelectionChanged">
-
-                <!-- DataGrid Column Header Style -->
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="{x:Type DataGridColumnHeader}">
                         <Setter Property="Background" Value="SteelBlue"/>
@@ -120,8 +63,7 @@
                         <Setter Property="FontFamily" Value="Segoe UI"/>
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
-
-                <!-- DataGrid Row Style -->
+                
                 <DataGrid.RowStyle>
                     <Style TargetType="{x:Type DataGridRow}">
                         <Setter Property="FontSize" Value="15"/>
@@ -133,11 +75,9 @@
                     </Style>
                 </DataGrid.RowStyle>
 
-                <!-- Define DataGrid Columns -->
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Customer ID" Binding="{Binding CustomerID}" Width="150" />
                     <DataGridTextColumn Header="Transaction ID" Binding="{Binding TankID}" Width="150" />
-
                     <DataGridTemplateColumn Header="Customer Name" Width="190">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -145,9 +85,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-
                     <DataGridTextColumn Header="Contact Number" Binding="{Binding ContactNumber}" Width="210" />
-
                     <DataGridTemplateColumn Header="Address" Width="190">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -156,44 +94,16 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Classification" Binding="{Binding TankClassification}" Width="170" />
-
-                    <!-- Actions Column (Edit and Delete Buttons) -->
                     <DataGridTemplateColumn Header="Actions" Width="220">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                    <!-- <Button Content="Edit" Width="80" Height="30" Margin="5,0,5,0"
-                                        Background="Green" Foreground="White" FontWeight="Bold"
-                                        BorderThickness="0" Cursor="Hand"
-                                        Tag="{Binding Id}" FontFamily="Segoe UI"
-                                        Click="EditButton_Click" /> -->
-                                    <!-- Bind to Edit Button Click Event -->
-                                    <!-- Bind to Delete Button Click Event -->
-                                    <!-- Edit Button -->
-                                    <Button x:Name="editButton" 
-                                            Tag="{Binding CustomerID}" 
-                                            Click="EditButton_Click" 
-                                            Width="45" 
-                                            Height="45" 
-                                            Background="Green" 
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Padding="5">
+                                    <Button x:Name="editBtn" Tag="{Binding CustomerID}" Width="45" Height="45" Background="Green" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5" Click="editButton_Click">
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                             <Image Source="/Images/edit.png" Height="20"/>
                                         </StackPanel>
                                     </Button>
-
-                                    <!-- Delete Button -->
-                                    <Button Width="45" 
-                                            Height="45" 
-                                            Margin="5,0,5,0"
-                                            Background="#FF4500" 
-                                            Foreground="WhiteSmoke" 
-                                            Cursor="Hand"
-                                            Tag="{Binding CustomerID}" FontFamily="Segoe UI"
-                                            Click="DeleteButton_Click">
-
+                                    <Button Width="45" Height="45" Margin="5,0,5,0" Background="#FF4500" Foreground="WhiteSmoke" Cursor="Hand" Tag="{Binding CustomerID}" FontFamily="Segoe UI" Click="deleteButton_Click">
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                             <Image Source="/Images/trash.png" Height="20" />
                                         </StackPanel>

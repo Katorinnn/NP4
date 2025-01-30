@@ -30,8 +30,6 @@
         </Border>
         <Grid x:Name="topGrid" Margin="48,23,52,498">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,72,0,0">
-                <!-- First Metric: Today's Income -->
-
                 <Border CornerRadius="5" BorderBrush="Gray" BorderThickness="1" Padding="10" Width="255" Height="162" Background="White" Margin="10,0,10,0">
                     <Border.Effect>
                         <DropShadowEffect Color="LightGray" Direction="300" ShadowDepth="5" BlurRadius="5" Opacity="0.5"/>
@@ -42,7 +40,6 @@
                     </StackPanel>
                 </Border>
 
-                <!-- Second Metric: Total Income -->
                 <Border CornerRadius="5" BorderBrush="Gray" BorderThickness="1" Padding="10" Width="256" Height="162" Background="White" Margin="10,0,10,0">
                     <Border.Effect>
                         <DropShadowEffect Color="LightGray"  Direction="300" ShadowDepth="5" BlurRadius="5" Opacity="0.5"/>
@@ -53,7 +50,6 @@
                     </StackPanel>
                 </Border>
 
-                <!-- Third Metric: Sold LPG -->
                 <Border CornerRadius="5" BorderBrush="Gray" BorderThickness="1" Padding="10" Width="255" Height="162" Background="White" Margin="10,0,10,0">
                     <Border.Effect>
                         <DropShadowEffect Color="LightGray"  Direction="300" ShadowDepth="5" BlurRadius="5" Opacity="0.5"/>
@@ -64,7 +60,6 @@
                     </StackPanel>
                 </Border>
 
-                <!-- Fourth Metric: Total Income -->
                 <Border CornerRadius="5" BorderBrush="Gray" BorderThickness="1" Padding="10" Width="254" Height="162" Background="White" Margin="10,0,10,0">
                     <Border.Effect>
                         <DropShadowEffect Color="LightGray"  Direction="300" ShadowDepth="5" BlurRadius="5" Opacity="0.5"/>
@@ -74,10 +69,7 @@
                         <Label x:Name="lblTotalIncome" Content="Loading..." FontSize="22" FontWeight="Bold" Foreground="Black" HorizontalContentAlignment="Center" Height="50"/>
                     </StackPanel>
                 </Border>
-
             </StackPanel>
-
-
         </Grid>
 
         <Grid x:Name="MonthlySalesChartContainer" Margin="82,425,668,34" Background="White" Width="500">
@@ -85,7 +77,6 @@
             <TextBlock Text="Monthly Sales" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,0"/>
         </Grid>
 
-        <!-- Right Chart: Sales Distribution -->
         <Grid x:Name="SalesByProductChartContainer" Margin="662,425,88,34" Background="White" Width="500">
             <lvc:PieChart Name="SalesDistributionChart" Margin="28,37,28,27"/>
             <TextBlock Text="Sales by Product" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,0"/>

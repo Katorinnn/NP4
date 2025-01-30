@@ -6,10 +6,8 @@
              xmlns:local="clr-namespace:LPG_Management_System.View.UserControls"
              mc:Ignorable="d" 
             d:DesignHeight="850" d:DesignWidth="1220" FontFamily="Century Gothic">
-    <Grid Background="#FF8ECAE6" Margin="-2,0,-2,0">
-        <!-- Home Button -->
 
-        <!-- Receipt Section -->
+    <Grid Background="#FF8ECAE6" Margin="-2,0,-2,0">
         <Grid HorizontalAlignment="Left" Height="622" Margin="23,22,0,0" VerticalAlignment="Top" Width="554" Background="#FFFEF9F5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -17,15 +15,14 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- Customer Info -->
             <StackPanel Orientation="Horizontal" Margin="5">
                 <TextBlock VerticalAlignment="Center" Margin="5" Width="536" Height="19"><Run Language="en-ph" Text="NP4 GAS RETAIL SHOP"/></TextBlock>
             </StackPanel>
-            <!-- Data Grid for Invoice Items -->
             <DataGrid x:Name="dataGridItems" Grid.Row="1" AutoGenerateColumns="False" Margin="5" 
-          ItemsSource="{Binding}" CanUserReorderColumns="False" 
-          CanUserResizeColumns="False" CanUserSortColumns="False" 
-          CanUserResizeRows="False" CanUserAddRows="False" IsEnabled="True">
+                      ItemsSource="{Binding}" CanUserReorderColumns="False" 
+                      CanUserResizeColumns="False" CanUserSortColumns="False" 
+                      CanUserResizeRows="False" CanUserAddRows="False" IsEnabled="True">
+
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Item" Binding="{Binding Brand}" Width="*"/>
                     <DataGridTextColumn Header="Size" Binding="{Binding Size}" Width="100"/>
@@ -52,12 +49,8 @@
                     <DataGridTextColumn Header="Total" Binding="{Binding Total}" Width="100" IsReadOnly="True"/>
                 </DataGrid.Columns>
             </DataGrid>
-
-
         </Grid>
-        <Button x:Name="cashBtn" Content="Pay Now" HorizontalAlignment="Left" Height="90" Margin="21,644,0,0" VerticalAlignment="Top" Width="556" Background="#FFB1C92A" FontSize="30" Click="cashBtn_Click_1"/>
-
-        <!-- Total and Change Labels -->
+        <Button x:Name="cashBtn" Content="Pay Now" Background="#FFB1C92A" HorizontalAlignment="Left" Height="90" Margin="21,644,0,0" VerticalAlignment="Top" Width="556"  FontSize="30" Click="cashBtn_Click"/>
         <Grid HorizontalAlignment="Left" Height="102" Margin="23,542,0,0" VerticalAlignment="Top" Width="554" Background="#FFEDEDED" RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
                 <TransformGroup>
@@ -75,42 +68,27 @@
         </Grid>
         <Label Content="TOTAL:" HorizontalAlignment="Left" Height="48" Margin="31,570,0,0" VerticalAlignment="Top" Width="302" FontSize="25"/>
         <Label x:Name="TotalPriceLabel" Content="₱ 0.00" HorizontalAlignment="Left" Height="48" Margin="131,570,0,0" VerticalAlignment="Top" Width="363" FontSize="25" />
-
-        <!-- Grid for Products and Kilogram Options -->
         <Grid HorizontalAlignment="Left" Height="713" Margin="600,22,0,0" VerticalAlignment="Top" Width="614" Background="#FF005F8C">
             <Grid.RowDefinitions>
                 <RowDefinition Height="209*"/>
                 <RowDefinition Height="504*"/>
             </Grid.RowDefinitions>
-            <!-- Product Buttons -->
             <StackPanel HorizontalAlignment="Left" Margin="8,15,0,0" Orientation="Horizontal" VerticalAlignment="Top" Width="590">
                 <Button Content="All" Height="46" Width="59" FontSize="20" Click="FilterByBrand_Click" Tag="All" IsDefault="True"/>
                 <Button Content="Coastal" Height="46" Width="131" FontSize="20" Click="FilterByBrand_Click" Tag="Coastal"/>
                 <Button Content="GazLite" Height="46" Width="131" FontSize="20" Click="FilterByBrand_Click" Tag="GazLite"/>
                 <Button Content="Solane" Height="46" Width="131" FontSize="20" Click="FilterByBrand_Click" Tag="Solane"/>
                 <Button Content="Regasco" Height="46" Width="138" FontSize="20" Click="FilterByBrand_Click" Tag="Regasco"/>
-
             </StackPanel>
 
-
-
-            <!-- Coastal Kilogram Buttons (Initially Hidden) -->
             <StackPanel x:Name="CoastalPanel" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed"/>
-
             <StackPanel x:Name="GazLitePanel" HorizontalAlignment="Left" Margin="180,100,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed"/>
-
-            <!-- Solane Kilogram Buttons (Initially Hidden) -->
             <StackPanel x:Name="SolanePanel" HorizontalAlignment="Left" Margin="350,100,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed"/>
-
-            <!-- Regasco Kilogram Buttons (Initially Hidden) -->
             <StackPanel x:Name="RegascoPanel" HorizontalAlignment="Left" Margin="520,100,0,0" VerticalAlignment="Top" Orientation="Vertical" Visibility="Collapsed"/>
-
 
             <ScrollViewer x:Name="ProductScrollViewer" Margin="8,66,0,0" Grid.RowSpan="2"  >
                 <WrapPanel x:Name="ProductsPanel" Margin="0" Background="#FF005F8C" Height="616" Grid.RowSpan="2" Width="575"/>
             </ScrollViewer>
-
-
         </Grid>
     </Grid>
 </UserControl>

@@ -14,19 +14,15 @@
     </Window.Resources>
 
     <Grid>
-        <!-- Border to wrap the content and provide rounded corners -->
         <Border Margin="20" Background="#d1e5f4" BorderBrush="Gray" BorderThickness="1,1,1,1" CornerRadius="10">
             <Border.Effect>
                 <DropShadowEffect Color="Gray" BlurRadius="30" ShadowDepth="-5" Opacity="0.3"/>
             </Border.Effect>
-            <!-- Close Button -->
             <Button Content="X" HorizontalAlignment="Right" VerticalAlignment="Top" Width="46" Height="32" 
-            Margin="0,6,1,0" 
-            Background="Transparent" Foreground="Gray" Cursor="Hand" 
-            BorderBrush="{x:Null}" FontSize="19" Click="Button_Click"/>
-
+                    Margin="0,6,1,0" 
+                    Background="Transparent" Foreground="Gray" Cursor="Hand" 
+                    BorderBrush="{x:Null}" FontSize="19" Click="Button_Click"/>
         </Border>
-        
         <Grid>
             <Label Content="Customer Name:" HorizontalAlignment="Left" Height="27" Margin="59,146,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold"/>
             <Label Content="Address:" HorizontalAlignment="Left" Height="28" Margin="59,230,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold"/>
@@ -50,8 +46,6 @@
                  BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd"/>
 
             <Button x:Name="addBtn" Content="ADD" HorizontalAlignment="Left" Height="48" Margin="142,327,0,0" VerticalAlignment="Top" Width="125" Cursor="Hand" Click="addBtn_Click" FontFamily="Segoe UI" FontSize="12"/>
-
         </Grid>
-
     </Grid>
 </Window>

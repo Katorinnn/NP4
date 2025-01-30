@@ -3,8 +3,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Invoice" Height="800" Width="700" WindowStartupLocation="CenterScreen">
+    
     <Grid Margin="10">
-        <!-- Header Section -->
         <StackPanel>
             <TextBlock Text="NP4 GAS" 
                        FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" />
@@ -14,14 +14,12 @@
             <Separator Margin="0,10"/>
         </StackPanel>
 
-        <!-- Distributor and Customer Details -->
         <Grid Margin="0,60,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <!-- Distributor Details -->
             <StackPanel Grid.Column="0">
                 <TextBlock Text="Distributor Details" FontWeight="Bold" />
                 <TextBlock Text="NP4 GAS SERVICE" FontSize="11"/>
@@ -29,14 +27,12 @@
                 <TextBlock Text="Jaynor Mendoza" FontSize="10"/>
             </StackPanel>
 
-            <!-- Customer Details -->
             <StackPanel Grid.Column="1">
                 <TextBlock x:Name="CustomerNameText" FontSize="14" />
                 <TextBlock x:Name="CustomerAddressText" FontSize="14" />
             </StackPanel>
         </Grid>
 
-        <!-- DataGrid for Invoice Items -->
         <DataGrid x:Name="InvoiceDataGrid" Margin="0,140,0,100" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True" CanUserSortColumns="False" IsHitTestVisible="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Product" Binding="{Binding Brand}" Width="2*"/>
@@ -46,7 +42,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Footer Section -->
+
         <StackPanel VerticalAlignment="Bottom">
             <Separator Margin="0,10"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -61,10 +57,8 @@
                 <TextBlock Text="Net Due: " FontWeight="Bold" FontSize="14"/>
                 <TextBlock x:Name="ChangeText" FontSize="14" Margin="5,0,0,0"/>
             </StackPanel>
-            <Button Content="Print Invoice" Width="120" Margin="0,10,0,0" HorizontalAlignment="Center"
-            Click="PrintButton_Click" Background="SteelBlue" FontWeight="Bold"/>
-            <TextBlock Text="** This is a computer generated document and needs no signatures." 
-               FontStyle="Italic" FontSize="12" HorizontalAlignment="Center" Margin="0,10"/>
+            <Button Content="Print Invoice" Width="120" Margin="0,10,0,0" HorizontalAlignment="Center" Click="PrintButton_Click" Background="SteelBlue" FontWeight="Bold"/>
+            <TextBlock Text="** This is a computer generated document and needs no signatures."  FontStyle="Italic" FontSize="12" HorizontalAlignment="Center" Margin="0,10"/>
         </StackPanel>
 
     </Grid>

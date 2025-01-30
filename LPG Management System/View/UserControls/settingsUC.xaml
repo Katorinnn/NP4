@@ -20,27 +20,27 @@
             <ColumnDefinition Width="179*"/>
             <ColumnDefinition Width="221*"/>
         </Grid.ColumnDefinitions>
-        <!-- Wrap the Grid with a ScrollViewer -->
-
-
+        
         <Label Content="Company Details" HorizontalAlignment="Left" Height="48" Margin="31,121,0,0" VerticalAlignment="Top" Width="222" FontSize="25" FontWeight="Bold" FontFamily="Segoe UI" Grid.Column="1"/>
         <Button Width="60" Height="34" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="279,135,0,0" Cursor="Hand"  Click="EditButton_Click" Grid.Column="1">
             <Button.Content>
                 <Image Source="/View/UserControls/edit.png" Width="30" Height="22" />
             </Button.Content>
         </Button>
-
-
+        
         <Label Content="Address:" HorizontalAlignment="Left" Height="35" Margin="62,352,0,0" VerticalAlignment="Top" Width="106" FontSize="15" FontFamily="Segoe UI" Grid.Column="1"/>
         <Label Content="Name:" HorizontalAlignment="Left" Height="32" Margin="62,198,0,0" VerticalAlignment="Top" Width="128" FontSize="15" FontFamily="Segoe UI" Grid.Column="1"/>
         <Label Content="Contact number:" HorizontalAlignment="Left" Height="32" Margin="62,253,0,0" VerticalAlignment="Top" Width="128" FontSize="15" FontFamily="Segoe UI" Grid.Column="1"/>
 
         <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Margin="198,197,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Height="35" FontSize="14" FontFamily="Segoe UI"
-                             BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsReadOnly="True" TextChanged="TextBox_TextChanged" Grid.Column="1"/>
+                             BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsReadOnly="True" Grid.Column="1"/>
+        
         <TextBox x:Name="AddressTextBox" HorizontalAlignment="Left" Margin="198,352,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Height="68" FontSize="14" FontFamily="Segoe UI"
                              BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsReadOnly="True" Grid.Column="1"/>
+        
         <TextBox x:Name="ContactTextBox" HorizontalAlignment="Left" Margin="198,253,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Height="35" FontSize="14" FontFamily="Segoe UI"
                              BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsReadOnly="True" Grid.Column="1"/>
+        
         <TextBox x:Name="EmailTextBox" HorizontalAlignment="Left" Margin="198,300,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Height="35" FontSize="14" FontFamily="Segoe UI"
                     BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsReadOnly="True" Grid.Column="1"/>
 
@@ -50,8 +50,10 @@
         <Label Content="password:" HorizontalAlignment="Left" Height="32" Margin="62,654,0,0" VerticalAlignment="Top" Width="128" FontSize="15" FontFamily="Segoe UI" Grid.Column="1"/>
         <TextBox x:Name="UsernameTextBox" HorizontalAlignment="Left" Margin="198,610,0,0" VerticalAlignment="Top" Width="250" Height="30" FontSize="14" FontFamily="Segoe UI"
                     BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsReadOnly="True" Grid.Column="1" RenderTransformOrigin="0.518,0.627"/>
+        
         <PasswordBox x:Name="PasswordTextBox" HorizontalAlignment="Left" Margin="198,654,0,0" VerticalAlignment="Top" Width="250" Height="32" FontSize="14" FontFamily="Segoe UI"
                     BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsEnabled="True" Grid.Column="1"/>
+        
         <Button x:Name="SavePrivacyButton" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="323,713,0,0" Width="100" Height="34" FontSize="14" FontFamily="Segoe UI"  Visibility="Collapsed"  Click="SavePrivacyButton_Click" Grid.Column="1" Background="Green"/>
         <Button x:Name="CancelPrivacyButton" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="209,713,0,0" Width="100" Height="34" FontSize="14" FontFamily="Segoe UI" Visibility="Collapsed"  Click="CancelPrivacyButton_Click" Grid.Column="1" Background="OrangeRed"/>
         <Button Width="60" Height="36" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="309,546,0,0" Cursor="Hand" MouseDown="EditPrivacyButton_Click" Click="EditPrivacyButton_Click" Grid.Column="1">
@@ -62,18 +64,7 @@
         <Button x:Name="SaveButton" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="323,437,0,0" Width="100"  Height="33" FontSize="14" FontFamily="Segoe UI" Visibility="Collapsed"  Click="SaveButton_Click" Grid.Column="1" Background="Green"/>
         <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="209,436,0,0" Width="100"  Height="34" FontSize="14" FontFamily="Segoe UI" Visibility="Collapsed"   Click="CancelButton_Click" Grid.Column="1" Background="OrangeRed"/>
 
-        <Button x:Name="LogoutButton" 
-                Background="DarkRed"
-                Content="Logout" 
-                HorizontalAlignment="Right" 
-                VerticalAlignment="Bottom" 
-                Margin="0,0,25,26" 
-                Width="133" 
-                Height="48" 
-                FontSize="14" 
-                FontFamily="Segoe UI" 
-                Click="LogoutButton_Click" 
-                Cursor="Hand" Grid.Column="2" />
+        <Button x:Name="LogoutButton" Background="DarkRed" Content="Logout" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,25,26" Width="133" Height="48" FontSize="14" FontFamily="Segoe UI" Click="LogoutButton_Click" Cursor="Hand" Grid.Column="2" />
 
         <Label Content="Email address:" HorizontalAlignment="Left" Height="32" Margin="62,303,0,0" VerticalAlignment="Top" Width="128" FontSize="15" FontFamily="Segoe UI" Grid.Column="1"/>
         <Button Content="Upload Image" HorizontalAlignment="Left" Margin="172,438,0,0" VerticalAlignment="Top" Click="UploadImage_Click" Height="50" Width="146" Grid.Column="2"/>
@@ -95,7 +86,5 @@
                     Margin="20,0,0,0"/>
             </StackPanel>
         </Border>
-
-
     </Grid>
 </UserControl>

@@ -17,7 +17,6 @@ namespace LPG_Management_System
             string username = unametxtBox.Text;
             string password = pwordBox.Password;
 
-            // Reset styles and error messages
             ResetValidation();
 
             if (ValidateLogin(username, password))
@@ -28,7 +27,6 @@ namespace LPG_Management_System
             }
             else
             {
-                // Highlight errors
                 if (string.IsNullOrWhiteSpace(username))
                 {
                     unametxtBox.BorderBrush = System.Windows.Media.Brushes.Red;
@@ -84,9 +82,6 @@ namespace LPG_Management_System
             }
         }
 
-        private void unametxtBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-        }
 
         private void loginBtn_MouseEnter(object sender, MouseEventArgs e)
         {

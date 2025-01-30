@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace LPG_Management_System.View.Windows
 {
-    /// <summary>
-    /// Interaction logic for PrintPreview.xaml
-    /// </summary>
     public partial class PrintPreview : Window
     {
         public PrintPreview(FixedDocument fixedDocument)

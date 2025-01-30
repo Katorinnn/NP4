@@ -25,7 +25,6 @@ namespace LPG_Management_System.View
                     var customer = dbContext.tbl_customers.FirstOrDefault(c => c.CustomerID == customerId);
                     if (customer != null)
                     {
-                        // Populate the controls (e.g., TextBoxes) with the data from the database
                         customerIDtxtBox.Text = customer.CustomerID.ToString();
                         tankIDtxtBox.Text = customer.TankID.ToString();
                         cuNametxtBox.Text = customer.CustomerName;
@@ -65,7 +64,7 @@ namespace LPG_Management_System.View
                         customer.ContactNumber = contactNumber;
                         customer.Address = address;
 
-                        dbContext.SaveChanges();  // Save the changes to the database
+                        dbContext.SaveChanges();  
 
                         MessageBox.Show("Customer updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.DialogResult = true;
@@ -81,11 +80,6 @@ namespace LPG_Management_System.View
             {
                 MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-        private void tankIDtxtBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-            // Handle text change if necessary
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

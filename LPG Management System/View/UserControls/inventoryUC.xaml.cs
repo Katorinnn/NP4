@@ -22,24 +22,18 @@ namespace LPG_Management_System.View.UserControls
             InitializeComponent();
             _context = new DataContext();
             LoadInventoryData();
-
-
         }
-
         private void LoadInventoryData()
         {
-           
-
             try
             {
                 using (var context = new DataContext())
                 {
-                    var customers = context.tbl_inventory.ToList(); // Fetch all customers
+                    var customers = context.tbl_inventory.ToList(); 
 
-                    // Check if the DataGrid is null
                     if (inventoryDG != null)
                     {
-                        inventoryDG.ItemsSource = customers; // Bind data to DataGrid
+                        inventoryDG.ItemsSource = customers; 
                     }
                     else
                     {
@@ -55,11 +49,10 @@ namespace LPG_Management_System.View.UserControls
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Ensure sender is a TextBox and extract the text
             var textBox = sender as TextBox;
             if (textBox == null) return;
 
-            string searchText = textBox.Text.Trim().ToLower(); // Trim and convert to lowercase
+            string searchText = textBox.Text.Trim().ToLower(); 
 
             if (!string.IsNullOrEmpty(searchText) && searchText != "search here")
             {
@@ -77,7 +70,7 @@ namespace LPG_Management_System.View.UserControls
                                 i.StocksID.ToString().Contains(searchText))
                             .ToList();
 
-                        inventoryDG.ItemsSource = filteredInventory; // Bind the filtered data to DataGrid
+                        inventoryDG.ItemsSource = filteredInventory; 
                     }
                 }
                 catch (Exception ex)
@@ -87,8 +80,7 @@ namespace LPG_Management_System.View.UserControls
             }
             else
             {
-                // Reload all data if search is empty or contains default placeholder text
-                LoadInventoryData(); // Assuming LoadInventoryData() loads all inventory items
+                LoadInventoryData(); 
             }
         }
 
@@ -97,7 +89,7 @@ namespace LPG_Management_System.View.UserControls
             if (TextBox.Text == "Search here")
             {
                 TextBox.Text = string.Empty;
-                TextBox.Foreground = Brushes.Black; // Set text color to normal
+                TextBox.Foreground = Brushes.Black; 
             }
         }
 
@@ -106,13 +98,9 @@ namespace LPG_Management_System.View.UserControls
             if (string.IsNullOrWhiteSpace(TextBox.Text))
             {
                 TextBox.Text = "Search here";
-                TextBox.Foreground = Brushes.Gray; // Set text color to placeholder style
+                TextBox.Foreground = Brushes.Gray; 
             }
         }
-
-
-
-
         private void ApplyFilter(string column, string value)
         {
             try
@@ -130,10 +118,9 @@ namespace LPG_Management_System.View.UserControls
                 MessageBox.Show("Error applying filter: " + ex.Message);
             }
         }
-
         private void newBtn_Click(object sender, RoutedEventArgs e)
         {
-            inventoryCRUD inventoryCRUD = new inventoryCRUD(); // No parameter needed
+            inventoryCRUD inventoryCRUD = new inventoryCRUD(); 
             bool? dialogResult = inventoryCRUD.ShowDialog();
             if (dialogResult == true)
             {
@@ -142,18 +129,15 @@ namespace LPG_Management_System.View.UserControls
 
         }
 
-
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
             if (btn != null)
             {
                 int selectedStockID = Convert.ToInt32(btn.Tag);
-                OpenInventoryUpdateWindow(selectedStockID);  // Ensure this is called to open the update window
+                OpenInventoryUpdateWindow(selectedStockID);  
             }
         }
-
-
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
@@ -179,13 +163,10 @@ namespace LPG_Management_System.View.UserControls
                 }
             }
         }
-
         private void ClearFilterButton_Click(object sender, RoutedEventArgs e)
         {
             LoadInventoryData();
         }
-
-
         public class InventoryTable
         {
             public int TankID { get; set; }
@@ -193,37 +174,27 @@ namespace LPG_Management_System.View.UserControls
             public string Size { get; set; }
             public decimal Price { get; set; }
             public byte[] ProductImage { get; set; }
-            public int Stock { get; set; } // New stock property
+            public int Stock { get; set; } 
         }
 
-        // Assuming you are opening inventoryUpdate from another window (e.g. the main window)
         private void OpenInventoryUpdateWindow(int stocksID)
         {
-            // Create an instance of inventoryUpdate
             inventoryUpdate updateWindow = new inventoryUpdate(stocksID, inventoryDG);
-
-            // Subscribe to the event to refresh the DataGrid when update is successful
             updateWindow.OnInventoryUpdated += RefreshDataGrid;
-
-            // Show the window
             updateWindow.ShowDialog();
         }
 
         private void RefreshDataGrid()
         {
-            // Re-fetch the updated data from the database and re-bind the DataGrid
             using (var dbContext = new DataContext())
             {
-                var updatedInventoryList = dbContext.tbl_inventory.ToList();  // Fetch updated data
-                inventoryDG.ItemsSource = updatedInventoryList;  // Re-bind the DataGrid
+                var updatedInventoryList = dbContext.tbl_inventory.ToList();  
+                inventoryDG.ItemsSource = updatedInventoryList; 
             }
         }
-
         private void LoadProductsForDisplay(InventoryTable selectedItem)
         {
             ProductsWrapPanel.Children.Clear();
-
-            // Fetch product data (can be filtered based on the selected item if needed)
             var products = _context.tbl_inventory.ToList();
 
             if (selectedItem != null)
@@ -251,26 +222,22 @@ namespace LPG_Management_System.View.UserControls
                         Opacity = 0.5
                     }
                 };
-
-                // Add zoom effect on hover
                 productContainer.MouseEnter += (s, e) =>
                 {
-                    productContainer.RenderTransform = new ScaleTransform(1.05, 1.05); // Scale up
-                    productContainer.RenderTransformOrigin = new Point(0.5, 0.5);    // Center the scaling
+                    productContainer.RenderTransform = new ScaleTransform(1.05, 1.05); 
+                    productContainer.RenderTransformOrigin = new Point(0.5, 0.5);    
                 };
 
                 productContainer.MouseLeave += (s, e) =>
                 {
-                    productContainer.RenderTransform = new ScaleTransform(1.0, 1.0); // Scale back to normal
+                    productContainer.RenderTransform = new ScaleTransform(1.0, 1.0); 
                 };
 
-                // Create a StackPanel inside the Border to hold product content
                 var stackPanel = new StackPanel
                 {
                     Orientation = Orientation.Vertical
                 };
 
-                // Add product image
                 var image = new Image
                 {
                     Source = ConvertToImageSource(product.ProductImage),
@@ -278,7 +245,6 @@ namespace LPG_Management_System.View.UserControls
                     Margin = new Thickness(20)
                 };
 
-                // Add product details
                 var brandText = new TextBlock
                 {
                     Text = $"Brand: {product.ProductName}",
@@ -304,24 +270,15 @@ namespace LPG_Management_System.View.UserControls
                     Margin = new Thickness(15, 5, 5, 5)
                 };
 
-                // Add all elements to the StackPanel
                 stackPanel.Children.Add(image);
                 stackPanel.Children.Add(brandText);
                 stackPanel.Children.Add(sizeText);
                 stackPanel.Children.Add(priceText);
-
-                // Set the content of the Border to be the StackPanel
                 productContainer.Child = stackPanel;
 
-                // Add the container to the WrapPanel
                 ProductsWrapPanel.Children.Add(productContainer);
             }
         }
-
-
-
-
-        // Method to convert byte array to ImageSource
         private ImageSource ConvertToImageSource(byte[] imageBytes)
         {
             if (imageBytes == null || imageBytes.Length == 0) return null;
@@ -346,8 +303,6 @@ namespace LPG_Management_System.View.UserControls
 
         private void GridView_Click(object sender, RoutedEventArgs e)
         {
-            // Show Grid View and hide WrapPanel
- 
             inventoryDG.Visibility = Visibility.Collapsed;
             ProductScrollViewer.Visibility = Visibility.Visible;
             ProductsWrapPanel.Visibility = Visibility.Visible;
@@ -355,55 +310,37 @@ namespace LPG_Management_System.View.UserControls
 
             LoadProductsForDisplay(null);
 
-            // Uncheck ListView button
             listViewButton.IsChecked = false;
 
-            // Check GridView button
             gridViewButton.IsChecked = true;
         }
 
         private void ListView_Click(object sender, RoutedEventArgs e)
         {
-            // Show WrapPanel and hide Grid View
             inventoryDG.Visibility = Visibility.Visible;
             ProductsWrapPanel.Visibility = Visibility.Collapsed;
             ProductScrollViewer.Visibility = Visibility.Collapsed;
             ProductBorder.Visibility = Visibility.Collapsed;
-
-            // Load all products to the WrapPanel for List view
-            // Pass null if no specific item is selected
-
-            // Uncheck GridView button
             gridViewButton.IsChecked = false;
-
-            // Check ListView button
             listViewButton.IsChecked = true;
         }
 
-
-
         private void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Check if an item is selected
             if (inventoryDG.SelectedItem is InventoryTable selectedItem)
             {
-                // Hide the DataGrid and show the WrapPanel
                 inventoryDG.Visibility = Visibility.Collapsed;
                 ProductsWrapPanel.Visibility = Visibility.Visible;
                 ProductBorder.Visibility = Visibility.Visible;
-
-                // Load products into the WrapPanel
-                LoadProductsForDisplay(selectedItem); // Pass selectedItem to display product details
+                LoadProductsForDisplay(selectedItem); 
             }
             else
             {
-                // If no item is selected, return to the GridView
                 inventoryDG.Visibility = Visibility.Visible;
                 ProductsWrapPanel.Visibility = Visibility.Collapsed;
                 ProductBorder.Visibility = Visibility.Collapsed;
             }
         }
-
         private void gridViewButton_Checked(object sender, RoutedEventArgs e)
         {
             TextBox.Visibility = Visibility.Collapsed;

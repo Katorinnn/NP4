@@ -54,7 +54,7 @@ namespace LPG_Management_System.View.Windows
         private string GenerateRandomOrderId()
         {
             Random random = new Random();
-            return random.Next(100000, 999999).ToString();  // Generates a random number between 100000 and 999999
+            return random.Next(100000, 999999).ToString();  
         }
 
         private void PrintButton_Click(object sender, RoutedEventArgs e)
@@ -63,7 +63,6 @@ namespace LPG_Management_System.View.Windows
             Font customFont = new Font(customBaseFont, 10f, Font.NORMAL);
             try
             {
-                // Fetch company details
                 var companyDetails = GetCompanyDetails();
 
                 using (MemoryStream memoryStream = new MemoryStream())
@@ -71,10 +70,9 @@ namespace LPG_Management_System.View.Windows
                     var items = InvoiceDataGrid.ItemsSource as IEnumerable<pointofsaleUC.ReceiptItem>;
                     int numberOfItems = items?.Count() ?? 0;
 
-                    // Set a fixed height per item and add padding
-                    float itemHeight = 15f;  // Height for each item in the receipt
-                    float paddingHeight = 100f;  // Padding for header, footer, etc.
-                    float totalHeight = Math.Max(itemHeight * numberOfItems + paddingHeight, 500f);  // Ensure a minimum height
+                    float itemHeight = 15f;  
+                    float paddingHeight = 100f;  
+                    float totalHeight = Math.Max(itemHeight * numberOfItems + paddingHeight, 500f);  
 
                     float width = 200f;
                     iTextSharp.text.Rectangle pageSize = new iTextSharp.text.Rectangle(width, totalHeight);
@@ -85,15 +83,13 @@ namespace LPG_Management_System.View.Windows
 
                     doc.Open();
 
-                    // Add Logo (fetched from database)
+     
                     if (companyDetails != null && companyDetails.Logo != null && companyDetails.Logo.Length > 0)
                     {
                         using (MemoryStream logoStream = new MemoryStream(companyDetails.Logo))
                         {
-                            // Load the image into a Bitmap
-                            using (var originalImage = System.Drawing.Image.FromStream(logoStream))
+                             using (var originalImage = System.Drawing.Image.FromStream(logoStream))
                             {
-                                // Convert the image to grayscale
                                 using (var grayscaleImage = new System.Drawing.Bitmap(originalImage.Width, originalImage.Height))
                                 {
                                     using (var g = System.Drawing.Graphics.FromImage(grayscaleImage))
@@ -119,14 +115,11 @@ namespace LPG_Management_System.View.Windows
                                             attributes
                                         );
                                     }
-
-                                    // Save the grayscale image into a MemoryStream for iTextSharp
                                     using (var grayscaleStream = new MemoryStream())
                                     {
                                         grayscaleImage.Save(grayscaleStream, System.Drawing.Imaging.ImageFormat.Png);
                                         grayscaleStream.Position = 0;
 
-                                        // Add the grayscale image to the PDF
                                         iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance(grayscaleStream);
                                         logo.ScaleToFit(100f, 100f);
                                         logo.Alignment = iTextSharp.text.Element.ALIGN_CENTER;
@@ -137,9 +130,6 @@ namespace LPG_Management_System.View.Windows
                         }
                     }
 
-
-
-                    // Header (dynamic data)
                     Font headerFont = new Font(Font.FontFamily.HELVETICA, 10f, Font.BOLD);
                     Font normalFont = new Font(Font.FontFamily.HELVETICA, 8f, Font.NORMAL);
 
@@ -152,7 +142,6 @@ namespace LPG_Management_System.View.Windows
                         doc.Add(new iTextSharp.text.Paragraph(new string('-', 70), normalFont) { Alignment = Element.ALIGN_CENTER });
                     }
 
-                    // Order Details
                     doc.Add(new iTextSharp.text.Paragraph($"Order ID: {GenerateRandomOrderId()}", normalFont) { Alignment = Element.ALIGN_CENTER });
                     doc.Add(new iTextSharp.text.Paragraph($"Cashier: Neil Agnes Pimentel", normalFont) { Alignment = Element.ALIGN_CENTER });
                     doc.Add(new iTextSharp.text.Paragraph($"Payment Mode: CASH", normalFont) { Alignment = Element.ALIGN_CENTER });
@@ -165,13 +154,12 @@ namespace LPG_Management_System.View.Windows
 
                     table.SetWidths(new float[] { 5f, 5f });  
 
-                    // Add a little padding inside the table cells
                     PdfPCell itemHeaderCell = new PdfPCell(new Phrase("Items", headerFont))
                     {
                         Border = 0,
                         HorizontalAlignment = PdfPCell.ALIGN_LEFT,
-                        PaddingLeft = 10f,  // Adding left padding
-                        PaddingRight = 10f  // Adding right padding
+                        PaddingLeft = 10f,  
+                        PaddingRight = 10f  
                     };
                     table.AddCell(itemHeaderCell);
 
@@ -179,8 +167,8 @@ namespace LPG_Management_System.View.Windows
                     {
                         Border = 0,
                         HorizontalAlignment = PdfPCell.ALIGN_RIGHT,
-                        PaddingLeft = 10f,  // Adding left padding
-                        PaddingRight = 10f  // Adding right padding
+                        PaddingLeft = 10f,  
+                        PaddingRight = 10f  
                     };
                     table.AddCell(totalHeaderCell);
 
@@ -210,58 +198,53 @@ namespace LPG_Management_System.View.Windows
 
                     doc.Add(table);
 
-
-                    // Totals
                     PdfPTable totalsTable = new PdfPTable(2)
                     {
                         WidthPercentage = 100
                     };
                     totalsTable.SetWidths(new float[] { 6f, 4f });
 
-                    // Add a separator line
                     doc.Add(new iTextSharp.text.Paragraph(new string('-', 70), normalFont) { Alignment = Element.ALIGN_CENTER });
 
-                    // Add Total row with padding
                     totalsTable.AddCell(new PdfPCell(new Phrase("TOTAL", headerFont))
                     {
                         Border = 0,
                         HorizontalAlignment = PdfPCell.ALIGN_LEFT,
-                        PaddingLeft = 10f,  // Left padding
-                        PaddingRight = 10f  // Right padding
+                        PaddingLeft = 10f,  
+                        PaddingRight = 10f  
                     });
 
                     totalsTable.AddCell(new PdfPCell(new Phrase($"₱ {TotalAmountText.Text}", normalFont))
                     {
                         Border = 0,
                         HorizontalAlignment = PdfPCell.ALIGN_RIGHT,
-                        PaddingLeft = 10f,  // Left padding
-                        PaddingRight = 10f  // Right padding
+                        PaddingLeft = 10f,  
+                        PaddingRight = 10f  
                     });
 
-                    // Add Amount Paid row with padding
+                    
                     totalsTable.AddCell(new PdfPCell(new Phrase("AMOUNT PAID", normalFont))
                     {
                         Border = 0,
                         HorizontalAlignment = PdfPCell.ALIGN_LEFT,
-                        PaddingLeft = 10f,  // Left padding
-                        PaddingRight = 10f  // Right padding
+                        PaddingLeft = 10f,  
+                        PaddingRight = 10f  
                     });
 
                     totalsTable.AddCell(new PdfPCell(new Phrase($"₱ {_amountPaid:F2}", normalFont))
                     {
                         Border = 0,
                         HorizontalAlignment = PdfPCell.ALIGN_RIGHT,
-                        PaddingLeft = 10f,  // Left padding
-                        PaddingRight = 10f  // Right padding
+                        PaddingLeft = 10f,  
+                        PaddingRight = 10f  
                     });
 
-                    // Add Change row with padding
                     totalsTable.AddCell(new PdfPCell(new Phrase("CHANGE", normalFont))
                     {
                         Border = 0,
                         HorizontalAlignment = PdfPCell.ALIGN_LEFT,
-                        PaddingLeft = 10f,  // Left padding
-                        PaddingRight = 10f  // Right padding
+                        PaddingLeft = 10f,  
+                        PaddingRight = 10f  
                     });
 
                     totalsTable.AddCell(new PdfPCell(new Phrase($"₱ {_change:F2}", normalFont))
@@ -269,14 +252,12 @@ namespace LPG_Management_System.View.Windows
                     {
                         Border = 0,
                         HorizontalAlignment = PdfPCell.ALIGN_RIGHT,
-                        PaddingLeft = 10f,  // Left padding
-                        PaddingRight = 10f  // Right padding
+                        PaddingLeft = 10f,  
+                        PaddingRight = 10f  
                     });
 
-                    // Add the totals table to the document
                     doc.Add(totalsTable);
 
-                    // Footer
                     doc.Add(new iTextSharp.text.Paragraph("Thank you! Please come again.", normalFont) { Alignment = Element.ALIGN_CENTER });
                     doc.Add(new iTextSharp.text.Paragraph("** This is a computer-generated receipt.", normalFont) { Alignment = Element.ALIGN_CENTER });
 
@@ -284,11 +265,9 @@ namespace LPG_Management_System.View.Windows
 
                     memoryStream.Position = 0;
 
-                    // Save the PDF to a temporary location
                     string tempFilePath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), $"{Guid.NewGuid()}.pdf");
                     File.WriteAllBytes(tempFilePath, memoryStream.ToArray());
 
-                    // Open the PDF for preview
                     Process.Start(new ProcessStartInfo(tempFilePath) { UseShellExecute = true });
 
                     Task.Run(() =>
@@ -312,7 +291,6 @@ namespace LPG_Management_System.View.Windows
         {
             using (var context = new DataContext())
             {
-                // Assuming there is only one company record
                 return context.tbl_company.FirstOrDefault();
             }
         }

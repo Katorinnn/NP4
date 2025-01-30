@@ -10,7 +10,6 @@
         Background="{x:Null}" AllowsTransparency="True">
 
     <Window.Resources>
-        <!-- Custom Style for Rounded TextBox -->
         <Style TargetType="TextBox">
             <Setter Property="Template">
                 <Setter.Value>
@@ -24,34 +23,26 @@
             <Setter Property="Padding" Value="5"/>
         </Style>
 
-        <!-- Boolean to Visibility Converter -->
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
 
     <Grid Margin="0,0,0,55" >
-
-        <!-- Border to wrap the content and provide rounded corners -->
         <Border Margin="20" Background="#d1e5f4" BorderBrush="Gray" BorderThickness="1,1,1,1" CornerRadius="5">
             <Border.Effect>
                 <DropShadowEffect Color="Gray" BlurRadius="30" ShadowDepth="-5" Opacity="0.3"/>
             </Border.Effect>
-            <!-- Close Button -->
+
             <ComboBox x:Name="tankClassComboBox" HorizontalAlignment="Left" Height="35" Margin="182,300,0,0" VerticalAlignment="Top" Width="150" BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
                 <ComboBoxItem Content="Tank Class" IsEnabled="False" Foreground="Gray" />
                 <ComboBoxItem Content="Class A"/>
                 <ComboBoxItem Content="Class AB"/>
                 <ComboBoxItem Content="Class C"/>
             </ComboBox>
-
-
-
-
-
         </Border>
+        
         <Grid HorizontalAlignment="Left" Height="48" Margin="23,61,0,0" VerticalAlignment="Top" Width="375" Background="#FFD1E5F4"/>
         <Grid HorizontalAlignment="Left" Height="398" Margin="396,0,0,0" VerticalAlignment="Center" Width="265" Background="#FFB7E1FC"/>
         <Label x:Name="TotalAmountLabel" HorizontalAlignment="Left" Margin="465,210,0,0" VerticalAlignment="Top" FontSize="15" Height="38" Width="134" Content="" Foreground="#DD000000" Background="{x:Null}" FontWeight="Bold"/>
-
         <Button x:Name="amountBtn" Content="Proceed" HorizontalAlignment="Left" Margin="489,323,0,0" VerticalAlignment="Top" Click="amountBtn_Click" FontSize="15" RenderTransformOrigin="0.125,0.532" Height="34" Width="95"/>
 
         <Label Content="Customer ID:" HorizontalAlignment="Left" Height="25" Margin="55,118,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontSize="15" FontWeight="Bold"/>
@@ -59,7 +50,6 @@
 
         <Label Content="Contact Number:" Margin="55,208,493,210" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
         <Label Content="Address:" HorizontalAlignment="Left" Height="28" Margin="55,254,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
-
 
         <RadioButton x:Name="NewCustomer" Content="New Customer" HorizontalAlignment="Left" Height="30" Margin="52,64,0,0" 
              VerticalAlignment="Top" Width="113" Checked="NewCustomer_Checked" IsChecked="True"/>
@@ -71,8 +61,6 @@
              TextWrapping="Wrap" VerticalAlignment="Top" Width="154" FontFamily="Segoe UI" 
              BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" 
              IsReadOnly="True" />
-        <!-- Making it Read-Only -->
-
 
         <TextBox x:Name="customertxtBox" HorizontalAlignment="Left" Height="30" Margin="202,160,0,0" 
                  TextWrapping="Wrap" VerticalAlignment="Top" Width="154" FontFamily="Segoe UI" 
@@ -87,7 +75,6 @@
 
         <ListBox x:Name="customerListBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Height="100" Margin="202,192,0,0"
          Visibility="Collapsed" SelectionChanged="customerListBox_SelectionChanged" Background="White" BorderBrush="DimGray" BorderThickness="0.5" Panel.ZIndex="1000">
-            <!-- Custom template for each list item -->
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding CustomerName}" Padding="5"/>
@@ -95,15 +82,12 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-
-
         <TextBox x:Name="addresstxtBox" HorizontalAlignment="Left" Height="45" Margin="167,254,0,0" 
                  TextWrapping="Wrap" VerticalAlignment="Top" Width="190" FontFamily="Segoe UI" 
                  BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" IsEnabled="True" 
                  PreviewTextInput="addresstxtBox_PreviewTextInput"/>
 
         <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Width="196" Height="48" Margin="434,270,0,0">
-            <!-- Peso Sign inside the TextBox -->
             <Border BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" CornerRadius="5">
                 <Grid>
                     <TextBlock Text="₱" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="18" Foreground="Gray"/>
@@ -114,21 +98,15 @@
                      BorderBrush="{x:Null}" 
                      Background="Transparent" 
                      FontSize="15"  
-                     TextChanged="amounttxtBox_TextChanged" 
                      PreviewTextInput="amounttxtBox_PreviewTextInput"
                      Height="30" />
                 </Grid>
             </Border>
         </Grid>
-
         <Label Content="Classification " HorizontalAlignment="Left" Height="28" Margin="55,322,0,0" VerticalAlignment="Top" Width="108" FontFamily="Segoe UI" FontWeight="Bold" FontSize="15"/>
-
-
         <Button x:Name="closeBtn" Content="X" HorizontalAlignment="Right" VerticalAlignment="Top" Width="50" Height="32" 
                 Margin="0,18,17,0" Click="Button_Click" 
                 Background="Transparent" Foreground="Gray" Cursor="Hand" 
                 BorderBrush="{x:Null}" FontSize="19"/>
-
-
     </Grid>
 </Window>
