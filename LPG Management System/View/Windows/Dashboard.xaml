@@ -11,23 +11,15 @@
         Title="NP4 lang" Height="850" Width="1500" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None">
     <Grid>
         <Grid.ColumnDefinitions>
-            <!-- Sidebar column -->
             <ColumnDefinition Width="300"/>
-            <!-- Main content column -->
             <ColumnDefinition Width="97*"/>
-
         </Grid.ColumnDefinitions>
 
-        <!-- Sidebar -->
         <StackPanel Background="#FF2C3E50" Grid.Column="0" x:Name="SidebarPanel">
-            <!-- Logo or Header -->
             <Grid Background="#FF34495E" Height="276">
                 <Image Source="{Binding Logo}" HorizontalAlignment="Left" Height="190" Margin="49,37,0,0" VerticalAlignment="Top" Width="230" />
             </Grid>
 
-
-            <!-- Sidebar Buttons -->
-            <!-- Dashboard Button -->
             <Button x:Name="dashboardBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="96" FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
@@ -63,8 +55,6 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-
-            <!-- Customer Button -->
             <Button x:Name="custumerBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="97" FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
@@ -100,8 +90,6 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-
-            <!-- Inventory Button -->
             <Button x:Name="inventoryBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="96" FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
@@ -137,8 +125,6 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-
-            <!-- POS Button -->
             <Button x:Name="posBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="97" FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
@@ -174,8 +160,6 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-
-            <!-- Reports Button -->
             <Button x:Name="reportsBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="96" FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
@@ -211,8 +195,6 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-
-            <!-- Settings Button -->
             <Button x:Name="settingsBtn" Click="NavigationButton_Click" Background="Transparent" BorderBrush="Transparent" Cursor="Hand" Height="97" FontWeight="Bold">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
@@ -248,15 +230,9 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
-
-
-
-            <!-- Add more buttons here -->
         </StackPanel>
-
-        <!-- Main Content Area -->
         <ContentControl x:Name="MainContent" Grid.Column="1" Background="#F0F0F0" Grid.ColumnSpan="2">
-            <userControls:dashboardUC Background="Black" Loaded="dashboardUC_Loaded"/>
+            <userControls:dashboardUC Background="Black"/>
         </ContentControl>
     </Grid>
 </Window>

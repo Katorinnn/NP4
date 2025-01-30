@@ -13,7 +13,6 @@
     </Window.Resources>
 
     <Grid Margin="0,0,0,-118">
-        <!-- Border to wrap the content and provide rounded corners -->
         <Border Margin="63,24,94,225" BorderBrush="Gray" BorderThickness="1,1,1,1" CornerRadius="5">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -24,16 +23,11 @@
             <Border.Effect>
                 <DropShadowEffect Color="Gray" BlurRadius="30" ShadowDepth="-5" Opacity="0.3"/>
             </Border.Effect>
-            <!-- Close Button -->
             <Border Margin="-1,-1,-1,471" Background="SteelBlue" CornerRadius="2">
-
-                <!-- Close Button -->
                 <Button Content="X" HorizontalAlignment="Right" VerticalAlignment="Top" Width="46" Height="32" Click="closeBtn_Click" 
                     Background="Transparent" Foreground="White" Cursor="Hand" 
                     BorderBrush="{x:Null}" FontSize="19"/>
-
             </Border>
-
         </Border>
 
         <Label Content="Customer Name:" HorizontalAlignment="Left" Height="31" Margin="152,224,0,0" VerticalAlignment="Top" Width="148" FontSize="16" FontWeight="Bold" FontFamily="Segoe UI"/>
@@ -55,11 +49,11 @@
 
         <TextBox x:Name="tankIDtxtBox" HorizontalAlignment="Left"  Margin="298,174,0,0" 
                  TextWrapping="Wrap" VerticalAlignment="Top" Width="134" Height="36"
-                 BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" TextChanged="tankIDtxtBox_TextChanged" />
+                 BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" />
 
         <TextBox x:Name="customerIDtxtBox" HorizontalAlignment="Left" Margin="298,125,0,0" 
                  TextWrapping="Wrap" VerticalAlignment="Top" Width="113" Height="36"
-                 BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" TextChanged="tankIDtxtBox_TextChanged"/>
+                 BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd"/>
 
         <Button x:Name="updateBtn" Content="Update" Background="Green" HorizontalAlignment="Left" Height="44" Margin="345,448,0,0" VerticalAlignment="Top" Width="122"  Cursor="Hand" Click="updateBtn_Click" FontFamily="Segoe UI" FontSize="14"/>
 
@@ -68,6 +62,7 @@
         <Button x:Name="cancelBtn" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" 
                 Width="116" Height="44" Margin="223,448,0,0" Click="cancelBtn_Click" 
                 Background="OrangeRed" Foreground="White" BorderBrush="Gray" RenderTransformOrigin="0.601,-0.207"/>
+        
         <Label Content=" Customer Information" HorizontalAlignment="Left" Margin="63,30,0,0" VerticalAlignment="Top" 
                 FontWeight="Bold" FontSize="14" Width="218" Foreground="White"/>
     </Grid>

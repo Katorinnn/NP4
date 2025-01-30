@@ -26,14 +26,12 @@
                                 BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="{TemplateBinding BorderThickness}" 
                                 CornerRadius="2">
-                            <ContentPresenter HorizontalAlignment="Center" 
-                                              VerticalAlignment="Center" />
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
-                <!-- Change color when toggled -->
                 <Trigger Property="IsChecked" Value="True">
                     <Setter Property="Background" Value="#0078D7" />
                     <Setter Property="Foreground" Value="White" />
@@ -41,7 +39,6 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-
     <Grid x:Name="mainGrid">
         <Grid Margin="0,0,0,-10">
             <Grid.ColumnDefinitions>
@@ -57,39 +54,37 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" MinHeight="96"/>
-                <!-- For Search and Button -->
                 <RowDefinition/>
-                <!-- For DataGrid -->
             </Grid.RowDefinitions>
 
             <Border Background="SteelBlue" Height="70" VerticalAlignment="Top" CornerRadius="0,0,0,0" Grid.ColumnSpan="2">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0">
                     <Image Source="/Images/inventory.png" Height="60" Margin="10,0" VerticalAlignment="Center"/>
                     <TextBlock x:Name="PreviousButton" Text="INVENTORY" 
-                   Foreground="White" 
-                   FontFamily="Segoe UI" 
-                   FontWeight="Bold" 
-                   FontSize="36" 
-                   VerticalAlignment="Center" 
-                   Margin="20,0,0,0"/>
+                               Foreground="White" 
+                               FontFamily="Segoe UI" 
+                               FontWeight="Bold" 
+                               FontSize="36" 
+                               VerticalAlignment="Center" 
+                               Margin="20,0,0,0"/>  
                 </StackPanel>
             </Border>
 
-
-
-            <!-- DataGrid -->
             <DataGrid x:Name="inventoryDG" Grid.Row="1" Margin="15,130,15,47"
-                      CanUserResizeColumns="False" GridLinesVisibility="None"
-                      HorizontalGridLinesBrush="LightGray"
+                      GridLinesVisibility="None" HorizontalGridLinesBrush="LightGray"
                       VerticalGridLinesBrush="LightGray" BorderBrush="Gray" BorderThickness="1"
-                      CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single" 
-                      SelectionUnit="FullRow" AutoGenerateColumns="False" MinRowHeight="30" 
+                      SelectionMode="Single" SelectionUnit="FullRow" 
+                      AutoGenerateColumns="False" MinRowHeight="30" 
                       RowHeaderWidth="0" FontFamily="Segoe UI"
-                      HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" 
                       ScrollViewer.CanContentScroll="True"
-                      AlternatingRowBackground="#F5F5F5" AlternationCount="2" Grid.ColumnSpan="2" CanUserReorderColumns="False" >
+                      AlternatingRowBackground="#F5F5F5" 
+                      AlternationCount="2" Grid.ColumnSpan="2" 
+                      HorizontalScrollBarVisibility="Disabled" 
+                      VerticalScrollBarVisibility="Auto" 
+                      CanUserResizeColumns="False" 
+                      CanUserReorderColumns="False" 
+                      CanUserAddRows="False" IsReadOnly="True">
 
-                <!-- DataGrid Column Header Style -->
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="{x:Type DataGridColumnHeader}">
                         <Setter Property="Background" Value="SteelBlue"/>
@@ -102,7 +97,6 @@
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
 
-                <!-- DataGrid Row Style -->
                 <DataGrid.RowStyle>
                     <Style TargetType="{x:Type DataGridRow}">
                         <Setter Property="FontSize" Value="14"/>
@@ -114,7 +108,6 @@
                     </Style>
                 </DataGrid.RowStyle>
 
-                <!-- Define DataGrid Columns -->
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Stock ID" Binding="{Binding StocksID}" Width="170" />
                     <DataGridTextColumn Header="Brand" Binding="{Binding ProductName}" Width="170" />
@@ -123,12 +116,10 @@
                     <DataGridTextColumn Header="Price" Binding="{Binding Price, StringFormat=₱{0:F2}}" Width="150" />
                     <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="210" />
 
-                    <!-- Actions Column (Edit and Delete Buttons) -->
                     <DataGridTemplateColumn Header="Actions" Width="220">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                    <!-- Edit Button -->
                                     <Button x:Name="editButton" 
                                             Tag="{Binding StocksID}" 
                                             Click="EditButton_Click" 
@@ -142,8 +133,6 @@
                                             <Image Source="/Images/edit.png" Height="20"/>
                                         </StackPanel>
                                     </Button>
-
-                                    <!-- Delete Button -->
                                     <Button Width="45" 
                                             Height="45"
                                             Margin="5,0,5,0"
@@ -152,7 +141,6 @@
                                             Cursor="Hand"
                                             Tag="{Binding StocksID}" FontFamily="Segoe UI"
                                             Click="DeleteButton_Click">
-
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                             <Image Source="/Images/trash.png" Height="20" />
                                         </StackPanel>
@@ -203,13 +191,12 @@
                 FontFamily="Segou UI" Margin="995,0,91,663" RenderTransformOrigin="0.498,0.367" Grid.Row="1" FontSize="15" VerticalAlignment="Bottom"/>
 
             <UniformGrid Rows="1" Columns="2" Margin="1080,66,10,635" Grid.Row="1" Grid.ColumnSpan="2">
-                <!-- List View Button -->
                 <ToggleButton x:Name="listViewButton" 
                   Style="{StaticResource ViewToggleButtonStyle}" 
                   IsChecked="True" 
                   Margin="7,2,3,21" Width="60"
                   Click="ListView_Click" Checked="listViewButton_Checked">
-                    <Image Source="/View/UserControls/menu.png" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Image Source="/View/UserControls/list.png" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </ToggleButton>
                 <ToggleButton x:Name="gridViewButton" 
                   Style="{StaticResource ViewToggleButtonStyle}" 
@@ -217,14 +204,8 @@
                   Click="GridView_Click" Checked="gridViewButton_Checked">
                     <Image Source="/View/UserControls/menu (1).png" Width="24" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </ToggleButton>
-
-                <!-- Grid View Button -->
             </UniformGrid>
 
-
-            <!-- List View -->
-
-            <!-- Product View -->
             <Border x:Name="ProductBorder" BorderBrush="LightGray" Grid.Row="1" BorderThickness="1" Margin="15,130,15,47" CornerRadius="10" Background="SteelBlue" Grid.ColumnSpan="2" Visibility="Collapsed">
                 <ScrollViewer x:Name="ProductScrollViewer"  Grid.ColumnSpan="2"  Visibility="Collapsed" >
                     <WrapPanel x:Name="ProductsWrapPanel" Margin="10" Width="1180">

@@ -53,9 +53,8 @@ namespace LPG_Management_System.View
             {
                 using (var db = new DataContext())
                 {
-                    // Check if a product with the same brand and size already exists
                     var existingProduct = db.tbl_inventory
-                        .AsEnumerable() // Forces in-memory comparison
+                        .AsEnumerable() 
                         .FirstOrDefault(i => i.ProductName.Equals(brandname, StringComparison.Ordinal)
                                           && i.Size.Equals(fullSize, StringComparison.Ordinal));
 
@@ -69,10 +68,10 @@ namespace LPG_Management_System.View
                     var inventory = new InventoryTable
                     {
                         ProductName = brandname,
-                        Size = fullSize, // Save the combined size and unit
+                        Size = fullSize,
                         Price = price,
                         Stocks = stocks,
-                        Date = DateTime.Now, // Ensure this matches the database type
+                        Date = DateTime.Now, 
                         ProductImage = selectedImageBytes
                     };
 
@@ -94,10 +93,8 @@ namespace LPG_Management_System.View
 
         private void ReduceQuantity_Click(object sender, RoutedEventArgs e)
         {
-            // Parse the current stock value from the TextBox
             if (int.TryParse(stockstxtBox.Text, out int currentStock))
             {
-                // Decrement the stock value, ensuring it doesn't go below 0
                 if (currentStock > 0)
                 {
                     currentStock--;
@@ -110,13 +107,10 @@ namespace LPG_Management_System.View
             }
         }
 
-        // Event handler for the increment button
         private void IncreaseQuantity_Click(object sender, RoutedEventArgs e)
         {
-            // Parse the current stock value from the TextBox
             if (int.TryParse(stockstxtBox.Text, out int currentStock))
             {
-                // Increment the stock value
                 currentStock++;
                 stockstxtBox.Text = currentStock.ToString();
             }
@@ -130,14 +124,12 @@ namespace LPG_Management_System.View
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Save logic here
-            DialogResult = true; // Indicate success and close the dialog
+            DialogResult = true; 
             Close();
         }
 
         private void imageSelectBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Open a file dialog for selecting an image
             var openFileDialog = new Microsoft.Win32.OpenFileDialog
             {
                 Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp"
@@ -145,11 +137,9 @@ namespace LPG_Management_System.View
 
             if (openFileDialog.ShowDialog() == true)
             {
-                // Load the selected image
                 string selectedFileName = openFileDialog.FileName;
                 selectedImageBytes = File.ReadAllBytes(selectedFileName);
 
-                // Display the selected image in the preview
                 productImagePreview.Source = new BitmapImage(new Uri(selectedFileName));
             }
         }
@@ -159,37 +149,22 @@ namespace LPG_Management_System.View
             this.Close();
         }
 
-        // Brand TextBox - Only letters and spaces
         private void brandtxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            // Allow only letters and spaces
             e.Handled = !Regex.IsMatch(e.Text, @"^[a-zA-Z\s]+$");
         }
-
-        // Size TextBox - Only numbers and decimal points
         private void sizetxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            // Allow only numbers and decimal points
             e.Handled = !Regex.IsMatch(e.Text, @"^[0-9]*\.?[0-9]*$");
         }
 
-        // Price TextBox - Only numbers and decimal points
         private void pricetxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            // Allow only numbers and decimal points
             e.Handled = !Regex.IsMatch(e.Text, @"^[0-9]*\.?[0-9]*$");
         }
-
-        // Stocks TextBox - Only whole numbers
         private void stockstxtBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            // Allow only whole numbers
             e.Handled = !Regex.IsMatch(e.Text, @"^[0-9]+$");
-        }
-
-        private void sizetxtBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-
         }
     }
 }

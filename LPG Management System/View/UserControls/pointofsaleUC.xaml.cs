@@ -34,11 +34,8 @@ namespace LPG_Management_System.View.UserControls
                     }
                 }
             }
-
             public double Total => Price * Quantity;
-
             public event PropertyChangedEventHandler PropertyChanged;
-
             protected void OnPropertyChanged(string propertyName) =>
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -56,7 +53,7 @@ namespace LPG_Management_System.View.UserControls
             new Dashboard().Show();
         }
 
-        private void cashBtn_Click_1(object sender, RoutedEventArgs e)
+        private void cashBtn_Click(object sender, RoutedEventArgs e)
         {
             if (!receiptItems.Any())
             {
@@ -73,7 +70,6 @@ namespace LPG_Management_System.View.UserControls
                 ProcessPayment(paymentWindow.PaymentAmount, totalPrice);
             }
         }
-
         private void ProcessPayment(double paymentAmount, double totalPrice)
         {
             double change = paymentAmount - totalPrice;
@@ -93,7 +89,6 @@ namespace LPG_Management_System.View.UserControls
                 ShowError($"Error updating inventory: {ex.Message}");
             }
         }
-
         private void UpdateInventory()
         {
             using var dbContext = new DataContext();
@@ -126,7 +121,6 @@ namespace LPG_Management_System.View.UserControls
 
             dbContext.SaveChanges();
         }
-
         private void GenerateInvoice(double paymentAmount, double change, double totalPrice)
         {
             var receiptItemsList = receiptItems.ToList();
@@ -154,7 +148,6 @@ namespace LPG_Management_System.View.UserControls
                 return new List<InventoryTable>();
             }
         }
-
         private void LoadProducts(string filterBrand = null)
         {
             var products = GetProductsFromDatabase();
@@ -183,7 +176,6 @@ namespace LPG_Management_System.View.UserControls
                 ProductsPanel.Children.Add(productControl);
             }
         }
-
         private System.Windows.Media.ImageSource ConvertToImageSource(byte[] imageBytes)
         {
             if (imageBytes == null || imageBytes.Length == 0) return null;
@@ -204,7 +196,6 @@ namespace LPG_Management_System.View.UserControls
                 return null;
             }
         }
-
         public void AddToReceipt(ReceiptItem item)
         {
             var existingItem = receiptItems.FirstOrDefault(r => r.Brand == item.Brand && r.Size == item.Size && r.Price == item.Price);
@@ -218,7 +209,6 @@ namespace LPG_Management_System.View.UserControls
             }
             UpdateTotalPrice();
         }
-
         private void FilterByBrand_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button { Tag: string brand })
@@ -226,7 +216,6 @@ namespace LPG_Management_System.View.UserControls
                 LoadProducts(brand.Equals("All", StringComparison.OrdinalIgnoreCase) ? null : brand);
             }
         }
-
         private void IncreaseQuantity_Click(object sender, RoutedEventArgs e)
         {
             if (((FrameworkElement)sender).DataContext is ReceiptItem selectedItem)
@@ -251,8 +240,6 @@ namespace LPG_Management_System.View.UserControls
                 UpdateTotalPrice();
             }
         }
-
-
         private void ShowWarning(string message) => MessageBox.Show(message, "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
         private void ShowError(string message) => MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
     }

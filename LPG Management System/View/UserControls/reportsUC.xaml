@@ -32,7 +32,7 @@
                    Margin="20,0,0,0"/>
             </StackPanel>
         </Border>
-        <!-- DataGrid for displaying reports -->
+
         <DataGrid x:Name="inventorySalesDG" 
                   HorizontalAlignment="Center" 
                   Height="540" 
@@ -45,7 +45,7 @@
                   CanUserReorderColumns="False"
                   CanUserResizeColumns="False" 
                   AutoGenerateColumns="False" Grid.Row="1">
-            <!-- Define the columns with TextWrapping using a TemplateColumn -->
+
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Transaction ID" Width="120" Binding="{Binding TransactionID}"  />
                 <DataGridTemplateColumn Header="Tank ID" Width="140" >
@@ -55,7 +55,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <!-- Column with text wrapping -->
+
                 <DataGridTemplateColumn Header="Product Name" Width="140" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -74,26 +74,22 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Total Price" Width="100" Binding="{Binding TotalPrice}" />
                 <DataGridTextColumn Header="Payment Method" Width="140" Binding="{Binding PaymentMethod}" />
-
                 <DataGridTextColumn Header="Paid Amount" Width="140" Binding="{Binding PaidAmount}" />
-                <!--<DataGridTextColumn Header="Change Given" Width="*" Binding="{Binding ChangeGiven}" />-->
                 <DataGridTextColumn Header="Date" Width="*" Binding="{Binding Date, StringFormat='dd/MM/yyyy hh:mm:ss'}" />
-                <!--<DataGridTextColumn Header="Status" Width="*" Binding="{Binding Status}" /> -->
             </DataGrid.Columns>
         </DataGrid>
 
-
         <DataGrid x:Name="stockCheckDG" Visibility="Collapsed" HorizontalAlignment="Stretch" 
-    Height="540" 
-    Margin="0,40,0,0" 
-    VerticalAlignment="Top" 
-    Width="Auto" 
-    IsReadOnly="True" 
-    HorizontalScrollBarVisibility="Auto" 
-    VerticalScrollBarVisibility="Auto"
-    CanUserReorderColumns="False"
-    CanUserResizeColumns="False" 
-    AutoGenerateColumns="False" Grid.Row="1">
+                Height="540" 
+                Margin="0,40,0,0" 
+                VerticalAlignment="Top" 
+                Width="Auto" 
+                IsReadOnly="True" 
+                HorizontalScrollBarVisibility="Auto" 
+                VerticalScrollBarVisibility="Auto"
+                CanUserReorderColumns="False"
+                CanUserResizeColumns="False" 
+                AutoGenerateColumns="False" Grid.Row="1">
             <DataGrid.Resources>
                 <Style TargetType="DataGridColumnHeadersPresenter">
                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -106,19 +102,17 @@
             </DataGrid.Columns>
         </DataGrid>
 
-
-        <!-- DataGrid for Sales by Product -->
         <DataGrid x:Name="salesByProductDG" Visibility="Collapsed" HorizontalAlignment="Stretch" 
-Height="540" 
-Margin="0,40,0,0" 
-VerticalAlignment="Top" 
- Width="Auto" 
-IsReadOnly="True" 
-HorizontalScrollBarVisibility="Auto" 
-VerticalScrollBarVisibility="Auto"
-CanUserReorderColumns="False"
-CanUserResizeColumns="False" 
-AutoGenerateColumns="False" Grid.Row="1">
+                    Height="540" 
+                    Margin="0,40,0,0" 
+                    VerticalAlignment="Top" 
+                     Width="Auto" 
+                    IsReadOnly="True" 
+                    HorizontalScrollBarVisibility="Auto" 
+                    VerticalScrollBarVisibility="Auto"
+                    CanUserReorderColumns="False"
+                    CanUserResizeColumns="False" 
+                    AutoGenerateColumns="False" Grid.Row="1">
             <DataGrid.Resources>
                 <Style TargetType="DataGridColumnHeadersPresenter">
                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -131,9 +125,6 @@ AutoGenerateColumns="False" Grid.Row="1">
             </DataGrid.Columns>
         </DataGrid>
 
-
-
-        <!-- Header panel with labels (for selecting report filters) -->
         <Border BorderBrush="#8ecae6" BorderThickness="1" CornerRadius="5" Background="WhiteSmoke" Margin="22,152,18,621" Grid.RowSpan="2">
             <Grid HorizontalAlignment="Center" Height="94" VerticalAlignment="Top" Width="1190">
                 <Label Content="Category" HorizontalAlignment="Left" Height="28" Margin="19,30,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontWeight="Bold"/>
@@ -142,43 +133,40 @@ AutoGenerateColumns="False" Grid.Row="1">
             </Grid>
         </Border>
 
-        <!-- DatePickers and ComboBox below the header -->
         <DatePicker x:Name="beginDatePicker" HorizontalAlignment="Left" Height="30" Margin="493,176,0,0" VerticalAlignment="Top" Width="174" FontSize="14" Grid.RowSpan="2" />
         <DatePicker x:Name="endDatePicker" HorizontalAlignment="Left" Height="30" Margin="818,174,0,0" VerticalAlignment="Top" Width="175" FontSize="14" Grid.RowSpan="2" />
         <ComboBox x:Name="categoryComboBox" HorizontalAlignment="Left" Height="30" Margin="120,178,0,0" VerticalAlignment="Top" Width="200" FontSize="14" SelectionChanged="categoryComboBox_SelectionChanged" Grid.RowSpan="2"/>
 
-        <!-- Pagination Controls -->
-        <Button x:Name="previousButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="42" Height="30" Margin="480,0,0,25" Click="PreviousButton_Click" Background="AliceBlue" Grid.Row="1">
+        <Button x:Name="previousButton" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="42" Height="30" Margin="480,0,0,25" Click="previousBtn_Click" Background="AliceBlue" Grid.Row="1">
             <Button.Content>
                 <Image Source="/View/UserControls/back.png"/>
             </Button.Content>
         </Button>
 
-        <Button x:Name="nextButton" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="42" Height="30" Margin="0,0,540,25" Click="NextButton_Click" Background="AliceBlue" BorderBrush="{x:Null}" Grid.Row="1">
+        <Button x:Name="nextButton" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="42" Height="30" Margin="0,0,540,25" Click="nextBtn_Click" Background="AliceBlue" BorderBrush="{x:Null}" Grid.Row="1">
             <Button.Content>
                 <Image Source="/View/UserControls/next.png" />
             </Button.Content>
         </Button>
 
-        <!-- Page Indicator -->
         <TextBlock x:Name="pageIndicator" FontSize="16" Margin="539,607,585,19" Foreground="Black" Grid.Row="1" Text="Page"/>
 
 
         <Button Content="Apply" HorizontalAlignment="Left" Margin="1018,178,0,0" VerticalAlignment="Top" Width="82" FontSize="16" Click="ApplyFilterButton_Click" Height="36" Grid.RowSpan="2"/>
 
-        <Button Content="Clear" HorizontalAlignment="Left" Margin="1111,178,0,0" VerticalAlignment="Top" Width="83" Height="36" FontSize="16" FontWeight="Bold" Background="Red" Foreground="White" Click="CancelFilterButton_Click" Grid.RowSpan="2"/>
+        <Button Content="Clear" HorizontalAlignment="Left" Margin="1111,178,0,0" VerticalAlignment="Top" Width="83" Height="36" FontSize="16" FontWeight="Bold" Background="Red" Foreground="White" Click="CancelFilterBtn_Click" Grid.RowSpan="2"/>
 
         <Button Content="Generate Report" HorizontalAlignment="Left" Margin="1046,598,0,0" VerticalAlignment="Top" Width="148" Click="PrintPreview_Click" Height="34" Background="#2ecc71" Foreground="White" Grid.Row="1"/>
         <TextBox x:Name="TextBox" 
-Background="WhiteSmoke" 
-TextWrapping="Wrap" 
-FontSize="16" 
-Padding="10,5" 
-Foreground="Gray"
-Text="Search here" 
-GotFocus="TextBox_GotFocus" 
-LostFocus="TextBox_LostFocus" 
-TextChanged="TextBox_TextChanged" Margin="894,18,26,147">
+                Background="WhiteSmoke" 
+                TextWrapping="Wrap" 
+                FontSize="16" 
+                Padding="10,5" 
+                Foreground="Gray"
+                Text="Search here" 
+                GotFocus="TextBox_GotFocus" 
+                LostFocus="TextBox_LostFocus" 
+                TextChanged="TextBox_TextChanged" Margin="894,18,26,147">
             <TextBox.Style>
                 <Style TargetType="{x:Type TextBox}">
                     <Setter Property="Template">
@@ -196,8 +184,5 @@ TextChanged="TextBox_TextChanged" Margin="894,18,26,147">
                 </Style>
             </TextBox.Style>
         </TextBox>
-
     </Grid>
-
-
 </UserControl>

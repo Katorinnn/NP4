@@ -33,8 +33,6 @@
     <None Remove="View\UserControls\edit.png" />
     <None Remove="View\UserControls\filter %281%29.png" />
     <None Remove="View\UserControls\filter.png" />
-    <None Remove="View\UserControls\menu %281%29.png" />
-    <None Remove="View\UserControls\menu.png" />
     <None Remove="View\UserControls\minus.png" />
     <None Remove="View\UserControls\next.png" />
     <None Remove="View\UserControls\plus.png" />
@@ -76,8 +74,8 @@
     <Resource Include="Images\filter.png" />
     <Resource Include="View\UserControls\back.png" />
     <Resource Include="View\UserControls\edit.png" />
-    <Resource Include="View\UserControls\menu (1).png" />
-    <Resource Include="View\UserControls\menu.png" />
+    <Resource Include="View\UserControls\menu %281%29.png" />
+    <Resource Include="View\UserControls\list.png" />
     <Resource Include="View\UserControls\minus.png" />
     <Resource Include="View\UserControls\next.png" />
     <Resource Include="View\UserControls\plus.png" />
@@ -103,6 +101,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="PDFsharp" Version="6.1.1" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="9.0.1" />
     <PackageReference Include="System.Drawing.Common" Version="9.0.1" />
   </ItemGroup>
 

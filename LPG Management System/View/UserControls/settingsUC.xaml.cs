@@ -19,11 +19,6 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace LPG_Management_System.View.UserControls
 {
-    /// <summary>
-    /// Interaction logic for trySettingsUC.xaml
-    /// </summary>
-    /// 
-
     public partial class settingsUC : UserControl
     {
         private CompanyTable originalCompanyData;
@@ -36,7 +31,6 @@ namespace LPG_Management_System.View.UserControls
             LoadPrivacySettings();
             DisablePrivacyEditing();
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -44,33 +38,13 @@ namespace LPG_Management_System.View.UserControls
             {
                 try
                 {
-                    //BitmapImage image = new BitmapImage(new Uri(openFileDialog.FileName));
                     logoPlaceholder.Source = new BitmapImage(new Uri(openFileDialog.FileName));
-                    //byte[] imageData = File.ReadAllBytes(openFileDialog.Filename);
                 }
                 catch (Exception ex) {
                     MessageBox.Show(ex.Message);
                 }
             }
         }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                // Debug your logic here
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}");
-            }
-        }
-
-
         private void UploadImage_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -82,24 +56,20 @@ namespace LPG_Management_System.View.UserControls
             {
                 try
                 {
-                    // Update the logoPlaceholder with the selected image
                     string selectedFilePath = openFileDialog.FileName;
                     logoPlaceholder.Source = new BitmapImage(new Uri(selectedFilePath));
 
                     byte[] imageBytes = File.ReadAllBytes(selectedFilePath);
 
-                    // Update the logo in the company table using Entity Framework
-                    using (var context = new DataContext())  // Replace with your actual DbContext
+                    using (var context = new DataContext())  
                     {
-                        var company = context.tbl_company.FirstOrDefault(c => c.CompanyID == 1); // Replace with dynamic company ID
+                        var company = context.tbl_company.FirstOrDefault(c => c.CompanyID == 1); 
                         if (company != null)
                         {
-                            company.Logo = imageBytes;  // Save the byte[] in the Logo field
-                            context.SaveChanges(); // Save the changes to the database
+                            company.Logo = imageBytes; 
+                            context.SaveChanges(); 
                         }
                     }
-
-                    // Refresh the logo to reflect changes immediately after save
                     LoadCompanyLogo();
                 }
                 catch (Exception ex)
@@ -108,28 +78,25 @@ namespace LPG_Management_System.View.UserControls
                 }
             }
         }
-
-
         private void LoadCompanyLogo()
         {
             try
             {
-                using (var context = new DataContext())  // Replace with your actual DbContext
+                using (var context = new DataContext()) 
                 {
-                    var company = context.tbl_company.FirstOrDefault(c => c.CompanyID == 1); // Replace with dynamic admin ID
+                    var company = context.tbl_company.FirstOrDefault(c => c.CompanyID == 1); 
                     if (company != null)
                     {
                         if (company.Logo != null && company.Logo.Length > 0)
                         {
-                            // Convert byte[] to BitmapImage
                             using (var ms = new MemoryStream(company.Logo))
                             {
                                 var bitmap = new BitmapImage();
                                 bitmap.BeginInit();
                                 bitmap.StreamSource = ms;
-                                bitmap.CacheOption = BitmapCacheOption.OnLoad; // Ensure the image is fully loaded
+                                bitmap.CacheOption = BitmapCacheOption.OnLoad;
                                 bitmap.EndInit();
-                                logoPlaceholder.Source = bitmap;  // Set the image source to the logoPlaceholder
+                                logoPlaceholder.Source = bitmap; 
                             }
                         }
                         else
@@ -148,7 +115,6 @@ namespace LPG_Management_System.View.UserControls
                 MessageBox.Show($"Error loading logo: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         private void LoadCompanyData()
         {
             try
@@ -187,8 +153,6 @@ namespace LPG_Management_System.View.UserControls
             SaveButton.Visibility = Visibility.Visible;
             CancelButton.Visibility = Visibility.Visible;
         }
-
-
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             var updatedCompany = new CompanyTable
@@ -207,20 +171,12 @@ namespace LPG_Management_System.View.UserControls
             {
                 AddCompanyDataToDatabase(updatedCompany);
             }
+                LoadCompanyData();
+                DisableEditing();
 
-            // Reload the company data to reflect changes
-            LoadCompanyData();
-
-            // Disable editing controls
-            DisableEditing();
-
-            // Hide Save and Cancel buttons
             SaveButton.Visibility = Visibility.Collapsed;
             CancelButton.Visibility = Visibility.Collapsed;
         }
-
-
-
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             if (originalCompanyData != null)
@@ -240,13 +196,9 @@ namespace LPG_Management_System.View.UserControls
 
             DisableEditing();
 
-            // Hide Save and Cancel buttons
             SaveButton.Visibility = Visibility.Collapsed;
             CancelButton.Visibility = Visibility.Collapsed;
         }
-
-
-
         private void SaveCompanyDataToDatabase(CompanyTable company)
         {
             using (var context = new DataContext())
@@ -271,7 +223,6 @@ namespace LPG_Management_System.View.UserControls
                 context.SaveChanges();
             }
         }
-
         private void DisableEditing()
         {
             NameTextBox.IsReadOnly = true;
@@ -400,11 +351,9 @@ namespace LPG_Management_System.View.UserControls
 
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
-            // Navigate to Login.xaml
             Login loginWindow = new Login();
             loginWindow.Show();
 
-            // Close the current window or hide the user control if needed
             Window currentWindow = Window.GetWindow(this);
             if (currentWindow != null)
             {
