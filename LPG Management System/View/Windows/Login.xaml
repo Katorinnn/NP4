@@ -25,23 +25,23 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBox x:Name="unametxtBox" HorizontalAlignment="Left" Margin="186,242,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="186" Height="34" 
+        <TextBox x:Name="unametxtBox" HorizontalAlignment="Left" Margin="186,246,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="186" Height="30" 
                 Cursor="IBeam" Foreground="Black" BorderBrush="DimGray" BorderThickness="0.5" Background="#e5f3fd" Grid.Column="1" Grid.Row="1"/>
-        
-        <Label x:Name="unameLabel" Content="username: " HorizontalAlignment="Left" Margin="87,250,0,0" VerticalAlignment="Top" Grid.Column="1" Height="27" Width="83" Grid.Row="1" FontWeight="Bold" FontSize="15"/>
-        <TextBlock x:Name="unameError" HorizontalAlignment="Left" Margin="140,157,0,0" Text="Invalid username" Foreground="Red" Visibility="Collapsed" Grid.Column="1"  Grid.Row="1"/>
 
-        <PasswordBox x:Name="pwordBox" HorizontalAlignment="Left" Margin="186,291,0,0" VerticalAlignment="Top" Width="186" Height="36" 
+        <Label x:Name="unameLabel" Content="username: " HorizontalAlignment="Left" Margin="88,248,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="83" Grid.Row="1" FontWeight="Bold" FontSize="15"/>
+        <TextBlock x:Name="unameError" HorizontalAlignment="Left" Margin="186,276,0,197" Text="Invalid username!" Foreground="Red"   Visibility="Collapsed" Grid.Column="1"  Grid.Row="1" FontSize="13"/>
+
+        <PasswordBox x:Name="pwordBox" HorizontalAlignment="Left" Margin="186,298,0,0" VerticalAlignment="Top" Width="186" Height="31" 
                      Foreground="Black" BorderBrush="DimGray" BorderThickness="0.5" Grid.Column="1" Grid.Row="1"  Background="#e5f3fd"/>
-        
+
         <Label x:Name="pwordLabel" Content="password: " HorizontalAlignment="Left" Margin="87,297,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.039,1.347" 
                Grid.Column="1" Height="28" Width="84" Grid.Row="1" FontWeight="Bold" FontSize="15"/>
-        
-        <TextBlock x:Name="pwordError" HorizontalAlignment="Left" Margin="140,205,0,0" Text="Invalid password" Foreground="Red" Visibility="Collapsed" Grid.Column="1"  Grid.Row="1"/>
+
+        <TextBlock x:Name="pwordError" HorizontalAlignment="Left" Margin="191,329,0,142" Text="Invalid password!" Foreground="Red"  Visibility="Collapsed" Grid.Column="1"  Grid.Row="1" Width="177" FontSize="13"/>
 
         <Button x:Name="loginBtn" Content="LOGIN" HorizontalAlignment="Left" Margin="163,379,0,0" VerticalAlignment="Top" Click="Button_Click" 
                 Width="144" Height="42" Cursor="Hand" MouseEnter="loginBtn_MouseEnter" Grid.Column="1" Grid.Row="1" >
-            
+
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Border Background="{TemplateBinding Background}" 
